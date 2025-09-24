@@ -1,0 +1,112 @@
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'Core/Const/app_colors.dart';
+import 'Core/Const/app_routes.dart';
+import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
+
+
+void main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final bool isAgreed = prefs.getBool('isAgreed') ?? false;
+  bool isLoggedIn = (prefs.getString('accessToken') == null)
+      ? false
+      : true;
+
+  runApp(MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed));
+}
+
+class MyApp extends StatefulWidget {
+
+  final bool isLoggedIn;
+  final bool isAgreed;
+
+  const MyApp({super.key, required this.isLoggedIn, required this.isAgreed});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  StreamSubscription<List<ConnectivityResult>>? subscription;
+  late bool isOffline = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    subscription = Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> result) {
+      // Received changes in available connectivity types!
+    });
+  }
+
+  @override
+  void dispose() {
+    subscription?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (BuildContext context) =>
+                MainNavigationBloc(initialIndex: 0)),
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: router,
+        locale: const Locale("fa", "IR"),
+        supportedLocales: const [
+          Locale("fa", "IR"),
+        ],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+
+        themeMode: ThemeMode.light,
+        // 🔹 تم روشن (پیش‌فرض)
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primaryColor: AppColors.primaryColor, // رنگ اصلی
+          scaffoldBackgroundColor: Colors.grey[200],
+          fontFamily: 'IRANSans', // فونت فارسی
+          colorScheme: ColorScheme.light(
+            primary: Colors.black,
+          ),
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
+            bodyMedium: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
+            bodySmall: TextStyle(color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),
+          ),
+        ),
+
+        // 🔹 تم تاریک
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primaryColor: AppColors.primaryColor,
+          scaffoldBackgroundColor: Colors.black26,
+          fontFamily: 'IRANSans',
+          colorScheme: ColorScheme.dark(
+            primary: Colors.white,
+          ),
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+            bodyMedium: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+            bodySmall: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+    );
+  }
+}
