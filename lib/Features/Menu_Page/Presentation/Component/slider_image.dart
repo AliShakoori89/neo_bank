@@ -96,7 +96,7 @@ class _VerticalSliderDemoState extends State<VerticalSliderDemo> {
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
                                               image: AssetImage(
-                                                'assets/Image/slider_image.png',)
+                                                'assets/image/slider_image.png',)
                                           )
                                       ),
                                     ),

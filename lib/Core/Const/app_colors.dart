@@ -3,10 +3,20 @@ import 'dart:ui';
 class AppColors {
   AppColors._();
 
-  static const Color gradiantColor1 = Color(0xff088AB2);
-  static const Color gradiantColor2 = Color(0xff06AED4);
+  static const Color splashGradiantColor1 = Color(0xff088AB2);
+  static const Color splashGradiantColor2 = Color(0xff06AED4);
+
+  static const Color loginGradiantColor1 = Color(0xFFE6E6FA);
+  static const Color loginGradiantColor2 = Color(0xFFB0E0E6);
+  static const Color loginHintFontColor = Color(0xFF717680);
+  static const Color loginTextColor = Color(0xFF535862);
+  static const Color loginIconColor = Color(0xFFA4A7AE);
+
+
 
   static const Color appWhite = Color(0xffFFFFFF);
+
+  static const Color loginBorderColor = Color(0xFFD5D7DA);
 
   static const Color cardBgColor = Color(0xff363636);
   static const Color cardBgLightColor = Color(0xff999999);

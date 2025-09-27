@@ -60,7 +60,7 @@ class ProfilePage extends StatelessWidget {
                             color: Colors.grey,
                             shape: BoxShape.circle,
                             image: DecorationImage(
-                              image: AssetImage('assets/Image/user.png'),
+                              image: AssetImage('assets/image/user.png'),
                               fit: BoxFit.fill
                             )
                           ),

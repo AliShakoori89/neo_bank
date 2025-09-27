@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 
 class CustomCardWithBorder extends StatelessWidget {
   const CustomCardWithBorder({super.key, required this.title});
@@ -11,9 +12,10 @@ class CustomCardWithBorder extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 50,
       decoration: BoxDecoration(
-          border: Border.all(
-              color: Colors.black,
-              width: 2
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [AppColors.splashGradiantColor1, AppColors.splashGradiantColor2],
           ),
           borderRadius: BorderRadius.circular(15)
       ),
@@ -30,11 +32,11 @@ class CustomCardWithBorder extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  color: Colors.black
+                  color: AppColors.appWhite
                 ),
               ),
               Icon(Icons.arrow_forward,
-                color: Colors.black,
+                color: AppColors.appWhite
               )
             ],
           ),

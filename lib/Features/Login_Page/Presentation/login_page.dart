@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 
 import '../../../Core/Const/stack_circle.dart';
+import '../../../Core/Utils/neo_bank_logo.dart';
+import '../../../Core/Utils/neo_bank_version.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -12,156 +15,153 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Stack(
-            children: [
-              StackCircle(
-                  circleColor: Theme.of(context).primaryColor,
-                  topPosition: -40,
-                  width: 500,
-                  height: 500),
-              StackCircle(
-                  circleColor: Theme.of(context).primaryColor,
-                  topPosition: 300,
-                  leftPosition: -30,
-                  width: 400,
-                  height: 400),
-              StackCircle(
-                  circleColor: Theme.of(context).primaryColor,
-                  topPosition: 600,
-                  leftPosition: 200,
-                  width: 300,
-                  height: 300),
-              Column(
-                children: [
-                  AppSpace.heightSpace_128,
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      height: 300,
-                      width: 300,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/Logo/qbank.png"),
-                          scale: 0.8,
-                          colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn)
-                        )
-                      ),
-                    ),
-                  ),
-                  AppSpace.heightSpace_32,
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 50,
-                      right: 50
-                    ),
-                    width: double.infinity,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: Colors.grey),
-                      color: Colors.white54
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        left: 10,
-                        right: 10
-                      ),
-                      child: Column(
-                        children: [
-                          Form(
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'نام کاربری',
-                                hintStyle: TextStyle(
-                                  color: Colors.grey
-                                ),
-                                hintTextDirection: TextDirection.rtl,
-                                contentPadding: EdgeInsets.only(
-                                  right: 20,
-                                  top: 10
-                                )
-                              ),
-                            ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                AppColors.loginGradiantColor1, // #E6E6FA
+                AppColors.loginGradiantColor2, // #B0E0E6
+            ]
+          )
+        ),
+        child: Column(
+          children: [
+            AppSpace.heightSpace_128,
+            NeoBankLogo(logoColor: AppColors.splashGradiantColor1,
+              logoWidth: 98,
+              logoHeight: 24,
+              space: 5,
+            ),
+            AppSpace.heightSpace_128,
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(9),
+                border: Border.all(color: AppColors.loginBorderColor),
+                color: Colors.white54,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: TextFormField(
+                        textAlign: TextAlign.right,
+                        textAlignVertical: TextAlignVertical.center,
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'نام کاربری',
+                          hintStyle: TextStyle(
+                            color: AppColors.loginHintFontColor,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 0,
                           ),
-                          Divider(
-                            color: Colors.grey,
-                          ),
-                          Form(
-                            child: TextFormField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'پسوورد',
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey
-                                  ),
-                                  hintTextDirection: TextDirection.rtl,
-                                  contentPadding: EdgeInsets.only(
-                                      right: 20,
-                                      bottom: 10
-                                  )
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  AppSpace.heightSpace_32,
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 50,
-                      right: 50
-                    ),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all<Color>(
-                            Colors.blueAccent),
-                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0), // Adjust for desired corner radius
-                          ),
+                          hintTextDirection: TextDirection.rtl,
+                          contentPadding: EdgeInsets.symmetric(vertical: 12.0), // تنظیم پدینگ عمودی
                         ),
                       ),
-                      onPressed: (){
-
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('ورود با اثر انگشت',
-                            style: TextStyle(
-                                color: Colors.white
-                            ),
+                    ),
+                    Divider(
+                      color: AppColors.loginBorderColor,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: TextFormField(
+                        obscureText: true,
+                        textAlign: TextAlign.right,
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'رمز عبور',
+                          hintStyle: TextStyle(
+                            color: AppColors.loginHintFontColor,
+                            fontWeight: FontWeight.w400,
                           ),
-                          AppSpace.widthSpace_8,
-                          Icon(Icons.fingerprint,
-                            color: Colors.white,
-                            size: 30,
-                          ),
-                        ],
+                          hintTextDirection: TextDirection.rtl,
+                          contentPadding: EdgeInsets.symmetric(vertical: 12.0), // تنظیم پدینگ عمودی
+                        ),
                       ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            AppSpace.heightSpace_32,
+            Container(
+              margin: EdgeInsets.only(
+                  left: 20,
+                  right: 20
+              ),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all<Color>(
+                      AppColors.splashGradiantColor1),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7.0), // Adjust for desired corner radius
                     ),
                   ),
-                  AppSpace.heightSpace_16,
-                  InkWell(
-                    onTap: (){
-                      context.push('/cant_login');
-                    },
-                    child: Text('نمی توانید وارد شوید؟',
-                      style: TextStyle(
-                        color: Colors.blueAccent
+                ),
+                onPressed: (){
+                  context.go('/main_page');
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 10,
+                    bottom: 10
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.fingerprint,
+                        color: AppColors.appWhite,
+                        size: 20,
                       ),
+                      AppSpace.widthSpace_8,
+                      Text('ورود با اثر انگشت',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.appWhite,
+                          fontWeight: FontWeight.w600
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            AppSpace.heightSpace_16,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: (){
+                    context.push('/cant_login');
+                  },
+                  child: Text('نمی توانید وارد شوید؟',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColors.loginTextColor,
+                      fontWeight: FontWeight.w600,
                     ),
-                  )
-                ],
-              )
-            ],
-          ),
+                  ),
+                ),
+                Icon(Icons.arrow_forward,
+                  color: AppColors.loginIconColor,
+                ),
+              ],
+            ),
+            Spacer(),
+            NeoBankVersion(textColor: AppColors.splashGradiantColor1,),
+            SizedBox(height: 40),
+          ],
         ),
       ),
     );

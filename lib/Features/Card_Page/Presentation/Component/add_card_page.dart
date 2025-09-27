@@ -141,9 +141,9 @@ class _AddCardPageState extends State<AddCardPage> {
                         image: AssetImage(
                           bankName == '' || digitsOnly.length < 6
                               ? Theme.of(context).brightness == Brightness.dark
-                                    ? "assets/Image/bg-dark.png"
-                                    : "assets/Image/bg-light.png"
-                              : "assets/Image/Bank_Card/bank_mehr.jpg",
+                                    ? "assets/image/bg-dark.png"
+                                    : "assets/image/bg-light.png"
+                              : "assets/image/Bank_Card/bank_mehr.jpg",
                         ),
                         fit: BoxFit.cover,
                       ),

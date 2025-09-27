@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../Core/Const/app_colors.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
@@ -54,23 +54,43 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           onTap: widget.onTap,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: SvgPicture.asset(
+                'assets/icon/navigation_bar_icon/home-line.svg',
+                width: 24,
+                height: 24,
+                color: widget.currentIndex == 0 ? Colors.black : Colors.grey[500],
+              ),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.compare_arrows),
+              icon: SvgPicture.asset(
+                'assets/icon/navigation_bar_icon/switch-vertical-02.svg',
+                width: 24,
+                height: 24,
+                color: widget.currentIndex == 0 ? Colors.black : Colors.grey[500],
+              ),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.grid_view_rounded),
+              icon: SvgPicture.asset(
+                'assets/icon/navigation_bar_icon/grid-01.svg',
+                width: 24,
+                height: 24,
+                color: widget.currentIndex == 0 ? Colors.black : Colors.grey[500],
+              ),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.credit_card_rounded),
+              icon: SvgPicture.asset(
+                'assets/icon/navigation_bar_icon/bar-chart-07.svg',
+                width: 24,
+                height: 24,
+                color: widget.currentIndex == 0 ? Colors.black : Colors.grey[500],
+              ),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Image.asset('assets/icon/navigation_bar_icon/Avatar.png'),
               label: '',
             ),
           ],

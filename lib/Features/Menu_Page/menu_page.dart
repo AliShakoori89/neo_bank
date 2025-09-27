@@ -13,16 +13,16 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     List<Map<String, String>> icons = [
-      {'icon': 'assets/Icon/sim-card.png', 'title': 'شارژ'},
-      {'icon': 'assets/Icon/worldwide.png', 'title': 'اینترنت'},
-      {'icon': 'assets/Icon/bill.png', 'title': 'قبض'},
-      {'icon': 'assets/Icon/money-back.png', 'title': 'برگشت پول'},
-      {'icon': 'assets/Icon/vam.png', 'title': 'وام'},
-      {'icon': 'assets/Icon/money.png', 'title': 'برداشت خودکار'},
-      {'icon': 'assets/Icon/share.png', 'title': 'دنگ'},
-      {'icon': 'assets/Icon/cheque.png', 'title': 'چک برگشتی'},
-      {'icon': 'assets/Icon/automobile_service.png', 'title': 'خدمات خودرو'},
-      {'icon': 'assets/Icon/increase.png', 'title': 'دعوت دوستان'},
+      {'icon': 'assets/icon/sim-card.png', 'title': 'شارژ'},
+      {'icon': 'assets/icon/worldwide.png', 'title': 'اینترنت'},
+      {'icon': 'assets/icon/bill.png', 'title': 'قبض'},
+      {'icon': 'assets/icon/money-back.png', 'title': 'برگشت پول'},
+      {'icon': 'assets/icon/vam.png', 'title': 'وام'},
+      {'icon': 'assets/icon/money.png', 'title': 'برداشت خودکار'},
+      {'icon': 'assets/icon/share.png', 'title': 'دنگ'},
+      {'icon': 'assets/icon/cheque.png', 'title': 'چک برگشتی'},
+      {'icon': 'assets/icon/automobile_service.png', 'title': 'خدمات خودرو'},
+      {'icon': 'assets/icon/increase.png', 'title': 'دعوت دوستان'},
     ];
 
     return SafeArea(
