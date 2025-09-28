@@ -21,8 +21,8 @@ class LoginPage extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                AppColors.loginGradiantColor1, // #E6E6FA
-                AppColors.loginGradiantColor2, // #B0E0E6
+                AppColors.loginPageGradiantColor1, // #E6E6FA
+                AppColors.loginPageGradiantColor2, // #B0E0E6
             ]
           )
         ),
@@ -57,7 +57,7 @@ class LoginPage extends StatelessWidget {
                           border: InputBorder.none,
                           hintText: 'نام کاربری',
                           hintStyle: TextStyle(
-                            color: AppColors.loginHintFontColor,
+                            color: AppColors.loginPageHintFontColor,
                             fontWeight: FontWeight.w400,
                             letterSpacing: 0,
                           ),
@@ -79,7 +79,7 @@ class LoginPage extends StatelessWidget {
                           border: InputBorder.none,
                           hintText: 'رمز عبور',
                           hintStyle: TextStyle(
-                            color: AppColors.loginHintFontColor,
+                            color: AppColors.loginPageHintFontColor,
                             fontWeight: FontWeight.w400,
                           ),
                           hintTextDirection: TextDirection.rtl,
@@ -146,13 +146,13 @@ class LoginPage extends StatelessWidget {
                   child: Text('نمی توانید وارد شوید؟',
                     style: TextStyle(
                       fontSize: 14,
-                      color: AppColors.loginTextColor,
+                      color: AppColors.loginPageTextColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
                 Icon(Icons.arrow_forward,
-                  color: AppColors.loginIconColor,
+                  color: AppColors.loginPageIconColor,
                 ),
               ],
             ),

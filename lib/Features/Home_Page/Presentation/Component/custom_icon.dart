@@ -13,31 +13,36 @@ class CustomIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 56,
-          width: 56,
-          decoration: BoxDecoration(
-              color: Color(0xffA5F0FC),
-              shape: BoxShape.circle
-          ),
-          child: Container(
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  color: AppColors.splashGradiantColor1,
-                  shape: BoxShape.circle
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              height: 56,
+              width: 56,
+              child: SvgPicture.asset('assets/svg/Background_color.svg',
+                fit: BoxFit.fill,
               ),
-              child: Center(
-                child: SvgPicture.asset(
-                  imagePath,
+            ),
+            Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    color: AppColors.splashGradiantColor1,
+                    shape: BoxShape.circle
                 ),
-              )
-          ),
+                child: Center(
+                  child: SvgPicture.asset(
+                    imagePath,
+                  ),
+                )
+            )
+          ],
         ),
         AppSpace.heightSpace_8,
         Text('شارژ و اینترنت',
           style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600
+              fontSize: 12,
+              fontWeight: FontWeight.w600
           ),
         )
       ],

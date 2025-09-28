@@ -24,8 +24,8 @@ class CantLogin extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  AppColors.loginGradiantColor1, // #E6E6FA
-                  AppColors.loginGradiantColor2, // #B0E0E6
+                  AppColors.loginPageGradiantColor1, // #E6E6FA
+                  AppColors.loginPageGradiantColor2, // #B0E0E6
                 ]
             )
         ),

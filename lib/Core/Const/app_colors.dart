@@ -6,13 +6,16 @@ class AppColors {
   static const Color splashGradiantColor1 = Color(0xff088AB2);
   static const Color splashGradiantColor2 = Color(0xff06AED4);
 
-  static const Color loginGradiantColor1 = Color(0xFFE6E6FA);
-  static const Color loginGradiantColor2 = Color(0xFFB0E0E6);
-  static const Color loginHintFontColor = Color(0xFF717680);
-  static const Color loginTextColor = Color(0xFF535862);
-  static const Color loginIconColor = Color(0xFFA4A7AE);
+  static const Color loginPageGradiantColor1 = Color(0xFFE6E6FA);
+  static const Color loginPageGradiantColor2 = Color(0xFFB0E0E6);
+  static const Color loginPageHintFontColor = Color(0xFF717680);
+  static const Color loginPageTextColor = Color(0xFF535862);
+  static const Color loginPageIconColor = Color(0xFFA4A7AE);
 
-
+  static const Color homePageTitleColor = Color(0xFF0E7090);
+  static const Color homePageIconColor = Color(0xFFDCFAE6);
+  static const Color homePageCardTitleColor = Color(0xFF181D27);
+  static const Color homePageDividerColor = Color(0xFFE9EAEB);
 
   static const Color appWhite = Color(0xffFFFFFF);
 

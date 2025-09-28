@@ -38,8 +38,8 @@ class ForgetUsername extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.loginGradiantColor1, // #E6E6FA
-              AppColors.loginGradiantColor2, // #B0E0E6
+              AppColors.loginPageGradiantColor1, // #E6E6FA
+              AppColors.loginPageGradiantColor2, // #B0E0E6
             ]
           )
         ),
@@ -85,7 +85,7 @@ class ForgetUsername extends StatelessWidget {
                         color: Colors.grey[400]
                     ),
                     prefixIcon: Icon(Icons.sim_card,
-                      color: AppColors.loginTextColor,
+                      color: AppColors.loginPageTextColor,
                     ),
                     hintTextDirection: TextDirection.rtl,
                     contentPadding: EdgeInsets.only(
@@ -94,11 +94,11 @@ class ForgetUsername extends StatelessWidget {
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: AppColors.loginTextColor,),
+                      borderSide: const BorderSide(color: AppColors.loginPageTextColor,),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: AppColors.loginTextColor,),
+                      borderSide: const BorderSide(color: AppColors.loginPageTextColor,),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
