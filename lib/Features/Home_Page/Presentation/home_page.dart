@@ -24,7 +24,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   final CarouselSliderController _controller = CarouselSliderController();
+  final CarouselSliderController _controller1 = CarouselSliderController();
   int _current = 0;
+  int _current1 = 0;
 
   final List<Map<String, String>> sampleCard = [
     {
@@ -37,24 +39,43 @@ class _HomePageState extends State<HomePage> {
     }
   ];
 
+  final List<Map<String, String>> sampleCard2 = [
+    {
+      'card_title': 'تسهیلات فوری تا سقف',
+      'card_value': '100000000',
+      'card_image': 'assets/image/banking-finance-bank-money.png',
+    },
+    {
+      'card_title': 'تسهیلات فوری تا سقف',
+      'card_value': '200000000',
+      'card_image': 'assets/image/banking-finance-bank-money.png',
+    },
+    {
+      'card_title': 'تسهیلات فوری تا سقف',
+      'card_value': '300000000',
+      'card_image': 'assets/image/banking-finance-bank-money.png',
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
+
     // ساخت لیست کارت‌ها + کارت اضافه کردن
     final List<Widget> cardItems = [
       ...sampleCard.map((card) {
         return Container(
           width: double.infinity,
-          height: 220,
+          height: 192,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                  image: AssetImage("assets/image/Bank_Card/bank_mehr.jpg"),
-                  fit: BoxFit.fill
-              )
+            border: Border.all(
+              width: 2,
+              color: AppColors.appWhite
+            ),
+            borderRadius: BorderRadius.circular(20),
+            color: AppColors.splashGradiantColor2
           ),
           child: Padding(
             padding: EdgeInsets.only(
-                top: 100,
                 left: 10,
                 right: 10,
                 bottom: 20
@@ -62,30 +83,190 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 Expanded(
-                  child: Text(
-                    card['card_number'] ?? '',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      letterSpacing: 2,
+                  flex: 3,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 20,
+                      right: 20,
                     ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            width: 94,
+                            height: 24,
+                            child: SvgPicture.asset(
+                              'assets/svg/Union.svg',
+                              colorFilter: ColorFilter.mode(
+                                AppColors.appWhite,
+                                BlendMode.srcIn,
+                              ),
+                            )
+                        ),
+                        Spacer(),
+                        SizedBox(
+                          width: 27,
+                          height: 25,
+                          child: Image.asset(
+                            'assets/logo/Logomark.png',
+                            color: AppColors.appWhite,
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  )
+                ),
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 40,
+                    right: 40
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        (card['card_number'] ?? '').replaceAllMapped(
+                          RegExp(r".{1,4}"), // هر ۴ رقم
+                              (match) => "${match.group(0)} ".toPersianDigit(), // اضافه کردن فاصله بعد از هر گروه
+                        ),
+                        style: const TextStyle(
+                          color: AppColors.appWhite,
+                          fontSize: 14,
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        '${card['card_expire_date']}'.toPersianDigit(),
+                        style: const TextStyle(
+                          color: AppColors.appWhite,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                AppSpace.heightSpace_32,
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Text(
-                      'تاریخ انقضا: ${card['card_expire_date']}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
+                AppSpace.heightSpace_12,
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: 20,
+                    left: 20
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(71),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromRGBO(250, 250, 250, 0.03).withAlpha(0),
+                          Color.fromRGBO(250, 250, 250, 0.15).withAlpha(50),
+                        ]
+                      )
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: Row(
+                        children: [
+                          Icon(Icons.remove_red_eye_outlined,
+                            color: AppColors.appWhite,
+                            size: 20,
+                          ),
+                          AppSpace.widthSpace_12,
+                          Text('1152230450'.seRagham().toPersianDigit(),
+                            style: const TextStyle(
+                              color: AppColors.appWhite,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600
+                            ),),
+                          AppSpace.widthSpace_5,
+                          Text('ریال',
+                            style: const TextStyle(
+                              color: AppColors.appWhite,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
+                )
+
               ],
             ),
+          ),
+        );
+      }),
+      // کارت افزودن
+      InkWell(
+        onTap: () {
+          debugPrint("Add Card Clicked   ");
+          context.push('/add_card_page');
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.grey.shade400, width: 2),
+          ),
+          child: const Center(
+            child: Icon(
+              Icons.add,
+              size: 80,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      ),
+    ];
+
+    final List<Widget> cardItems2 = [
+      ...sampleCard2.map((card) {
+        return Container(
+          width: double.infinity,
+          height: 192,
+          decoration: BoxDecoration(
+              border: Border.all(
+                  width: 2,
+                  color: AppColors.appWhite
+              ),
+              borderRadius: BorderRadius.circular(20),
+              color: AppColors.splashGradiantColor1
+          ),
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: 10,
+                right: 10,
+                bottom: 20
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('تسهیلات فوری تا سقف',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.appWhite,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                    Text('۱۰۰,۰۰۰,۰۰۰ تومان',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: AppColors.appWhite,
+                          fontWeight: FontWeight.w700
+                      ),),
+                  ],
+                ),
+                Image.asset('assets/image/banking-finance-bank-money.png',
+                  width: 78,
+                  height: 54,
+                )
+              ],
+            )
           ),
         );
       }),
@@ -132,7 +313,7 @@ class _HomePageState extends State<HomePage> {
               child: Padding(
                 padding: EdgeInsets.only(
                   right: 20,
-                  left: 30,
+                  left: 20,
                   bottom: 20
                 ),
                 child: Align(
@@ -154,65 +335,168 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: 300,
-              color: Colors.black,
-              child: Stack(
-                children: [
-                  Align(
+            Stack(
+              children: [
+                Align(
                     alignment: Alignment.centerLeft,
-                    child: CustomPaint(
-                      painter: ShapePainter(),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width / 1.25,
-                        height: 300,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                AppColors.splashGradiantColor1,
-                                AppColors.splashGradiantColor1,
-                                AppColors.splashGradiantColor1,
-                                Colors.black,
-                              ]
-                          ),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              AppColors.splashGradiantColor2,
+                              AppColors.splashGradiantColor2,
+                              AppColors.splashGradiantColor2,
+                              AppColors.splashGradiantColor2,
+                              AppColors.splashGradiantColor2,
+                              Color(0xff058eb5),
+                              AppColors.splashGradiantColor2,
+                              AppColors.splashGradiantColor2,
+                              AppColors.splashGradiantColor2,
+                            ]
                         ),
                       ),
                     )
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 30
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      // color: AppColors.splashGradiantColor2,
-                        image: DecorationImage(
-                          image: AssetImage('assets/image/Ellipse 2.png'),
-                          fit: BoxFit.fill
-                        )
-                    ),
-                    child: Column(
-                      children: [
-                        AppSpace.heightSpace_24,
-                        CarouselSlider(
-                          items: cardItems,
-                          carouselController: _controller,
-                          options: CarouselOptions(
-                            autoPlay: false,
-                            enlargeCenterPage: true,
-                            aspectRatio: 2.0,
-                            viewportFraction: 0.8,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _current = index;
-                              });
-                            },
-                          ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CarouselSlider(
+                        items: cardItems,
+                        carouselController: _controller,
+                        options: CarouselOptions(
+                          autoPlay: false,
+                          enlargeCenterPage: true,
+                          aspectRatio: 2.0,
+                          viewportFraction: 0.8,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _current = index;
+                            });
+                          },
                         ),
-                      ],
+                      ),
+
+                      // دایره های indicator
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 30,
+                          top: 25
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: cardItems.asMap().entries.map((entry) {
+                            int index = entry.key;
+                            return _current != index ? Container(
+                              width: 8.0,
+                              height: 8.0,
+                              margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: _current == index
+                                    ? AppColors.appWhite  // دایره فعال
+                                    : AppColors.splashGradiantColor1 ,       // دایره غیر فعال
+                              ),
+                            )
+                                : Container(
+                              width: 42.0,
+                              height: 8.0,
+                              margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: _current == index
+                                    ? AppColors.appWhite  // دایره فعال
+                                    : AppColors.splashGradiantColor1 ,       // دایره غیر فعال
+                              ),
+                            ) ;
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  )
+                  ,
+                )
+              ],
+            ),
+            SizedBox(
+              height: 120,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (context, index){
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      left: 24,
+                      top: 20
                     ),
-                  ),
-                ],
-              )
+                    child: CustomIcon(
+                      imagePath: 'assets/svg/simcard.svg',
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: 120,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: 10,
+                  right: 20,
+                  left: 20
+                ),
+                child: Stack(
+                  children: [
+                    CarouselSlider(
+                      items: cardItems2,
+                      carouselController: _controller1,
+                      options: CarouselOptions(
+                        height: 120.0,
+                        enlargeCenterPage: false,
+                        autoPlay: false,
+                        viewportFraction: 1,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _current1 = index;
+                          });
+                        },
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: 30,
+                            top: 25
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: cardItems2.asMap().entries.map((entry) {
+                            int index = entry.key;
+                            return Container(
+                              width: 24.0,
+                              height: 2.0,
+                              margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: _current1 == index
+                                    ? AppColors.appWhite  // دایره فعال
+                                    : AppColors.splashGradiantColor2 ,       // دایره غیر فعال
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ),
             ),
             Expanded(
               child: Container(
@@ -225,53 +509,6 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 100,
-                            decoration: BoxDecoration(
-                                color: Colors.grey.withAlpha(50),
-                                borderRadius: BorderRadius.circular(20)
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(Icons.share),
-                                AppSpace.heightSpace_12,
-                                Text('شماره کارت و شبا',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        AppSpace.widthSpace_8,
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            height: 100,
-                            decoration: BoxDecoration(
-                                color: Colors.grey.withAlpha(50),
-                                borderRadius: BorderRadius.circular(20)
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(Icons.key),
-                                AppSpace.heightSpace_12,
-                                Text('رمز دوم پویا',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
                     AppSpace.heightSpace_16,
                     Text('تنظیمات',
                         style: Theme.of(context).textTheme.bodyLarge),
@@ -340,31 +577,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-}
-
-
-class ShapePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
-
-    final path = Path()
-      ..moveTo(0, 0) // نقطه شروع (بالا-چپ)
-      ..lineTo(size.width, 0) // به بالا-راست
-      ..lineTo(size.width, size.height * 0.5) // به وسط-راست
-      ..lineTo(size.width * 0.5, size.height) // به پایین-وسط
-      ..lineTo(0, size.height) // به پایین-چپ
-      ..close(); // بستن شکل
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }

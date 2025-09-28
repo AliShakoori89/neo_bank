@@ -73,39 +73,6 @@ class _MyAppState extends State<MyApp> {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-
-        themeMode: ThemeMode.light,
-        // 🔹 تم روشن (پیش‌فرض)
-        theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: AppColors.primaryColor, // رنگ اصلی
-          scaffoldBackgroundColor: Colors.grey[200],
-          fontFamily: 'IRANSans', // فونت فارسی
-          colorScheme: ColorScheme.light(
-            primary: Colors.black,
-          ),
-          textTheme: const TextTheme(
-            bodyLarge: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
-            bodyMedium: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
-            bodySmall: TextStyle(color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),
-          ),
-        ),
-
-        // 🔹 تم تاریک
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: AppColors.primaryColor,
-          scaffoldBackgroundColor: Colors.black26,
-          fontFamily: 'IRANSans',
-          colorScheme: ColorScheme.dark(
-            primary: Colors.white,
-          ),
-          textTheme: const TextTheme(
-            bodyLarge: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
-            bodyMedium: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
-            bodySmall: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
-          ),
-        ),
       ),
     );
   }

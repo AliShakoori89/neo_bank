@@ -14,7 +14,7 @@ class NeoBankLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
       child: Row(
@@ -30,7 +30,13 @@ class NeoBankLogo extends StatelessWidget {
           SizedBox(
             width:  logoWidth ?? 31.66,
             height:  logoHeight ?? 37.99,
-            child: SvgPicture.asset('assets/svg/Union.svg', color: logoColor,),
+            child: SvgPicture.asset(
+              'assets/svg/Union.svg',
+              colorFilter: ColorFilter.mode(
+                logoColor,
+                BlendMode.srcIn,
+              ),
+            )
           )
 
         ],
