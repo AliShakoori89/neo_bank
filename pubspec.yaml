@@ -42,6 +42,7 @@ flutter:
     - assets/image/Bank_Card/
     - assets/svg/
     - assets/icon/navigation_bar_icon/
+    - assets/svg/fund_transfer_page/
 
   fonts:
     - family: IRANSans

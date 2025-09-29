@@ -73,6 +73,13 @@ class _MyAppState extends State<MyApp> {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+        theme: ThemeData(
+          useMaterial3: true,
+          textTheme: ThemeData.light().textTheme.apply(
+            fontFamily: 'IRANSans',
+          ),
+          datePickerTheme: DatePickerThemeData(),
+        ),
       ),
     );
   }

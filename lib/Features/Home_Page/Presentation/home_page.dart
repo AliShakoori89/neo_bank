@@ -1,14 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../Core/Const/app_colors.dart';
 import '../../../Core/Const/app_space.dart';
+import '../../../Core/Utils/neo_bank_logo.dart';
 import 'Component/add_card_button.dart';
 import 'Component/card_balance.dart';
 import 'Component/card_header.dart';
 import 'Component/card_number_and_date.dart';
 import 'Component/custom_Indicator.dart';
-import 'Component/custom_header.dart';
 import 'Component/icon_row_widget.dart';
 import 'Component/transactions_list.dart';
 
@@ -55,7 +56,14 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              buildHeader(),
+              customHeader(NeoBankLogo(
+                logoColor: AppColors.splashGradiantColor1,
+                width: 88,
+                height: 24,
+                logoHeight: 20,
+                logoWidth: 62,
+                space: 4,
+              ),),
               _buildCardSlider(context),
               buildIconRow(),
               _buildSecondSlider(),

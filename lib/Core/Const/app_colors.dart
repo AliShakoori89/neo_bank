@@ -18,6 +18,8 @@ class AppColors {
   static const Color homePageDividerColor = Color(0xFFE9EAEB);
 
   static const Color navBarIconShadowColor = Color(0xFFCFF9FE);
+  static const Color customHeaderTextColor = Color(0xFF414651);
+  static const Color noImageBackgroundColor = Color(0xFFF5F5F5);
 
   static const Color appWhite = Color(0xffFFFFFF);
 
