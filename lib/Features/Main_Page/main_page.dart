@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../Card_Page/Presentation/card_page.dart';
 import '../Home_Page/Presentation/home_page.dart';
 import '../Menu_Page/menu_page.dart';
 import '../Profile_Page/Presentation/profile_page.dart';

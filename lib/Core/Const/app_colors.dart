@@ -17,6 +17,8 @@ class AppColors {
   static const Color homePageCardTitleColor = Color(0xFF181D27);
   static const Color homePageDividerColor = Color(0xFFE9EAEB);
 
+  static const Color navBarIconShadowColor = Color(0xFFCFF9FE);
+
   static const Color appWhite = Color(0xffFFFFFF);
 
   static const Color loginBorderColor = Color(0xFFD5D7DA);

@@ -21,14 +21,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(bottom: 5, left: 10, right: 10),
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(25)
-            // topLeft: Radius.circular(25),
-            // topRight: Radius.circular(25)
-          ),
           boxShadow: [
             BoxShadow(
               offset: Offset(20, 20),
@@ -39,57 +33,180 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           ],
         ),
         child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
           elevation: 1,
           currentIndex: widget.currentIndex,
           backgroundColor: AppColors.primaryColor,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.grey[500],
-          unselectedLabelStyle: TextStyle(
-            color: Colors.grey[800],
-            fontSize: 14,
-          ),
           showSelectedLabels: false,
           showUnselectedLabels: false,
+
           onTap: widget.onTap,
           items: [
-            BottomNavigationBarItem(
+            widget.currentIndex == 0
+                ? BottomNavigationBarItem(
+              icon: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.navBarIconShadowColor
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: SvgPicture.asset(
+                    'assets/icon/navigation_bar_icon/home-line.svg',
+                    width: 24,
+                    height: 24,
+                    colorFilter: ColorFilter.mode(
+                      widget.currentIndex == 0
+                          ? AppColors.splashGradiantColor2 // رنگ انتخاب‌شده
+                          : AppColors.loginPageIconColor, // رنگ انتخاب‌نشده
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ),
+              label: '',
+            )
+                : BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icon/navigation_bar_icon/home-line.svg',
                 width: 24,
                 height: 24,
-                color: widget.currentIndex == 0 ? Colors.black : Colors.grey[500],
+                colorFilter: ColorFilter.mode(
+                  widget.currentIndex == 0
+                      ? AppColors.splashGradiantColor2 // رنگ انتخاب‌شده
+                      : AppColors.loginPageIconColor, // رنگ انتخاب‌نشده
+                  BlendMode.srcIn,
+                ),
               ),
               label: '',
             ),
-            BottomNavigationBarItem(
+            widget.currentIndex == 1 ? BottomNavigationBarItem(
+              icon: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.navBarIconShadowColor
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: SvgPicture.asset(
+                    'assets/icon/navigation_bar_icon/switch-vertical-02.svg',
+                    width: 24,
+                    height: 24,
+                    colorFilter: ColorFilter.mode(
+                      widget.currentIndex == 1
+                          ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
+                          : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ),
+              label: '',
+            )
+                : BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icon/navigation_bar_icon/switch-vertical-02.svg',
                 width: 24,
                 height: 24,
-                color: widget.currentIndex == 0 ? Colors.black : Colors.grey[500],
+                colorFilter: ColorFilter.mode(
+                  widget.currentIndex == 1
+                      ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
+                      : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
+                  BlendMode.srcIn,
+                ),
               ),
               label: '',
             ),
-            BottomNavigationBarItem(
+            widget.currentIndex == 2
+                ? BottomNavigationBarItem(
+              icon: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.navBarIconShadowColor
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: SvgPicture.asset(
+                    'assets/icon/navigation_bar_icon/grid-01.svg',
+                    width: 24,
+                    height: 24,
+                    colorFilter: ColorFilter.mode(
+                      widget.currentIndex == 2
+                          ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
+                          : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ),
+              label: '',
+            )
+                : BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icon/navigation_bar_icon/grid-01.svg',
                 width: 24,
                 height: 24,
-                color: widget.currentIndex == 0 ? Colors.black : Colors.grey[500],
+                colorFilter: ColorFilter.mode(
+                  widget.currentIndex == 2
+                      ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
+                      : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
+                  BlendMode.srcIn,
+                ),
               ),
               label: '',
             ),
-            BottomNavigationBarItem(
+            widget.currentIndex == 3
+                ? BottomNavigationBarItem(
+              icon: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.navBarIconShadowColor
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: SvgPicture.asset(
+                    'assets/icon/navigation_bar_icon/bar-chart-07.svg',
+                    width: 24,
+                    height: 24,
+                    colorFilter: ColorFilter.mode(
+                      widget.currentIndex == 3
+                          ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
+                          : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ),
+              label: '',
+            )
+                : BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icon/navigation_bar_icon/bar-chart-07.svg',
                 width: 24,
                 height: 24,
-                color: widget.currentIndex == 0 ? Colors.black : Colors.grey[500],
+                colorFilter: ColorFilter.mode(
+                  widget.currentIndex == 3
+                      ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
+                      : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
+                  BlendMode.srcIn,
+                ),
               ),
               label: '',
             ),
-            BottomNavigationBarItem(
+            widget.currentIndex == 4
+                ? BottomNavigationBarItem(
+              icon: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.navBarIconShadowColor
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Image.asset('assets/icon/navigation_bar_icon/Avatar.png'),
+                ),
+              ),
+              label: '',
+            )
+                : BottomNavigationBarItem(
               icon: Image.asset('assets/icon/navigation_bar_icon/Avatar.png'),
               label: '',
             ),
