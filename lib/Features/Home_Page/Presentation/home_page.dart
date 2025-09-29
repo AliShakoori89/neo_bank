@@ -1,20 +1,16 @@
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-
 import '../../../Core/Const/app_colors.dart';
 import '../../../Core/Const/app_space.dart';
-import '../../../Core/Utils/custom_card.dart';
-import '../../../Core/Utils/neo_bank_logo.dart';
-import '../../Menu_Page/Presentation/Component/slider_image.dart';
 import 'Component/add_card_button.dart';
+import 'Component/card_balance.dart';
+import 'Component/card_header.dart';
+import 'Component/card_number_and_date.dart';
 import 'Component/custom_Indicator.dart';
 import 'Component/custom_header.dart';
-import 'Component/custom_icon.dart';
 import 'Component/icon_row_widget.dart';
+import 'Component/transactions_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -63,7 +59,8 @@ class _HomePageState extends State<HomePage> {
               _buildCardSlider(context),
               buildIconRow(),
               _buildSecondSlider(),
-              _buildTransactionsList(),
+              //لست تراکنش ها
+              buildTransactionsList(),
             ],
           ),
         ),
@@ -137,11 +134,11 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.fromLTRB(10, 0, 20, 20),
         child: Column(
           children: [
-            _buildCardHeader(),
+            buildCardHeader(),
             const Spacer(),
-            _buildCardNumberAndDate(card),
+            buildCardNumberAndDate(card),
             AppSpace.heightSpace_12,
-            _buildCardBalance(),
+            buildCardBalance(),
           ],
         ),
       ),
@@ -231,137 +228,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  /// 🔹 لیست تراکنش‌ها
-  Widget _buildTransactionsList() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppSpace.heightSpace_16,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('آخرین تراکنش‌ها',
-                  style: TextStyle(
-                      color: AppColors.homePageTitleColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600)),
-              Icon(Icons.arrow_forward_ios,
-                  color: AppColors.homePageTitleColor, size: 20),
-            ],
-          ),
-          AppSpace.heightSpace_24,
-          ListView(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            children: const [
-              CustomCard(
-                deposit: true,
-                title: 'واریز',
-                subtitle: 'خلق ثروت سرزمین پارسه',
-                date: 'پنجشنبه ۱۴۰۴/۰۴/۱۲',
-                mount: '۲۳۲۴۵۳۰۰۰',
-              ),
-              AppSpace.heightSpace_16,
-              CustomCard(
-                deposit: true,
-                title: 'تنظیمات امنیتی',
-                subtitle: 'تغییر و دریافت رمز مجدد کارت',
-                date: 'پنجشنبه ۱۴۰۴/۰۴/۱۲',
-                mount: '۲۳۲۴۵۳۰۰۰',
-              ),
-              AppSpace.heightSpace_16,
-              CustomCard(
-                deposit: false,
-                title: 'تعویض کارت',
-                subtitle: 'می توانید کارت جدید سفارش دهید',
-                date: 'پنجشنبه ۱۴۰۴/۰۴/۱۲',
-                mount: '۲۳۲۴۵۳۰۰۰',
-              ),
-              AppSpace.heightSpace_16,
-              CustomCard(
-                deposit: false,
-                title: 'غیر فعال کردن',
-                subtitle: 'مسدودسازی کارت در صورت مفقودی و ...',
-                circleColor: Colors.red,
-                textColor: Colors.red,
-                date: 'پنجشنبه ۱۴۰۴/۰۴/۱۲',
-                mount: '۲۳۲۴۵۳۰۰۰',
-              ),
-              AppSpace.heightSpace_90,
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 
-  /// 🔹 بخش‌های داخلی کارت
-  Widget _buildCardHeader() => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
-    child: Row(
-      children: [
-        SizedBox(
-          width: 94,
-          height: 24,
-          child: SvgPicture.asset(
-            'assets/svg/Union.svg',
-            colorFilter:
-            const ColorFilter.mode(AppColors.appWhite, BlendMode.srcIn),
-          ),
-        ),
-        const Spacer(),
-        Image.asset('assets/logo/Logomark.png',
-            width: 27, height: 25, color: AppColors.appWhite),
-      ],
-    ),
-  );
-
-  Widget _buildCardNumberAndDate(Map<String, String> card) => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 5),
-    child: Row(
-      children: [
-        Text(
-          (card['card_number'] ?? '').replaceAllMapped(
-            RegExp(r".{1,4}"),
-                (match) => "${match.group(0)} ".toPersianDigit(),
-          ),
-          style: const TextStyle(color: AppColors.appWhite, fontSize: 14),
-        ),
-        const Spacer(),
-        Text('${card['card_expire_date']}'.toPersianDigit(),
-            style: const TextStyle(color: AppColors.appWhite, fontSize: 14)),
-      ],
-    ),
-  );
-
-  Widget _buildCardBalance() => Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(71),
-      gradient: LinearGradient(colors: [
-        const Color.fromRGBO(250, 250, 250, 0.03).withAlpha(0),
-        const Color.fromRGBO(250, 250, 250, 0.15).withAlpha(50),
-      ]),
-    ),
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: Row(
-      children: [
-        const Icon(Icons.remove_red_eye_outlined,
-            color: AppColors.appWhite, size: 20),
-        AppSpace.widthSpace_12,
-        Text('1152230450'.seRagham().toPersianDigit(),
-            style: const TextStyle(
-                color: AppColors.appWhite,
-                fontSize: 18,
-                fontWeight: FontWeight.w600)),
-        AppSpace.widthSpace_5,
-        const Text('ریال',
-            style: TextStyle(
-                color: AppColors.appWhite,
-                fontSize: 18,
-                fontWeight: FontWeight.w600)),
-      ],
-    ),
-  );
 }
