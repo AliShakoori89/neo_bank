@@ -19,10 +19,10 @@ class _FundTransferPageState extends State<FundTransferPage> with SingleTickerPr
   late TabController tabController;
 
   final List<Map<String, String>> imagePath = [
-    {'icon_path': 'assets/svg/fund_transfer_page/credit-card-02.svg', 'icon_title': 'کارت'},
+    {'icon_path': 'assets/svg/fund_transfer_page/credit-card.svg', 'icon_title': 'کارت'},
     {'icon_path': 'assets/svg/fund_transfer_page/bank.svg', 'icon_title': 'حساب'},
     {'icon_path': 'assets/svg/fund_transfer_page/Layer_1.svg', 'icon_title': 'شبا'},
-    {'icon_path': 'assets/svg/fund_transfer_page/gift-01.svg', 'icon_title': 'هدیه'},
+    {'icon_path': 'assets/svg/fund_transfer_page/gift.svg', 'icon_title': 'هدیه'},
   ];
 
   @override
