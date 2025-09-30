@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Report_Page/Presentation/account_report_page.dart';
 import '../Bank_Services_Page/bank_services_page.dart';
 import '../Fund_Transfer/Presentation/fund_transfer_page.dart';
 import '../Home_Page/Presentation/home_page.dart';
@@ -25,7 +26,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     FundTransferPage(),
     BankServicesPage(),
-    Container(),
+    AccountReportPage(),
     ProfilePage(),
   ];
 

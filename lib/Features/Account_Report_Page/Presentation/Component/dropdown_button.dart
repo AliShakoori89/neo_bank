@@ -1,0 +1,109 @@
+import 'dart:collection';
+
+import 'package:flutter/material.dart';
+
+import '../../../../Core/Const/app_colors.dart';
+
+const List<String> list = <String>[
+  '500570005633843001',
+  '500570005633843002',
+  '500570005633843003',
+  '500570005633843004'
+];
+
+class DropdownMenuExample extends StatefulWidget {
+  const DropdownMenuExample({super.key});
+
+  @override
+  State<DropdownMenuExample> createState() => _DropdownMenuExampleState();
+}
+
+typedef MenuEntry = DropdownMenuEntry<String>;
+
+class _DropdownMenuExampleState extends State<DropdownMenuExample> {
+  String dropdownValue = list.first;
+
+  // تابع تبدیل اعداد انگلیسی به فارسی
+  String toPersianNumber(String input) {
+    const english = ['0','1','2','3','4','5','6','7','8','9'];
+    const persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+
+    String output = input;
+    for (int i = 0; i < english.length; i++) {
+      output = output.replaceAll(english[i], persian[i]);
+    }
+    return output;
+  }
+
+  late final List<MenuEntry> menuEntries = UnmodifiableListView<MenuEntry>(
+    list.map<MenuEntry>((String name) => MenuEntry(
+      value: name,
+      label: toPersianNumber(name), // اعداد فارسی اینجا قرار می‌گیرن
+    )),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width - 60,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: Color.fromRGBO(10, 13, 18, 0.18), // inner border مشابه CSS
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(10, 13, 18, 0.05),
+            offset: Offset(0, -2),
+            blurRadius: 0,
+            spreadRadius: 0,
+          ),
+          BoxShadow(
+            color: Color.fromRGBO(10, 13, 18, 0.05),
+            offset: Offset(0, 1),
+            blurRadius: 2,
+          ),
+          BoxShadow(
+            color: Color.fromRGBO(10, 13, 18, 0.05),
+            offset: Offset(0, 1),
+            blurRadius: 2,
+          ),
+        ],
+      ),
+      child: DropdownMenu<String>(
+        width: MediaQuery.of(context).size.width - 60,
+        textAlign: TextAlign.center,
+        trailingIcon: Icon(
+          Icons.keyboard_arrow_down_sharp,
+          color: AppColors.loginPageIconColor,
+          size: 20,
+        ),
+        selectedTrailingIcon: Icon(
+          Icons.keyboard_arrow_up_sharp,
+          color: AppColors.loginPageIconColor,
+          size: 20,
+        ),
+        textStyle: TextStyle(
+          color: AppColors.customHeaderTextColor,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(
+              color: AppColors.loginBorderColor,
+            ),
+          ),
+        ),
+        initialSelection: dropdownValue,
+        onSelected: (String? value) {
+          setState(() {
+            dropdownValue = value!;
+          });
+        },
+        dropdownMenuEntries: menuEntries,
+      ),
+    );
+  }
+}

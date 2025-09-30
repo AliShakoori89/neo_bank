@@ -5,8 +5,6 @@ import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer/Presentation/component/build_cart_tab_body.dart';
 
-import '../../Home_Page/Presentation/Component/custom_icon.dart';
-
 class FundTransferPage extends StatefulWidget {
   const FundTransferPage({super.key});
 
@@ -60,51 +58,62 @@ class _FundTransferPageState extends State<FundTransferPage> with SingleTickerPr
           // --- TabBar ---
 
           Container(
+            decoration: BoxDecoration(
+              color: AppColors.appWhite,
+              border: Border(
+                top: BorderSide(
+                  color: AppColors.homePageDividerColor
+                )
+              )
+            ),
             width: double.infinity,
-            margin: EdgeInsets.all(20),
-            child: TabBar(
-              controller: tabController,
-              indicator: BoxDecoration(
-                color: AppColors.navBarIconShadowColor,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              indicatorSize: TabBarIndicatorSize.label,
-              indicatorPadding: const EdgeInsets.only(bottom: 40),
-              labelColor: Colors.white,
-              unselectedLabelColor: AppColors.loginPageIconColor,
-              tabs: List.generate(4, (index) {
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: TabBar(
+                controller: tabController,
+                indicator: BoxDecoration(
+                  color: AppColors.navBarIconShadowColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorPadding: const EdgeInsets.only(bottom: 40),
+                labelColor: Colors.white,
+                unselectedLabelColor: AppColors.loginPageIconColor,
+                dividerColor: Colors.white,
+                tabs: List.generate(4, (index) {
 
-                bool isSelected = tabController.index == index;
+                  bool isSelected = tabController.index == index;
 
-                return ClipRect(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(15),
-                        child: SvgPicture.asset(
-                          imagePath[index]['icon_path']!,
-                          width: 20,
-                          height: 20,
-                          colorFilter: ColorFilter.mode(
-                            isSelected ? AppColors.splashGradiantColor2 : AppColors.loginPageIconColor,
-                            BlendMode.srcIn,
+                  return ClipRect(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(15),
+                          child: SvgPicture.asset(
+                            imagePath[index]['icon_path']!,
+                            width: 20,
+                            height: 20,
+                            colorFilter: ColorFilter.mode(
+                              isSelected ? AppColors.splashGradiantColor2 : AppColors.loginPageIconColor,
+                              BlendMode.srcIn,
+                            ),
                           ),
                         ),
-                      ),
-                      AppSpace.heightSpace_24,
-                      Text(
-                        imagePath[index]['icon_title']!,
-                        style: TextStyle(
-                          color: isSelected ? AppColors.splashGradiantColor2 : AppColors.loginPageIconColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600
+                        AppSpace.heightSpace_24,
+                        Text(
+                          imagePath[index]['icon_title']!,
+                          style: TextStyle(
+                            color: isSelected ? AppColors.splashGradiantColor2 : AppColors.loginPageIconColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              }),
+                      ],
+                    ),
+                  );
+                }),
+              ),
             ),
           ),
 

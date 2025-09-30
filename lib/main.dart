@@ -74,6 +74,7 @@ class _MyAppState extends State<MyApp> {
           GlobalCupertinoLocalizations.delegate,
         ],
         theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.customContainerBackGroundColor,
           useMaterial3: true,
           textTheme: ThemeData.light().textTheme.apply(
             fontFamily: 'IRANSans',

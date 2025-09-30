@@ -21,7 +21,8 @@ class AppColors {
   static const Color customHeaderTextColor = Color(0xFF414651);
   static const Color noImageBackgroundColor = Color(0xFFF5F5F5);
 
-  static const Color appWhite = Color(0xffFFFFFF);
+  static const Color appWhite = Color(0xFFFFFFFF);
+  static const Color customContainerBackGroundColor = Color(0xffFAFAFA);
 
   static const Color loginBorderColor = Color(0xFFD5D7DA);
 

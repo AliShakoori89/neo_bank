@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/Component/forget_username.dart';
 import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Splash_Screen_Page/Presentation/splash_screen.dart';
-import '../../Features/Card_Page/Presentation/Component/add_card_page.dart';
 import '../../Features/Login_Page/Presentation/Component/cant_login.dart';
 import '../../Features/Main_Page/main_page.dart';
 
@@ -35,12 +34,6 @@ final GoRouter router = GoRouter(
       path: '/login_page',
       builder: (context, state) {
         return LoginPage();
-      },
-    ),
-    GoRoute(
-      path: '/add_card_page',
-      builder: (context, state) {
-        return AddCardPage();
       },
     ),
     GoRoute(

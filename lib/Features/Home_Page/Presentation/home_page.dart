@@ -188,7 +188,8 @@ class _HomePageState extends State<HomePage> {
     ))
         .toList();
 
-    return SizedBox(
+    return Container(
+      color: AppColors.appWhite,
       height: 120,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

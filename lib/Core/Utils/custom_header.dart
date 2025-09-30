@@ -9,6 +9,7 @@ Widget customHeader(Widget widget) {
     width: double.infinity,
     padding: const EdgeInsets.only(right: 20, left: 20, bottom: 20),
     decoration: BoxDecoration(
+      color: AppColors.appWhite,
       border: Border(bottom: BorderSide(
         color: AppColors.homePageDividerColor
       ))
