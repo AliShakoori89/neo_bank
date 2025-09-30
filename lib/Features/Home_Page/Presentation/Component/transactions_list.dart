@@ -9,18 +9,23 @@ Widget buildTransactionsList() {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppSpace.heightSpace_16,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('آخرین تراکنش‌ها',
-                style: TextStyle(
-                    color: AppColors.homePageTitleColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600)),
-            Icon(Icons.arrow_forward_ios,
-                color: AppColors.homePageTitleColor, size: 20),
-          ],
+        Padding(
+          padding: EdgeInsets.only(
+            left: 12,
+            right: 25
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('آخرین تراکنش‌ها',
+                  style: TextStyle(
+                      color: AppColors.homePageTitleColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600)),
+              Icon(Icons.arrow_forward_ios,
+                  color: AppColors.homePageTitleColor, size: 20),
+            ],
+          ),
         ),
         AppSpace.heightSpace_24,
         ListView(

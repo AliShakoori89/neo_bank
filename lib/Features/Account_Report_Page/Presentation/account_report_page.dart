@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
+import 'Component/build_balance_and_transaction_body.dart';
 import 'Component/dropdown_button.dart';
 
 class AccountReportPage extends StatefulWidget {
@@ -35,21 +36,21 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // --- Header ---
-            customHeader(Text(
-              'انتقال وجه',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.customHeaderTextColor),
-            )),
+      body: Column(
+        children: [
+          // --- Header ---
+          customHeader(Text(
+            'انتقال وجه',
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.customHeaderTextColor),
+          )),
 
-            // --- Body ---
-            Container(
-              margin: EdgeInsets.all(30),
+          // --- Body ---
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(top: 30),
               child: Container(
                 margin: EdgeInsets.zero,
                 child: Column(
@@ -60,11 +61,11 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
                       width: double.infinity,
                       height: 60,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: AppColors.customContainerBackGroundColor,
-                        border: BoxBorder.all(
-                          color: AppColors.homePageDividerColor
-                        )
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.customContainerBackGroundColor,
+                          border: BoxBorder.all(
+                              color: AppColors.homePageDividerColor
+                          )
                       ),
                       child: TabBar(
                         controller: tabController,
@@ -77,7 +78,7 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
                         indicatorColor: Colors.white,
                         overlayColor: WidgetStateProperty.all<Color>(Colors.transparent),
                         indicator: BoxDecoration(
-                          color: AppColors.navBarIconShadowColor,
+                          color: AppColors.appWhite,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         tabs: List.generate(2, (index) {
@@ -89,16 +90,30 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
                             alignment: Alignment.center,
                             child: Text(label[index]),
                           );
-                        }),
-                      )
+                        },
+                        ),
+                      ),
+                    ),
+
+                    // --- TabBarView (BODY) ---
+
+                    Flexible(
+                      fit: FlexFit.loose,
+                      child: TabBarView(
+                        controller: tabController,
+                        children: [
+                          buildBalanceAndTransactionBody(),
+                          Center(child: Text("محتوای تب ۲")),
+                        ],
+                      ),
                     )
                   ],
                 ),
               ),
-            )
-          ],
-        ),
-      ),
+            ),
+          )
+        ],
+      )
     );
   }
 }
