@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-class CustomHeader extends StatelessWidget {
-  const CustomHeader({super.key, required this.title, required this.iconData});
+class LoginHeader extends StatelessWidget {
+  const LoginHeader({super.key, required this.title, required this.iconData});
 
   final String title;
   final IconButton iconData;

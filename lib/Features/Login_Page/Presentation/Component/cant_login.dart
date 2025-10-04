@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
-import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/Component/custom_header.dart';
+import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/Component/login_header.dart';
 
 import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Const/stack_circle.dart';
@@ -38,7 +38,7 @@ class CantLogin extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppSpace.heightSpace_32,
-              CustomHeader(
+              LoginHeader(
                   title: 'نمی توانید وارد شوید؟',
                   iconData: IconButton(
                     icon: Icon(Icons.arrow_back),

@@ -39,7 +39,7 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
       body: Column(
         children: [
           // --- Header ---
-          customHeader(Text(
+          customHeader(context, Text(
             'انتقال وجه',
             style: TextStyle(
                 fontSize: 16,
@@ -102,7 +102,7 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
                       child: TabBarView(
                         controller: tabController,
                         children: [
-                          buildBalanceAndTransactionBody(),
+                          buildBalanceAndTransactionBody(context),
                           Center(child: Text("محتوای تب ۲")),
                         ],
                       ),

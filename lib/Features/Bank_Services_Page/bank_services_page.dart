@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/stack_circle.dart';
 import 'package:neo_bank_mehr_iran/Features/Bank_Services_Page/Presentation/Component/custom_icon_widget.dart';
-
 import '../../Core/Const/app_colors.dart';
 import '../../Core/Const/app_space.dart';
 import '../../Core/Utils/custom_header.dart';
-import 'Presentation/Component/inward_curve_clipper.dart';
-import 'Presentation/Component/slider_image.dart';
 
 class BankServicesPage extends StatelessWidget {
   const BankServicesPage({super.key});
@@ -24,7 +19,7 @@ class BankServicesPage extends StatelessWidget {
           
               // --- Header ---
           
-              customHeader(Text('انتقال وجه',
+              customHeader(context, Text('انتقال وجه',
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

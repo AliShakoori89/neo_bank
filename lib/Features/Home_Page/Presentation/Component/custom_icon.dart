@@ -16,11 +16,15 @@ class CustomIcon extends StatelessWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            Container(
+            SizedBox(
               height: 56,
               width: 56,
               child: SvgPicture.asset('assets/svg/Background_color.svg',
                 fit: BoxFit.fill,
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.surfaceTint,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
             Container(
@@ -42,6 +46,7 @@ class CustomIcon extends StatelessWidget {
         Text('شارژ و اینترنت',
           style: TextStyle(
               fontSize: 12,
+              color: Theme.of(context).colorScheme.surfaceBright,
               fontWeight: FontWeight.w600
           ),
         )

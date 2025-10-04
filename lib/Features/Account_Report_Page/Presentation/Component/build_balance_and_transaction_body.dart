@@ -6,7 +6,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import '../../../Home_Page/Presentation/Component/transactions_list.dart';
 
 
-Widget buildBalanceAndTransactionBody(){
+Widget buildBalanceAndTransactionBody(BuildContext context){
   return SingleChildScrollView(
     child: Column(
       children: [
@@ -164,7 +164,7 @@ Widget buildBalanceAndTransactionBody(){
           ),
         ),
         AppSpace.heightSpace_24,
-        buildTransactionsList(),
+        buildTransactionsList(context),
       ],
     ),
   );

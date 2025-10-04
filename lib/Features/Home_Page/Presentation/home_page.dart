@@ -1,10 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../Core/Const/app_colors.dart';
 import '../../../Core/Const/app_space.dart';
+import '../../../Core/Theme/app_them.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
+import '../../Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'Component/add_card_button.dart';
 import 'Component/card_balance.dart';
 import 'Component/card_header.dart';
@@ -53,10 +56,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
         body: SingleChildScrollView(
           child: Column(
             children: [
-              customHeader(NeoBankLogo(
+              customHeader(context, NeoBankLogo(
                 logoColor: AppColors.splashGradiantColor1,
                 width: 88,
                 height: 24,
@@ -68,7 +72,7 @@ class _HomePageState extends State<HomePage> {
               buildIconRow(),
               _buildSecondSlider(),
               //لست تراکنش ها
-              buildTransactionsList(),
+              buildTransactionsList(context),
             ],
           ),
         ),
@@ -156,41 +160,48 @@ class _HomePageState extends State<HomePage> {
   /// 🔹 اسلایدر دوم
   Widget _buildSecondSlider() {
     final cardItems2 = sampleCard2
-        .map((card) => Container(
-      decoration: BoxDecoration(
-        border: Border.all(width: 2, color: AppColors.appWhite),
-        borderRadius: BorderRadius.circular(20),
-        color: AppColors.splashGradiantColor1,
-      ),
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        .map((card) => BlocBuilder<ThemeBloc, ThemeData>(
+        builder: (context, theme) {
+            return Container(
+              margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+            border: Border.all(
+                width: theme == AppTheme.lightTheme ? 2 : 0,
+                color: AppColors.appWhite),
+            borderRadius: BorderRadius.circular(20),
+            color: AppColors.splashGradiantColor1,
+                  ),
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(card['card_title'] ?? '',
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.appWhite,
-                      fontWeight: FontWeight.w600)),
-              Text('${card['card_value']}'.seRagham().toPersianDigit(),
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: AppColors.appWhite,
-                      fontWeight: FontWeight.w700)),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(card['card_title'] ?? '',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: AppColors.appWhite,
+                          fontWeight: FontWeight.w600)),
+                  Text('${card['card_value']}'.seRagham().toPersianDigit(),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: AppColors.appWhite,
+                          fontWeight: FontWeight.w700)),
+                ],
+              ),
+              Image.asset(card['card_image'] ?? '',
+                  width: 78, height: 54),
             ],
-          ),
-          Image.asset(card['card_image'] ?? '',
-              width: 78, height: 54),
-        ],
-      ),
-    ))
+                  ),
+                );
+          }
+        ))
         .toList();
 
     return Container(
-      color: AppColors.appWhite,
-      height: 120,
+      color: Theme.of(context).colorScheme.surfaceContainer,
+      height: 140,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Stack(
@@ -210,7 +221,7 @@ class _HomePageState extends State<HomePage> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.only(
-                  bottom: 10
+                  bottom: 20
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

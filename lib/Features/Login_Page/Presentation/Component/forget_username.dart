@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Const/app_space.dart';
 import '../../../../Core/Const/stack_circle.dart';
-import 'custom_header.dart';
+import 'login_header.dart';
 
 class ForgetUsername extends StatelessWidget {
   const ForgetUsername({super.key});
@@ -47,7 +47,7 @@ class ForgetUsername extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppSpace.heightSpace_32,
-            CustomHeader(
+            LoginHeader(
               title: 'فراموشی رمز کاربری؟',
               iconData: IconButton(
                 icon: Icon(Icons.arrow_back),

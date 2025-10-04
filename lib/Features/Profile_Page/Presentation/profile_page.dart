@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/custom_profile_card.dart';
-import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/name_and_phone.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/profile_page_custom_card.dart';
+import '../../../Core/Const/app_colors.dart';
+import '../../../Core/Utils/custom_header.dart';
+import 'Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
+import 'Component/user_image.dart';
 
-import '../../../Core/Const/stack_circle.dart';
-
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+
+  bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -14,190 +26,250 @@ class ProfilePage extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            Stack(
-              children: [
-                Container(
-                  height: 230,
-                  width: double.infinity,
-                  color: Theme.of(context).primaryColor,
-                  child: Padding(
+            // --- Header ---
+            customHeader(context, Text(
+              'پروفایل کاربری',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.customHeaderTextColor),
+            )),
+
+            // --- Body ---
+            Container(
+              margin: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      UserImage(),
+                      AppSpace.widthSpace_12,
+                      NameAndPhone()
+                    ],
+                  ),
+                  AppSpace.heightSpace_24,
+                  Container(
+                    width: double.infinity,
                     padding: EdgeInsets.only(
-                      right: 15,
-                      top: 20,
-                      left: 15
+                        top: 8,
+                        bottom: 8,
+                        left: 16,
+                        right: 16
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: AppColors.appWhite
                     ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(Icons.qr_code_scanner,
-                              color: Colors.black,
-                            ),
-                            Text('پروفایل',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14
-                            ),),
-                            Row(
-                              children: [
-                                Icon(Icons.share,
-                                  color: Colors.black,),
-                                AppSpace.widthSpace_12,
-                                Icon(Icons.help,
-                                  color: Colors.black,),
-                              ],
-                            )
-                          ],
-                        ),
-                        AppSpace.heightSpace_42,
-                        Container(
-                          width: 70,
-                          height: 70,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage('assets/image/user.png'),
-                              fit: BoxFit.fill
-                            )
+                        ProfilePageCustomRow(
+                          iconPath: 'assets/svg/user-03.svg',
+                          title: 'نام کاربری',
+                          value: 'mehrdadasd',
+                          widget: Icon(Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: AppColors.loginPageIconColor,
                           ),
                         ),
-                        AppSpace.heightSpace_12,
-                        Text('علی شکوری',
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),),
-                        AppSpace.heightSpace_12,
-                        Text('09381083275'.toPersianDigit(),
-                          style: TextStyle(
-                            color: Colors.black,
-                          ),),
+                        AppSpace.heightSpace_8,
+                        Divider(
+                          height: 1,
+                          color: AppColors.homePageDividerColor,
+                        ),
+                        AppSpace.heightSpace_8,
+                        ProfilePageCustomRow(
+                          iconPath: 'assets/svg/bank_services_page/passcode.svg',
+                          title: 'رمز همراه بانک',
+                          value: '',
+                          widget: Icon(Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: AppColors.loginPageIconColor,
+                          ),
+                        ),
+                        AppSpace.heightSpace_8,
+                        Divider(
+                          height: 1,
+                          color: AppColors.homePageDividerColor,
+                        ),
+                        AppSpace.heightSpace_8,
+                        ProfilePageCustomRow(
+                          iconPath: 'assets/svg/fingerprint-03.svg',
+                          title: 'ورود بیومتریک',
+                          value: '',
+                          widget: SizedBox(
+
+                            child: Transform.scale(
+                              scale: 0.8,
+                              child: RotatedBox(
+                                quarterTurns: 90,
+                                child: Switch(
+                                  value: isSwitched,
+                                  padding: EdgeInsets.all(
+                                    2
+                                  ),
+                                  activeColor: Colors.white, // رنگ دایره وقتی روشن است
+                                  activeTrackColor: AppColors.splashGradiantColor1, // رنگ پس‌زمینه وقتی روشن است
+                                  inactiveThumbColor: Colors.white, // رنگ دایره وقتی خاموش است
+                                  inactiveTrackColor: Colors.grey, // رنگ پس‌زمینه وقتی خاموش است
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isSwitched = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          )
+                        ),
                       ],
                     ),
                   ),
-                ),
-                StackCircle(
-                    topPosition: -50,
-                    rightPosition: -150,
-                    height: 300,
-                    width: 300
-                ),
-                StackCircle(
-                    topPosition: -50,
-                    leftPosition: -50,
-                    height: 100,
-                    width: 100
-                ),
-                StackCircle(
-                    topPosition: 100,
-                    leftPosition: -50,
-                    height: 200,
-                    width: 200
-                ),
-              ],
-            ),
-            Expanded(
-              child: Container(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    left: 10,
-                    right: 10
-                  ),
-                  child: ListView(
-                    children: [
-                      CustomProfileCard(
-                          iconData: Icons.person,
-                          title: 'حساب کاربری',
-                          subTitle: 'اطلاعات بانکی و شخصی'),
-                      AppSpace.heightSpace_8,
-                      CustomProfileCard(
-                          iconData: Icons.security,
-                          title: 'امنیت و حریم خصوصی',
-                          subTitle: 'رمز عبور و تراکنش، اثر انگشت و ...'),
-                      AppSpace.heightSpace_8,
-                      CustomProfileCard(
-                          iconData: Icons.notifications_none,
-                          title: 'امنیت و حریم خصوصی',
-                          subTitle: 'رمز عبور و تراکنش، اثر انگشت و ...'),
-                      AppSpace.heightSpace_8,
-                      CustomProfileCard(
-                          iconData: Icons.theater_comedy_outlined,
-                          title: 'نمایش',
-                          subTitle: 'حالت روز و شب'),
-                      AppSpace.heightSpace_8,
-                      CustomProfileCard(
-                          iconData: Icons.browser_updated,
-                          title: 'بروز رسانی',
-                          subTitle: 'بررسی نسخه برنامه'),
-                      AppSpace.heightSpace_16,
-                      Text('عمومی',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      AppSpace.heightSpace_16,
-                      CustomProfileCard(
-                          iconData: Icons.question_mark,
-                          title: 'پشتیبانی',
-                          subTitle: 'گفتگو، تماس و سوالات متداول'),
-                      AppSpace.heightSpace_8,
-                      CustomProfileCard(
-                          iconData: Icons.insert_invitation,
-                          title: 'دعوت از دوستان',
-                          subTitle: 'هدیه نقدی برای شما'),
-                      AppSpace.heightSpace_8,
-                      CustomProfileCard(
-                          iconData: Icons.comment_bank_outlined,
-                          title: 'ثبت ایده ها و نظرات',
-                          subTitle: 'رشد و بهبود کیو بانک در کنار شما'),
-                      AppSpace.heightSpace_8,
-                      CustomProfileCard(
-                          iconData: Icons.browser_updated,
-                          title: 'کیوبانک',
-                          subTitle: 'قوانین و شرایط، درباره ما'),
-                      AppSpace.heightSpace_64,
-                      Center(
-                        child: Text('Version 3.5.1',
-                          style: Theme.of(context).textTheme.bodyMedium,),
-                      ),
-                      AppSpace.heightSpace_12,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset('assets/Logo/instagram.png',
-                            fit: BoxFit.fill,
-                            width: 20,
-                            height: 20,
+                  AppSpace.heightSpace_24,
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.only(
+                        top: 8,
+                        bottom: 8,
+                        left: 16,
+                        right: 16
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: AppColors.appWhite
+                    ),
+                    child: Column(
+                      children: [
+                        ProfilePageCustomRow(
+                          iconPath: 'assets/svg/settings-02.svg',
+                          title: 'تنظیمات',
+                          value: '',
+                          widget: Icon(Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: AppColors.loginPageIconColor,
                           ),
-                          AppSpace.widthSpace_8,
-                          Image.asset('assets/Logo/twitter-alt.png',
-                            fit: BoxFit.fill,
-                            width: 20,
-                            height: 20,),
-                          AppSpace.widthSpace_8,
-                          Image.asset('assets/Logo/telegram.png',
-                            fit: BoxFit.fill,
-                            width: 20,
-                            height: 20,),
-                          AppSpace.widthSpace_8,
-                          Image.asset('assets/Logo/linkedin.png',
-                            fit: BoxFit.fill,
-                            width: 20,
-                            height: 20,),
-                        ],
+                        ),
+                        AppSpace.heightSpace_8,
+                        Divider(
+                          height: 1,
+                          color: AppColors.homePageDividerColor,
+                        ),
+                        AppSpace.heightSpace_8,
+                        ProfilePageCustomRow(
+                          iconPath: 'assets/svg/arrow-up.svg',
+                          title: 'درباره برنامه',
+                          value: '',
+                          widget: Icon(Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: AppColors.loginPageIconColor,
+                          ),
+                        ),
+                        AppSpace.heightSpace_8,
+                        Divider(
+                          height: 1,
+                          color: AppColors.homePageDividerColor,
+                        ),
+                        AppSpace.heightSpace_8,
+                        ProfilePageCustomRow(
+                          iconPath: 'assets/svg/info-circle.svg',
+                          title: 'راهنما',
+                          value: '',
+                          widget: Icon(Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: AppColors.loginPageIconColor,
+                          ),
+                        ),
+                        AppSpace.heightSpace_8,
+                        Divider(
+                          height: 1,
+                          color: AppColors.homePageDividerColor,
+                        ),
+                        AppSpace.heightSpace_8,
+                        InkWell(
+                          child: ProfilePageCustomRow(
+                            iconPath: 'assets/svg/theme.svg',
+                            title: 'زمینه',
+                            value: '',
+                            widget: Icon(Icons.arrow_forward_ios_outlined,
+                              size: 20,
+                              color: AppColors.loginPageIconColor,
+                            ),
+                          ),
+                          onTap: (){
+                            showAlertDialog(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsGeometry.only(
+                left: 14,
+                right: 14,
+                top: 10,
+                bottom: 10
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  // کاری که باید انجام بشه
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.appWhite,        // رنگ پس‌زمینه
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8), // گوشه‌های گرد
+                    side: BorderSide(
+                      color: AppColors.lowRedColor,
+                      width: 1
+                    )
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/svg/log-out-02.svg',
+                      fit: BoxFit.fill,
+                      width: 16,
+                      height: 16,
+                    ),
+                    Text(
+                      "خروج از حساب",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.redColor,
+                        fontWeight: FontWeight.w600,
                       ),
-                      AppSpace.heightSpace_200,
-                    ]
-                  )
+                    ),
+                  ],
                 ),
               ),
-            )
-          ],
-        )
+            )          ],
+        ),
       ),
     );
   }
+}
+
+showAlertDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Switch(
+            value: Theme.of(context).brightness == Brightness.dark,
+            activeColor: AppColors.splashGradiantColor1,
+            onChanged: (_) {
+              context.read<ThemeBloc>().add(ThemeEvent.toggle);
+              Navigator.pop(context);
+            },
+          ),
+        ),
+      );
+    },
+  );
 }

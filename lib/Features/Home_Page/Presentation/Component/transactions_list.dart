@@ -3,7 +3,7 @@ import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Const/app_space.dart';
 import '../../../../Core/Utils/custom_card.dart';
 
-Widget buildTransactionsList() {
+Widget buildTransactionsList(BuildContext context) {
   return Container(
     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
     child: Column(
@@ -19,11 +19,12 @@ Widget buildTransactionsList() {
             children: [
               Text('آخرین تراکنش‌ها',
                   style: TextStyle(
-                      color: AppColors.homePageTitleColor,
+                      color: Theme.of(context).colorScheme.surfaceContainerHigh,
                       fontSize: 14,
                       fontWeight: FontWeight.w600)),
               Icon(Icons.arrow_forward_ios,
-                  color: AppColors.homePageTitleColor, size: 20),
+                  color: Theme.of(context).colorScheme.surfaceContainerLow,
+                  size: 20),
             ],
           ),
         ),

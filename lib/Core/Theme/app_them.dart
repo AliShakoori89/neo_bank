@@ -1,0 +1,135 @@
+import 'package:flutter/material.dart';
+
+import '../Const/app_colors.dart';
+
+class AppTheme {
+  // 🌞 تم روشن
+  static ThemeData lightTheme = ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.light,
+    fontFamily: 'IRANSans',
+
+    colorScheme: const ColorScheme.light(
+      primary: Color(0xff088AB2), // آبی اصلی بانک
+      secondary: Color(0xff06AED4), // آبی مکمل
+      primaryContainer: Color(0xFFE6E6FA), // پس‌زمینه اصلی صفحه
+      secondaryContainer: Color(0xFFB0E0E6), // پس‌زمینه اصلی صفحه
+      surface: Color(0xFF717680), // هینت تکست ها
+      scrim: Color(0xFFFFFFFF), // اپ لوگو
+      onSurface: Color(0xFF535862), // تکست ها
+      tertiary: Color(0xff088AB2), // رنک کلمه نسخه
+      outline: Colors.white54, //بک گراند تکست فیلدها
+      surfaceDim: Color(0xFFD5D7DA),
+      surfaceTint: Color(0xFFECFDFF),
+      surfaceBright: Color(0xFF414651),
+      surfaceContainer: Color(0xFFFFFFFF),
+      surfaceContainerHigh: Color(0xFF0E7090),
+      surfaceContainerLow: Color(0xFF0E7090),
+      onTertiary: Color(0xFF079455),
+      onPrimary: Color(0xFF535862),
+      onSecondary: Color(0xFF079354),
+      onInverseSurface: Color(0xFF70757F),
+      inverseSurface: Color(0xFFDCFAE6),
+      surfaceContainerHighest: Color(0xFFF3F3F3),
+      onPrimaryFixed: Color(0xFFF8F8F8),
+    ),
+
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: Color(0xFFFFFFFF),
+    ),
+
+    scaffoldBackgroundColor: AppColors.customContainerBackGroundColor,
+
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.white,
+      iconTheme: IconThemeData(color: Color(0xFF414651)),
+      titleTextStyle: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.customHeaderTextColor
+      ),
+    ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFF00A5CF),
+        foregroundColor: Colors.white,
+      ),
+    ),
+
+    switchTheme: SwitchThemeData(
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return const Color(0xFF00A5CF);
+        return Colors.grey.shade300;
+      }),
+      thumbColor: WidgetStateProperty.all(Colors.white),
+    ),
+
+    dividerColor: Color(0xFFE9EAEB),
+
+  );
+
+  // 🌚 تم تاریک
+  static ThemeData darkTheme = ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.dark,
+    fontFamily: 'IRANSans',
+
+    colorScheme: ColorScheme.dark(
+      primary: Color(0xFF13161B), // آبی اصلی ثابت می‌مونه
+      secondary: Color(0xFF0E4052),
+      tertiary: AppColors.splashGradiantColor2,
+      outline: Color(0xFF0C0E12),
+      surface: Color(0xFF85888E),
+      onSurface: Color(0xFF94979C),
+      surfaceDim: Color(0xFF373A41),
+      surfaceTint: Color(0xFF0D2D3A),
+      surfaceBright: Color(0xFFCECFD2),
+      surfaceContainer: Color(0xFF0C0E12),
+      surfaceContainerHigh: Color(0xFFCECFD2),
+      surfaceContainerLow: Color(0xFF61656C),
+      onTertiary: Color(0xFF47CD89),
+      onPrimary: Color(0xFF94979C),
+      onSecondary: Color(0xFF079354),
+      onInverseSurface: Color(0xFF70757F),
+      inverseSurface: Color(0xFFDCFAE6),
+      surfaceContainerHighest: Color(0xFF22262F),
+      onPrimaryFixed: Color(0xFF13161B),
+    ),
+
+
+
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: Color(0xFF0C0E12),
+    ),
+
+    scaffoldBackgroundColor: const Color(0xFF0E0E0E),
+
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFF0C0E12),
+      iconTheme: IconThemeData(color: Color(0xFFCECFD2)),
+      titleTextStyle: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: Color(0xFFCECFD2),
+      ),
+    ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFF00A5CF),
+        foregroundColor: Colors.white,
+      ),
+    ),
+
+    switchTheme: SwitchThemeData(
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return const Color(0xFF00A5CF);
+        return Colors.grey.shade700;
+      }),
+      thumbColor: WidgetStateProperty.all(Colors.white),
+    ),
+
+    dividerColor: Color(0xFF22262F),
+  );
+}

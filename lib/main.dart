@@ -6,7 +6,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/Const/app_colors.dart';
 import 'Core/Const/app_routes.dart';
+import 'Core/Theme/app_them.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
+import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 
 
 void main() async{
@@ -60,27 +62,26 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
             create: (BuildContext context) =>
                 MainNavigationBloc(initialIndex: 0)),
+        BlocProvider(
+            create: (_) => ThemeBloc(),)
       ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerConfig: router,
-        locale: const Locale("fa", "IR"),
-        supportedLocales: const [
-          Locale("fa", "IR"),
-        ],
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.customContainerBackGroundColor,
-          useMaterial3: true,
-          textTheme: ThemeData.light().textTheme.apply(
-            fontFamily: 'IRANSans',
-          ),
-          datePickerTheme: DatePickerThemeData(),
-        ),
+      child: BlocBuilder<ThemeBloc, ThemeData>(
+        builder: (context, theme) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: router,
+            locale: const Locale("fa", "IR"),
+            supportedLocales: const [
+              Locale("fa", "IR"),
+            ],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            theme: theme,
+          );
+        }
       ),
     );
   }

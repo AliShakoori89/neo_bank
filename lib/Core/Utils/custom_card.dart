@@ -33,12 +33,13 @@ class CustomCard extends StatelessWidget {
                     height: 32,
                     width: 32,
                     decoration: BoxDecoration(
-                        color: deposit ? AppColors.homePageIconColor : AppColors.homePageDividerColor,
+                        color: deposit ? Theme.of(context).colorScheme.inverseSurface : Theme.of(context).colorScheme.surfaceContainerHighest,
                         shape: BoxShape.circle
                     ),
                     child: Center(
                       child: Icon(deposit ? Icons.arrow_downward : Icons.arrow_upward,
                         size: 16,
+                        color: deposit ? Theme.of(context).colorScheme.onSecondary : Theme.of(context).colorScheme.onInverseSurface,
                       ),
                     ),
                   ),
@@ -62,7 +63,8 @@ class CustomCard extends StatelessWidget {
                           AppSpace.heightSpace_4,
                           Text(
                             'خلق ثروت سرزمین پارسه',
-                            style: TextStyle(color: AppColors.loginPageTextColor),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary),
                           ),
                         ],
                       ),
@@ -70,17 +72,17 @@ class CustomCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(mount,
+                          Text(mount.seRagham(),
                             style: TextStyle(
                                 fontSize: 12,
-                                color: Colors.green.shade800,
+                                color: Theme.of(context).colorScheme.onTertiary,
                                 fontWeight: FontWeight.w600
                             ),
                           ),
                           AppSpace.heightSpace_4,
                           Text(
                             date,
-                            style: TextStyle(color: Colors.grey.shade600),
+                            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                           ),
                         ],
                       ),
@@ -96,7 +98,7 @@ class CustomCard extends StatelessWidget {
                 )
               ],
             ),
-            AppSpace.heightSpace_8,
+            AppSpace.heightSpace_12,
             Padding(
               padding: EdgeInsets.only(
                 right: 10,
@@ -104,7 +106,7 @@ class CustomCard extends StatelessWidget {
               ),
               child: Divider(
                 height: 1,
-                color: AppColors.homePageDividerColor,
+                color: Theme.of(context).dividerColor,
               ),
             )
           ],

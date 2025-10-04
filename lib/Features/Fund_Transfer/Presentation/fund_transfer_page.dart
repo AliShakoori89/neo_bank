@@ -47,11 +47,11 @@ class _FundTransferPageState extends State<FundTransferPage> with SingleTickerPr
 
           // --- Header ---
 
-          customHeader(Text('انتقال وجه',
+          customHeader(context, Text('انتقال وجه',
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: AppColors.customHeaderTextColor
+                color: Theme.of(context).appBarTheme.titleTextStyle!.color
             ),
           )),
 
