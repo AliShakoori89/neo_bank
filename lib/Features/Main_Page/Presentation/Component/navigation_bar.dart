@@ -36,7 +36,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             icon: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: AppColors.navBarIconShadowColor
+                  color: Theme.of(context).navigationBarTheme.indicatorColor
               ),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -73,7 +73,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             icon: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: AppColors.navBarIconShadowColor
+                  color: Theme.of(context).navigationBarTheme.indicatorColor
               ),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -111,7 +111,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             icon: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: AppColors.navBarIconShadowColor
+                  color: Theme.of(context).navigationBarTheme.indicatorColor
               ),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -149,7 +149,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             icon: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: AppColors.navBarIconShadowColor
+                  color: Theme.of(context).navigationBarTheme.indicatorColor
               ),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -187,7 +187,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             icon: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: AppColors.navBarIconShadowColor
+                  color: Theme.of(context).navigationBarTheme.indicatorColor
               ),
               child: Padding(
                 padding: const EdgeInsets.all(15),

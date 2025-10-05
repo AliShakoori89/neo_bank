@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer/Presentation/component/build_cart_tab_body.dart';
+import 'component/build_cart_tab_body.dart';
 
 class FundTransferPage extends StatefulWidget {
   const FundTransferPage({super.key});
@@ -42,6 +42,7 @@ class _FundTransferPageState extends State<FundTransferPage> with SingleTickerPr
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
       body: Column(
         children: [
 
@@ -59,10 +60,10 @@ class _FundTransferPageState extends State<FundTransferPage> with SingleTickerPr
 
           Container(
             decoration: BoxDecoration(
-              color: AppColors.appWhite,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               border: Border(
                 top: BorderSide(
-                  color: AppColors.homePageDividerColor
+                  color: Theme.of(context).colorScheme.surfaceDim
                 )
               )
             ),
@@ -79,7 +80,7 @@ class _FundTransferPageState extends State<FundTransferPage> with SingleTickerPr
                 indicatorPadding: const EdgeInsets.only(bottom: 40),
                 labelColor: Colors.white,
                 unselectedLabelColor: AppColors.loginPageIconColor,
-                dividerColor: Colors.white,
+                dividerColor: Colors.transparent,
                 tabs: List.generate(4, (index) {
 
                   bool isSelected = tabController.index == index;
@@ -124,7 +125,7 @@ class _FundTransferPageState extends State<FundTransferPage> with SingleTickerPr
             child: TabBarView(
               controller: tabController,
               children: [
-                buildCartTabBody(),
+                buildCartTabBody(context),
                 Center(child: Text("محتوای تب ۲")),
                 Center(child: Text("محتوای تب ۳")),
                 Center(child: Text("محتوای تب ۴")),

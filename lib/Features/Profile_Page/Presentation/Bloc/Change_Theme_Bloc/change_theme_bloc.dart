@@ -5,7 +5,7 @@ import '../../../../../Core/Theme/app_them.dart';
 enum ThemeEvent { toggle }
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeData> {
-  ThemeBloc() : super(AppTheme.darkTheme) {
+  ThemeBloc() : super(AppTheme.lightTheme) {
     on<ThemeEvent>((event, emit) {
       if (state.brightness == Brightness.light) {
         emit(AppTheme.darkTheme);

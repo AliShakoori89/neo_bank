@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 
 import '../../../../Core/Const/app_colors.dart';
 
@@ -17,10 +18,15 @@ class CardCustomColumn extends StatelessWidget {
           style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: AppColors.homePageCardTitleColor
+              color: Theme.of(context).colorScheme.primaryFixed,
           ),
         ),
-        Text(value)
+        AppSpace.heightSpace_8,
+        Text(value,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary
+          ),
+        )
       ],
     )
         : Center(
@@ -28,7 +34,7 @@ class CardCustomColumn extends StatelessWidget {
         style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: AppColors.homePageCardTitleColor
+            color: Theme.of(context).colorScheme.primaryFixed,
         ),
       ),
     );

@@ -11,16 +11,16 @@ const List<String> list = <String>[
   '500570005633843004'
 ];
 
-class DropdownMenuExample extends StatefulWidget {
-  const DropdownMenuExample({super.key});
+class CustomDropdownMenu extends StatefulWidget {
+  const CustomDropdownMenu({super.key});
 
   @override
-  State<DropdownMenuExample> createState() => _DropdownMenuExampleState();
+  State<CustomDropdownMenu> createState() => _CustomDropdownMenuState();
 }
 
 typedef MenuEntry = DropdownMenuEntry<String>;
 
-class _DropdownMenuExampleState extends State<DropdownMenuExample> {
+class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
   String dropdownValue = list.first;
 
   // تابع تبدیل اعداد انگلیسی به فارسی
@@ -47,10 +47,10 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
     return Container(
       width: MediaQuery.of(context).size.width - 60,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: Color.fromRGBO(10, 13, 18, 0.18), // inner border مشابه CSS
+          color: Theme.of(context).colorScheme.surfaceDim, // inner border مشابه CSS
           width: 1,
         ),
         boxShadow: [
@@ -82,17 +82,17 @@ class _DropdownMenuExampleState extends State<DropdownMenuExample> {
         ),
         selectedTrailingIcon: Icon(
           Icons.keyboard_arrow_up_sharp,
-          color: AppColors.loginPageIconColor,
+          color: Theme.of(context).colorScheme.surfaceContainerHigh,
           size: 20,
         ),
         textStyle: TextStyle(
-          color: AppColors.customHeaderTextColor,
+          color: Theme.of(context).colorScheme.primaryFixed,
         ),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
-              color: AppColors.loginBorderColor,
+              color: Theme.of(context).colorScheme.surfaceDim,
             ),
           ),
         ),

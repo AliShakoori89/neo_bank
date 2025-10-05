@@ -18,8 +18,11 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final width = MediaQuery.of(context).size.width;
+
     return SizedBox(
-      height: 70,
+      height: width < 400 ? 100 : 70,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -49,42 +52,48 @@ class CustomCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(title,
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.homePageCardTitleColor,
-                                fontWeight: FontWeight.w600
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(title,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                  fontWeight: FontWeight.w600
+                              ),
                             ),
-                          ),
-                          AppSpace.heightSpace_4,
-                          Text(
-                            'خلق ثروت سرزمین پارسه',
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary),
-                          ),
-                        ],
+                            AppSpace.heightSpace_4,
+                            Text(
+                              'خلق ثروت سرزمین پارسه',
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.onPrimary),
+                            ),
+                          ],
+                        ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(mount.seRagham(),
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Theme.of(context).colorScheme.onTertiary,
-                                fontWeight: FontWeight.w600
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(mount.seRagham(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Theme.of(context).colorScheme.onTertiary,
+                                  fontWeight: FontWeight.w600
+                              ),
                             ),
-                          ),
-                          AppSpace.heightSpace_4,
-                          Text(
-                            date,
-                            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-                          ),
-                        ],
+                            AppSpace.heightSpace_4,
+                            Text(
+                              date,
+                              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

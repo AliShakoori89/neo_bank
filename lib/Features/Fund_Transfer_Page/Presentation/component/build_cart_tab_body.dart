@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Const/app_space.dart';
 
-Widget buildCartTabBody(){
+Widget buildCartTabBody(BuildContext context){
   return Column(
     children: [
 
@@ -16,7 +16,7 @@ Widget buildCartTabBody(){
           child: Container(
             margin: EdgeInsets.only(right: 30, left: 30),
             height: 50,
-            color: AppColors.appWhite,
+            color: Theme.of(context).colorScheme.outline,
             child: TextFormField(
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
@@ -29,14 +29,14 @@ Widget buildCartTabBody(){
                   hintText: 'مبلغ انتقال',
                   hintStyle: TextStyle(
                       fontSize: 16,
-                      color: Color(0xFF717680)
+                      color: Theme.of(context).colorScheme.surface,
                   ),
                   border: OutlineInputBorder(borderSide: BorderSide(
-                      color: AppColors.loginBorderColor
+                      color: Theme.of(context).colorScheme.surfaceDim
                   )),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: AppColors.loginBorderColor
+                          color: Theme.of(context).colorScheme.surfaceDim
                       )
                   ),
                   focusedBorder: OutlineInputBorder(
@@ -70,6 +70,7 @@ Widget buildCartTabBody(){
                     color: AppColors.appWhite
                 ),
               ),
+              AppSpace.widthSpace_5,
               Icon(Icons.arrow_forward,
                   color: AppColors.appWhite
               )
@@ -83,7 +84,7 @@ Widget buildCartTabBody(){
       // --- عنوان مخاطبین ---
 
       Container(
-        color: AppColors.appWhite,
+        color: Theme.of(context).colorScheme.surfaceContainer,
         child: Column(
           children: [
             Container(
@@ -94,7 +95,7 @@ Widget buildCartTabBody(){
                   Text('مخاطبین پر تکرار',
                     style: TextStyle(
                         fontSize: 14,
-                        color: AppColors.homePageCardTitleColor
+                        color: Theme.of(context).colorScheme.primaryFixed,
                     ),
                   ),
                   Text('مشاهده همه',
@@ -123,17 +124,18 @@ Widget buildCartTabBody(){
                       Column(
                         children: [
                           CircleAvatar(
-                            backgroundColor: AppColors.noImageBackgroundColor,
+                            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
                             child: SvgPicture.asset(
                               'assets/svg/fund_transfer_page/user-01.svg',
                               fit: BoxFit.fill,
                             ),
                           ),
+                          AppSpace.heightSpace_12,
                           Text('احسان علیمردانی',
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.customHeaderTextColor
+                                color: Theme.of(context).colorScheme.primaryFixed,
                             ),
                           )
                         ],

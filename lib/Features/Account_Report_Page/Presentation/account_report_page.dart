@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Report_Page/Presentation/Component/custom_tab_bar.dart';
 import 'Component/build_balance_and_transaction_body.dart';
 import 'Component/dropdown_button.dart';
 
@@ -36,15 +37,16 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
       body: Column(
         children: [
           // --- Header ---
           customHeader(context, Text(
-            'انتقال وجه',
+            'گزارش حساب',
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: AppColors.customHeaderTextColor),
+                color: Theme.of(context).appBarTheme.titleTextStyle!.color),
           )),
 
           // --- Body ---
@@ -55,45 +57,10 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
                 margin: EdgeInsets.zero,
                 child: Column(
                   children: [
-                    DropdownMenuExample(),
+                    CustomDropdownMenu(),
                     AppSpace.heightSpace_24,
-                    Container(
-                      width: double.infinity,
-                      height: 60,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.customContainerBackGroundColor,
-                          border: BoxBorder.all(
-                              color: AppColors.homePageDividerColor
-                          )
-                      ),
-                      child: TabBar(
-                        controller: tabController,
-                        // padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
-                        indicatorSize: TabBarIndicatorSize.label,
-                        indicatorPadding: const EdgeInsets.only(top: 5, bottom: 5),
-                        labelColor: AppColors.customHeaderTextColor,
-                        unselectedLabelColor: AppColors.loginPageHintFontColor,
-                        dividerColor: Colors.white,
-                        indicatorColor: Colors.white,
-                        overlayColor: WidgetStateProperty.all<Color>(Colors.transparent),
-                        indicator: BoxDecoration(
-                          color: AppColors.appWhite,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        tabs: List.generate(2, (index) {
-
-                          bool isSelected = tabController.index == index;
-
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            alignment: Alignment.center,
-                            child: Text(label[index]),
-                          );
-                        },
-                        ),
-                      ),
-                    ),
+                    CustomTabBar(tabController: tabController, label: label),
+                    AppSpace.heightSpace_24,
 
                     // --- TabBarView (BODY) ---
 

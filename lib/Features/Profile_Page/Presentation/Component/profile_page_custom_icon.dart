@@ -16,13 +16,17 @@ class ProfilePageCustomIcon extends StatelessWidget {
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: AppColors.noImageBackgroundColor
+          color: Theme.of(context).cardTheme.color
       ),
       child: SvgPicture.asset(
         iconPath,
         fit: BoxFit.fill,
         width: 16,
         height: 16,
+        colorFilter: ColorFilter.mode(
+          Theme.of(context).iconTheme.color!,
+          BlendMode.srcIn,
+        ),
       ),
     );
   }

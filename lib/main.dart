@@ -9,6 +9,7 @@ import 'Core/Const/app_routes.dart';
 import 'Core/Theme/app_them.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
+import 'package:device_preview/device_preview.dart';
 
 
 void main() async{
@@ -21,7 +22,14 @@ void main() async{
       ? false
       : true;
 
-  runApp(MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed));
+  runApp(
+      // DevicePreview(
+      // child:
+      // builder:
+      //     (context) =>
+              MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed)
+  // )
+  );
 }
 
 class MyApp extends StatefulWidget {

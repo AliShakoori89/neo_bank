@@ -11,7 +11,7 @@ Widget customHeader(BuildContext context, Widget widget) {
     decoration: BoxDecoration(
       color: Theme.of(context).appBarTheme.backgroundColor,
       border: Border(bottom: BorderSide(
-        color: AppColors.homePageDividerColor
+        color: Theme.of(context).colorScheme.surfaceDim
       ))
     ),
     child: Align(

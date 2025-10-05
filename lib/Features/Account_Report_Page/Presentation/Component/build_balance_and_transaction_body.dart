@@ -11,7 +11,7 @@ Widget buildBalanceAndTransactionBody(BuildContext context){
     child: Column(
       children: [
         Container(
-          color: AppColors.appWhite,
+          color: Theme.of(context).colorScheme.surfaceContainer,
           height: 400,
           width: double.infinity,
           child: Padding(
@@ -24,7 +24,7 @@ Widget buildBalanceAndTransactionBody(BuildContext context){
             child: Container(
               decoration: BoxDecoration(
                 border: BoxBorder.all(
-                  color: AppColors.homePageDividerColor,
+                  color: Theme.of(context).colorScheme.surfaceDim
                 ),
                 borderRadius: BorderRadius.circular(12)
               ),
@@ -45,118 +45,164 @@ Widget buildBalanceAndTransactionBody(BuildContext context){
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: AppColors.loginPageTextColor
+                              color: Theme.of(context).colorScheme.primaryFixed,
                             ),
                           ),
                         ],
                       ),
                     ),
                     Expanded(
-                      flex: 8,
-                      child: LineChart(
-                        LineChartData(
-                          gridData: FlGridData(show: true),
-                          titlesData: FlTitlesData(
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                interval: 1,
-                                getTitlesWidget: (value, meta) {
-                                  String text;
-                                  switch (value.toInt()) {
-                                    case 0:
-                                      text = '۰';
-                                      break;
-                                    case 1:
-                                      text = '۱';
-                                      break;
-                                    case 2:
-                                      text = '۲';
-                                      break;
-                                    case 3:
-                                      text = '۳';
-                                      break;
-                                    case 4:
-                                      text = '۴';
-                                      break;
-                                    case 5:
-                                      text = '۵';
-                                      break;
-                                    case 6:
-                                      text = '۶';
-                                      break;
-                                    default:
-                                      text = '';
-                                      break;
-                                  }
-                                  return Text(
-                                    text,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12,
-                                    ),
-                                  );
-                                },
+                      flex: 10,
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: LineChart(
+                          LineChartData(
+                            gridData: FlGridData(
+                              show: true,
+                              drawVerticalLine: true,
+                              verticalInterval: 30,
+                              drawHorizontalLine: true,
+                              getDrawingHorizontalLine: (value) => FlLine(
+                                color: Theme.of(context).colorScheme.surfaceDim,
+                                strokeWidth: 1,
+                              ),
+                              getDrawingVerticalLine: (value) => FlLine(
+                                color: Theme.of(context).colorScheme.surfaceDim,
+                                strokeWidth: 1,
                               ),
                             ),
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                interval: 500,
-                                reservedSize: 40,
-                                getTitlesWidget: (value, meta) {
-                                  if (value % 500 == 0) {
-                                    return Text(
-                                      '${value ~/ 100}۰۰۰',
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                      ),
-                                    );
-                                  }
-                                  return const SizedBox.shrink();
-                                },
+                            titlesData: FlTitlesData(
+                              show: true,
+                              rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+
+                              // محور X
+                              bottomTitles: AxisTitles(
+                                axisNameWidget: Text(
+                                  'ماه',
+                                  style: TextStyle(color: Theme.of(context).colorScheme.primaryFixed, fontSize: 12),
+                                ),
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  reservedSize: 28,
+                                  getTitlesWidget: (value, meta) {
+                                    switch (value.toInt()) {
+                                      case 1:
+                                        return Text('۱', style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primaryFixed,
+                                          fontSize: 11,
+                                        ));
+                                      case 8:
+                                        return Text('۸', style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primaryFixed,
+                                          fontSize: 11,
+                                        ));
+                                      case 15:
+                                        return Text('۱۵', style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primaryFixed,
+                                          fontSize: 11,
+                                        ));
+                                      case 23:
+                                        return Text('۲۳', style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primaryFixed,
+                                          fontSize: 11,
+                                        ));
+                                      case 30:
+                                        return Text('۳۰', style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primaryFixed,
+                                          fontSize: 11,
+                                        ));
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
+                              ),
+
+                              // محور Y
+                              leftTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  interval: 100,
+                                  reservedSize: 42,
+                                  getTitlesWidget: (value, meta) {
+                                    switch (value.toInt()) {
+                                      case 100:
+                                        return Padding(
+                                          padding: EdgeInsets.only(right: 5),
+                                          child:  Text('۱۰۰م', style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primaryFixed,
+                                            fontSize: 11,
+                                          )),
+                                        );
+                                      case 200:
+                                        return Padding(
+                                          padding: EdgeInsets.only(right: 5),
+                                          child: Text('۲۰۰م', style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primaryFixed,
+                                            fontSize: 11,
+                                          )),
+                                        );
+                                      case 300:
+                                        return Padding(
+                                          padding: EdgeInsets.only(right: 5),
+                                          child: Text('۳۰۰م', style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primaryFixed,
+                                            fontSize: 11,
+                                          )),
+                                        );
+                                      case 400:
+                                        return Padding(
+                                          padding: EdgeInsets.only(right: 5),
+                                          child: Text('۴۰۰م', style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primaryFixed,
+                                            fontSize: 11,
+                                          )),
+                                        );
+                                      case 500:
+                                        return Padding(
+                                          padding: EdgeInsets.only(right: 5),
+                                          child: Text('۵۰۰م', style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primaryFixed,
+                                            fontSize: 11,
+                                          )),
+                                        );
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
                               ),
                             ),
-                            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                            borderData: FlBorderData(
+                              show: true,
+                              border: Border.all(color: Colors.white.withOpacity(0.1)),
+                            ),
+                            minX: 1,
+                            maxX: 30,
+                            minY: 0,
+                            maxY: 500,
+                            lineBarsData: [
+                              LineChartBarData(
+                                isCurved: true,
+                                color: Colors.cyanAccent,
+                                barWidth: 2.5,
+                                dotData: FlDotData(show: false),
+                                belowBarData: BarAreaData(show: false),
+                                spots: const [
+                                  FlSpot(1, 300),
+                                  FlSpot(5, 320),
+                                  FlSpot(10, 340),
+                                  FlSpot(15, 330),
+                                  FlSpot(20, 360),
+                                  FlSpot(25, 390),
+                                  FlSpot(30, 450),
+                                ],
+                              ),
+                            ],
                           ),
-                          borderData: FlBorderData(
-                            show: true,
-                            border: Border.all(color: Colors.grey),
-                          ),
-                          minX: 0,
-                          maxX: 6,
-                          minY: 0,
-                          maxY: 2000,
-                          lineBarsData: [
-                            LineChartBarData(
-                              spots: const [
-                                FlSpot(0, 200),
-                                FlSpot(1, 400),
-                                FlSpot(2, 800),
-                                FlSpot(3, 1200),
-                                FlSpot(4, 1500),
-                                FlSpot(5, 1800),
-                                FlSpot(6, 1900),
-                              ],
-                              isCurved: true,
-                              color: AppColors.splashGradiantColor1, // در نسخه جدید دیگه colors لیست نیست
-                              barWidth: 3,
-                              dotData: FlDotData(show: true),
-                              belowBarData: BarAreaData(
-                                show: true,
-                                color: Colors.blue.withOpacity(0.2),
-                              ),
-                            ),
-                          ],
                         ),
-                      ),
+                      )
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: Text('ماه'),
-                    ),
+                    AppSpace.heightSpace_24,
                   ],
                 ),
               ),

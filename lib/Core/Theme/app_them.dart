@@ -32,10 +32,34 @@ class AppTheme {
       inverseSurface: Color(0xFFDCFAE6),
       surfaceContainerHighest: Color(0xFFF3F3F3),
       onPrimaryFixed: Color(0xFFF8F8F8),
+      tertiaryFixed: Color(0xFFFFFFFF),
+      primaryFixed: Color(0xFF181D27)
+    ),
+
+    iconTheme: IconThemeData(
+      color: Color(0xFF717680),
+    ),
+
+    cardTheme: CardThemeData(
+      color: Color(0xFFF5F5F5),
+    ),
+
+    buttonTheme: ButtonThemeData(
+      colorScheme: ColorScheme.light(
+        primary: Color(0xFFD92D20),        // رنگ دکمه‌ها
+        secondary: Color(0xFFFDA29B),     // رنگ ثانویه
+      ),
+    ),
+
+    textTheme: TextTheme(
+      titleMedium: TextStyle(
+        color: Color(0xFF181D27),
+      )
     ),
 
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Color(0xFFFFFFFF),
+      indicatorColor: AppColors.navBarIconShadowColor
     ),
 
     scaffoldBackgroundColor: AppColors.customContainerBackGroundColor,
@@ -95,15 +119,40 @@ class AppTheme {
       inverseSurface: Color(0xFFDCFAE6),
       surfaceContainerHighest: Color(0xFF22262F),
       onPrimaryFixed: Color(0xFF13161B),
+      tertiaryFixed: Color(0xFF13161B),
+      primaryFixed: Color(0xFFFFFFFF)
     ),
 
+    cardTheme: CardThemeData(
+      color: Color(0xFF22262F),
+    ),
 
+    iconTheme: IconThemeData(
+      color: Color(0xFFECECED),
+    ),
+
+    buttonTheme: ButtonThemeData(
+      colorScheme: ColorScheme.light(
+        primary: Color(0xFFF97066),        // رنگ دکمه‌ها
+        secondary: Color(0xFFF04438),     // رنگ ثانویه
+      ),
+    ),
+
+    textTheme: TextTheme(
+        titleMedium: TextStyle(
+          color: Color(0xFFCECFD2),
+        )
+    ),
 
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Color(0xFF0C0E12),
+      indicatorColor: Color(0xFF164C63),
+
     ),
 
     scaffoldBackgroundColor: const Color(0xFF0E0E0E),
+
+
 
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFF0C0E12),
