@@ -46,6 +46,7 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width - 60,
+      height: 40,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(8),
@@ -89,12 +90,16 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
           color: Theme.of(context).colorScheme.primaryFixed,
         ),
         inputDecorationTheme: InputDecorationTheme(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.surfaceDim,
-            ),
-          ),
+          isCollapsed: true,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+          constraints: BoxConstraints.tight(const
+          Size.fromHeight(40)),
+          // enabledBorder: OutlineInputBorder(
+          //   borderRadius: BorderRadius.circular(8),
+          //   borderSide: BorderSide(
+          //     color: Theme.of(context).colorScheme.surfaceDim,
+          //   ),
+          // ),
         ),
         initialSelection: dropdownValue,
         onSelected: (String? value) {

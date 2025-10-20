@@ -33,6 +33,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
         controller: widget.tabController,
         // padding: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
         indicatorSize: TabBarIndicatorSize.label,
+
         indicatorPadding: const EdgeInsets.only(top: 5, bottom: 5),
         labelColor: Theme.of(context).colorScheme.primaryFixed,
         unselectedLabelColor: AppColors.loginPageHintFontColor,

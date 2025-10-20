@@ -59,6 +59,10 @@ class _FundTransferPageState extends State<FundTransferPage> with SingleTickerPr
           // --- TabBar ---
 
           Container(
+            padding: EdgeInsets.only(
+              top: 10,
+              bottom: 10
+            ),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surfaceContainer,
               border: Border(
@@ -68,60 +72,81 @@ class _FundTransferPageState extends State<FundTransferPage> with SingleTickerPr
               )
             ),
             width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: TabBar(
-                controller: tabController,
-                indicator: BoxDecoration(
-                  color: AppColors.navBarIconShadowColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                indicatorSize: TabBarIndicatorSize.label,
-                indicatorPadding: const EdgeInsets.only(bottom: 40),
-                labelColor: Colors.white,
-                unselectedLabelColor: AppColors.loginPageIconColor,
-                dividerColor: Colors.transparent,
-                tabs: List.generate(4, (index) {
+            child: TabBar(
+              controller: tabController,
+              indicator: BoxDecoration(
+                color: AppColors.navBarIconShadowColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              indicatorSize: TabBarIndicatorSize.label,
+              indicatorPadding: EdgeInsets.only(bottom: 24),
+              labelColor: Colors.white,
+              unselectedLabelColor: AppColors.loginPageIconColor,
+              dividerColor: Colors.transparent,
+              tabs: List.generate(4, (index) {
 
-                  bool isSelected = tabController.index == index;
+                bool isSelected = tabController.index == index;
 
-                  return ClipRect(
+                return SizedBox(
+                  width: 48,
+                  height: 72,
+                  child: ClipRect(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(15),
-                          child: SvgPicture.asset(
-                            imagePath[index]['icon_path']!,
-                            width: 20,
+                          width: 48,
+                          height: 48,
+                          padding: const EdgeInsets.all(14),
+                          child: SizedBox(
                             height: 20,
-                            colorFilter: ColorFilter.mode(
-                              isSelected ? AppColors.splashGradiantColor2 : AppColors.loginPageIconColor,
-                              BlendMode.srcIn,
+                            width: 20,
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  top: index == 0 ? 4.17 : index == 1 ? 2.52 : index == 2 ? 3 : 1.67 ,
+                                  left: index == 0 ? 1.67 : index == 1 ? 2.5 : index == 2 ? 3 : 1.67 ,
+                                  child: SizedBox(
+                                    width: index == 0 ? 16.67 : index == 1 ? 15 : index == 2 ? 13.34 : 16.67,
+                                    height: index == 0 ? 11.67 : index == 1 ? 14.98 : index == 2 ? 15 : 16.67,
+                                    child: SvgPicture.asset(
+                                      imagePath[index]['icon_path']!,
+                                      fit: BoxFit.fill,
+                                      colorFilter: ColorFilter.mode(
+                                        isSelected
+                                            ? AppColors.splashGradiantColor2
+                                            : AppColors.loginPageIconColor,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        AppSpace.heightSpace_24,
-                        Text(
-                          imagePath[index]['icon_title']!,
-                          style: TextStyle(
-                            color: isSelected ? AppColors.splashGradiantColor2 : AppColors.loginPageIconColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600
+                        AppSpace.heightSpace_4,
+                        Center(
+                          child: Text(
+                            imagePath[index]['icon_title']!,
+                            style: TextStyle(
+                                color: isSelected ? AppColors.splashGradiantColor2 : AppColors.loginPageIconColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600
+                            ),
                           ),
-                        ),
+                        )
                       ],
                     ),
-                  );
-                }),
-              ),
-            ),
+                  ),
+                );
+              }),
+            )
           ),
 
           // --- TabBarView (BODY) ---
 
-          Flexible(
-            fit: FlexFit.loose,
+          Expanded(
             child: TabBarView(
               controller: tabController,
               children: [

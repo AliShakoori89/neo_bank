@@ -16,9 +16,16 @@ class CustomIcon extends StatelessWidget {
         Stack(
           alignment: Alignment.center,
           children: [
-            SizedBox(
+            Container(
               height: 56,
               width: 56,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: AppColors.circleBorderColor,
+                  width: 1
+                ),
+                shape: BoxShape.circle
+              ),
               child: SvgPicture.asset('assets/svg/Background_color.svg',
                 fit: BoxFit.fill,
                 colorFilter: ColorFilter.mode(
@@ -28,8 +35,8 @@ class CustomIcon extends StatelessWidget {
               ),
             ),
             Container(
-                height: 40,
-                width: 40,
+                height: 36,
+                width: 36,
                 decoration: BoxDecoration(
                     color: AppColors.splashGradiantColor1,
                     shape: BoxShape.circle

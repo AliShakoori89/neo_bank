@@ -11,6 +11,7 @@ class AppColors {
   static const Color loginPageHintFontColor = Color(0xFF717680);
   static const Color loginPageTextColor = Color(0xFF535862);
   static const Color loginPageIconColor = Color(0xFFA4A7AE);
+  static const Color darkModeIconIconColor = Color(0xFFCECFD2);
 
   static const Color homePageTitleColor = Color(0xFF0E7090);
   static const Color homePageIconColor = Color(0xFFDCFAE6);
@@ -21,6 +22,8 @@ class AppColors {
   static const Color customHeaderTextColor = Color(0xFF414651);
   static const Color noImageBackgroundColor = Color(0xFFF5F5F5);
 
+  static const Color circleBorderColor = Color(0xFFA5F0FC);
+
   static const Color appWhite = Color(0xFFFFFFFF);
   static const Color customContainerBackGroundColor = Color(0xffFAFAFA);
 
@@ -28,5 +31,8 @@ class AppColors {
 
   static const Color redColor = Color(0xFFD92D20);
   static const Color lowRedColor = Color(0xFFFDA29B);
+
+
+  static const Color buttonIconColor = Color(0xFF67E3F9);
 
 }

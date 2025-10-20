@@ -62,68 +62,74 @@ class _ProfilePageState extends State<ProfilePage> {
                           borderRadius: BorderRadius.circular(12),
                           color: Theme.of(context).colorScheme.surfaceContainer,
                       ),
-                      child: Column(
-                        children: [
-                          ProfilePageCustomRow(
-                            iconPath: 'assets/svg/user-03.svg',
-                            title: 'نام کاربری',
-                            value: 'mehrdadasd',
-                            widget: Icon(Icons.arrow_forward_ios_outlined,
-                              size: 20,
-                              color: AppColors.loginPageIconColor,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: 8,
+                          bottom: 8
+                        ),
+                        child: Column(
+                          children: [
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/user-03.svg',
+                              title: 'نام کاربری',
+                              value: 'mehrdadasd',
+                              widget: Icon(Icons.arrow_forward_ios_outlined,
+                                size: 20,
+                                color: AppColors.loginPageIconColor,
+                              ),
                             ),
-                          ),
-                          AppSpace.heightSpace_8,
-                          Divider(
-                            height: 1,
-                            color: AppColors.homePageDividerColor,
-                          ),
-                          AppSpace.heightSpace_8,
-                          ProfilePageCustomRow(
-                            iconPath: 'assets/svg/bank_services_page/passcode.svg',
-                            title: 'رمز همراه بانک',
-                            value: '',
-                            widget: Icon(Icons.arrow_forward_ios_outlined,
-                              size: 20,
-                              color: AppColors.loginPageIconColor,
+                            AppSpace.heightSpace_8,
+                            Divider(
+                              height: 1,
+                              color: AppColors.homePageDividerColor,
                             ),
-                          ),
-                          AppSpace.heightSpace_8,
-                          Divider(
-                            height: 1,
-                            color: AppColors.homePageDividerColor,
-                          ),
-                          AppSpace.heightSpace_8,
-                          ProfilePageCustomRow(
-                            iconPath: 'assets/svg/fingerprint-03.svg',
-                            title: 'ورود بیومتریک',
-                            value: '',
-                            widget: SizedBox(
-          
-                              child: Transform.scale(
-                                scale: 0.8,
-                                child: RotatedBox(
-                                  quarterTurns: 90,
-                                  child: Switch(
-                                    value: isSwitched,
-                                    padding: EdgeInsets.all(
-                                      2
+                            AppSpace.heightSpace_8,
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/bank_services_page/passcode.svg',
+                              title: 'رمز همراه بانک',
+                              value: '',
+                              widget: Icon(Icons.arrow_forward_ios_outlined,
+                                size: 20,
+                                color: AppColors.loginPageIconColor,
+                              ),
+                            ),
+                            AppSpace.heightSpace_8,
+                            Divider(
+                              height: 1,
+                              color: AppColors.homePageDividerColor,
+                            ),
+                            AppSpace.heightSpace_8,
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/fingerprint-03.svg',
+                              title: 'ورود بیومتریک',
+                              value: '',
+                              widget: SizedBox(
+
+                                child: Transform.scale(
+                                  scale: 0.8,
+                                  child: RotatedBox(
+                                    quarterTurns: 90,
+                                    child: Switch(
+                                      value: isSwitched,
+                                      padding: EdgeInsets.all(
+                                        2
+                                      ),
+                                      activeColor: Colors.white, // رنگ دایره وقتی روشن است
+                                      activeTrackColor: AppColors.splashGradiantColor1, // رنگ پس‌زمینه وقتی روشن است
+                                      inactiveThumbColor: Colors.white, // رنگ دایره وقتی خاموش است
+                                      inactiveTrackColor: Colors.grey, // رنگ پس‌زمینه وقتی خاموش است
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isSwitched = value;
+                                        });
+                                      },
                                     ),
-                                    activeColor: Colors.white, // رنگ دایره وقتی روشن است
-                                    activeTrackColor: AppColors.splashGradiantColor1, // رنگ پس‌زمینه وقتی روشن است
-                                    inactiveThumbColor: Colors.white, // رنگ دایره وقتی خاموش است
-                                    inactiveTrackColor: Colors.grey, // رنگ پس‌زمینه وقتی خاموش است
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isSwitched = value;
-                                      });
-                                    },
                                   ),
                                 ),
-                              ),
-                            )
-                          ),
-                        ],
+                              )
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     AppSpace.heightSpace_24,
@@ -139,105 +145,111 @@ class _ProfilePageState extends State<ProfilePage> {
                           borderRadius: BorderRadius.circular(12),
                           color: Theme.of(context).colorScheme.surfaceContainer,
                       ),
-                      child: Column(
-                        children: [
-                          ProfilePageCustomRow(
-                            iconPath: 'assets/svg/settings-02.svg',
-                            title: 'تنظیمات',
-                            value: '',
-                            widget: Icon(Icons.arrow_forward_ios_outlined,
-                              size: 20,
-                              color: AppColors.loginPageIconColor,
-                            ),
-                          ),
-                          AppSpace.heightSpace_8,
-                          Divider(
-                            height: 1,
-                            color: AppColors.homePageDividerColor,
-                          ),
-                          AppSpace.heightSpace_8,
-                          ProfilePageCustomRow(
-                            iconPath: 'assets/svg/arrow-up.svg',
-                            title: 'درباره برنامه',
-                            value: '',
-                            widget: Icon(Icons.arrow_forward_ios_outlined,
-                              size: 20,
-                              color: AppColors.loginPageIconColor,
-                            ),
-                          ),
-                          AppSpace.heightSpace_8,
-                          Divider(
-                            height: 1,
-                            color: AppColors.homePageDividerColor,
-                          ),
-                          AppSpace.heightSpace_8,
-                          ProfilePageCustomRow(
-                            iconPath: 'assets/svg/info-circle.svg',
-                            title: 'راهنما',
-                            value: '',
-                            widget: Icon(Icons.arrow_forward_ios_outlined,
-                              size: 20,
-                              color: AppColors.loginPageIconColor,
-                            ),
-                          ),
-                          AppSpace.heightSpace_8,
-                          Divider(
-                            height: 1,
-                            color: AppColors.homePageDividerColor,
-                          ),
-                          AppSpace.heightSpace_8,
-                          // InkWell(
-                          //   child: ProfilePageCustomRow(
-                          //     iconPath: 'assets/svg/theme.svg',
-                          //     title: 'زمینه',
-                          //     value: '',
-                          //     widget: Icon(Icons.arrow_forward_ios_outlined,
-                          //       size: 20,
-                          //       color: AppColors.loginPageIconColor,
-                          //     ),
-                          //   ),
-                          //   onTap: (){
-                          //     showAlertDialog(context);
-                          //   },
-                          // ),
-                          InkWell(
-                            child: ProfilePageCustomRow(
-                              iconPath: 'assets/svg/theme.svg',
-                              title: 'زمینه',
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: 8,
+                            bottom: 8
+                        ),
+                        child: Column(
+                          children: [
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/settings-02.svg',
+                              title: 'تنظیمات',
                               value: '',
-                              widget: Row(
-                                children: [
-                                  Icon(Icons.light_mode,
-                                    size: 20,
-                                    color: AppColors.loginPageIconColor,
-                                  ),
-                                  SizedBox(
-                                    height: 24,
-                                    width: 40,
-                                    child: Transform.scale(
-                                      scale: 0.5, // بین 0.5 تا 1.0 بسته به اندازه دلخواه
-                                      child: Switch(
-                                        value: Theme.of(context).brightness == Brightness.dark,
-                                        activeColor: AppColors.splashGradiantColor1,
-                                        onChanged: (_) {
-                                          context.read<ThemeBloc>().add(ThemeEvent.toggle);
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(Icons.dark_mode,
-                                    size: 20,
-                                    color: AppColors.loginPageIconColor,
-                                  ),
-          
-                                ],
+                              widget: Icon(Icons.arrow_forward_ios_outlined,
+                                size: 20,
+                                color: AppColors.loginPageIconColor,
                               ),
                             ),
-                            onTap: (){
-                              // showAlertDialog(context);
-                            },
-                          ),
-                        ],
+                            AppSpace.heightSpace_8,
+                            Divider(
+                              height: 1,
+                              color: AppColors.homePageDividerColor,
+                            ),
+                            AppSpace.heightSpace_8,
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/arrow-up.svg',
+                              title: 'درباره برنامه',
+                              value: '',
+                              widget: Icon(Icons.arrow_forward_ios_outlined,
+                                size: 20,
+                                color: AppColors.loginPageIconColor,
+                              ),
+                            ),
+                            AppSpace.heightSpace_8,
+                            Divider(
+                              height: 1,
+                              color: AppColors.homePageDividerColor,
+                            ),
+                            AppSpace.heightSpace_8,
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/info-circle.svg',
+                              title: 'راهنما',
+                              value: '',
+                              widget: Icon(Icons.arrow_forward_ios_outlined,
+                                size: 20,
+                                color: AppColors.loginPageIconColor,
+                              ),
+                            ),
+                            AppSpace.heightSpace_8,
+                            Divider(
+                              height: 1,
+                              color: AppColors.homePageDividerColor,
+                            ),
+                            AppSpace.heightSpace_8,
+                            // InkWell(
+                            //   child: ProfilePageCustomRow(
+                            //     iconPath: 'assets/svg/theme.svg',
+                            //     title: 'زمینه',
+                            //     value: '',
+                            //     widget: Icon(Icons.arrow_forward_ios_outlined,
+                            //       size: 20,
+                            //       color: AppColors.loginPageIconColor,
+                            //     ),
+                            //   ),
+                            //   onTap: (){
+                            //     showAlertDialog(context);
+                            //   },
+                            // ),
+                            InkWell(
+                              child: ProfilePageCustomRow(
+                                iconPath: 'assets/svg/theme.svg',
+                                title: 'زمینه',
+                                value: '',
+                                widget: Row(
+                                  children: [
+                                    Icon(Icons.light_mode,
+                                      size: 20,
+                                      color: AppColors.loginPageIconColor,
+                                    ),
+                                    SizedBox(
+                                      height: 24,
+                                      width: 40,
+                                      child: Transform.scale(
+                                        scale: 0.7, // بین 0.5 تا 1.0 بسته به اندازه دلخواه
+                                        child: Switch(
+                                          value: Theme.of(context).brightness == Brightness.dark,
+                                          activeColor: AppColors.splashGradiantColor1,
+                                          onChanged: (_) {
+                                            context.read<ThemeBloc>().add(ThemeEvent.toggle);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    Icon(Icons.dark_mode,
+                                      size: 20,
+                                      color: AppColors.loginPageIconColor,
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                              onTap: (){
+                                // showAlertDialog(context);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -91,27 +93,71 @@ class _HomePageState extends State<HomePage> {
       children: [
         Container(
           width: double.infinity,
-          height: 300,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppColors.splashGradiantColor2,
-                AppColors.splashGradiantColor2,
-                const Color(0xff058eb5),
-                AppColors.splashGradiantColor2,
-              ],
-            ),
-          ),
+          height: 268,
+          color: AppColors.splashGradiantColor1,
         ),
+        /// Circle 1
+        Positioned(
+          right: -220,
+          top: 50,
+          child: ImageFiltered(
+            imageFilter: ImageFilter.blur(sigmaX: 16.1, sigmaY: 16.1),
+            child: Container(
+              width: 383,
+              height: 383,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.splashGradiantColor2.withValues(alpha: 0.7),
+              ),
+            ),
+          )
+        ),
+
+        /// Circle 2
+        Positioned(
+          right: 100,
+          top: -250,
+          child: ImageFiltered(
+            imageFilter: ImageFilter.blur(sigmaX: 16.1, sigmaY: 16.1),
+            child: Container(
+              width: 383,
+              height: 383,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.splashGradiantColor2.withValues(alpha: 0.7),
+              ),
+            ),
+          )
+        ),
+
+        /// Circle 3
+        Positioned(
+          right: 250,
+          top: 150,
+          child: ImageFiltered(
+            imageFilter: ImageFilter.blur(sigmaX: 16.1, sigmaY: 16.1),
+            child: Container(
+              width: 195,
+              height: 195,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.splashGradiantColor2.withValues(alpha: 0.7),
+              ),
+            ),
+          )
+        ),
+
         Padding(
           padding: const EdgeInsets.only(top: 30),
           child: Column(
             children: [
-              SizedBox(
+              Container(
                 width: double.infinity,
-                height: 200,
+                height: 192,
+                constraints: const BoxConstraints(
+                  minWidth: 320,
+                  minHeight: 192,
+                ),
                 child: CarouselSlider(
                   items: cardItems,
                   carouselController: _controller,
@@ -135,25 +181,60 @@ class _HomePageState extends State<HomePage> {
 
   /// 🔹 کارت بانکی
   Widget _buildBankCard(Map<String, String> card) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 0),
-      decoration: BoxDecoration(
-        border: Border.all(width: 2, color: AppColors.appWhite),
-        borderRadius: BorderRadius.circular(20),
-        color: AppColors.splashGradiantColor2,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 0, 20, 20),
-        child: Column(
-          children: [
-            buildCardHeader(),
-            const Spacer(),
-            buildCardNumberAndDate(card),
-            AppSpace.heightSpace_12,
-            buildCardBalance(),
-          ],
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color(0xFFE0E0E0), // رنگ دلخواه border
+              width: 2,),
+            borderRadius: BorderRadius.circular(20),
+            color: AppColors.splashGradiantColor2.withValues(alpha: 0.3),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 20, 20),
+            child: Column(
+              children: [
+                buildCardHeader(),
+                const Spacer(),
+                buildCardNumberAndDate(card),
+                AppSpace.heightSpace_12,
+                buildCardBalance(),
+              ],
+            ),
+          ),
         ),
-      ),
+        // 🔹 لایه اول (gradient سیاه)
+        Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              transform: GradientRotation(109.8 * (3.1415926 / 180)), // تبدیل درجه به رادیان
+              colors: [
+                Color.fromRGBO(0, 0, 0, 0.016),
+                Color.fromRGBO(0, 0, 0, 0.08),
+              ],
+              stops: [0.0011, 1.0011], // معادل درصدها در CSS
+            ),
+          ),
+        ),
+
+        // 🔹 لایه دوم (gradient سفید)
+        Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              transform: GradientRotation(111.42 * (3.1415926 / 180)),
+              colors: [
+                Color.fromRGBO(255, 255, 255, 0.06),
+                Color.fromRGBO(255, 255, 255, 0.0),
+              ],
+              stops: [0.0, 0.9998],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -164,37 +245,46 @@ class _HomePageState extends State<HomePage> {
         builder: (context, theme) {
             return Container(
               margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-            border: Border.all(
-                width: theme == AppTheme.lightTheme ? 2 : 0,
-                color: AppColors.appWhite),
-            borderRadius: BorderRadius.circular(20),
-            color: AppColors.splashGradiantColor1,
-                  ),
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      width: theme == AppTheme.lightTheme ? 2 : 0,
+                      color: AppColors.appWhite),
+                  borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  transform: GradientRotation(45 * (3.1415926 / 180)), // تبدیل درجه به رادیان
+                  colors: [
+                    AppColors.homePageTitleColor,
+                    AppColors.splashGradiantColor1,
+                  ],
+                  stops: [0.0, 1.0],
+                ),
+              ),
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(card['card_title'] ?? '',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: AppColors.appWhite,
-                          fontWeight: FontWeight.w600)),
-                  Text('${card['card_value']}'.seRagham().toPersianDigit(),
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: AppColors.appWhite,
-                          fontWeight: FontWeight.w700)),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(card['card_title'] ?? '',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: AppColors.appWhite,
+                              fontWeight: FontWeight.w600)),
+                      Text('${card['card_value']}'.seRagham().toPersianDigit(),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: AppColors.appWhite,
+                              fontWeight: FontWeight.w700)),
+                    ],
+                  ),
+                  Image.asset(card['card_image'] ?? '',
+                      width: 78, height: 54),
                 ],
               ),
-              Image.asset(card['card_image'] ?? '',
-                  width: 78, height: 54),
-            ],
-                  ),
-                );
+            );
           }
         ))
         .toList();
