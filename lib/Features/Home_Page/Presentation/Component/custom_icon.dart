@@ -20,17 +20,28 @@ class CustomIcon extends StatelessWidget {
               height: 56,
               width: 56,
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: AppColors.circleBorderColor,
-                  width: 1
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: Theme.of(context).colorScheme.tertiaryFixed == const Color(0xFFFFFFFF)
+                      ? [const Color(0xFFD0F8AB), const Color(0xFFF3FEE7).withOpacity(0.0), const Color(0xFFF3FEE7).withOpacity(0.0)]
+                      : [const Color(0xFFD0F8AB), const Color(0xFF2B5314).withOpacity(0.0), const Color(0xFF2B5314).withOpacity(0.0)],
                 ),
-                shape: BoxShape.circle
+
               ),
-              child: SvgPicture.asset('assets/svg/Background_color.svg',
-                fit: BoxFit.fill,
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.surfaceTint,
-                  BlendMode.srcIn,
+              child: Container(
+                margin: EdgeInsets.all(1), // ضخامت بوردر
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: Theme.of(context).colorScheme.tertiaryFixed == const Color(0xFFFFFFFF)
+                        ? [const Color(0xFFF3FEE7), const Color(0xFFF3FEE7).withOpacity(0.0)]
+                        : [const Color(0xFF2B5314), const Color(0xFF2B5314).withOpacity(0.0)],
+                  ),
+
                 ),
               ),
             ),

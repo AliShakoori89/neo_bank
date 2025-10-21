@@ -5,7 +5,7 @@ import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Const/app_space.dart';
 
 Widget buildCartTabBody(BuildContext context){
-  return Container(
+  return SizedBox(
     height: double.infinity,
     width: double.infinity,
     child: Column(
@@ -65,7 +65,7 @@ Widget buildCartTabBody(BuildContext context){
                             'ریال',
                             style: TextStyle(
                               fontSize: 16,
-                              color: AppColors.homePageCardTitleColor,
+                              color: Theme.of(context).colorScheme.primaryFixed,
                             ),
                           ),
                         ),
@@ -100,10 +100,14 @@ Widget buildCartTabBody(BuildContext context){
                         ),
                       ),
                       AppSpace.widthSpace_5,
-                      Icon(Icons.arrow_forward,
-                          color: AppColors.buttonIconColor
-                      )
-                    ],
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Theme.of(context)
+                            .elevatedButtonTheme
+                            .style
+                            ?.iconColor
+                            ?.resolve({}),
+                      )                    ],
                   ),
                   onPressed: (){},
                 ),

@@ -38,7 +38,9 @@ class _SplashScreenState extends State<SplashScreen> {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [AppColors.splashGradiantColor1, AppColors.splashGradiantColor2],
+            colors: [
+              AppColors.splashGradiantColor2,
+              AppColors.splashGradiantColor1],
           ),
         ),
         child: Column(

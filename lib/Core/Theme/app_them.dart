@@ -10,21 +10,21 @@ class AppTheme {
     fontFamily: 'IRANSans',
 
     colorScheme: const ColorScheme.light(
-      primary: Color(0xff088AB2), // آبی اصلی بانک
-      secondary: Color(0xff06AED4), // آبی مکمل
+      primary: Color(0xff4CA30D), // آبی اصلی بانک
+      secondary: Color(0xff66C61C), // آبی مکمل
       primaryContainer: Color(0xFFE6E6FA), // پس‌زمینه اصلی صفحه
-      secondaryContainer: Color(0xFFB0E0E6), // پس‌زمینه اصلی صفحه
+      secondaryContainer: Color(0xFFB8D8A1), // پس‌زمینه اصلی صفحه
       surface: Color(0xFF717680), // هینت تکست ها
       scrim: Color(0xFFFFFFFF), // اپ لوگو
       onSurface: Color(0xFF535862), // تکست ها
-      tertiary: Color(0xff088AB2), // رنک کلمه نسخه
+      tertiary: Color(0xff4CA30D), // رنک کلمه نسخه
       outline: Colors.white54, //بک گراند تکست فیلدها
       surfaceDim: Color(0xFFD5D7DA),
       surfaceTint: Color(0xFFECFDFF),
       surfaceBright: Color(0xFF414651),
       surfaceContainer: Color(0xFFFFFFFF),
-      surfaceContainerHigh: Color(0xFF0E7090),
-      surfaceContainerLow: Color(0xFF0E7090),
+      surfaceContainerHigh: Color(0xFFCECFD2),
+      surfaceContainerLow: Color(0xFF66C61C),
       onTertiary: Color(0xFF079455),
       onPrimary: Color(0xFF535862),
       onSecondary: Color(0xFF079354),
@@ -51,33 +51,40 @@ class AppTheme {
       ),
     ),
 
+    tabBarTheme: TabBarThemeData(
+        indicatorColor: Color(0xFFE3FBCC)
+    ),
+
     textTheme: TextTheme(
       titleMedium: TextStyle(
         color: Color(0xFF181D27),
-      )
+      ),
     ),
 
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Color(0xFFFFFFFF),
-      indicatorColor: AppColors.navBarIconShadowColor
+      indicatorColor: Color(0xFFCFF9FE)
     ),
 
-    scaffoldBackgroundColor: AppColors.customContainerBackGroundColor,
+    scaffoldBackgroundColor: Color(0xffFAFAFA),
 
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFFFFFFF),
       iconTheme: IconThemeData(color: Color(0xFF414651)),
       titleTextStyle: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
-        color: AppColors.customHeaderTextColor
+        color: Color(0xFF414651)
       ),
     ),
 
+
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFF00A5CF),
-        foregroundColor: Colors.white,
+        backgroundColor: Color(0xFF414651),
+        foregroundColor: Color(0xFFFFFFFF),
+        iconColor: Color(0xFFA6EF67)
       ),
     ),
 
@@ -93,6 +100,14 @@ class AppTheme {
 
   );
 
+
+
+
+
+
+
+
+
   // 🌚 تم تاریک
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
@@ -102,7 +117,7 @@ class AppTheme {
     colorScheme: ColorScheme.dark(
       primary: Color(0xFF13161B), // آبی اصلی ثابت می‌مونه
       secondary: Color(0xFF0E4052),
-      tertiary: AppColors.splashGradiantColor2,
+      tertiary: Color(0xff66C61C),
       outline: Color(0xFF0C0E12),
       surface: Color(0xFF85888E),
       onSurface: Color(0xFF94979C),
@@ -138,6 +153,10 @@ class AppTheme {
       ),
     ),
 
+    tabBarTheme: TabBarThemeData(
+        indicatorColor: Color(0xFFE3FBCC)
+    ),
+
     textTheme: TextTheme(
         titleMedium: TextStyle(
           color: Color(0xFFCECFD2),
@@ -168,6 +187,7 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: Color(0xFF00A5CF),
         foregroundColor: Colors.white,
+        iconColor: Color(0xFFE3FBCC)
       ),
     ),
 

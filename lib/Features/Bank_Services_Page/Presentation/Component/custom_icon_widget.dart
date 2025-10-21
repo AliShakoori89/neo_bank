@@ -93,7 +93,7 @@ class CustomIconWidget extends StatelessWidget {
                         child: SvgPicture.asset(
                           iconPath,
                           colorFilter: ColorFilter.mode(
-                            AppColors.darkModeIconIconColor,
+                            Theme.of(context).appBarTheme.iconTheme!.color!,
                             BlendMode.srcIn,
                           ),
                         ),

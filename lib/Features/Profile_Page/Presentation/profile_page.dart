@@ -229,7 +229,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         scale: 0.7, // بین 0.5 تا 1.0 بسته به اندازه دلخواه
                                         child: Switch(
                                           value: Theme.of(context).brightness == Brightness.dark,
-                                          activeColor: AppColors.splashGradiantColor1,
+                                          // activeColor: AppColors.splashGradiantColor1,
                                           onChanged: (_) {
                                             context.read<ThemeBloc>().add(ThemeEvent.toggle);
                                           },

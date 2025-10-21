@@ -75,7 +75,7 @@ class _FundTransferPageState extends State<FundTransferPage> with SingleTickerPr
             child: TabBar(
               controller: tabController,
               indicator: BoxDecoration(
-                color: AppColors.navBarIconShadowColor,
+                color: Theme.of(context).tabBarTheme.indicatorColor,
                 borderRadius: BorderRadius.circular(8),
               ),
               indicatorSize: TabBarIndicatorSize.label,
