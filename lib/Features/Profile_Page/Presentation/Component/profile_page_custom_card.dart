@@ -6,11 +6,11 @@ import '../../../../Core/Const/app_space.dart';
 import 'card_custom_column.dart';
 
 class ProfilePageCustomRow extends StatelessWidget {
-  const ProfilePageCustomRow({super.key, required this.iconPath, required this.title, required this.value, required this.widget});
+  ProfilePageCustomRow({super.key, required this.iconPath, required this.title, this.value, required this.widget});
 
   final String iconPath;
   final String title;
-  final String value;
+  String? value;
   final Widget widget;
 
   @override
@@ -22,7 +22,7 @@ class ProfilePageCustomRow extends StatelessWidget {
           children: [
             ProfilePageCustomIcon(iconPath: iconPath),
             AppSpace.widthSpace_8,
-            CardCustomColumn(title: title, value: value)
+            CardCustomColumn(title: title, value: value ?? '')
           ],
         ),
         widget

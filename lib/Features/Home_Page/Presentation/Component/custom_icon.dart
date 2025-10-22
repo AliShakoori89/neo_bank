@@ -25,8 +25,8 @@ class CustomIcon extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: Theme.of(context).colorScheme.tertiaryFixed == const Color(0xFFFFFFFF)
-                      ? [const Color(0xFFD0F8AB), const Color(0xFFF3FEE7).withOpacity(0.0), const Color(0xFFF3FEE7).withOpacity(0.0)]
-                      : [const Color(0xFFD0F8AB), const Color(0xFF2B5314).withOpacity(0.0), const Color(0xFF2B5314).withOpacity(0.0)],
+                      ? [const Color(0xFFD0F8AB), const Color(0xFFF3FEE7).withAlpha(0), const Color(0xFFF3FEE7).withAlpha(0)]
+                      : [const Color(0xFFD0F8AB), const Color(0xFF2B5314).withAlpha(0), const Color(0xFF2B5314).withAlpha(0)],
                 ),
 
               ),
@@ -38,8 +38,8 @@ class CustomIcon extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: Theme.of(context).colorScheme.tertiaryFixed == const Color(0xFFFFFFFF)
-                        ? [const Color(0xFFF3FEE7), const Color(0xFFF3FEE7).withOpacity(0.0)]
-                        : [const Color(0xFF2B5314), const Color(0xFF2B5314).withOpacity(0.0)],
+                        ? [const Color(0xFFF3FEE7), const Color(0xFFF3FEE7).withAlpha(0)]
+                        : [const Color(0xFF2B5314), const Color(0xFF2B5314).withAlpha(0)],
                   ),
 
                 ),

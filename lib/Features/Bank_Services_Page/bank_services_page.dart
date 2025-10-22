@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Features/Bank_Services_Page/Presentation/Component/custom_icon_widget.dart';
+import 'package:neo_bank_mehr_iran/Features/Bank_Services_Page/Presentation/Component/widget_container.dart';
 import '../../Core/Const/app_space.dart';
 import '../../Core/Utils/custom_header.dart';
+import 'Presentation/Component/widget_title.dart';
 
 class BankServicesPage extends StatelessWidget {
   const BankServicesPage({super.key});
@@ -38,7 +40,7 @@ class BankServicesPage extends StatelessWidget {
                   children: [
 
                     widgetTitle(context, 'واریز و پرداخت'),
-                    containerWidget(context, [
+                    widgetContainer(context, [
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/switch-vertical.svg', iconName: 'انتقال وجه'),
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/globe.svg', iconName: 'اینترنت'),
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/simcard.svg', iconName: 'شارژ'),
@@ -50,7 +52,7 @@ class BankServicesPage extends StatelessWidget {
                     AppSpace.heightSpace_4,
 
                     widgetTitle(context, 'امور حسابتان را آنلاین انجام دهید'),
-                    containerWidget(context, [
+                    widgetContainer(context, [
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/switch-vertical.svg', iconName: 'افتتاح حساب جدید'),
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/credit-card.svg', iconName: 'حساب و کارت'),
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/calendar.svg', iconName: 'تقویم مالی'),
@@ -62,7 +64,7 @@ class BankServicesPage extends StatelessWidget {
                     AppSpace.heightSpace_4,
 
                     widgetTitle(context, 'چک و وام خود را مدیریت کنید'),
-                    containerWidget(context, [
+                    widgetContainer(context, [
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/coins-hand.svg', iconName: 'درخواست وام'),
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/wallet.svg', iconName: 'وام من'),
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/calculator.svg', iconName: 'معدل حساب'),
@@ -76,7 +78,7 @@ class BankServicesPage extends StatelessWidget {
                     AppSpace.heightSpace_4,
 
                     widgetTitle(context, 'با ما همراه باشید'),
-                    containerWidget(context, [
+                    widgetContainer(context, [
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/file-heart.svg', iconName: 'همیارانر مهر'),
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/marker-pin.svg', iconName: 'شعب بانک'),
                       CustomIconWidget(iconPath: 'assets/svg/bank_services_page/simcard.svg', iconName: 'سجام'),
@@ -98,48 +100,3 @@ class BankServicesPage extends StatelessWidget {
   }
 }
 
-Widget widgetTitle(context, title){
-  return Text(title,
-    style: TextStyle(
-        color: Theme.of(context).textTheme.titleMedium!.color,
-        fontSize: 12,
-        fontWeight: FontWeight.w600
-    ),
-  );
-}
-
-Widget containerWidget(context, customList){
-  return Container(
-    margin: EdgeInsets.only(
-        top: 16,
-        bottom: 16
-    ),
-    width: double.infinity,
-    decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainer,
-        boxShadow: [
-          BoxShadow(
-            color: const Color.fromRGBO(10, 13, 18, 0.05),
-            offset: const Offset(0, 1), // x=0, y=1
-            blurRadius: 2, // همون blur
-            spreadRadius: 0,
-          ),
-        ],
-        borderRadius: BorderRadius.circular(12),
-        border: BoxBorder.all(
-          color: Theme.of(context).colorScheme.surfaceDim,
-          width: 1,
-        )
-    ),
-    child: GridView.count(
-      shrinkWrap: true, // تا ارتفاع درست حساب بشه
-      physics: NeverScrollableScrollPhysics(), // چون داخل صفحه دیگه‌ای هست
-      crossAxisCount: 4, // تعداد ستون‌ها = 4
-      padding: EdgeInsets.all(
-          12
-      ),
-      mainAxisSpacing: 20,
-      children: customList,
-    )
-  );
-}

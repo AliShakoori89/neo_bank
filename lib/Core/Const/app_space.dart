@@ -3,9 +3,17 @@ import 'package:flutter/material.dart';
 class AppSpace {
 
   //------------------- height space
+  static const SizedBox heightSpace_400 = SizedBox(height: 350,);
+  static const SizedBox heightSpace_350 = SizedBox(height: 350,);
+  static const SizedBox heightSpace_280 = SizedBox(height: 280,);
+  static const SizedBox heightSpace_240 = SizedBox(height: 240,);
   static const SizedBox heightSpace_200 = SizedBox(height: 200,);
+  static const SizedBox heightSpace_180 = SizedBox(height: 180,);
+  static const SizedBox heightSpace_170 = SizedBox(height: 170,);
+  static const SizedBox heightSpace_160 = SizedBox(height: 160,);
   static const SizedBox heightSpace_128 = SizedBox(height: 128,);
   static const SizedBox heightSpace_90 = SizedBox(height: 90,);
+  static const SizedBox heightSpace_70 = SizedBox(height: 70,);
   static const SizedBox heightSpace_64 = SizedBox(height: 64,);
   static const SizedBox heightSpace_48 = SizedBox(height: 48,);
   static const SizedBox heightSpace_42 = SizedBox(height: 42,);

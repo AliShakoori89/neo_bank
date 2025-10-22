@@ -23,12 +23,12 @@ void main() async{
       : true;
 
   runApp(
-      // DevicePreview(
+      DevicePreview(
       // child:
-      // builder:
-      //     (context) =>
+      builder:
+          (context) =>
               MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed)
-  // )
+  )
   );
 }
 
