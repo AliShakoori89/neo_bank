@@ -1,20 +1,24 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Core/Const/app_colors.dart';
 import 'Core/Const/app_routes.dart';
-import 'Core/Theme/app_them.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
-import 'package:device_preview/device_preview.dart';
 
 
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 🔒 قفل در حالت عمودی
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final bool isAgreed = prefs.getBool('isAgreed') ?? false;
@@ -23,12 +27,12 @@ void main() async{
       : true;
 
   runApp(
-      DevicePreview(
+      // DevicePreview(
       // child:
-      builder:
-          (context) =>
+      // builder:
+      //     (context) =>
               MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed)
-  )
+  // )
   );
 }
 
