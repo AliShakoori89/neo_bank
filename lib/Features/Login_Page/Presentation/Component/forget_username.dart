@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Const/app_space.dart';
-import '../../../../Core/Const/stack_circle.dart';
 import 'login_header.dart';
 
 class ForgetUsername extends StatelessWidget {
@@ -20,18 +19,14 @@ class ForgetUsername extends StatelessWidget {
           AppSpace.widthSpace_8,
           FloatingActionButton(
             backgroundColor: AppColors.splashGradiantColor1,
-            onPressed: (){
-
-            },
+            onPressed: () {},
             child: Center(
-              child: Icon(Icons.arrow_forward_ios,
-                color: AppColors.appWhite,
-              ),
+              child: Icon(Icons.arrow_forward_ios, color: AppColors.appWhite),
             ),
           ),
         ],
       ),
-      body:Container(
+      body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -40,8 +35,8 @@ class ForgetUsername extends StatelessWidget {
             colors: [
               AppColors.loginPageGradiantColor1, // #E6E6FA
               AppColors.loginPageGradiantColor2, // #B0E0E6
-            ]
-          )
+            ],
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,27 +46,22 @@ class ForgetUsername extends StatelessWidget {
               title: 'فراموشی رمز کاربری؟',
               iconData: IconButton(
                 icon: Icon(Icons.arrow_back),
-                onPressed: (){
+                onPressed: () {
                   context.pop();
                 },
               ),
             ),
             AppSpace.heightSpace_32,
             Padding(
-              padding: EdgeInsets.only(
-                  right: 20),
-              child: Text('شماره تلفن همراه خود را وارد کنید.',
-                style: TextStyle(
-                    color: Colors.black
-                ),
+              padding: EdgeInsets.only(right: 20),
+              child: Text(
+                'شماره تلفن همراه خود را وارد کنید.',
+                style: TextStyle(color: Colors.black),
               ),
             ),
             AppSpace.heightSpace_12,
             Padding(
-              padding: EdgeInsets.only(
-                  right: 20,
-                  left: 20
-              ),
+              padding: EdgeInsets.only(right: 20, left: 20),
               child: Form(
                 child: TextFormField(
                   keyboardType: TextInputType.phone,
@@ -81,37 +71,39 @@ class ForgetUsername extends StatelessWidget {
 
                   decoration: InputDecoration(
                     hintText: 'شماره همراه خود را وارد نمایید.',
-                    hintStyle: TextStyle(
-                        color: Colors.grey[400]
-                    ),
-                    prefixIcon: Icon(Icons.sim_card,
+                    hintStyle: TextStyle(color: Colors.grey[400]),
+                    prefixIcon: Icon(
+                      Icons.sim_card,
                       color: AppColors.loginPageTextColor,
                     ),
                     hintTextDirection: TextDirection.rtl,
-                    contentPadding: EdgeInsets.only(
-                        right: 20,
-                        top: 10
-                    ),
+                    contentPadding: EdgeInsets.only(right: 20, top: 10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: AppColors.loginPageTextColor,),
+                      borderSide: const BorderSide(
+                        color: AppColors.loginPageTextColor,
+                      ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: AppColors.loginPageTextColor,),
+                      borderSide: const BorderSide(
+                        color: AppColors.loginPageTextColor,
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Colors.blue, width: 1),
+                      borderSide: const BorderSide(
+                        color: Colors.blue,
+                        width: 1,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-
           ],
-        )
-      )
+        ),
+      ),
     );
   }
 }

@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../../Core/Const/app_colors.dart';
 
 class CustomTabBar extends StatefulWidget {
-  const CustomTabBar({super.key, required this.tabController, required this.label});
+  const CustomTabBar({
+    super.key,
+    required this.tabController,
+    required this.label,
+  });
 
   final TabController tabController;
   final List label;
@@ -16,18 +20,13 @@ class _CustomTabBarState extends State<CustomTabBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        right: 30,
-        left: 30
-      ),
+      margin: EdgeInsets.only(right: 30, left: 30),
       width: double.infinity,
       height: 40,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).colorScheme.surfaceContainer,
-          border: BoxBorder.all(
-              color: Theme.of(context).colorScheme.surfaceDim,
-          )
+        borderRadius: BorderRadius.circular(10),
+        color: Theme.of(context).colorScheme.surfaceContainer,
+        border: BoxBorder.all(color: Theme.of(context).colorScheme.surfaceDim),
       ),
       child: TabBar(
         controller: widget.tabController,
@@ -45,16 +44,12 @@ class _CustomTabBarState extends State<CustomTabBar> {
           borderRadius: BorderRadius.circular(8),
         ),
         tabs: List.generate(2, (index) {
-
-          bool isSelected = widget.tabController.index == index;
-
           return Container(
             width: MediaQuery.of(context).size.width,
             alignment: Alignment.center,
             child: Text(widget.label[index]),
           );
-        },
-        ),
+        }),
       ),
     );
   }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../Core/Const/app_colors.dart';
-
 class ProfilePageCustomIcon extends StatelessWidget {
   const ProfilePageCustomIcon({super.key, required this.iconPath});
 
@@ -15,8 +13,8 @@ class ProfilePageCustomIcon extends StatelessWidget {
       height: 32,
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Theme.of(context).cardTheme.color
+        shape: BoxShape.circle,
+        color: Theme.of(context).cardTheme.color,
       ),
       child: SvgPicture.asset(
         iconPath,

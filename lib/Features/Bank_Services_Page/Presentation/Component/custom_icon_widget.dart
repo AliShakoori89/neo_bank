@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 
-import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Theme/app_them.dart';
 import '../../../Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 
@@ -31,11 +30,13 @@ class CustomIconWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.tertiaryFixed,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Theme.of(context).colorScheme.surfaceDim),
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.surfaceDim,
+                ),
               ),
               child: Center(
                 child: BlocBuilder<ThemeBloc, ThemeData>(
-                    builder: (context, theme) {
+                  builder: (context, theme) {
                     return Container(
                       width: 40,
                       height: 40,
@@ -44,50 +45,55 @@ class CustomIconWidget extends StatelessWidget {
                         boxShadow: [
                           theme == AppTheme.lightTheme
                               ? BoxShadow(
-                            color: const Color.fromRGBO(10, 13, 18, 0.10),
-                            offset: const Offset(0, -2),
-                            blurRadius: 2,)
+                                  color: const Color.fromRGBO(10, 13, 18, 0.10),
+                                  offset: const Offset(0, -2),
+                                  blurRadius: 2,
+                                )
                               : BoxShadow(
-                            color: Color.fromRGBO(255, 255, 255, 0.00),
-                            offset: Offset(0, -2),
-                            blurRadius: 2,
-                            spreadRadius: 0,
-                            blurStyle: BlurStyle.inner, // 👈 معادل inset
-                          ),
+                                  color: Color.fromRGBO(255, 255, 255, 0.00),
+                                  offset: Offset(0, -2),
+                                  blurRadius: 2,
+                                  spreadRadius: 0,
+                                  blurStyle: BlurStyle.inner, // 👈 معادل inset
+                                ),
                           theme == AppTheme.lightTheme
                               ? BoxShadow(
-                            color: const Color.fromRGBO(10, 13, 18, 0.05),
-                            offset: const Offset(1, 8),
-                            blurRadius: 5,)
+                                  color: const Color.fromRGBO(10, 13, 18, 0.05),
+                                  offset: const Offset(1, 8),
+                                  blurRadius: 5,
+                                )
                               : BoxShadow(
-                            color: Color.fromRGBO(255, 255, 255, 0.00),
-                            offset: Offset(1, 8),
-                            blurRadius: 5,
-                          ),
+                                  color: Color.fromRGBO(255, 255, 255, 0.00),
+                                  offset: Offset(1, 8),
+                                  blurRadius: 5,
+                                ),
                           theme == AppTheme.lightTheme
                               ? BoxShadow(
-                            color: const Color.fromRGBO(10, 13, 18, 0.10),
-                            offset: const Offset(0, 3),
-                            blurRadius: 3,)
+                                  color: const Color.fromRGBO(10, 13, 18, 0.10),
+                                  offset: const Offset(0, 3),
+                                  blurRadius: 3,
+                                )
                               : BoxShadow(
-                            color: Color.fromRGBO(255, 255, 255, 0.00),
-                            offset: Offset(0, 3),
-                            blurRadius: 3,
-                          ),
+                                  color: Color.fromRGBO(255, 255, 255, 0.00),
+                                  offset: Offset(0, 3),
+                                  blurRadius: 3,
+                                ),
                           theme == AppTheme.lightTheme
                               ? BoxShadow(
-                            color: const Color.fromRGBO(10, 13, 18, 0.10),
-                            offset: const Offset(0, 1),
-                            blurRadius: 2,
-                          )
+                                  color: const Color.fromRGBO(10, 13, 18, 0.10),
+                                  offset: const Offset(0, 1),
+                                  blurRadius: 2,
+                                )
                               : BoxShadow(
-                            color: Color.fromRGBO(255, 255, 255, 0.00),
-                            offset: Offset(0, 1),
-                            blurRadius: 2,
-                          ),
+                                  color: Color.fromRGBO(255, 255, 255, 0.00),
+                                  offset: Offset(0, 1),
+                                  blurRadius: 2,
+                                ),
                         ],
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Theme.of(context).colorScheme.surfaceDim),
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.surfaceDim,
+                        ),
                       ),
                       child: Center(
                         child: SvgPicture.asset(
@@ -99,7 +105,7 @@ class CustomIconWidget extends StatelessWidget {
                         ),
                       ),
                     );
-                  }
+                  },
                 ),
               ),
             ),
@@ -117,7 +123,7 @@ class CustomIconWidget extends StatelessWidget {
                 fontSize: 12,
               ),
             ),
-          )
+          ),
         ],
       ),
     );

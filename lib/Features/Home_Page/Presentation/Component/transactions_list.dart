@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Const/app_space.dart';
 import '../../../../Core/Utils/custom_card.dart';
 
@@ -10,21 +9,23 @@ Widget buildTransactionsList(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(
-            left: 12,
-            right: 25
-          ),
+          padding: EdgeInsets.only(left: 12, right: 25),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('آخرین تراکنش‌ها',
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.surfaceContainerHigh,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600)),
-              Icon(Icons.arrow_forward_ios,
-                  color: Theme.of(context).colorScheme.surfaceContainerLow,
-                  size: 20),
+              Text(
+                'آخرین تراکنش‌ها',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Theme.of(context).colorScheme.surfaceContainerLow,
+                size: 20,
+              ),
             ],
           ),
         ),

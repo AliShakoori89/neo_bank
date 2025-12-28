@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../Const/app_colors.dart';
-
 class AppTheme {
   // 🌞 تم روشن
   static ThemeData lightTheme = ThemeData(
@@ -33,37 +31,27 @@ class AppTheme {
       surfaceContainerHighest: Color(0xFFF3F3F3),
       onPrimaryFixed: Color(0xFFF8F8F8),
       tertiaryFixed: Color(0xFFFFFFFF),
-      primaryFixed: Color(0xFF181D27)
+      primaryFixed: Color(0xFF181D27),
     ),
 
-    iconTheme: IconThemeData(
-      color: Color(0xFF717680),
-    ),
+    iconTheme: IconThemeData(color: Color(0xFF717680)),
 
-    cardTheme: CardThemeData(
-      color: Color(0xFFF5F5F5),
-    ),
+    cardTheme: CardThemeData(color: Color(0xFFF5F5F5)),
 
     buttonTheme: ButtonThemeData(
       colorScheme: ColorScheme.light(
-        primary: Color(0xFFD92D20),        // رنگ دکمه‌ها
-        secondary: Color(0xFFFDA29B),     // رنگ ثانویه
+        primary: Color(0xFFD92D20), // رنگ دکمه‌ها
+        secondary: Color(0xFFFDA29B), // رنگ ثانویه
       ),
     ),
 
-    tabBarTheme: TabBarThemeData(
-        indicatorColor: Color(0xFFE3FBCC)
-    ),
+    tabBarTheme: TabBarThemeData(indicatorColor: Color(0xFFE3FBCC)),
 
-    textTheme: TextTheme(
-      titleMedium: TextStyle(
-        color: Color(0xFF181D27),
-      ),
-    ),
+    textTheme: TextTheme(titleMedium: TextStyle(color: Color(0xFF181D27))),
 
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Color(0xFFFFFFFF),
-      indicatorColor: Color(0xFFCFF9FE)
+      indicatorColor: Color(0xFFCFF9FE),
     ),
 
     scaffoldBackgroundColor: Color(0xffFAFAFA),
@@ -74,39 +62,29 @@ class AppTheme {
       titleTextStyle: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
-        color: Color(0xFF414651)
+        color: Color(0xFF414651),
       ),
     ),
-
-
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: Color(0xFF414651),
         foregroundColor: Color(0xFFFFFFFF),
-        iconColor: Color(0xFFA6EF67)
+        iconColor: Color(0xFFA6EF67),
       ),
     ),
 
     switchTheme: SwitchThemeData(
       trackColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) return const Color(0xFF00A5CF);
+        if (states.contains(WidgetState.selected))
+          return const Color(0xFF00A5CF);
         return Colors.grey.shade300;
       }),
       thumbColor: WidgetStateProperty.all(Colors.white),
     ),
 
     dividerColor: Color(0xFFE9EAEB),
-
   );
-
-
-
-
-
-
-
-
 
   // 🌚 تم تاریک
   static ThemeData darkTheme = ThemeData(
@@ -135,43 +113,30 @@ class AppTheme {
       surfaceContainerHighest: Color(0xFF22262F),
       onPrimaryFixed: Color(0xFF13161B),
       tertiaryFixed: Color(0xFF13161B),
-      primaryFixed: Color(0xFFFFFFFF)
+      primaryFixed: Color(0xFFFFFFFF),
     ),
 
-    cardTheme: CardThemeData(
-      color: Color(0xFF22262F),
-    ),
+    cardTheme: CardThemeData(color: Color(0xFF22262F)),
 
-    iconTheme: IconThemeData(
-      color: Color(0xFFECECED),
-    ),
+    iconTheme: IconThemeData(color: Color(0xFFECECED)),
 
     buttonTheme: ButtonThemeData(
       colorScheme: ColorScheme.light(
-        primary: Color(0xFFF97066),        // رنگ دکمه‌ها
-        secondary: Color(0xFFF04438),     // رنگ ثانویه
+        primary: Color(0xFFF97066), // رنگ دکمه‌ها
+        secondary: Color(0xFFF04438), // رنگ ثانویه
       ),
     ),
 
-    tabBarTheme: TabBarThemeData(
-        indicatorColor: Color(0xFFE3FBCC)
-    ),
+    tabBarTheme: TabBarThemeData(indicatorColor: Color(0xFFE3FBCC)),
 
-    textTheme: TextTheme(
-        titleMedium: TextStyle(
-          color: Color(0xFFCECFD2),
-        )
-    ),
+    textTheme: TextTheme(titleMedium: TextStyle(color: Color(0xFFCECFD2))),
 
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Color(0xFF0C0E12),
       indicatorColor: Color(0xFF164C63),
-
     ),
 
     scaffoldBackgroundColor: const Color(0xFF0E0E0E),
-
-
 
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFF0C0E12),
@@ -187,13 +152,14 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: Color(0xFF00A5CF),
         foregroundColor: Colors.white,
-        iconColor: Color(0xFFE3FBCC)
+        iconColor: Color(0xFFE3FBCC),
       ),
     ),
 
     switchTheme: SwitchThemeData(
       trackColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) return const Color(0xFF00A5CF);
+        if (states.contains(WidgetState.selected))
+          return const Color(0xFF00A5CF);
         return Colors.grey.shade700;
       }),
       thumbColor: WidgetStateProperty.all(Colors.white),

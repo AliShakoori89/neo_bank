@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'component/build_cart_tab_body.dart';
 import 'component/build_tab_item.dart';
@@ -18,7 +16,10 @@ class _FundTransferPageState extends State<FundTransferPage>
   late TabController _tabController;
 
   final List<Map<String, String>> _tabs = [
-    {'icon': 'assets/svg/fund_transfer_page/credit-card-02.svg', 'title': 'کارت'},
+    {
+      'icon': 'assets/svg/fund_transfer_page/credit-card-02.svg',
+      'title': 'کارت',
+    },
     {'icon': 'assets/svg/fund_transfer_page/bank.svg', 'title': 'حساب'},
     {'icon': 'assets/svg/fund_transfer_page/Layer_1.svg', 'title': 'شبا'},
     {'icon': 'assets/svg/fund_transfer_page/gift-01.svg', 'title': 'هدیه'},
@@ -107,5 +108,4 @@ class _FundTransferPageState extends State<FundTransferPage>
       ),
     );
   }
-
 }
