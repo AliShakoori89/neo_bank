@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:neo_bank_mehr_iran/Features/Login_Page/Domain/Repository/user_login_auth_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/Const/app_routes.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 
-
-void main() async{
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // 🔒 قفل در حالت عمودی
@@ -22,22 +22,19 @@ void main() async{
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final bool isAgreed = prefs.getBool('isAgreed') ?? false;
-  bool isLoggedIn = (prefs.getString('accessToken') == null)
-      ? false
-      : true;
+  bool isLoggedIn = (prefs.getString('accessToken') == null) ? false : true;
 
   runApp(
-      // DevicePreview(
-      // child:
-      // builder:
-      //     (context) =>
-              MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed)
-  // )
+    // DevicePreview(
+    // child:
+    // builder:
+    //     (context) =>
+    MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed),
+    // )
   );
 }
 
 class MyApp extends StatefulWidget {
-
   final bool isLoggedIn;
   final bool isAgreed;
 
@@ -48,7 +45,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   StreamSubscription<List<ConnectivityResult>>? subscription;
   late bool isOffline = false;
 
@@ -56,7 +52,9 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    subscription = Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> result) {
+    subscription = Connectivity().onConnectivityChanged.listen((
+      List<ConnectivityResult> result,
+    ) {
       // Received changes in available connectivity types!
     });
   }
@@ -72,28 +70,33 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (BuildContext context) =>
-                MainNavigationBloc(initialIndex: 0)),
-        BlocProvider(
-            create: (_) => ThemeBloc(),)
+          create: (BuildContext context) => MainNavigationBloc(initialIndex: 0),
+        ),
+        BlocProvider(create: (_) => ThemeBloc()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeData>(
         builder: (context, theme) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            routerConfig: router,
-            locale: const Locale("fa", "IR"),
-            supportedLocales: const [
-              Locale("fa", "IR"),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (BuildContext context) =>
+                    UserLoginAuthBloc(UserLoginAuthRepository()),
+              ),
             ],
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            theme: theme,
+            child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              routerConfig: router,
+              locale: const Locale("fa", "IR"),
+              supportedLocales: const [Locale("fa", "IR")],
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              theme: theme,
+            ),
           );
-        }
+        },
       ),
     );
   }

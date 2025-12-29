@@ -13,10 +13,11 @@ class CustomTextButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         InkWell(
-          onTap: (){
+          onTap: () {
             context.push('/cant_login');
           },
-          child: Text('نمی توانید وارد شوید؟',
+          child: Text(
+            'نمی توانید وارد شوید؟',
             style: TextStyle(
               fontSize: 14,
               color: Theme.of(context).colorScheme.onSurface,
@@ -25,7 +26,8 @@ class CustomTextButton extends StatelessWidget {
           ),
         ),
         AppSpace.widthSpace_5,
-        Icon(Icons.arrow_forward,
+        Icon(
+          Icons.arrow_forward,
           size: 20,
           color: AppColors.loginPageIconColor,
         ),
