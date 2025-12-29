@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
-import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Const/app_space.dart';
@@ -23,7 +23,7 @@ class CustomButton extends StatelessWidget {
     return BlocListener<UserLoginAuthBloc, UserLoginAuthState>(
       listener: (context, state) {
         if (state.status == UserLoginAuthStatus.success) {
-          if (state.loginStatus) {
+          if (state.logedin) {
             Fluttertoast.showToast(
               msg: 'ورود با موفقیت انجام شد',
               toastLength: Toast.LENGTH_SHORT,

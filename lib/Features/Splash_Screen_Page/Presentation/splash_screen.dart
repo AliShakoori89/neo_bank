@@ -1,8 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_version.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,15 +13,22 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
+    _checkAuth();
+  }
 
-    // ✅ بعد از ۲ ثانیه میره به مین پیج
-    Timer(const Duration(seconds: 2), () {
+  Future<void> _checkAuth() async {
+    await Future.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
+
+    final bool loggedIn = await TokenStorage.isLoggedIn();
+    if (loggedIn) {
+      context.go('/main_page');
+    } else {
       context.go('/login_page');
-    });
+    }
   }
 
   @override
@@ -36,7 +43,8 @@ class _SplashScreenState extends State<SplashScreen> {
             end: Alignment.bottomLeft,
             colors: [
               AppColors.splashGradiantColor2,
-              AppColors.splashGradiantColor1],
+              AppColors.splashGradiantColor1,
+            ],
           ),
         ),
         child: Column(
@@ -50,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
               space: 5,
             ),
             Spacer(),
-            NeoBankVersion(textColor: AppColors.appWhite,),
+            NeoBankVersion(textColor: AppColors.appWhite),
             SizedBox(height: 40),
           ],
         ),

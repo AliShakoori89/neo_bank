@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
-import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/Component/custom_button.dart';
-import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/Component/custom_text_button.dart';
-import 'package:neo_bank_mehr_iran/Features/Login_Page/Presentation/Component/custom_text_form_field.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/custom_button.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/custom_text_button.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/custom_text_form_field.dart';
 import '../../../Core/Theme/app_them.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
 import '../../../Core/Utils/neo_bank_version.dart';
@@ -23,9 +23,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.height;
-    print(width);
-
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: BlocBuilder<ThemeBloc, ThemeData>(

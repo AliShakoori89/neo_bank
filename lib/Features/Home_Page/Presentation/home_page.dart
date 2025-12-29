@@ -31,10 +31,12 @@ class _HomePageState extends State<HomePage> {
   int _current = 0;
   int _current1 = 0;
 
-  final List<Map<String, String>> sampleCard = [
-    {'card_number': '6063732514168589', 'card_expire_date': '08/06'},
-    {'card_number': '5022291075418596', 'card_expire_date': '11/27'},
-  ];
+  final List<Map<String, String>> sampleCard = [];
+
+  // final List<Map<String, String>> sampleCard = [
+  //   {'card_number': '6063732514168589', 'card_expire_date': '08/06'},
+  //   {'card_number': '5022291075418596', 'card_expire_date': '11/27'},
+  // ];
 
   final List<Map<String, String>> sampleCard2 = [
     {
@@ -62,14 +64,17 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              customHeader(context, NeoBankLogo(
-                logoColor: AppColors.splashGradiantColor1,
-                width: 88,
-                height: 24,
-                logoHeight: 20,
-                logoWidth: 62,
-                space: 4,
-              ),),
+              customHeader(
+                context,
+                NeoBankLogo(
+                  logoColor: AppColors.splashGradiantColor1,
+                  width: 88,
+                  height: 24,
+                  logoHeight: 20,
+                  logoWidth: 62,
+                  space: 4,
+                ),
+              ),
               _buildCardSlider(context),
               buildIconRow(),
               _buildSecondSlider(),
@@ -96,6 +101,7 @@ class _HomePageState extends State<HomePage> {
           height: 268,
           color: AppColors.splashGradiantColor1,
         ),
+
         /// Circle 1
         Positioned(
           right: -220,
@@ -110,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                 color: AppColors.splashGradiantColor2.withValues(alpha: 0.7),
               ),
             ),
-          )
+          ),
         ),
 
         /// Circle 2
@@ -127,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                 color: AppColors.splashGradiantColor2.withValues(alpha: 0.7),
               ),
             ),
-          )
+          ),
         ),
 
         /// Circle 3
@@ -144,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                 color: AppColors.splashGradiantColor2.withValues(alpha: 0.7),
               ),
             ),
-          )
+          ),
         ),
 
         Padding(
@@ -185,8 +191,10 @@ class _HomePageState extends State<HomePage> {
       children: [
         Container(
           decoration: BoxDecoration(
-            border: Border.all(color: const Color(0xFFE0E0E0), // رنگ دلخواه border
-              width: 2,),
+            border: Border.all(
+              color: const Color(0xFFE0E0E0), // رنگ دلخواه border
+              width: 2,
+            ),
             borderRadius: BorderRadius.circular(20),
             color: AppColors.splashGradiantColor2.withValues(alpha: 0.3),
           ),
@@ -209,7 +217,9 @@ class _HomePageState extends State<HomePage> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              transform: GradientRotation(109.8 * (3.1415926 / 180)), // تبدیل درجه به رادیان
+              transform: GradientRotation(
+                109.8 * (3.1415926 / 180),
+              ), // تبدیل درجه به رادیان
               colors: [
                 Color.fromRGBO(0, 0, 0, 0.016),
                 Color.fromRGBO(0, 0, 0, 0.08),
@@ -241,52 +251,66 @@ class _HomePageState extends State<HomePage> {
   /// 🔹 اسلایدر دوم
   Widget _buildSecondSlider() {
     final cardItems2 = sampleCard2
-        .map((card) => BlocBuilder<ThemeBloc, ThemeData>(
-        builder: (context, theme) {
-            return Container(
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
+        .map(
+          (card) => BlocBuilder<ThemeBloc, ThemeData>(
+            builder: (context, theme) {
+              return Container(
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
                   border: Border.all(
-                      width: theme == AppTheme.lightTheme ? 2 : 0,
-                      color: AppColors.appWhite),
-                  borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  transform: GradientRotation(45 * (3.1415926 / 180)), // تبدیل درجه به رادیان
-                  colors: [
-                    AppColors.homePageTitleColor,
-                    AppColors.splashGradiantColor1,
-                  ],
-                  stops: [0.0, 1.0],
-                ),
-              ),
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(card['card_title'] ?? '',
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: AppColors.appWhite,
-                              fontWeight: FontWeight.w600)),
-                      Text('${card['card_value']}'.seRagham().toPersianDigit(),
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: AppColors.appWhite,
-                              fontWeight: FontWeight.w700)),
-                    ],
+                    width: theme == AppTheme.lightTheme ? 2 : 0,
+                    color: AppColors.appWhite,
                   ),
-                  Image.asset(card['card_image'] ?? '',
-                      width: 78, height: 54),
-                ],
-              ),
-            );
-          }
-        ))
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    transform: GradientRotation(
+                      45 * (3.1415926 / 180),
+                    ), // تبدیل درجه به رادیان
+                    colors: [
+                      AppColors.homePageTitleColor,
+                      AppColors.splashGradiantColor1,
+                    ],
+                    stops: [0.0, 1.0],
+                  ),
+                ),
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          card['card_title'] ?? '',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.appWhite,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          '${card['card_value']}'.seRagham().toPersianDigit(),
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: AppColors.appWhite,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Image.asset(
+                      card['card_image'] ?? '',
+                      width: 78,
+                      height: 54,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        )
         .toList();
 
     return Container(
@@ -310,14 +334,12 @@ class _HomePageState extends State<HomePage> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: EdgeInsets.only(
-                  bottom: 20
-                ),
+                padding: EdgeInsets.only(bottom: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
                     cardItems2.length,
-                        (index) => Container(
+                    (index) => Container(
                       width: 24,
                       height: 2,
                       margin: const EdgeInsets.symmetric(horizontal: 4),
@@ -337,6 +359,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-
 }
