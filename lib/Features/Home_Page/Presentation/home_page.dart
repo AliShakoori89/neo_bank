@@ -11,6 +11,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/card_list_model
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/card_number_and_date.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../Core/Const/app_colors.dart';
 import '../../../Core/Const/app_space.dart';
@@ -20,7 +21,6 @@ import '../../Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc
 import 'Component/add_card_button.dart';
 import 'Component/card_balance.dart';
 import 'Component/card_header.dart';
-import 'Component/card_number_and_date.dart';
 import 'Component/custom_Indicator.dart';
 import 'Component/icon_row_widget.dart';
 import 'Component/transactions_list.dart';
@@ -246,7 +246,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 buildCardHeader(),
                 const Spacer(),
-                // buildCardNumberAndDate(card),
+                buildCardNumberAndDate(card),
                 AppSpace.heightSpace_12,
                 buildCardBalance(),
               ],
