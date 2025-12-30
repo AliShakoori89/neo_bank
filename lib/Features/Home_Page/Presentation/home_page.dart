@@ -1,9 +1,16 @@
 import 'dart:ui';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/card_list_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_state.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../Core/Const/app_colors.dart';
 import '../../../Core/Const/app_space.dart';
@@ -31,12 +38,12 @@ class _HomePageState extends State<HomePage> {
   int _current = 0;
   int _current1 = 0;
 
-  final List<Map<String, String>> sampleCard = [];
+  // final List<Map<String, String>> sampleCard = [];
 
-  // final List<Map<String, String>> sampleCard = [
-  //   {'card_number': '6063732514168589', 'card_expire_date': '08/06'},
-  //   {'card_number': '5022291075418596', 'card_expire_date': '11/27'},
-  // ];
+  final List<Map<String, String>> sampleCard = [
+    {'card_number': '6063732514168589', 'card_expire_date': '08/06'},
+    {'card_number': '5022291075418596', 'card_expire_date': '11/27'},
+  ];
 
   final List<Map<String, String>> sampleCard2 = [
     {
@@ -57,6 +64,12 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<GetAllCardsBloc>(context).add(GetUserAllCardsEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -75,7 +88,33 @@ class _HomePageState extends State<HomePage> {
                   space: 4,
                 ),
               ),
-              _buildCardSlider(context),
+              BlocListener<GetAllCardsBloc, GetAllCardsState>(
+                listener: (context, state) {
+                  if (state.status == GetAllCardsStatus.tokenExpired) {
+                    context.read<UserLoginAuthBloc>().add(LogoutEvent());
+                    context.go('/login_page');
+                  }
+                  if (state.status == GetAllCardsStatus.tokenExpired) {
+                    Fluttertoast.showToast(
+                      msg: 'نشست شما منقضی شده، دوباره وارد شوید',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                    );
+                  }
+                },
+                child: BlocBuilder<GetAllCardsBloc, GetAllCardsState>(
+                  builder: (context, state) {
+                    if (state.status == GetAllCardsStatus.loading) {
+                      return const SizedBox(
+                        height: 192,
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+
+                    return _buildBankCardSlider(context, state.cards ?? []);
+                  },
+                ),
+              ),
               buildIconRow(),
               _buildSecondSlider(),
               //لست تراکنش ها
@@ -88,9 +127,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   /// 🔹 اسلایدر کارت‌ها + بک‌گراند
-  Widget _buildCardSlider(BuildContext context) {
+  Widget _buildBankCardSlider(
+    BuildContext context,
+    List<CardDataModel>? cards,
+  ) {
     final List<Widget> cardItems = [
-      ...sampleCard.map((card) => _buildBankCard(card)),
+      ...cards!.map((card) => _buildBankCard(card)),
       buildAddCardButton(context),
     ];
 
@@ -186,7 +228,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   /// 🔹 کارت بانکی
-  Widget _buildBankCard(Map<String, String> card) {
+  Widget _buildBankCard(CardDataModel card) {
     return Stack(
       children: [
         Container(
@@ -204,7 +246,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 buildCardHeader(),
                 const Spacer(),
-                buildCardNumberAndDate(card),
+                // buildCardNumberAndDate(card),
                 AppSpace.heightSpace_12,
                 buildCardBalance(),
               ],

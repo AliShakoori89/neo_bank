@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repository/user_login_auth_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/get_all_card_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/Const/app_routes.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
@@ -81,6 +83,10 @@ class _MyAppState extends State<MyApp> {
               BlocProvider(
                 create: (BuildContext context) =>
                     UserLoginAuthBloc(UserLoginAuthRepository()),
+              ),
+              BlocProvider(
+                create: (BuildContext context) =>
+                    GetAllCardsBloc(GetAllCardRepository()),
               ),
             ],
             child: MaterialApp.router(

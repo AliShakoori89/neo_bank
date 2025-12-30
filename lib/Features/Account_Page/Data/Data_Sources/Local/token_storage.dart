@@ -20,4 +20,14 @@ class TokenStorage {
     final token = await read('token');
     return token != null && token.isNotEmpty;
   }
+
+  static Future<bool> isTokenExpired() async {
+    final expire = await read('token_expire_at');
+    return expire == null || DateTime.now().isAfter(DateTime.parse(expire));
+  }
+
+  static Future<void> clear() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/forget_username.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Splash_Screen_Page/Presentation/splash_screen.dart';
@@ -9,20 +10,14 @@ import '../../Features/Main_Page/main_page.dart';
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) {
-        return SplashScreen();
-      },
-    ),
-
     // GoRoute(
     //   path: '/',
     //   builder: (context, state) {
-    //     final index = state.extra as bool? ?? false;
-    //     return index ? MainPage(initialIndex: 0) : LoginPage();
+    //     return SplashScreen();
     //   },
     // ),
+    GoRoute(path: '/', builder: (context, state) => const AuthGate()),
+
     GoRoute(
       path: '/main_page',
       builder: (context, state) {

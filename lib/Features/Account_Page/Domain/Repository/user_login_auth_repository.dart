@@ -28,6 +28,10 @@ class UserLoginAuthRepository {
       if (response.statusCode == 200) {
         final data = UserLoginAuthData.fromJson(response.data['data']);
         TokenStorage.save('token', data.token!);
+        await TokenStorage.save(
+          'token_expire_at',
+          data.expireAt!.toIso8601String(),
+        );
 
         return true;
       } else {

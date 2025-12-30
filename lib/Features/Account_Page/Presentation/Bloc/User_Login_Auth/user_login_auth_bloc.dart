@@ -10,6 +10,7 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
     : super(UserLoginAuthState.initial()) {
     on<UserLoginEvent>(_mapUserLoginEventToState);
     on<UserIsLoginEvent>(_mapUserIsLoginEventToState);
+    on<LogoutEvent>(_mapLogoutEventToState);
   }
 
   void _mapUserLoginEventToState(
@@ -47,5 +48,13 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
     } catch (error) {
       emit(state.copyWith(status: UserLoginAuthStatus.error));
     }
+  }
+
+  void _mapLogoutEventToState(
+    LogoutEvent event,
+    Emitter<UserLoginAuthState> emit,
+  ) async {
+    emit(state.copyWith(status: UserLoginAuthStatus.loading));
+    emit(state.copyWith(status: UserLoginAuthStatus.success, logedin: null));
   }
 }
