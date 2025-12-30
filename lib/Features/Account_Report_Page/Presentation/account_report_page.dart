@@ -12,8 +12,8 @@ class AccountReportPage extends StatefulWidget {
   State<AccountReportPage> createState() => _AccountReportPageState();
 }
 
-class _AccountReportPageState extends State<AccountReportPage> with SingleTickerProviderStateMixin {
-
+class _AccountReportPageState extends State<AccountReportPage>
+    with SingleTickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -40,13 +40,17 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
       body: Column(
         children: [
           // --- Header ---
-          customHeader(context, Text(
-            'گزارش حساب',
-            style: TextStyle(
+          customHeader(
+            context,
+            Text(
+              'گزارش حساب',
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Theme.of(context).appBarTheme.titleTextStyle!.color),
-          )),
+                color: Theme.of(context).appBarTheme.titleTextStyle!.color,
+              ),
+            ),
+          ),
 
           // --- Body ---
           Expanded(
@@ -62,7 +66,6 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
                     AppSpace.heightSpace_24,
 
                     // --- TabBarView (BODY) ---
-
                     Flexible(
                       fit: FlexFit.loose,
                       child: TabBarView(
@@ -72,16 +75,14 @@ class _AccountReportPageState extends State<AccountReportPage> with SingleTicker
                           Center(child: Text("محتوای تب ۲")),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
-          )
+          ),
         ],
-      )
+      ),
     );
   }
 }
-
-

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../Core/Const/app_colors.dart';
+import '../../../../../Core/Const/app_colors.dart';
 
 Widget buildCardHeader() => Padding(
   padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
@@ -12,13 +12,19 @@ Widget buildCardHeader() => Padding(
         height: 24,
         child: SvgPicture.asset(
           'assets/svg/Union.svg',
-          colorFilter:
-          const ColorFilter.mode(AppColors.appWhite, BlendMode.srcIn),
+          colorFilter: const ColorFilter.mode(
+            AppColors.appWhite,
+            BlendMode.srcIn,
+          ),
         ),
       ),
       const Spacer(),
-      Image.asset('assets/logo/Logomark.png',
-          width: 27, height: 25, color: AppColors.appWhite),
+      Image.asset(
+        'assets/logo/Logomark.png',
+        width: 27,
+        height: 25,
+        color: AppColors.appWhite,
+      ),
     ],
   ),
 );

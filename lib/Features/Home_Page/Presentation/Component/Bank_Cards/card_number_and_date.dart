@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-import '../../../../Core/Const/app_colors.dart';
+import '../../../../../Core/Const/app_colors.dart';
 
 Widget buildCardNumberAndDate(card) {
   final date = DateTime.parse(card.expireDate!.toString());

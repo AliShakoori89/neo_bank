@@ -9,12 +9,6 @@ import '../../Features/Main_Page/main_page.dart';
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    // GoRoute(
-    //   path: '/',
-    //   builder: (context, state) {
-    //     return SplashScreen();
-    //   },
-    // ),
     GoRoute(path: '/', builder: (context, state) => const AuthGate()),
 
     GoRoute(
