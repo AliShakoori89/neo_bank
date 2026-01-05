@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/forget_username.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
 import '../../Features/Account_Page/Presentation/Component/cant_login.dart';
 import '../../Features/Main_Page/main_page.dart';
 
@@ -18,6 +19,14 @@ final GoRouter router = GoRouter(
         return MainPage(initialIndex: index);
       },
     ),
+
+    GoRoute(
+      path: '/otp_code_page',
+      builder: (context, state) {
+        return OtpCodePage();
+      },
+    ),
+
     GoRoute(
       path: '/login_page',
       builder: (context, state) {

@@ -3,13 +3,13 @@ abstract class UserLoginAuthEvent {
 }
 
 class UserLoginEvent extends UserLoginAuthEvent {
-  final String username;
-  final String password;
+  final String nationalCode;
+  final String phoneNumber;
 
-  UserLoginEvent({required this.username, required this.password});
+  UserLoginEvent({required this.nationalCode, required this.phoneNumber});
 
   @override
-  List<Object> get props => [username, password];
+  List<Object> get props => [nationalCode, phoneNumber];
 }
 
 class UserIsLoginEvent extends UserLoginAuthEvent {}

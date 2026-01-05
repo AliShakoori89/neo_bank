@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -19,11 +20,17 @@ class CustomTextFormField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 10, right: 10),
       child: TextFormField(
+        textDirection: TextDirection.ltr,
         controller: controller,
-        textAlign: TextAlign.right,
         textAlignVertical: TextAlignVertical.center,
         keyboardType: textInputType,
         obscureText: obscureText,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+          hintText == 'شماره همراه'
+              ? LengthLimitingTextInputFormatter(11)
+              : LengthLimitingTextInputFormatter(10),
+        ],
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hintText,

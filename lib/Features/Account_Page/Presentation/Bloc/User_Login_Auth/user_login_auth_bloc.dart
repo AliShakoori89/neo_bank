@@ -21,8 +21,8 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
       emit(state.copyWith(status: UserLoginAuthStatus.loading));
 
       final logedin = await userAuthRepository.userLogin(
-        event.username,
-        event.password,
+        event.nationalCode,
+        event.phoneNumber,
       );
 
       emit(

@@ -11,12 +11,12 @@ import '../../../../Core/Const/app_space.dart';
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
-    required this.usernameController,
-    required this.passwordController,
+    required this.nationalCodeController,
+    required this.phoneNumberController,
   });
 
-  final TextEditingController usernameController;
-  final TextEditingController passwordController;
+  final TextEditingController nationalCodeController;
+  final TextEditingController phoneNumberController;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class CustomButton extends StatelessWidget {
               textColor: Colors.white,
               fontSize: 16.0,
             );
-            context.go('/main_page');
+            context.go('/otp_code_page');
           } else {
             Fluttertoast.showToast(
               msg: 'نام کاربری یا رمز عبور اشتباه است',
@@ -59,6 +59,7 @@ class CustomButton extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.only(left: 20, right: 20),
+        width: double.infinity,
         child: ElevatedButton(
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.all<Color>(
@@ -75,31 +76,20 @@ class CustomButton extends StatelessWidget {
           onPressed: () {
             context.read<UserLoginAuthBloc>().add(
               UserLoginEvent(
-                username: usernameController.text,
-                password: passwordController.text,
+                nationalCode: nationalCodeController.text,
+                phoneNumber: phoneNumberController.text,
               ),
             );
           },
           child: Padding(
             padding: EdgeInsets.only(top: 10, bottom: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.fingerprint,
-                  color: Theme.of(context).colorScheme.scrim,
-                  size: 20,
-                ),
-                AppSpace.widthSpace_8,
-                Text(
-                  'ورود با اثر انگشت',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: AppColors.appWhite,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+            child: Text(
+              'ورود',
+              style: TextStyle(
+                fontSize: 16,
+                color: AppColors.appWhite,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
