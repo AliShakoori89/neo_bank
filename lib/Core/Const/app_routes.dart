@@ -23,7 +23,8 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/otp_code_page',
       builder: (context, state) {
-        return OtpCodePage();
+        final phoneNumber = state.extra as String;
+        return OtpCodePage(phoneNumber: phoneNumber);
       },
     ),
 

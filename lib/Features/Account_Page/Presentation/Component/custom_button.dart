@@ -6,17 +6,20 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../Core/Const/app_colors.dart';
-import '../../../../Core/Const/app_space.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.nationalCodeController,
     required this.phoneNumberController,
+    required this.nationalCodeFormKey,
+    required this.phoneNumberFormKey,
   });
 
   final TextEditingController nationalCodeController;
   final TextEditingController phoneNumberController;
+  final GlobalKey<FormState> nationalCodeFormKey;
+  final GlobalKey<FormState> phoneNumberFormKey;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class CustomButton extends StatelessWidget {
               textColor: Colors.white,
               fontSize: 16.0,
             );
-            context.go('/otp_code_page');
+            context.go('/otp_code_page', extra: phoneNumberController.text);
           } else {
             Fluttertoast.showToast(
               msg: 'نام کاربری یا رمز عبور اشتباه است',
@@ -74,12 +77,15 @@ class CustomButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            context.read<UserLoginAuthBloc>().add(
-              UserLoginEvent(
-                nationalCode: nationalCodeController.text,
-                phoneNumber: phoneNumberController.text,
-              ),
-            );
+            if (nationalCodeFormKey.currentState!.validate() &&
+                phoneNumberFormKey.currentState!.validate()) {
+              context.read<UserLoginAuthBloc>().add(
+                UserLoginEvent(
+                  nationalCode: nationalCodeController.text,
+                  phoneNumber: phoneNumberController.text,
+                ),
+              );
+            }
           },
           child: Padding(
             padding: EdgeInsets.only(top: 10, bottom: 10),

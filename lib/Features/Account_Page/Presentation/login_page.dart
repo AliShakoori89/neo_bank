@@ -32,6 +32,9 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController nationalCodeController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
 
+  final GlobalKey<FormState> nationalCodeFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> phoneNumberFormKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -238,6 +241,7 @@ class _LoginPageState extends State<LoginPage> {
                                     hintText: 'کد ملی',
                                     obscureText: false,
                                     controller: nationalCodeController,
+                                    formKey: nationalCodeFormKey,
                                   ),
                                   Divider(
                                     color: Theme.of(
@@ -251,6 +255,7 @@ class _LoginPageState extends State<LoginPage> {
                                     hintText: 'شماره همراه',
                                     obscureText: false,
                                     controller: phoneNumberController,
+                                    formKey: phoneNumberFormKey,
                                   ),
                                 ],
                               ),
@@ -261,6 +266,8 @@ class _LoginPageState extends State<LoginPage> {
                             CustomButton(
                               nationalCodeController: nationalCodeController,
                               phoneNumberController: phoneNumberController,
+                              nationalCodeFormKey: nationalCodeFormKey,
+                              phoneNumberFormKey: phoneNumberFormKey,
                             ),
 
                             AppSpace.heightSpace_16,

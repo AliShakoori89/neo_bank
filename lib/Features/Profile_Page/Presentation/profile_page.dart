@@ -219,7 +219,7 @@ class _ProfilePageState extends State<ProfilePage> {
       quarterTurns: 90,
       child: Switch(
         value: isBiometricEnabled,
-        activeColor: Colors.white,
+        activeThumbColor: Colors.white,
         activeTrackColor: AppColors.splashGradiantColor1,
         inactiveThumbColor: Colors.white,
         inactiveTrackColor: Colors.grey,
@@ -253,24 +253,4 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     ],
   );
-
-  void _showThemeDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Switch(
-            value: Theme.of(context).brightness == Brightness.dark,
-            activeColor: AppColors.splashGradiantColor1,
-            onChanged: (_) {
-              context.read<ThemeBloc>().add(ThemeEvent.toggle);
-              Navigator.pop(context);
-            },
-          ),
-        ),
-      ),
-    );
-  }
 }
