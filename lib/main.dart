@@ -89,17 +89,22 @@ class _MyAppState extends State<MyApp> {
                     GetAllCardsBloc(GetAllCardRepository()),
               ),
             ],
-            child: MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              routerConfig: router,
-              locale: const Locale("fa", "IR"),
-              supportedLocales: const [Locale("fa", "IR")],
-              localizationsDelegates: const [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              theme: theme,
+            child: AnimatedTheme(
+              data: theme,
+              duration: const Duration(milliseconds: 1000),
+              curve: Curves.easeInOut,
+              child: MaterialApp.router(
+                debugShowCheckedModeBanner: false,
+                routerConfig: router,
+                locale: const Locale("fa", "IR"),
+                supportedLocales: const [Locale("fa", "IR")],
+                localizationsDelegates: const [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                theme: theme,
+              ),
             ),
           );
         },

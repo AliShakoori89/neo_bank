@@ -64,13 +64,22 @@ class _ProfilePageState extends State<ProfilePage> {
                           iconPath: 'assets/svg/user-03.svg',
                           title: 'نام کاربری',
                           value: 'mehrdadasd',
-                          widget: const Icon(Icons.arrow_forward_ios_outlined, size: 20, color: AppColors.loginPageIconColor),
+                          widget: const Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: AppColors.loginPageIconColor,
+                          ),
                         ),
                         _divider(),
                         ProfilePageCustomRow(
-                          iconPath: 'assets/svg/bank_services_page/passcode.svg',
+                          iconPath:
+                              'assets/svg/bank_services_page/passcode.svg',
                           title: 'رمز همراه بانک',
-                          widget: const Icon(Icons.arrow_forward_ios_outlined, size: 20, color: AppColors.loginPageIconColor),
+                          widget: const Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: AppColors.loginPageIconColor,
+                          ),
                         ),
                         _divider(),
                         ProfilePageCustomRow(
@@ -90,28 +99,37 @@ class _ProfilePageState extends State<ProfilePage> {
                         ProfilePageCustomRow(
                           iconPath: 'assets/svg/settings-02.svg',
                           title: 'تنظیمات',
-                          widget: const Icon(Icons.arrow_forward_ios_outlined, size: 20, color: AppColors.loginPageIconColor),
+                          widget: const Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: AppColors.loginPageIconColor,
+                          ),
                         ),
                         _divider(),
                         ProfilePageCustomRow(
                           iconPath: 'assets/svg/arrow-up.svg',
                           title: 'درباره برنامه',
-                          widget: const Icon(Icons.arrow_forward_ios_outlined, size: 20, color: AppColors.loginPageIconColor),
+                          widget: const Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: AppColors.loginPageIconColor,
+                          ),
                         ),
                         _divider(),
                         ProfilePageCustomRow(
                           iconPath: 'assets/svg/info-circle.svg',
                           title: 'راهنما',
-                          widget: const Icon(Icons.arrow_forward_ios_outlined, size: 20, color: AppColors.loginPageIconColor),
+                          widget: const Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 20,
+                            color: AppColors.loginPageIconColor,
+                          ),
                         ),
                         _divider(),
-                        InkWell(
-                          onTap: () => _showThemeDialog(context),
-                          child: ProfilePageCustomRow(
-                            iconPath: 'assets/svg/theme.svg',
-                            title: 'زمینه',
-                            widget: _buildThemeSwitch(context),
-                          ),
+                        ProfilePageCustomRow(
+                          iconPath: 'assets/svg/theme.svg',
+                          title: 'زمینه',
+                          widget: _buildThemeSwitch(context),
                         ),
                       ],
                     ),
@@ -121,7 +139,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
               /// --- Logout Button ---
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 10,
+                ),
                 child: ElevatedButton(
                   onPressed: () {
                     // TODO: Handle logout action
@@ -162,7 +183,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
 
-              AppSpace.heightSpace_90
+              AppSpace.heightSpace_90,
             ],
           ),
         ),
@@ -171,7 +192,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   /// --- Helper Widgets ---
-  Widget _buildProfileCard(BuildContext context, {required List<Widget> children}) {
+  Widget _buildProfileCard(
+    BuildContext context, {
+    required List<Widget> children,
+  }) {
     final theme = Theme.of(context);
     return Container(
       width: double.infinity,
@@ -206,7 +230,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildThemeSwitch(BuildContext context) => Row(
     children: [
-      const Icon(Icons.light_mode, size: 20, color: AppColors.loginPageIconColor),
+      const Icon(
+        Icons.light_mode,
+        size: 20,
+        color: AppColors.loginPageIconColor,
+      ),
       SizedBox(
         height: 24,
         width: 40,
@@ -218,7 +246,11 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
-      const Icon(Icons.dark_mode, size: 20, color: AppColors.loginPageIconColor),
+      const Icon(
+        Icons.dark_mode,
+        size: 20,
+        color: AppColors.loginPageIconColor,
+      ),
     ],
   );
 

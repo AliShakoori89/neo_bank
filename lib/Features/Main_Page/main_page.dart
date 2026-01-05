@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Report_Page/Presentation/account_report_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import '../Bank_Services_Page/bank_services_page.dart';
 import '../Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../Home_Page/Presentation/home_page.dart';
@@ -21,6 +22,12 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   DateTime? _lastBackPress;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ThemeBloc>().add(ThemeEvent.load);
+  }
 
   final List<Widget> _pages = [
     HomePage(),
@@ -62,35 +69,39 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: PopScope(
-        canPop: false,
-        onPopInvoked: (didPop) async {
-          if (await _handleBack()) {
-            Future.delayed(Duration.zero, () {
-              Navigator.of(context).maybePop();
-            });
-          }
-        },
-        child: SafeArea(
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: BlocBuilder<MainNavigationBloc, MainNavigationState>(
-              builder: (context, navState) {
-                return Stack(
-                  children: [
-                    _pages[navState.selectedIndex],
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: CustomBottomNavigationBar(
-                        currentIndex: navState.selectedIndex,
-                        onTap: _onItemTapped,
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: PopScope(
+          canPop: false,
+          onPopInvoked: (didPop) async {
+            if (await _handleBack()) {
+              Future.delayed(Duration.zero, () {
+                Navigator.of(context).maybePop();
+              });
+            }
+          },
+          child: SafeArea(
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: BlocBuilder<MainNavigationBloc, MainNavigationState>(
+                builder: (context, navState) {
+                  return Stack(
+                    children: [
+                      _pages[navState.selectedIndex],
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: CustomBottomNavigationBar(
+                          currentIndex: navState.selectedIndex,
+                          onTap: _onItemTapped,
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              },
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ),

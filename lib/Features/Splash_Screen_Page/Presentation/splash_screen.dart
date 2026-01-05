@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_version.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
-import '../../../Core/Utils/neo_bank_logo.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_logo.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,24 +11,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _checkAuth();
-  }
-
-  Future<void> _checkAuth() async {
-    await Future.delayed(const Duration(seconds: 2));
-    if (!mounted) return;
-
-    final bool loggedIn = await TokenStorage.isLoggedIn();
-    if (loggedIn) {
-      context.go('/main_page');
-    } else {
-      context.go('/login_page');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
