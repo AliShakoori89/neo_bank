@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
+import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/user_login_auth_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,13 +10,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserLoginAuthRepository {
   final dio = Dio();
 
-  FutureOr<bool?> userLogin(String username, String password) async {
+  FutureOr<bool?> userLogin(String nationalCode, String phoneNumber) async {
     try {
-      var body = {"username": username, "password": password};
+      final deviceInfo = await DeviceInfoService.getDeviceInfo();
+
+      final body = {
+        "username": "string",
+        "password": "string",
+        // "nationalCode": nationalCode,
+        // "phoneNumber": phoneNumber,
+        // "device": deviceInfo,
+      };
 
       final response = await dio.post(
         "${APIKey.baseUrl}/api/auth/login",
-        data: jsonEncode(body), // ✅ مهم!
+        data: jsonEncode(body),
         options: Options(
           headers: {
             "Content-Type": "application/json",

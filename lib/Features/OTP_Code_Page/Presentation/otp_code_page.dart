@@ -1,11 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_logo.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/confirmation_bottun.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/edit_phone_number_bottun.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/otp_code_box.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/phone_number.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:pinput/pinput.dart';
@@ -26,8 +31,14 @@ class _OtpCodePageState extends State<OtpCodePage> {
   int resendTimer = 0;
   Timer? timer;
 
+  void _onOtpChanged(bool value) {
+    setState(() {
+      isOtpComplete = value;
+    });
+  }
+
   void _startTimer() {
-    resendTimer = 60;
+    resendTimer = 120;
     timer?.cancel();
     timer = Timer.periodic(Duration(seconds: 1), (t) {
       if (resendTimer == 0) {
@@ -39,15 +50,10 @@ class _OtpCodePageState extends State<OtpCodePage> {
     });
   }
 
-  void _stopTimer() {
-    timer?.cancel();
-    setState(() {});
-  }
-
   @override
   void dispose() {
     timer?.cancel();
-    _otpController.dispose(); // 👈 اینو اضافه کن
+    _otpController.dispose();
     super.dispose();
   }
 
@@ -107,10 +113,11 @@ class _OtpCodePageState extends State<OtpCodePage> {
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.splashGradiantColor2.withAlpha(30),
-                    borderRadius: BorderRadius.circular(5),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                   child: Column(
                     children: [
+                      //edit phone number container
                       Container(
                         width: double.infinity,
                         height: 50,
@@ -123,33 +130,9 @@ class _OtpCodePageState extends State<OtpCodePage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                height: 35,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  color: AppColors.splashGradiantColor1,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'ویرایش',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              EditPhoneNumberBottun(),
                               AppSpace.widthSpace_48,
-                              Text(
-                                widget.phoneNumber.toPersianDigit(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.customHeaderTextColor,
-                                ),
-                              ),
+                              PhoneNumber(phoneNumber: widget.phoneNumber),
                             ],
                           ),
                         ),
@@ -166,82 +149,15 @@ class _OtpCodePageState extends State<OtpCodePage> {
                           ),
                         ),
                       ),
-                      Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: Pinput(
-                          length: 5,
-                          autofocus: true,
-                          keyboardType: TextInputType.number,
-                          controller: _otpController,
-                          onChanged: (value) {
-                            setState(() {
-                              isOtpComplete = value.length == 5;
-                            });
-                          },
-                          onCompleted: (value) {
-                            setState(() {
-                              isOtpComplete = true;
-                            });
-                          },
-                          cursor: const Icon(Icons.circle, color: Colors.black),
-                          defaultPinTheme: PinTheme(
-                            width: 50,
-                            height: 55,
-                            textStyle: const TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 2,
-                                color: AppColors.splashGradiantColor1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
+                      OtpCodeBox(
+                        otpController: _otpController,
+                        onCompleted: _onOtpChanged,
                       ),
                       AppSpace.heightSpace_24,
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: isOtpComplete
-                                ? AppColors.splashGradiantColor1
-                                : Colors.grey.shade400, // حالت غیرفعال
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-
-                          onPressed: isOtpComplete
-                              ? () {
-                                  final otp = _otpController.text;
-                                  print('OTP => $otp');
-                                  // verify otp
-                                  context.go('/main_page');
-                                }
-                              : null, // 👈 وقتی null باشه دکمه قفله
-
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: const [
-                                Text('تایید و ادامه'),
-                                Positioned(
-                                  left: 5,
-                                  child: Icon(Icons.arrow_forward, size: 24),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      ConfirmationBottun(
+                        otpController: _otpController,
+                        isOtpComplete: isOtpComplete,
                       ),
-
                       AppSpace.heightSpace_24,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
