@@ -47,49 +47,49 @@ final GoRouter router = GoRouter(
       },
     ),
 
-    GoRoute(
-      path: '/cant_login',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          transitionDuration: Duration(milliseconds: 500),
-          child: CantLogin(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(0.0, 1.0); // Bottom to top transition
-            const end = Offset.zero;
-            const curve = Curves.easeOut;
-            var tween = Tween(
-              begin: begin,
-              end: end,
-            ).chain(CurveTween(curve: curve));
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
-        );
-      },
-    ),
-    GoRoute(
-      path: '/forget_username',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          transitionDuration: Duration(milliseconds: 500),
-          child: ForgetUsername(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(-1.0, 0.0); // Bottom to top transition
-            const end = Offset.zero;
-            const curve = Curves.easeOut;
-            var tween = Tween(
-              begin: begin,
-              end: end,
-            ).chain(CurveTween(curve: curve));
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
-        );
-      },
-    ),
+    // GoRoute(
+    //   path: '/cant_login',
+    //   pageBuilder: (context, state) {
+    //     return CustomTransitionPage(
+    //       transitionDuration: Duration(milliseconds: 500),
+    //       child: CantLogin(),
+    //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //         const begin = Offset(0.0, 1.0); // Bottom to top transition
+    //         const end = Offset.zero;
+    //         const curve = Curves.easeOut;
+    //         var tween = Tween(
+    //           begin: begin,
+    //           end: end,
+    //         ).chain(CurveTween(curve: curve));
+    //         return SlideTransition(
+    //           position: animation.drive(tween),
+    //           child: child,
+    //         );
+    //       },
+    //     );
+    //   },
+    // ),
+    // GoRoute(
+    //   path: '/forget_username',
+    //   pageBuilder: (context, state) {
+    //     return CustomTransitionPage(
+    //       transitionDuration: Duration(milliseconds: 500),
+    //       child: ForgetUsername(),
+    //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    //         const begin = Offset(-1.0, 0.0); // Bottom to top transition
+    //         const end = Offset.zero;
+    //         const curve = Curves.easeOut;
+    //         var tween = Tween(
+    //           begin: begin,
+    //           end: end,
+    //         ).chain(CurveTween(curve: curve));
+    //         return SlideTransition(
+    //           position: animation.drive(tween),
+    //           child: child,
+    //         );
+    //       },
+    //     );
+    //   },
+    // ),
   ],
 );

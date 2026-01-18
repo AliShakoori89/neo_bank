@@ -25,11 +25,11 @@ class GetAllCardsBloc extends Bloc<GetAllCardsEvent, GetAllCardsState> {
         state.copyWith(status: GetAllCardsStatus.success, cards: cards.data),
       );
     } on DioException catch (e) {
-      if (e.error == 'TOKEN_EXPIRED' || e.response?.statusCode == 401) {
-        emit(state.copyWith(status: GetAllCardsStatus.tokenExpired));
-      } else {
-        emit(state.copyWith(status: GetAllCardsStatus.error));
-      }
+      // if (e.error == 'TOKEN_EXPIRED' || e.response?.statusCode == 401) {
+      //   emit(state.copyWith(status: GetAllCardsStatus.tokenExpired));
+      // } else {
+      //   emit(state.copyWith(status: GetAllCardsStatus.error));
+      // }
     } catch (error) {
       emit(state.copyWith(status: GetAllCardsStatus.error));
     }

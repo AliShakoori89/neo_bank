@@ -24,15 +24,15 @@ Widget buildBankCardSlider(
 ) {
   return BlocListener<GetAllCardsBloc, GetAllCardsState>(
     listener: (context, state) {
-      if (state.status == GetAllCardsStatus.tokenExpired) {
-        context.read<UserLoginAuthBloc>().add(LogoutEvent());
-        Fluttertoast.showToast(
-          msg: 'نشست شما منقضی شده، دوباره وارد شوید',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-        );
-        context.go('/login_page');
-      }
+      // if (state.status == GetAllCardsStatus.tokenExpired) {
+      //   context.read<UserLoginAuthBloc>().add(LogoutEvent());
+      //   Fluttertoast.showToast(
+      //     msg: 'نشست شما منقضی شده، دوباره وارد شوید',
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.BOTTOM,
+      //   );
+      //   context.go('/login_page');
+      // }
 
       if (state.status == GetAllCardsStatus.success &&
           state.cards != null &&

@@ -24,6 +24,8 @@ class OtpCodeCheckBloc extends Bloc<OtpCodeCheckEvent, OtpCodeCheckState> {
         event.deviceId,
       );
 
+      print(otpLoginStatus);
+
       emit(
         state.copyWith(
           status: OtpCodeCheckStatus.success,

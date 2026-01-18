@@ -1,15 +1,15 @@
 class OtpCodeResponsModel {
-  final OtpCodeResponsDataModel? owner;
+  final OtpCodeResponsDataModel? data;
   final bool? success;
   final String? traceId;
   final OtpCodeResponsErrorModel? error;
 
-  OtpCodeResponsModel({this.owner, this.success, this.traceId, this.error});
+  OtpCodeResponsModel({this.data, this.success, this.traceId, this.error});
 
   factory OtpCodeResponsModel.fromJson(Map<String, dynamic> json) {
     return OtpCodeResponsModel(
-      owner: json['owner'] != null
-          ? OtpCodeResponsDataModel.fromJson(json['owner'])
+      data: json['data'] != null
+          ? OtpCodeResponsDataModel.fromJson(json['data'])
           : null,
       success: json['success'] as bool?,
       traceId: json['traceId'] as String?,

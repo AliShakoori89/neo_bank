@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_logo.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart'
-    show ThemeBloc;
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/pass_field.dart';
+import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/set_pass_button.dart';
+import 'package:pinput/pinput.dart';
 
-class SetPassPage extends StatelessWidget {
-  const SetPassPage({super.key});
+class SetPassPage extends StatefulWidget {
+  SetPassPage({super.key});
+
+  @override
+  State<SetPassPage> createState() => _SetPassPageState();
+}
+
+class _SetPassPageState extends State<SetPassPage> {
+  bool? passFieldsIsFill;
+
+  void _onpassFieldsIsFill(bool value) {
+    setState(() {
+      passFieldsIsFill = value;
+    });
+  }
+
+  final TextEditingController _passFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +79,38 @@ class SetPassPage extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: AppColors.splashGradiantColor2.withAlpha(30),
                     borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 50),
+                      PassField(
+                        passFieldController: _passFieldController,
+                        onpassFieldsIsFill: _onpassFieldsIsFill,
+                      ),
+                      SizedBox(height: 50),
+                      passFieldsIsFill != true
+                          ? Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 20,
+                                  bottom: 5,
+                                ),
+                                child: Text(
+                                  'رمز عبور باید از چهار رقم تشکیل شده باشد.',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Text(''),
+                      SetPassButton(
+                        passField: _passFieldController.text,
+                        onpassFieldsIsFill: passFieldsIsFill,
+                      ),
+                    ],
                   ),
                 ),
               ],

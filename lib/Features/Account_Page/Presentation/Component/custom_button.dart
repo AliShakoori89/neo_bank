@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
@@ -29,16 +28,6 @@ class CustomButton extends StatelessWidget {
       listener: (context, state) {
         if (state.status.isSuccess) {
           if (state.loginStatus) {
-            Fluttertoast.showToast(
-              msg: 'ورود با موفقیت انجام شد.',
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.green,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-
             context.go(
               '/otp_code_page',
               extra: OtpCodePage(
@@ -119,13 +108,23 @@ class CustomButton extends StatelessWidget {
                         ),
                       ],
                     )
-                  : const Text(
-                      'ورود',
-                      key: ValueKey('normal'),
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                  : const SizedBox(
+                      width: double.infinity,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: const [
+                          Text(
+                            'تایید و ادامه',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Positioned(
+                            left: 5,
+                            child: Icon(Icons.arrow_forward, size: 24),
+                          ),
+                        ],
                       ),
                     ),
             ),

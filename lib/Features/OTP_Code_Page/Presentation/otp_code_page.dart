@@ -69,6 +69,7 @@ class _OtpCodePageState extends State<OtpCodePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: BlocBuilder<ThemeBloc, ThemeData>(
         builder: (context, theme) {
           return Container(

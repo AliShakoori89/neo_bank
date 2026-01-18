@@ -38,26 +38,20 @@ class OtpCodeCheckRepository {
       );
 
       print('aaa');
+      print('response.statusCode   ' + response.statusCode.toString());
 
       if (response.statusCode == 200) {
-        print(response.data);
-
         final data = OtpCodeResponsModel.fromJson(response.data);
 
-        print(data.owner);
-
-        print('111111111111111111');
+        print(data.success ?? 'null');
 
         if (data.success!) {
-          LocalStorage.save('access_token', data.owner!.token!);
+          LocalStorage.save('access_token', data.data!.token!);
           LocalStorage.save(
             'access_token_expire_time',
-            data.owner!.expireAt!.toIso8601String(),
+            data.data!.expireAt!.toIso8601String(),
           );
         }
-
-        print(data.success);
-        print(data.error!.errorMessage);
 
         return [
           data.success,
