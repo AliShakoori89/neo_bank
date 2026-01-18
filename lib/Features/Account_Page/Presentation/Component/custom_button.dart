@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
 import '../../../../Core/Const/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
@@ -25,10 +27,10 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<UserLoginAuthBloc, UserLoginAuthState>(
       listener: (context, state) {
-        if (state.status == UserLoginAuthStatus.success) {
-          if (state.logedin) {
+        if (state.status.isSuccess) {
+          if (state.loginStatus) {
             Fluttertoast.showToast(
-              msg: 'ورود با موفقیت انجام شد',
+              msg: 'ورود با موفقیت انجام شد.',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
@@ -36,10 +38,18 @@ class CustomButton extends StatelessWidget {
               textColor: Colors.white,
               fontSize: 16.0,
             );
-            context.go('/otp_code_page', extra: phoneNumberController.text);
+
+            context.go(
+              '/otp_code_page',
+              extra: OtpCodePage(
+                deviceId: state.deviceId,
+                phoneNumber: phoneNumberController.text,
+                secretKey: state.secretKey,
+              ),
+            );
           } else {
             Fluttertoast.showToast(
-              msg: 'نام کاربری یا رمز عبور اشتباه است',
+              msg: state.loginMessage,
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
@@ -48,16 +58,6 @@ class CustomButton extends StatelessWidget {
               fontSize: 16.0,
             );
           }
-        } else if (state.status == UserLoginAuthStatus.error) {
-          Fluttertoast.showToast(
-            msg: 'خطایی در برقراری ارتباط رخ داد',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
         }
       },
       builder: (context, state) {

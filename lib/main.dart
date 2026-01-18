@@ -8,6 +8,8 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repository/user_
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/get_all_card_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/otp_code_check_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/Const/app_routes.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
@@ -22,25 +24,18 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool isAgreed = prefs.getBool('isAgreed') ?? false;
-  bool isLoggedIn = (prefs.getString('accessToken') == null) ? false : true;
-
   runApp(
     // DevicePreview(
     // child:
     // builder:
     //     (context) =>
-    MyApp(isLoggedIn: isLoggedIn, isAgreed: isAgreed),
+    MyApp(),
     // )
   );
 }
 
 class MyApp extends StatefulWidget {
-  final bool isLoggedIn;
-  final bool isAgreed;
-
-  const MyApp({super.key, required this.isLoggedIn, required this.isAgreed});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -87,6 +82,10 @@ class _MyAppState extends State<MyApp> {
               BlocProvider(
                 create: (BuildContext context) =>
                     GetAllCardsBloc(GetAllCardRepository()),
+              ),
+              BlocProvider(
+                create: (BuildContext context) =>
+                    OtpCodeCheckBloc(OtpCodeCheckRepository()),
               ),
             ],
             child: AnimatedTheme(

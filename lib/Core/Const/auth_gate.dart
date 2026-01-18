@@ -18,8 +18,9 @@ class _AuthGateState extends State<AuthGate> {
   }
 
   Future<void> _checkAuth() async {
-    final isExpired = await TokenStorage.isTokenExpired();
-    final token = await TokenStorage.read('token');
+    final isExpired = await LocalStorage.isTokenExpired();
+    final secretKey = await LocalStorage.read('secret_key');
+    final access_token = await LocalStorage.read('access_token');
 
     await Future.delayed(
       const Duration(milliseconds: 100),
@@ -27,10 +28,10 @@ class _AuthGateState extends State<AuthGate> {
 
     if (!mounted) return;
 
-    if (token != null && !isExpired) {
+    if (access_token != null && !isExpired) {
       context.go('/main_page');
     } else {
-      await TokenStorage.clear();
+      await LocalStorage.clear();
       context.go('/login_page');
     }
   }

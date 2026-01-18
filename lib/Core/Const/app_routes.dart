@@ -4,6 +4,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/forget_username.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
 import '../../Features/Account_Page/Presentation/Component/cant_login.dart';
 import '../../Features/Main_Page/main_page.dart';
 
@@ -23,8 +24,12 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/otp_code_page',
       builder: (context, state) {
-        final phoneNumber = state.extra as String;
-        return OtpCodePage(phoneNumber: phoneNumber);
+        final args = state.extra as OtpCodePage;
+        return OtpCodePage(
+          deviceId: args.deviceId,
+          phoneNumber: args.phoneNumber,
+          secretKey: args.secretKey,
+        );
       },
     ),
 
@@ -34,6 +39,14 @@ final GoRouter router = GoRouter(
         return LoginPage();
       },
     ),
+
+    GoRoute(
+      path: '/set_pass_page',
+      builder: (context, state) {
+        return SetPassPage();
+      },
+    ),
+
     GoRoute(
       path: '/cant_login',
       pageBuilder: (context, state) {

@@ -12,32 +12,54 @@ extension UserLoginAuthStatusX on UserLoginAuthStatus {
 class UserLoginAuthState extends Equatable {
   const UserLoginAuthState({
     required this.status,
-    required this.logedin,
+    required this.loginStatus,
+    required this.loginMessage,
     required this.isLogin,
+    required this.secretKey,
+    required this.deviceId,
   });
 
   static UserLoginAuthState initial() => UserLoginAuthState(
     status: UserLoginAuthStatus.initial,
-    logedin: false,
+    loginStatus: false,
+    loginMessage: '',
     isLogin: false,
+    secretKey: '',
+    deviceId: '',
   );
 
   final UserLoginAuthStatus status;
-  final bool logedin;
+  final bool loginStatus;
+  final String loginMessage;
   final bool isLogin;
+  final String secretKey;
+  final String deviceId;
 
   @override
-  List<Object?> get props => [status, logedin, isLogin];
+  List<Object?> get props => [
+    status,
+    loginStatus,
+    loginMessage,
+    isLogin,
+    secretKey,
+    deviceId,
+  ];
 
   UserLoginAuthState copyWith({
     UserLoginAuthStatus? status,
-    bool? logedin,
+    bool? loginStatus,
+    String? loginMessage,
     bool? isLogin,
+    String? secretKey,
+    String? deviceId,
   }) {
     return UserLoginAuthState(
       status: status ?? this.status,
-      logedin: logedin ?? this.logedin,
+      loginStatus: loginStatus ?? this.loginStatus,
+      loginMessage: loginMessage ?? this.loginMessage,
       isLogin: isLogin ?? this.isLogin,
+      secretKey: secretKey ?? this.secretKey,
+      deviceId: deviceId ?? this.deviceId,
     );
   }
 }

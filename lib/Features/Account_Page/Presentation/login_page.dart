@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/custom_button.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/custom_text_button.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/custom_text_form_field.dart';
@@ -270,101 +272,98 @@ class _LoginPageState extends State<LoginPage> {
                               phoneNumberFormKey: phoneNumberFormKey,
                             ),
 
-                            AppSpace.heightSpace_16,
+                            // AppSpace.heightSpace_16,
 
-                            // نمی توانید وارد شوید
-                            CustomTextButton(),
-
+                            // // نمی توانید وارد شوید
+                            // CustomTextButton(),
                             AppSpace.heightSpace_128,
 
-                            InkWell(
-                              child: CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Theme.of(
-                                  context,
-                                ).colorScheme.primary,
-                                child: Icon(
-                                  Icons.fingerprint,
-                                  color: Theme.of(context).colorScheme.scrim,
-                                  size: 50,
-                                ),
-                              ),
-                              onTap: () {
-                                // if (_supportState == _SupportState.unknown)
-                                //   const CircularProgressIndicator();
-                                // else if (_supportState ==
-                                //     _SupportState.supported)
-                                //   const Text('This device is supported');
-                                // else
-                                //   const Text('This device is not supported');
-                              },
-                            ),
-
-                            if (_supportState == _SupportState.unknown)
-                              const CircularProgressIndicator()
-                            else if (_supportState == _SupportState.supported)
-                              const Text('This device is supported')
-                            else
-                              const Text('This device is not supported'),
-                            const Divider(height: 100),
-                            Text(
-                              'Can check biometrics: $_canCheckBiometrics\n',
-                            ),
-                            ElevatedButton(
-                              onPressed: _checkBiometrics,
-                              child: const Text('Check biometrics'),
-                            ),
-                            const Divider(height: 100),
-                            Text(
-                              'Available biometrics: $_availableBiometrics\n',
-                            ),
-                            ElevatedButton(
-                              onPressed: _getAvailableBiometrics,
-                              child: const Text('Get available biometrics'),
-                            ),
-                            const Divider(height: 100),
-                            Text('Current State: $_authorized\n'),
-                            if (_isAuthenticating)
-                              ElevatedButton(
-                                onPressed: _cancelAuthentication,
-                                child: const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text('Cancel Authentication'),
-                                    Icon(Icons.cancel),
-                                  ],
-                                ),
-                              )
-                            else
-                              Column(
-                                children: <Widget>[
-                                  ElevatedButton(
-                                    onPressed: _authenticate,
-                                    child: const Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Text('Authenticate'),
-                                        Icon(Icons.perm_device_information),
-                                      ],
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: _authenticateWithBiometrics,
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Text(
-                                          _isAuthenticating
-                                              ? 'Cancel'
-                                              : 'Authenticate: biometrics only',
-                                        ),
-                                        const Icon(Icons.fingerprint),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-
+                            // InkWell(
+                            //   child: CircleAvatar(
+                            //     radius: 30,
+                            //     backgroundColor: Theme.of(
+                            //       context,
+                            //     ).colorScheme.primary,
+                            //     child: Icon(
+                            //       Icons.fingerprint,
+                            //       color: Theme.of(context).colorScheme.scrim,
+                            //       size: 50,
+                            //     ),
+                            //   ),
+                            //   onTap: () {
+                            //     // if (_supportState == _SupportState.unknown)
+                            //     //   const CircularProgressIndicator();
+                            //     // else if (_supportState ==
+                            //     //     _SupportState.supported)
+                            //     //   const Text('This device is supported');
+                            //     // else
+                            //     //   const Text('This device is not supported');
+                            //   },
+                            // ),
+                            // if (_supportState == _SupportState.unknown)
+                            //   const CircularProgressIndicator()
+                            // else if (_supportState == _SupportState.supported)
+                            //   const Text('This device is supported')
+                            // else
+                            //   const Text('This device is not supported'),
+                            // const Divider(height: 100),
+                            // Text(
+                            //   'Can check biometrics: $_canCheckBiometrics\n',
+                            // ),
+                            // ElevatedButton(
+                            //   onPressed: _checkBiometrics,
+                            //   child: const Text('Check biometrics'),
+                            // ),
+                            // const Divider(height: 100),
+                            // Text(
+                            //   'Available biometrics: $_availableBiometrics\n',
+                            // ),
+                            // ElevatedButton(
+                            //   onPressed: _getAvailableBiometrics,
+                            //   child: const Text('Get available biometrics'),
+                            // ),
+                            // const Divider(height: 100),
+                            // Text('Current State: $_authorized\n'),
+                            // if (_isAuthenticating)
+                            //   ElevatedButton(
+                            //     onPressed: _cancelAuthentication,
+                            //     child: const Row(
+                            //       mainAxisSize: MainAxisSize.min,
+                            //       children: <Widget>[
+                            //         Text('Cancel Authentication'),
+                            //         Icon(Icons.cancel),
+                            //       ],
+                            //     ),
+                            //   )
+                            // else
+                            //   Column(
+                            //     children: <Widget>[
+                            //       ElevatedButton(
+                            //         onPressed: _authenticate,
+                            //         child: const Row(
+                            //           mainAxisSize: MainAxisSize.min,
+                            //           children: <Widget>[
+                            //             Text('Authenticate'),
+                            //             Icon(Icons.perm_device_information),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //       ElevatedButton(
+                            //         onPressed: _authenticateWithBiometrics,
+                            //         child: Row(
+                            //           mainAxisSize: MainAxisSize.min,
+                            //           children: <Widget>[
+                            //             Text(
+                            //               _isAuthenticating
+                            //                   ? 'Cancel'
+                            //                   : 'Authenticate: biometrics only',
+                            //             ),
+                            //             const Icon(Icons.fingerprint),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
                             Spacer(), // 👈 بقیه محتوا رو بالا نگه می‌داره
 
                             NeoBankVersion(

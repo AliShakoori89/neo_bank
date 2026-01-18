@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
@@ -12,13 +10,18 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/otp_code_box.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/phone_number.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
-import 'package:persian_number_utility/persian_number_utility.dart';
-import 'package:pinput/pinput.dart';
 
 class OtpCodePage extends StatefulWidget {
-  const OtpCodePage({super.key, required this.phoneNumber});
+  const OtpCodePage({
+    super.key,
+    required this.phoneNumber,
+    required this.secretKey,
+    required this.deviceId,
+  });
 
   final String phoneNumber;
+  final String secretKey;
+  final String deviceId;
 
   @override
   State<OtpCodePage> createState() => _OtpCodePageState();
@@ -157,6 +160,8 @@ class _OtpCodePageState extends State<OtpCodePage> {
                       ConfirmationBottun(
                         otpController: _otpController,
                         isOtpComplete: isOtpComplete,
+                        secretKey: widget.secretKey,
+                        deviceId: widget.deviceId,
                       ),
                       AppSpace.heightSpace_24,
                       Row(

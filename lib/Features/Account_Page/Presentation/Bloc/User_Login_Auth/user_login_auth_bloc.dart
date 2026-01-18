@@ -26,7 +26,13 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
       );
 
       emit(
-        state.copyWith(status: UserLoginAuthStatus.success, logedin: logedin!),
+        state.copyWith(
+          status: UserLoginAuthStatus.success,
+          loginStatus: logedin![0],
+          loginMessage: logedin[1],
+          secretKey: logedin[2],
+          deviceId: logedin[3],
+        ),
       );
     } catch (error) {
       emit(state.copyWith(status: UserLoginAuthStatus.error));
@@ -55,6 +61,6 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
     Emitter<UserLoginAuthState> emit,
   ) async {
     emit(state.copyWith(status: UserLoginAuthStatus.loading));
-    emit(state.copyWith(status: UserLoginAuthStatus.success, logedin: null));
+    emit(state.copyWith(status: UserLoginAuthStatus.success, isLogin: null));
   }
 }

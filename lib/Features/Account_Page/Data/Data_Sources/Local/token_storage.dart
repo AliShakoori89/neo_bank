@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TokenStorage {
+class LocalStorage {
   static Future<void> save(String key, String value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(key, value);
@@ -17,7 +17,7 @@ class TokenStorage {
   }
 
   static Future<bool> isLoggedIn() async {
-    final token = await read('token');
+    final token = await read('secret_key');
     return token != null && token.isNotEmpty;
   }
 

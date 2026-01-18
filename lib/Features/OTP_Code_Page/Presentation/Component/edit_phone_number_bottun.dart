@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 
 class EditPhoneNumberBottun extends StatelessWidget {
   const EditPhoneNumberBottun({super.key});
@@ -9,6 +10,7 @@ class EditPhoneNumberBottun extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        TokenStorage.clear();
         context.go('/login_page');
       },
       child: Container(
