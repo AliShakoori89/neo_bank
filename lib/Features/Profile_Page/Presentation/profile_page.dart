@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_state.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/name_and_phone.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/profile_page_custom_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/user_image.dart';
@@ -18,6 +23,12 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool isBiometricEnabled = false;
+
+  @override
+  void initState() {
+    BlocProvider.of<ProfileBloc>(context).add(GetProfileEventEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,98 +54,108 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
 
               /// --- User Info ---
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Row(
+              BlocBuilder<ProfileBloc, ProfileState>(
+                builder: (context, state) {
+                  print(state.profileFields!.data);
+
+                  return Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
                       children: [
-                        const UserImage(),
-                        AppSpace.widthSpace_12,
-                        const NameAndPhone(),
+                        Row(
+                          children: [
+                            const UserImage(),
+                            AppSpace.widthSpace_12,
+                            NameAndPhone(profileDetail: state.profileFields!),
+                          ],
+                        ),
+                        AppSpace.heightSpace_24,
+
+                        /// --- Account Section ---
+                        _buildProfileCard(
+                          context,
+                          children: [
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/user-03.svg',
+                              title: 'نام کاربری',
+                              value: state.profileFields != null
+                                  ? state.profileFields!.data != null
+                                        ? state.profileFields!.data!.lastName
+                                        : ''
+                                  : '',
+                              widget: const Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 20,
+                                color: AppColors.loginPageIconColor,
+                              ),
+                            ),
+                            _divider(),
+                            ProfilePageCustomRow(
+                              iconPath:
+                                  'assets/svg/bank_services_page/passcode.svg',
+                              title: 'رمز همراه بانک',
+                              widget: const Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 20,
+                                color: AppColors.loginPageIconColor,
+                              ),
+                            ),
+                            _divider(),
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/fingerprint-03.svg',
+                              title: 'ورود بیومتریک',
+                              widget: _buildBiometricSwitch(),
+                            ),
+                          ],
+                        ),
+
+                        AppSpace.heightSpace_24,
+
+                        /// --- Settings Section ---
+                        _buildProfileCard(
+                          context,
+                          children: [
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/settings-02.svg',
+                              title: 'تنظیمات',
+                              widget: const Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 20,
+                                color: AppColors.loginPageIconColor,
+                              ),
+                            ),
+                            _divider(),
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/arrow-up.svg',
+                              title: 'درباره برنامه',
+                              widget: const Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 20,
+                                color: AppColors.loginPageIconColor,
+                              ),
+                            ),
+                            _divider(),
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/info-circle.svg',
+                              title: 'راهنما',
+                              widget: const Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 20,
+                                color: AppColors.loginPageIconColor,
+                              ),
+                            ),
+                            _divider(),
+                            ProfilePageCustomRow(
+                              iconPath: 'assets/svg/theme.svg',
+                              title: 'زمینه',
+                              widget: _buildThemeSwitch(context),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                    AppSpace.heightSpace_24,
-
-                    /// --- Account Section ---
-                    _buildProfileCard(
-                      context,
-                      children: [
-                        ProfilePageCustomRow(
-                          iconPath: 'assets/svg/user-03.svg',
-                          title: 'نام کاربری',
-                          value: 'mehrdadasd',
-                          widget: const Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 20,
-                            color: AppColors.loginPageIconColor,
-                          ),
-                        ),
-                        _divider(),
-                        ProfilePageCustomRow(
-                          iconPath:
-                              'assets/svg/bank_services_page/passcode.svg',
-                          title: 'رمز همراه بانک',
-                          widget: const Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 20,
-                            color: AppColors.loginPageIconColor,
-                          ),
-                        ),
-                        _divider(),
-                        ProfilePageCustomRow(
-                          iconPath: 'assets/svg/fingerprint-03.svg',
-                          title: 'ورود بیومتریک',
-                          widget: _buildBiometricSwitch(),
-                        ),
-                      ],
-                    ),
-
-                    AppSpace.heightSpace_24,
-
-                    /// --- Settings Section ---
-                    _buildProfileCard(
-                      context,
-                      children: [
-                        ProfilePageCustomRow(
-                          iconPath: 'assets/svg/settings-02.svg',
-                          title: 'تنظیمات',
-                          widget: const Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 20,
-                            color: AppColors.loginPageIconColor,
-                          ),
-                        ),
-                        _divider(),
-                        ProfilePageCustomRow(
-                          iconPath: 'assets/svg/arrow-up.svg',
-                          title: 'درباره برنامه',
-                          widget: const Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 20,
-                            color: AppColors.loginPageIconColor,
-                          ),
-                        ),
-                        _divider(),
-                        ProfilePageCustomRow(
-                          iconPath: 'assets/svg/info-circle.svg',
-                          title: 'راهنما',
-                          widget: const Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 20,
-                            color: AppColors.loginPageIconColor,
-                          ),
-                        ),
-                        _divider(),
-                        ProfilePageCustomRow(
-                          iconPath: 'assets/svg/theme.svg',
-                          title: 'زمینه',
-                          widget: _buildThemeSwitch(context),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
 
               /// --- Logout Button ---
@@ -146,6 +167,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     // TODO: Handle logout action
+                    LocalStorage.clear();
+                    context.go('/');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.colorScheme.surfaceContainer,

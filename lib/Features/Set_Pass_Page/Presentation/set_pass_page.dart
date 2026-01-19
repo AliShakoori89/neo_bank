@@ -82,6 +82,12 @@ class _SetPassPageState extends State<SetPassPage> {
                   ),
                   child: Column(
                     children: [
+                      Text(
+                        'برای دسترسی آسان به اپلیکیشن رمز عبور مورد نظر خود را تعیین نمایید.',
+                        style: TextStyle(
+                          color: AppColors.homePageCardTitleColor,
+                        ),
+                      ),
                       SizedBox(height: 50),
                       PassField(
                         passFieldController: _passFieldController,

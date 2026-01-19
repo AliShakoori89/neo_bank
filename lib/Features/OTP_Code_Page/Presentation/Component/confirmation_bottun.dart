@@ -27,11 +27,7 @@ class ConfirmationBottun extends StatelessWidget {
       listener: (context, state) {
         print(state);
         if (state.status.isSuccess) {
-          print('@@@@@@@@@@         ' + state.status.isSuccess.toString());
           if (state.otpLoginStatus) {
-            print(
-              '##############         ' + state.status.isSuccess.toString(),
-            );
             context.go('/set_pass_page');
           } else {
             Fluttertoast.showToast(
@@ -44,8 +40,6 @@ class ConfirmationBottun extends StatelessWidget {
               fontSize: 16.0,
             );
           }
-        } else {
-          print('erroooooooooooooor');
         }
       },
       builder: (context, state) {

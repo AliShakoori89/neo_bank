@@ -10,6 +10,8 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/get_all_
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/otp_code_check_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/profile_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
 import 'Core/Const/app_routes.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
@@ -85,6 +87,10 @@ class _MyAppState extends State<MyApp> {
               BlocProvider(
                 create: (BuildContext context) =>
                     OtpCodeCheckBloc(OtpCodeCheckRepository()),
+              ),
+              BlocProvider(
+                create: (BuildContext context) =>
+                    ProfileBloc(GetProfileRepository()),
               ),
             ],
             child: AnimatedTheme(
