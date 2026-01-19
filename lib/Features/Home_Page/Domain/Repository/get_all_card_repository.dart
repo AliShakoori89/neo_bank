@@ -7,11 +7,8 @@ class GetAllCardRepository {
   final dio = Dio();
 
   Future<CardListModel> getAllCards() async {
-    print('GetAllCardRepository');
     try {
       final token = await LocalStorage.read('access_token');
-
-      print(token);
 
       final response = await dio.post(
         "${APIKey.baseUrl}/api/cards/get-all",
@@ -24,11 +21,8 @@ class GetAllCardRepository {
         ),
       );
 
-      print(response.statusCode);
-
       if (response.statusCode == 200) {
         final data = response.data;
-        print(CardListModel.fromJson(data));
         return CardListModel.fromJson(data);
       }
     } catch (e) {
