@@ -1,17 +1,14 @@
-import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Background_UI/circle_1.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Background_UI/circle_2.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Background_UI/circle_3.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/add_card_button.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/bank_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/bank_card_shimmer.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/custom_Indicator.dart';
-
 import '../../Bloc/Get_All_cards_Bloc/get_all_cards_bloc.dart';
 import '../../Bloc/Get_All_cards_Bloc/get_all_cards_state.dart';
 
@@ -44,115 +41,73 @@ Widget buildBankCardSlider(
     },
     child: BlocBuilder<GetAllCardsBloc, GetAllCardsState>(
       builder: (context, state) {
-        if (state.status == GetAllCardsStatus.loading) {
+        if (state.status.isLoading) {
           return BankCardShimmer();
         }
+        if (state.status.isSuccess) {
+          final cards = state.cards ?? [];
 
-        final cards = state.cards ?? [];
+          final cardItems = [
+            ...cards.map((card) => buildBankCard(card)),
+            buildAddCardButton(context),
+          ];
 
-        final cardItems = [
-          ...cards.map((card) => buildBankCard(card)),
-          buildAddCardButton(context),
-        ];
+          final initialPage = cards.isNotEmpty ? 0 : cardItems.length - 1;
 
-        final initialPage = cards.isNotEmpty ? 0 : cardItems.length - 1;
-
-        return Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 268,
-              color: AppColors.splashGradiantColor1,
-            ),
-
-            /// Circle 1
-            Positioned(
-              right: -220,
-              top: 50,
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 16.1, sigmaY: 16.1),
-                child: Container(
-                  width: 383,
-                  height: 383,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.splashGradiantColor2.withValues(
-                      alpha: 0.7,
-                    ),
-                  ),
-                ),
+          return Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 268,
+                color: AppColors.splashGradiantColor1,
               ),
-            ),
 
-            /// Circle 2
-            Positioned(
-              right: 100,
-              top: -250,
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 16.1, sigmaY: 16.1),
-                child: Container(
-                  width: 383,
-                  height: 383,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.splashGradiantColor2.withValues(
-                      alpha: 0.7,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+              /// Circle 1
+              Circle1(),
 
-            /// Circle 3
-            Positioned(
-              right: 250,
-              top: 150,
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 16.1, sigmaY: 16.1),
-                child: Container(
-                  width: 195,
-                  height: 195,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.splashGradiantColor2.withValues(
-                      alpha: 0.7,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+              /// Circle 2
+              Circle2(),
 
-            Padding(
-              padding: const EdgeInsets.only(top: 30),
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 192,
-                    constraints: const BoxConstraints(
-                      minWidth: 320,
-                      minHeight: 192,
-                    ),
-                    child: CarouselSlider(
-                      items: cardItems,
-                      carouselController: controller,
-                      options: CarouselOptions(
-                        initialPage: initialPage,
-                        autoPlay: false,
-                        enlargeCenterPage: true,
-                        viewportFraction: 0.8,
-                        onPageChanged: (index, reason) {
-                          onPageChanged(index);
-                        },
+              /// Circle 3
+              Circle3(),
+
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 192,
+                      constraints: const BoxConstraints(
+                        minWidth: 320,
+                        minHeight: 192,
+                      ),
+                      child: CarouselSlider(
+                        items: cardItems,
+                        carouselController: controller,
+                        options: CarouselOptions(
+                          initialPage: initialPage,
+                          autoPlay: false,
+                          enlargeCenterPage: true,
+                          viewportFraction: 0.8,
+                          onPageChanged: (index, reason) {
+                            onPageChanged(index);
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                  buildIndicator(cardItems.length, current),
-                ],
+                    buildIndicator(cardItems.length, current),
+                  ],
+                ),
               ),
-            ),
-          ],
-        );
+            ],
+          );
+        }
+        if (state.status.isError) {
+          return Center(child: Text('لطفا بعدا تلاش کنید.'));
+        }
+
+        return Center(child: Text('لطفا بعدا تلاش کنید.'));
       },
     ),
   );

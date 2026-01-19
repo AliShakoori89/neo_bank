@@ -16,10 +16,6 @@ class OtpCodeCheckRepository {
     try {
       // final secretKey = LocalStorage.read('secret_key');
 
-      print(otpCode);
-      print(secretKey);
-      print(deviceID);
-
       final body = {
         "code": otpCode,
         "secretKey": secretKey,
@@ -37,13 +33,8 @@ class OtpCodeCheckRepository {
         ),
       );
 
-      print('aaa');
-      print('response.statusCode   ' + response.statusCode.toString());
-
       if (response.statusCode == 200) {
         final data = OtpCodeResponsModel.fromJson(response.data);
-
-        print(data.success ?? 'null');
 
         if (data.success!) {
           LocalStorage.save('access_token', data.data!.token!);

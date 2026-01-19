@@ -16,8 +16,12 @@ class GetAllCardsBloc extends Bloc<GetAllCardsEvent, GetAllCardsState> {
     GetUserAllCardsEvent event,
     Emitter<GetAllCardsState> emit,
   ) async {
+    print('*****');
+
     try {
       emit(state.copyWith(status: GetAllCardsStatus.loading));
+
+      print('loading');
 
       final cards = await getAllCardsRepository.getAllCards();
 

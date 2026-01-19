@@ -27,7 +27,7 @@ Widget buildBankCard(CardDataModel card) {
               const Spacer(),
               buildCardNumberAndDate(card),
               AppSpace.heightSpace_12,
-              buildCardBalance(),
+              buildCardBalance(card),
             ],
           ),
         ),

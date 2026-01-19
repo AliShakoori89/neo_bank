@@ -23,7 +23,7 @@ Widget buildCardNumberAndDate(card) {
         ),
         const Spacer(),
         Text(
-          '${date.month.toString().padLeft(2, '0')}/${(date.year % 100).toString().padLeft(2, '0')}'
+          '${(date.year % 100).toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}'
               .toPersianDigit(),
           style: const TextStyle(
             color: AppColors.appWhite,

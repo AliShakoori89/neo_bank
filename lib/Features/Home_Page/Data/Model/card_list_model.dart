@@ -25,12 +25,14 @@ class CardDataModel {
   final DateTime? expireDate;
   final String? pan;
   final String? cardDeposit;
+  final int? availableBalance;
 
   CardDataModel({
     this.depositNumber,
     this.expireDate,
     this.pan,
     this.cardDeposit,
+    this.availableBalance,
   });
 
   factory CardDataModel.fromJson(Map<String, dynamic> json) {
@@ -41,6 +43,7 @@ class CardDataModel {
           : null,
       pan: json['pan'] as String?,
       cardDeposit: json['cardDeposit'] as String?,
+      availableBalance: json['availableBalance'] as int?,
     );
   }
 }
