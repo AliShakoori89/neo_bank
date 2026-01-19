@@ -1,34 +1,27 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/to_persian_number.dart';
 
-import '../../../../Core/Const/app_colors.dart';
-
-const List<String> list = <String>[
-  '500570005633843001',
-  '500570005633843002',
-  '500570005633843003',
-  '500570005633843004',
-];
+typedef MenuEntry = DropdownMenuEntry<String>;
 
 class CustomDropdownMenu extends StatefulWidget {
-  const CustomDropdownMenu({super.key});
+  const CustomDropdownMenu({super.key, required this.cardsPan});
+
+  final List<String> cardsPan;
 
   @override
   State<CustomDropdownMenu> createState() => _CustomDropdownMenuState();
 }
 
-typedef MenuEntry = DropdownMenuEntry<String>;
-
 class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
-  String dropdownValue = list.first;
+  late String dropdownValue = widget.cardsPan.first;
 
   late final List<MenuEntry> menuEntries = UnmodifiableListView<MenuEntry>(
-    list.map<MenuEntry>(
-      (String name) => MenuEntry(
-        value: name,
-        label: toPersianNumber(name), // اعداد فارسی اینجا قرار می‌گیرن
+    widget.cardsPan.map<MenuEntry>(
+      (String card) => MenuEntry(
+        value: card,
+        label: toPersianNumber(card), // اعداد فارسی اینجا قرار می‌گیرن
       ),
     ),
   );
@@ -42,9 +35,7 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
         color: Theme.of(context).colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: Theme.of(
-            context,
-          ).colorScheme.surfaceDim, // inner border مشابه CSS
+          color: Theme.of(context).colorScheme.surfaceDim,
           width: 1,
         ),
         boxShadow: [

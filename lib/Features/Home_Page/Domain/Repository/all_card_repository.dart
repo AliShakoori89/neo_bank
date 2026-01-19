@@ -3,7 +3,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/card_list_model.dart';
 
-class GetAllCardRepository {
+class AllCardRepository {
   final dio = Dio();
 
   Future<CardListModel> getAllCards() async {

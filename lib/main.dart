@@ -6,8 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repository/user_login_auth_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/get_all_card_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repository/all_card_pan_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/All_cards_Pan_Bloc/all_cards_pans_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/all_card_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/otp_code_check_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/profile_repository.dart';
@@ -82,7 +84,11 @@ class _MyAppState extends State<MyApp> {
               ),
               BlocProvider(
                 create: (BuildContext context) =>
-                    GetAllCardsBloc(GetAllCardRepository()),
+                    AllCardsBloc(AllCardRepository()),
+              ),
+              BlocProvider(
+                create: (BuildContext context) =>
+                    AllCardsPansBloc(AllCardPanRepository()),
               ),
               BlocProvider(
                 create: (BuildContext context) =>

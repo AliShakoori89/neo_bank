@@ -1,25 +1,24 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/get_all_card_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_event.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_All_cards_Bloc/get_all_cards_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/all_card_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_state.dart';
 
-class GetAllCardsBloc extends Bloc<GetAllCardsEvent, GetAllCardsState> {
-  GetAllCardRepository getAllCardsRepository;
+class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
+  AllCardRepository allCardRepository;
 
-  GetAllCardsBloc(this.getAllCardsRepository)
-    : super(GetAllCardsState.initial()) {
+  AllCardsBloc(this.allCardRepository) : super(AllCardsState.initial()) {
     on<GetUserAllCardsEvent>(_mapGetUserAllCardsEventToState);
   }
 
   void _mapGetUserAllCardsEventToState(
     GetUserAllCardsEvent event,
-    Emitter<GetAllCardsState> emit,
+    Emitter<AllCardsState> emit,
   ) async {
     try {
       emit(state.copyWith(status: GetAllCardsStatus.loading));
 
-      final cards = await getAllCardsRepository.getAllCards();
+      final cards = await allCardRepository.getAllCards();
 
       emit(
         state.copyWith(status: GetAllCardsStatus.success, cards: cards.data),

@@ -1,115 +1,158 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/All_cards_Pan_Bloc/all_cards_pans_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/All_cards_Pan_Bloc/all_cards_pans_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Card/dropdown_button.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Const/app_space.dart';
 
-Widget buildCartTabBody(BuildContext context){
+Widget buildCartTabBody(BuildContext context) {
   return SizedBox(
     height: double.infinity,
     width: double.infinity,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-
         AppSpace.heightSpace_24,
-
+        BlocBuilder<AllCardsPansBloc, AllCardsPansState>(
+          builder: (context, state) {
+            final cardsPan = state.cardsPan;
+            if (state.status.isLoading) {
+              return Container(
+                width: MediaQuery.of(context).size.width - 60,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppColors.circleBorderColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                constraints: const BoxConstraints(minWidth: 320, minHeight: 40),
+                child: Shimmer(
+                  duration: Duration(seconds: 1), //Default value
+                  interval: Duration(
+                    microseconds: 1,
+                  ), //Default value: Duration(seconds: 0)
+                  //Default value
+                  colorOpacity: 5, //Default value
+                  enabled: true, //Default value
+                  direction: ShimmerDirection.fromLTRB(), //Default Value
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              );
+            }
+            if (state.status.isSuccess) {
+              return CustomDropdownMenu(cardsPan: cardsPan!);
+            }
+            if (state.status.isError) {
+              return Text('error');
+            }
+            return Container();
+          },
+        ),
+        AppSpace.heightSpace_24,
         SizedBox(
           height: 144,
           child: Column(
             children: [
-
               // --- مبلغ انتقال ---
               Form(
-                  child: Container(
-                    margin: EdgeInsets.only(right: 30, left: 30),
-                    height: 44,
-                    color: Theme.of(context).colorScheme.outline,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        TextFormField(
-                          textAlign: TextAlign.center, // hint و متن وسط
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                            hintText: 'مبلغ انتقال',
-                            hintStyle: TextStyle(
-                              fontSize: 16,
-                              color: Theme.of(context).colorScheme.surface,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.surfaceDim,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).colorScheme.surfaceDim,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                color: Colors.blue,
-                              ),
+                child: Container(
+                  margin: EdgeInsets.only(right: 30, left: 30),
+                  height: 44,
+                  color: Theme.of(context).colorScheme.outline,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      TextFormField(
+                        textAlign: TextAlign.center, // hint و متن وسط
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 10,
+                          ),
+                          hintText: 'مبلغ انتقال',
+                          hintStyle: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).colorScheme.surface,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.surfaceDim,
                             ),
                           ),
-                        ),
-                        Positioned(
-                          left: 16, // فاصله از سمت راست
-                          child: Text(
-                            'ریال',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Theme.of(context).colorScheme.primaryFixed,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.surfaceDim,
                             ),
                           ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
                         ),
-                      ],
-                    ),
-                  )
+                      ),
+                      Positioned(
+                        left: 16, // فاصله از سمت راست
+                        child: Text(
+                          'ریال',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).colorScheme.primaryFixed,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-
 
               AppSpace.heightSpace_24,
 
               // --- دکمه تایید ---
-
               Container(
                 height: 44,
                 margin: EdgeInsets.only(right: 30, left: 30),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:AppColors.splashGradiantColor1,
+                    backgroundColor: AppColors.splashGradiantColor1,
                     shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color.fromRGBO(255, 255, 255, 0.12)),
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                      side: BorderSide(
+                        color: Color.fromRGBO(255, 255, 255, 0.12),
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('تایید و ادامه',
+                      Text(
+                        'تایید و ادامه',
                         style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.appWhite
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.appWhite,
                         ),
                       ),
                       AppSpace.widthSpace_5,
                       Icon(
                         Icons.arrow_forward,
-                        color: Theme.of(context)
-                            .elevatedButtonTheme
-                            .style
-                            ?.iconColor
-                            ?.resolve({}),
-                      )                    ],
+                        color: Theme.of(
+                          context,
+                        ).elevatedButtonTheme.style?.iconColor?.resolve({}),
+                      ),
+                    ],
                   ),
-                  onPressed: (){},
+                  onPressed: () {},
                 ),
               ),
               AppSpace.heightSpace_32,
@@ -118,7 +161,6 @@ Widget buildCartTabBody(BuildContext context){
         ),
 
         // --- عنوان مخاطبین ---
-
         Container(
           color: Theme.of(context).colorScheme.surfaceContainer,
           height: 142,
@@ -132,19 +174,21 @@ Widget buildCartTabBody(BuildContext context){
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('مخاطبین پر تکرار',
+                        Text(
+                          'مخاطبین پر تکرار',
                           style: TextStyle(
                             fontSize: 14,
                             color: Theme.of(context).colorScheme.primaryFixed,
                           ),
                         ),
-                        Text('مشاهده همه',
+                        Text(
+                          'مشاهده همه',
                           style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.splashGradiantColor1
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.splashGradiantColor1,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -154,58 +198,57 @@ Widget buildCartTabBody(BuildContext context){
               AppSpace.heightSpace_8,
 
               // --- لیست مخاطبین ---
-
               Padding(
-                padding: EdgeInsets.only(
-                  right: 12
-                ),
+                padding: EdgeInsets.only(right: 12),
                 child: Container(
                   height: 82,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
                     separatorBuilder: (_, __) => const SizedBox(width: 5),
-                    itemBuilder: (context, index) =>
-                        Container(
-                          width: 74,
-                          height: 82,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: CircleAvatar(
-                                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                                  child: SvgPicture.asset(
-                                    'assets/svg/fund_transfer_page/user-01.svg',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
+                    itemBuilder: (context, index) => Container(
+                      width: 74,
+                      height: 82,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: CircleAvatar(
+                              backgroundColor: Theme.of(
+                                context,
+                              ).colorScheme.surfaceContainerHighest,
+                              child: SvgPicture.asset(
+                                'assets/svg/fund_transfer_page/user-01.svg',
+                                fit: BoxFit.fill,
                               ),
-                              AppSpace.heightSpace_12,
-                              Expanded(
-                                flex: 1,
-                                child: Text('احسان علیمردانی',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: Theme.of(context).colorScheme.primaryFixed,
-                                  ),
-                                ),
-                              )
-                            ],
+                            ),
                           ),
-                        ),
-                  )
+                          AppSpace.heightSpace_12,
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'احسان علیمردانی',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.primaryFixed,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
-        )
-
-
+        ),
       ],
     ),
   );

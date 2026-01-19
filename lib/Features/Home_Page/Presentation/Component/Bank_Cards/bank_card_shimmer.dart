@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Box_Background_UI/circle_1.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Box_Background_UI/circle_2.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Box_Background_UI/circle_3.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 class BankCardShimmer extends StatelessWidget {
@@ -18,55 +21,13 @@ class BankCardShimmer extends StatelessWidget {
         ),
 
         /// Circle 1
-        Positioned(
-          right: -220,
-          top: 50,
-          child: ImageFiltered(
-            imageFilter: ImageFilter.blur(sigmaX: 16.1, sigmaY: 16.1),
-            child: Container(
-              width: 383,
-              height: 383,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.splashGradiantColor2.withValues(alpha: 0.7),
-              ),
-            ),
-          ),
-        ),
+        Circle1(),
 
         /// Circle 2
-        Positioned(
-          right: 100,
-          top: -250,
-          child: ImageFiltered(
-            imageFilter: ImageFilter.blur(sigmaX: 16.1, sigmaY: 16.1),
-            child: Container(
-              width: 383,
-              height: 383,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.splashGradiantColor2.withValues(alpha: 0.7),
-              ),
-            ),
-          ),
-        ),
+        Circle2(),
 
         /// Circle 3
-        Positioned(
-          right: 250,
-          top: 150,
-          child: ImageFiltered(
-            imageFilter: ImageFilter.blur(sigmaX: 16.1, sigmaY: 16.1),
-            child: Container(
-              width: 195,
-              height: 195,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.splashGradiantColor2.withValues(alpha: 0.7),
-              ),
-            ),
-          ),
-        ),
+        Circle3(),
 
         Padding(
           padding: const EdgeInsets.only(top: 30, left: 45, right: 45),

@@ -25,6 +25,7 @@ final GoRouter router = GoRouter(
         return OtpCodePage(
           deviceId: args.deviceId,
           phoneNumber: args.phoneNumber,
+          nationalCode: args.nationalCode,
           secretKey: args.secretKey,
         );
       },

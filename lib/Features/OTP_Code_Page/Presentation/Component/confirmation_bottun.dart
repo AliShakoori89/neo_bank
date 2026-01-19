@@ -25,7 +25,6 @@ class ConfirmationBottun extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<OtpCodeCheckBloc, OtpCodeCheckState>(
       listener: (context, state) {
-        print(state);
         if (state.status.isSuccess) {
           if (state.otpLoginStatus) {
             context.go('/set_pass_page');

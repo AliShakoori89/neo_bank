@@ -8,14 +8,13 @@ extension GetAllCardsStatusX on GetAllCardsStatus {
   bool get isSuccess => this == GetAllCardsStatus.success;
   bool get isError => this == GetAllCardsStatus.error;
   bool get isLoading => this == GetAllCardsStatus.loading;
-  bool get isTokenExpired => this == GetAllCardsStatus.tokenExpired;
 }
 
-class GetAllCardsState extends Equatable {
-  const GetAllCardsState({required this.status, required this.cards});
+class AllCardsState extends Equatable {
+  const AllCardsState({required this.status, required this.cards});
 
-  static GetAllCardsState initial() =>
-      GetAllCardsState(status: GetAllCardsStatus.initial, cards: []);
+  static AllCardsState initial() =>
+      AllCardsState(status: GetAllCardsStatus.initial, cards: []);
 
   final GetAllCardsStatus status;
   final List<CardDataModel>? cards;
@@ -23,11 +22,11 @@ class GetAllCardsState extends Equatable {
   @override
   List<Object?> get props => [status, cards];
 
-  GetAllCardsState copyWith({
+  AllCardsState copyWith({
     GetAllCardsStatus? status,
     List<CardDataModel>? cards,
   }) {
-    return GetAllCardsState(
+    return AllCardsState(
       status: status ?? this.status,
       cards: cards ?? this.cards,
     );

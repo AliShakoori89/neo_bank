@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Box_Background_UI/circle_1.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Box_Background_UI/circle_2.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Box_Background_UI/circle_3.dart';
@@ -9,8 +10,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Ban
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/bank_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/bank_card_shimmer.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/custom_Indicator.dart';
-import '../../Bloc/Get_All_cards_Bloc/get_all_cards_bloc.dart';
-import '../../Bloc/Get_All_cards_Bloc/get_all_cards_state.dart';
+import '../../Bloc/All_cards_Bloc/all_cards_state.dart';
 
 /// 🔹 اسلایدر کارت‌ها + بک‌گراند
 Widget buildBankCardSlider(
@@ -19,7 +19,7 @@ Widget buildBankCardSlider(
   int current,
   ValueChanged<int> onPageChanged,
 ) {
-  return BlocListener<GetAllCardsBloc, GetAllCardsState>(
+  return BlocListener<AllCardsBloc, AllCardsState>(
     listener: (context, state) {
       // if (state.status == GetAllCardsStatus.tokenExpired) {
       //   context.read<UserLoginAuthBloc>().add(LogoutEvent());
@@ -39,7 +39,7 @@ Widget buildBankCardSlider(
         });
       }
     },
-    child: BlocBuilder<GetAllCardsBloc, GetAllCardsState>(
+    child: BlocBuilder<AllCardsBloc, AllCardsState>(
       builder: (context, state) {
         if (state.status.isLoading) {
           return BankCardShimmer();

@@ -33,6 +33,7 @@ class CustomButton extends StatelessWidget {
               extra: OtpCodePage(
                 deviceId: state.deviceId,
                 phoneNumber: phoneNumberController.text,
+                nationalCode: nationalCodeController.text,
                 secretKey: state.secretKey,
               ),
             );
