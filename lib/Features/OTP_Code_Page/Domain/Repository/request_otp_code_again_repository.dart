@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/user_login_auth_success_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class UserLoginAuthRepository {
+class RequestOtpCodeAgainRepository {
   final dio = Dio();
 
-  FutureOr<List<dynamic>?> userLogin(
+  FutureOr<List<dynamic>?> requestOTPAgain(
     String nationalNumber,
     String mobileNumber,
   ) async {
@@ -65,18 +65,12 @@ class UserLoginAuthRepository {
         return [
           data.success,
           data.error!.errorMessage,
-          data.data!.secretKey,
           data.data!.deviceId,
+          data.data!.secretKey,
         ];
       }
     } catch (e) {
       return null;
     }
-  }
-
-  FutureOr<bool?> userIsLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    return token != null ? true : false;
   }
 }

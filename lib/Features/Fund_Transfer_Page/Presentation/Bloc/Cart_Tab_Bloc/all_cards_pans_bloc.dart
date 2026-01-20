@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repository/all_card_pan_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/All_cards_Pan_Bloc/all_cards_pans_event.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/All_cards_Pan_Bloc/all_cards_pans_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_pans_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_pans_state.dart';
 
 class AllCardsPansBloc extends Bloc<AllCardsPansEvent, AllCardsPansState> {
   AllCardPanRepository allCardPanRepository;

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/All_cards_Pan_Bloc/all_cards_pans_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/All_cards_Pan_Bloc/all_cards_pans_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_pans_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_pans_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/build_account_tab_body.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'component/build_cart_tab_body.dart';
 import 'component/build_tab_item.dart';
@@ -33,6 +36,7 @@ class _FundTransferPageState extends State<FundTransferPage>
   void initState() {
     super.initState();
     BlocProvider.of<AllCardsPansBloc>(context).add(GetAllCardsPanEvent());
+    BlocProvider.of<UserAllAccountBloc>(context).add(GetUserAllAccountEvent());
     _tabController = TabController(length: _tabs.length, vsync: this)
       ..addListener(() => setState(() {}));
   }
@@ -103,7 +107,7 @@ class _FundTransferPageState extends State<FundTransferPage>
               controller: _tabController,
               children: [
                 buildCartTabBody(context),
-                const Center(child: Text("محتوای تب حساب")),
+                buildAccountTabBody(context),
                 const Center(child: Text("محتوای تب شبا")),
                 const Center(child: Text("محتوای تب هدیه")),
               ],

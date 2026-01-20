@@ -1,12 +1,20 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_logo.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_event.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_state.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_event.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_state.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/confirmation_bottun.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/edit_phone_number_bottun.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/otp_code_box.dart';
@@ -37,6 +45,8 @@ class _OtpCodePageState extends State<OtpCodePage> {
   bool isOtpComplete = false;
   int resendTimer = 0;
   Timer? timer;
+
+  String? newSecuretKey;
 
   void _onOtpChanged(bool value) {
     setState(() {
@@ -192,12 +202,12 @@ class _OtpCodePageState extends State<OtpCodePage> {
                               : GestureDetector(
                                   onTap: () {
                                     _startTimer(); // ارسال مجدد OTP
-                                    // context.read<UserLoginAuthBloc>().add(
-                                    //   UserLoginEvent(
-                                    //     nationalCode: widget.nationalCode,
-                                    //     phoneNumber: widget.phoneNumber,
-                                    //   ),
-                                    // );
+                                    context.read<UserLoginAuthBloc>().add(
+                                      UserLoginEvent(
+                                        nationalCode: widget.nationalCode,
+                                        phoneNumber: widget.phoneNumber,
+                                      ),
+                                    );
                                   },
                                   child: Text(
                                     'ارسال مجدد کد',
