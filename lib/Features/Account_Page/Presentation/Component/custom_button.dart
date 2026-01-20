@@ -30,12 +30,12 @@ class CustomButton extends StatelessWidget {
           if (state.loginStatus) {
             context.go(
               '/otp_code_page',
-              extra: OtpCodePage(
-                deviceId: state.deviceId,
-                phoneNumber: phoneNumberController.text,
-                nationalCode: nationalCodeController.text,
-                secretKey: state.secretKey,
-              ),
+              extra: {
+                'deviceId': state.deviceId,
+                'phoneNumber': phoneNumberController.text,
+                'nationalCode': nationalCodeController.text,
+                'secretKey': state.secretKey,
+              },
             );
           } else {
             Fluttertoast.showToast(

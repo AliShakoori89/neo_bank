@@ -1,16 +1,21 @@
-// abstract class RequerstOtpAgainEvent {
-//   List<Object> get props => [];
-// }
+import 'package:equatable/equatable.dart';
 
-// class RequestOTPCodeAgainEvent extends RequerstOtpAgainEvent {
-//   final String nationalCode;
-//   final String phoneNumber;
+abstract class RequerstOtpAgainEvent extends Equatable {
+  const RequerstOtpAgainEvent();
 
-//   RequestOTPCodeAgainEvent({
-//     required this.nationalCode,
-//     required this.phoneNumber,
-//   });
+  @override
+  List<Object> get props => [];
+}
 
-//   @override
-//   List<Object> get props => [nationalCode, phoneNumber];
-// }
+class RequestOTPCodeAgainEvent extends RequerstOtpAgainEvent {
+  final String nationalCode;
+  final String phoneNumber;
+
+  const RequestOTPCodeAgainEvent({
+    required this.nationalCode,
+    required this.phoneNumber,
+  });
+
+  @override
+  List<Object> get props => [nationalCode, phoneNumber];
+}

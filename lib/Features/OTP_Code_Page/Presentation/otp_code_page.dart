@@ -46,7 +46,8 @@ class _OtpCodePageState extends State<OtpCodePage> {
   int resendTimer = 0;
   Timer? timer;
 
-  String? newSecuretKey;
+  String? newSecretKey;
+  String? newDeviceId;
 
   void _onOtpChanged(bool value) {
     setState(() {
@@ -76,157 +77,188 @@ class _OtpCodePageState extends State<OtpCodePage> {
 
   @override
   void initState() {
-    _startTimer();
     super.initState();
+    _restartTimerSafely();
+  }
+
+  void _restartTimerSafely() {
+    timer?.cancel();
+    resendTimer = 120;
+
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      if (!mounted) {
+        t.cancel();
+        return;
+      }
+
+      if (resendTimer == 0) {
+        t.cancel();
+      } else {
+        setState(() {
+          resendTimer--;
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: BlocBuilder<ThemeBloc, ThemeData>(
-        builder: (context, theme) {
-          return Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: theme == AppTheme.lightTheme
-                    ? [
-                        Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.secondaryContainer,
-                      ]
-                    : [
-                        Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.secondaryContainer,
-                        Theme.of(context).colorScheme.secondaryContainer,
-                      ],
-              ),
-            ),
-            child: Column(
-              children: [
-                AppSpace.heightSpace_128,
-                NeoBankLogo(
-                  logoColor: AppColors.splashGradiantColor1,
-                  logoWidth: 98,
-                  logoHeight: 24,
-                  space: 5,
+    return BlocListener<RequerstOtpAgainBloc, RequerstOtpAgainState>(
+      listenWhen: (previous, current) {
+        return previous.status != current.status && current.status.isSuccess;
+      },
+      listener: (context, state) {
+        newSecretKey = state.secretKey;
+        newDeviceId = state.deviceId;
+
+        _restartTimerSafely();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: BlocBuilder<ThemeBloc, ThemeData>(
+          builder: (context, theme) {
+            return Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: theme == AppTheme.lightTheme
+                      ? [
+                          Theme.of(context).colorScheme.primaryContainer,
+                          Theme.of(context).colorScheme.secondaryContainer,
+                        ]
+                      : [
+                          Theme.of(context).colorScheme.primaryContainer,
+                          Theme.of(context).colorScheme.primaryContainer,
+                          Theme.of(context).colorScheme.secondaryContainer,
+                          Theme.of(context).colorScheme.secondaryContainer,
+                        ],
                 ),
-                AppSpace.heightSpace_128,
-                Container(
-                  margin: const EdgeInsets.only(
-                    left: 24,
-                    right: 24,
-                    bottom: 24,
-                    top: 24,
+              ),
+              child: Column(
+                children: [
+                  AppSpace.heightSpace_128,
+                  NeoBankLogo(
+                    logoColor: AppColors.splashGradiantColor1,
+                    logoWidth: 98,
+                    logoHeight: 24,
+                    space: 5,
                   ),
-                  width: double.infinity,
-                  padding: const EdgeInsets.only(
-                    left: 24,
-                    right: 24,
-                    top: 24,
-                    bottom: 24,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.splashGradiantColor2.withAlpha(30),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Column(
-                    children: [
-                      //edit phone number container
-                      Container(
-                        width: double.infinity,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: AppColors.splashGradiantColor2.withAlpha(30),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 30, right: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              EditPhoneNumberBottun(),
-                              AppSpace.widthSpace_48,
-                              PhoneNumber(phoneNumber: widget.phoneNumber),
-                            ],
+                  AppSpace.heightSpace_128,
+                  Container(
+                    margin: const EdgeInsets.only(
+                      left: 24,
+                      right: 24,
+                      bottom: 24,
+                      top: 24,
+                    ),
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(
+                      left: 24,
+                      right: 24,
+                      top: 24,
+                      bottom: 24,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.splashGradiantColor2.withAlpha(30),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Column(
+                      children: [
+                        //edit phone number container
+                        Container(
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: AppColors.splashGradiantColor2.withAlpha(30),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                        ),
-                      ),
-                      AppSpace.heightSpace_24,
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 24),
-                        child: const Text(
-                          'کد تایید را وارد کنید',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      OtpCodeBox(
-                        otpController: _otpController,
-                        onCompleted: _onOtpChanged,
-                      ),
-                      AppSpace.heightSpace_24,
-                      ConfirmationBottun(
-                        otpController: _otpController,
-                        isOtpComplete: isOtpComplete,
-                        secretKey: widget.secretKey,
-                        deviceId: widget.deviceId,
-                      ),
-                      AppSpace.heightSpace_24,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'زمان استفاده از کد',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.customHeaderTextColor,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 30, right: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                EditPhoneNumberBottun(),
+                                AppSpace.widthSpace_48,
+                                PhoneNumber(phoneNumber: widget.phoneNumber),
+                              ],
                             ),
                           ),
-                          resendTimer > 0
-                              ? Text(
-                                  '$resendTimer ثانیه',
-                                  style: TextStyle(
-                                    color: AppColors.customHeaderTextColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                )
-                              : GestureDetector(
-                                  onTap: () {
-                                    _startTimer(); // ارسال مجدد OTP
-                                    context.read<UserLoginAuthBloc>().add(
-                                      UserLoginEvent(
-                                        nationalCode: widget.nationalCode,
-                                        phoneNumber: widget.phoneNumber,
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    'ارسال مجدد کد',
+                        ),
+                        AppSpace.heightSpace_24,
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 24),
+                          child: const Text(
+                            'کد تایید را وارد کنید',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        OtpCodeBox(
+                          otpController: _otpController,
+                          onCompleted: _onOtpChanged,
+                        ),
+                        AppSpace.heightSpace_24,
+                        ConfirmationBottun(
+                          otpController: _otpController,
+                          isOtpComplete: isOtpComplete,
+                          secretKey: newSecretKey ?? widget.secretKey,
+                          deviceId: newDeviceId ?? widget.deviceId,
+                        ),
+                        AppSpace.heightSpace_24,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'زمان استفاده از کد',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.customHeaderTextColor,
+                              ),
+                            ),
+                            resendTimer > 0
+                                ? Text(
+                                    '$resendTimer ثانیه',
                                     style: TextStyle(
-                                      color: AppColors.splashGradiantColor1,
-                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.customHeaderTextColor,
                                       fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  )
+                                : GestureDetector(
+                                    onTap: () {
+                                      _startTimer(); // ارسال مجدد OTP
+                                      context.read<RequerstOtpAgainBloc>().add(
+                                        RequestOTPCodeAgainEvent(
+                                          nationalCode: widget.nationalCode,
+                                          phoneNumber: widget.phoneNumber,
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'ارسال مجدد کد',
+                                      style: TextStyle(
+                                        color: AppColors.splashGradiantColor1,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                      ),
                                     ),
                                   ),
-                                ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

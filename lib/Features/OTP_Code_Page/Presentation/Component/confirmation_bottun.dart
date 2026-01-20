@@ -59,6 +59,10 @@ class ConfirmationBottun extends StatelessWidget {
             onPressed: () {
               final otp = otpController.text;
 
+              print(otp);
+              print(secretKey);
+              print(deviceId);
+
               context.read<OtpCodeCheckBloc>().add(
                 OtpCodeCheckValueEvent(
                   deviceId: deviceId,

@@ -1,6 +1,9 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/request_otp_code_again_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
 import '../../Features/Main_Page/main_page.dart';
@@ -21,12 +24,16 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/otp_code_page',
       builder: (context, state) {
-        final args = state.extra as OtpCodePage;
-        return OtpCodePage(
-          deviceId: args.deviceId,
-          phoneNumber: args.phoneNumber,
-          nationalCode: args.nationalCode,
-          secretKey: args.secretKey,
+        final args = state.extra as Map<String, dynamic>;
+
+        return BlocProvider(
+          create: (_) => RequerstOtpAgainBloc(RequestOtpCodeAgainRepository()),
+          child: OtpCodePage(
+            deviceId: args['deviceId'],
+            phoneNumber: args['phoneNumber'],
+            nationalCode: args['nationalCode'],
+            secretKey: args['secretKey'],
+          ),
         );
       },
     ),
