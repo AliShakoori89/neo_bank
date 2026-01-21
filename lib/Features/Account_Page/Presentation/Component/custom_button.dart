@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/Route/otp_args.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
 import '../../../../Core/Const/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
@@ -26,24 +27,23 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<UserLoginAuthBloc, UserLoginAuthState>(
       listener: (context, state) {
-        if (state.status.isSuccess) {
-          print('11111');
-          if (state.loginStatus) {
-            print(state.loginStatus);
-            context.go(
-              '/otp_code_page',
-              extra: {
-                'deviceId': state.deviceId,
-                'phoneNumber': phoneNumberController.text,
-                'nationalCode': nationalCodeController.text,
-                'secretKey': state.secretKey,
-              },
-            );
-          } else {
-            AppSnackBar.error(context, state.loginMessage);
-          }
+        if (state.status == UserLoginAuthStatus.success && state.loginStatus) {
+          context.go(
+            '/otp_code_page',
+            extra: OtpArgs(
+              phoneNumber: phoneNumberController.text,
+              nationalCode: nationalCodeController.text,
+              deviceId: state.deviceId,
+              secretKey: state.secretKey,
+            ),
+          );
+        }
+
+        if (state.status == UserLoginAuthStatus.error) {
+          AppSnackBar.error(context, state.loginMessage);
         }
       },
+
       builder: (context, state) {
         final isLoading = state.status == UserLoginAuthStatus.loading;
 

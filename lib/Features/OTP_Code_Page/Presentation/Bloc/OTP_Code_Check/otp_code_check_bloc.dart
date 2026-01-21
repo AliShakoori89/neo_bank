@@ -29,8 +29,8 @@ class OtpCodeCheckBloc extends Bloc<OtpCodeCheckEvent, OtpCodeCheckState> {
       emit(
         state.copyWith(
           status: OtpCodeCheckStatus.success,
-          otpLoginStatus: otpLoginStatus![0],
-          otpLoginMessage: otpLoginStatus[1],
+          otpLoginStatus: otpLoginStatus!.success,
+          otpLoginMessage: otpLoginStatus.message,
         ),
       );
     } catch (error) {

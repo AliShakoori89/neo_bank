@@ -25,15 +25,27 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
         event.phoneNumber,
       );
 
-      emit(
-        state.copyWith(
-          status: UserLoginAuthStatus.success,
-          loginStatus: result.success,
-          loginMessage: result.message,
-          secretKey: result.secretKey,
-          deviceId: result.deviceId,
-        ),
-      );
+      if (result.success) {
+        emit(
+          state.copyWith(
+            status: UserLoginAuthStatus.success,
+            loginStatus: true,
+            loginMessage: result.message,
+            secretKey: result.secretKey,
+            deviceId: result.deviceId,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            status: UserLoginAuthStatus.error,
+            loginStatus: false,
+            loginMessage: result.message,
+            secretKey: '',
+            deviceId: '',
+          ),
+        );
+      }
     } catch (error) {
       emit(state.copyWith(status: UserLoginAuthStatus.error));
     }

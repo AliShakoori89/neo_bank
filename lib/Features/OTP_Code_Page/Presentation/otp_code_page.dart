@@ -72,6 +72,8 @@ class _OtpCodePageState extends State<OtpCodePage> {
   void initState() {
     super.initState();
     _restartTimerSafely();
+    print('widget.secretKey    ' + widget.secretKey);
+    print('widget.deviceId    ' + widget.deviceId);
   }
 
   void _restartTimerSafely() {

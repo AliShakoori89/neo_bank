@@ -4,14 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/login_result_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/user_login_auth_success_model.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Models/otp_request_result_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLoginAuthRepository {
   final dio = Dio();
 
-  FutureOr<OtpRequestResultModel> userLogin(
+  FutureOr<LoginResultModel> userLogin(
     String nationalNumber,
     String mobileNumber,
   ) async {
@@ -28,6 +28,8 @@ class UserLoginAuthRepository {
         "appVersion": deviceInfo['appVersion'],
       };
 
+      print('###########################');
+
       final response = await dio.post(
         "${APIKey.baseUrl}/api/auth/request-login",
         data: jsonEncode(body),
@@ -39,40 +41,39 @@ class UserLoginAuthRepository {
         ),
       );
 
-      if (response.statusCode == 200) {
-        final data = UserLoginAuthModel.fromJson(response.data);
+      final data = UserLoginAuthModel.fromJson(response.data);
 
-        print('*************************************************');
+      if (response.statusCode == 200 && data.success == true) {
+        print(data.data ?? 'asdadasds');
+
+        print('*');
         print('otpcode     ${data.data!.code}');
         print('deviceId     ${data.data!.deviceId}');
         print('secretKey     ${data.data!.secretKey}');
-        print('*************************************************');
+        print('**');
 
-        if (data.success!) {
-          LocalStorage.save('secret_key', data.data!.secretKey!);
-          LocalStorage.save(
-            'expire_secret_key_time',
-            data.data!.expireTime!.toIso8601String(),
-          );
-        }
+        LocalStorage.save('secret_key', data.data!.secretKey!);
+        LocalStorage.save(
+          'expire_secret_key_time',
+          data.data!.expireTime!.toIso8601String(),
+        );
 
-        return OtpRequestResultModel(
+        return LoginResultModel(
           success: true,
           message: '',
           secretKey: data.data!.secretKey!,
           deviceId: data.data!.deviceId!,
         );
-      } else {
-        final data = UserLoginAuthModel.fromJson(response.data);
-        return OtpRequestResultModel(
-          success: false,
-          message: data.error?.errorMessage ?? 'خطای نامشخص',
-          secretKey: '',
-          deviceId: '',
-        );
       }
+
+      return LoginResultModel(
+        success: false,
+        message: data.error?.errorMessage ?? 'خطای نامشخص',
+        secretKey: '',
+        deviceId: '',
+      );
     } catch (e) {
-      return OtpRequestResultModel(
+      return LoginResultModel(
         success: false,
         message: 'خطا در ارتباط با سرور',
         secretKey: '',
