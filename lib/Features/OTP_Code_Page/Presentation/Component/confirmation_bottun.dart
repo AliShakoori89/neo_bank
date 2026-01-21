@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_event.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_state.dart';
@@ -29,15 +30,7 @@ class ConfirmationBottun extends StatelessWidget {
           if (state.otpLoginStatus) {
             context.go('/set_pass_page');
           } else {
-            Fluttertoast.showToast(
-              msg: state.otpLoginMessage,
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
+            AppSnackBar.error(context, state.otpLoginMessage);
           }
         }
       },
