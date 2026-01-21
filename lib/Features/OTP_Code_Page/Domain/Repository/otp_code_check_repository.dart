@@ -40,8 +40,6 @@ class OtpCodeCheckRepository {
       );
 
       final data = OtpCodeResponseModel.fromJson(response.data);
-      print('*****************');
-      print(data.data);
 
       if (response.statusCode == 200 && data.success == true) {
         LocalStorage.save('access_token', data.data!.token!);

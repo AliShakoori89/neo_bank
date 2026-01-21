@@ -28,8 +28,6 @@ class UserLoginAuthRepository {
         "appVersion": deviceInfo['appVersion'],
       };
 
-      print('###########################');
-
       final response = await dio.post(
         "${APIKey.baseUrl}/api/auth/request-login",
         data: jsonEncode(body),
@@ -44,8 +42,6 @@ class UserLoginAuthRepository {
       final data = UserLoginAuthModel.fromJson(response.data);
 
       if (response.statusCode == 200 && data.success == true) {
-        print(data.data ?? 'asdadasds');
-
         print('*');
         print('otpcode     ${data.data!.code}');
         print('deviceId     ${data.data!.deviceId}');

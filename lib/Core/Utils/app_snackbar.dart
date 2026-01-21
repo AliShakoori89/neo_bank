@@ -1,39 +1,42 @@
 import 'package:flutter/material.dart';
 
 class AppSnackBar {
-  AppSnackBar._(); // جلوگیری از ساخت instance
+  AppSnackBar._();
 
-  static void error(BuildContext context, String message) {
-    show(context, message: message, backgroundColor: Colors.red);
+  static void errorTop(BuildContext context, String message) {
+    _showTop(context, message: message, backgroundColor: Colors.red);
   }
 
-  static void success(BuildContext context, String message) {
-    show(context, message: message, backgroundColor: Colors.green);
+  static void successTop(BuildContext context, String message) {
+    _showTop(context, message: message, backgroundColor: Colors.green);
   }
 
-  static void show(
+  static void _showTop(
     BuildContext context, {
     required String message,
-    Color backgroundColor = Colors.red,
-    Duration duration = const Duration(seconds: 2),
+    required Color backgroundColor,
+    Duration duration = const Duration(seconds: 3),
   }) {
     final messenger = ScaffoldMessenger.of(context);
 
-    messenger.clearSnackBars();
+    messenger.clearMaterialBanners();
 
-    messenger.showSnackBar(
-      SnackBar(
+    messenger.showMaterialBanner(
+      MaterialBanner(
+        backgroundColor: backgroundColor,
         content: Text(
           message,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
+          textAlign: TextAlign.justify,
         ),
-        duration: duration,
-        backgroundColor: backgroundColor,
-        behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        leading: const Icon(Icons.info, color: Colors.white),
+        actions: const [SizedBox()],
+        padding: EdgeInsets.all(20),
       ),
     );
+
+    Future.delayed(duration, () {
+      messenger.hideCurrentMaterialBanner();
+    });
   }
 }

@@ -30,7 +30,7 @@ class ConfirmationBottun extends StatelessWidget {
           if (state.otpLoginStatus) {
             context.go('/set_pass_page');
           } else {
-            AppSnackBar.error(context, state.otpLoginMessage);
+            AppSnackBar.errorTop(context, state.otpLoginMessage);
           }
         }
       },
@@ -51,10 +51,6 @@ class ConfirmationBottun extends StatelessWidget {
 
             onPressed: () {
               final otp = otpController.text;
-
-              print(otp);
-              print(secretKey);
-              print(deviceId);
 
               context.read<OtpCodeCheckBloc>().add(
                 OtpCodeCheckValueEvent(

@@ -40,7 +40,7 @@ class CustomButton extends StatelessWidget {
         }
 
         if (state.status == UserLoginAuthStatus.error) {
-          AppSnackBar.error(context, state.loginMessage);
+          AppSnackBar.errorTop(context, state.loginMessage);
         }
       },
 
