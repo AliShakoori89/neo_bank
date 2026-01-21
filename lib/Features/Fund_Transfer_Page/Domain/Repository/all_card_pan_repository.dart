@@ -7,10 +7,10 @@ class AllCardPanRepository {
   final dio = Dio();
 
   Future<List<String>> getAllCardsPan() async {
-    List<String> cardsPan = <String>[];
 
     try {
       final token = await LocalStorage.read('access_token');
+      if (token == null) throw Exception('Token not found');
 
       final response = await dio.post(
         "${APIKey.baseUrl}/api/cards/get-all",
@@ -18,23 +18,25 @@ class AllCardPanRepository {
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            'Authorization': '$token',
+            'Authorization': token,
           },
         ),
       );
 
       if (response.statusCode == 200) {
-        final data = response.data;
-        final cards = AllCardsPansModel.fromJson(data);
-        for (int i = 0; i < cards.data!.length; i++) {
-          cardsPan.add(cards.data![i].pan!);
+        final cards = AllCardsPansModel.fromJson(response.data);
+        final List<String> cardsPan = [];
+        if (cards.data != null) {
+          for (final card in cards.data!) {
+            if (card.pan != null) cardsPan.add(card.pan!);
+          }
         }
-
         return cardsPan;
+      } else {
+        throw Exception('Failed to fetch cards');
       }
     } catch (e) {
-      rethrow; // بزار Bloc تصمیم بگیره
+      rethrow; // Bloc handle
     }
-    return [];
   }
 }

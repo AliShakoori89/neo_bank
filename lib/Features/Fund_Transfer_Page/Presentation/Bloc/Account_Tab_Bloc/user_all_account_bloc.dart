@@ -29,11 +29,11 @@ class UserAllAccountBloc
         ),
       );
     } on DioException catch (e) {
-      // if (e.error == 'TOKEN_EXPIRED' || e.response?.statusCode == 401) {
-      //   emit(state.copyWith(status: GetAllCardsStatus.tokenExpired));
-      // } else {
-      //   emit(state.copyWith(status: GetAllCardsStatus.error));
-      // }
+      if (e.response?.statusCode == 401) {
+        emit(state.copyWith(status: UserAllAccountStatus.tokenExpired));
+      } else {
+        emit(state.copyWith(status: UserAllAccountStatus.error));
+      }
     } catch (error) {
       emit(state.copyWith(status: UserAllAccountStatus.error));
     }

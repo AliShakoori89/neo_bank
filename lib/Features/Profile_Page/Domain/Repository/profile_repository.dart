@@ -9,6 +9,7 @@ class GetProfileRepository {
   Future<ProfileModel> getProfileField() async {
     try {
       final token = await LocalStorage.read('access_token');
+      if (token == null) throw Exception('Token not found');
 
       final response = await dio.post(
         "${APIKey.baseUrl}/api/customers/get-info",
@@ -16,19 +17,18 @@ class GetProfileRepository {
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            'Authorization': '$token',
+            'Authorization': token,
           },
         ),
       );
 
       if (response.statusCode == 200) {
-        final data = response.data;
-
-        return ProfileModel.fromJson(data);
+        return ProfileModel.fromJson(response.data);
+      } else {
+        throw Exception('Failed to fetch profile');
       }
     } catch (e) {
-      rethrow; // بزار Bloc تصمیم بگیره
+      rethrow; // Bloc خودش تصمیم بگیره
     }
-    return ProfileModel();
   }
 }

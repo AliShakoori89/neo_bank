@@ -9,6 +9,7 @@ class AllCardRepository {
   Future<CardListModel> getAllCards() async {
     try {
       final token = await LocalStorage.read('access_token');
+      if (token == null) throw Exception('Token not found');
 
       final response = await dio.post(
         "${APIKey.baseUrl}/api/cards/get-all",

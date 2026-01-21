@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Models/otp_code_respons_model.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Models/otp_code_response_model.dart';
 
 class OtpCodeCheckRepository {
   final dio = Dio();
@@ -34,7 +34,7 @@ class OtpCodeCheckRepository {
       );
 
       if (response.statusCode == 200) {
-        final data = OtpCodeResponsModel.fromJson(response.data);
+        final data = OtpCodeResponseModel.fromJson(response.data);
 
         if (data.success!) {
           LocalStorage.save('access_token', data.data!.token!);
@@ -49,7 +49,7 @@ class OtpCodeCheckRepository {
           data.success == true ? '' : data.error!.errorMessage,
         ];
       } else {
-        final data = OtpCodeResponsModel.fromJson(response.data);
+        final data = OtpCodeResponseModel.fromJson(response.data);
         return [data.success, data.error!.errorMessage];
       }
     } catch (e) {

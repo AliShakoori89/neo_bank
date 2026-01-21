@@ -20,7 +20,7 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
     try {
       emit(state.copyWith(status: UserLoginAuthStatus.loading));
 
-      final logedin = await userAuthRepository.userLogin(
+      final result = await userAuthRepository.userLogin(
         event.nationalCode,
         event.phoneNumber,
       );
@@ -28,10 +28,10 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
       emit(
         state.copyWith(
           status: UserLoginAuthStatus.success,
-          loginStatus: logedin![0],
-          loginMessage: logedin[1],
-          secretKey: logedin[2],
-          deviceId: logedin[3],
+          loginStatus: result.success,
+          loginMessage: result.message,
+          secretKey: result.secretKey,
+          deviceId: result.deviceId,
         ),
       );
     } catch (error) {

@@ -1,40 +1,40 @@
-class OtpCodeResponsModel {
-  final OtpCodeResponsDataModel? data;
+class OtpCodeResponseModel {
+  final OtpCodeResponseDataModel? data;
   final bool? success;
   final String? traceId;
-  final OtpCodeResponsErrorModel? error;
+  final OtpCodeResponseErrorModel? error;
 
-  OtpCodeResponsModel({this.data, this.success, this.traceId, this.error});
+  OtpCodeResponseModel({this.data, this.success, this.traceId, this.error});
 
-  factory OtpCodeResponsModel.fromJson(Map<String, dynamic> json) {
-    return OtpCodeResponsModel(
+  factory OtpCodeResponseModel.fromJson(Map<String, dynamic> json) {
+    return OtpCodeResponseModel(
       data: json['data'] != null
-          ? OtpCodeResponsDataModel.fromJson(json['data'])
+          ? OtpCodeResponseDataModel.fromJson(json['data'])
           : null,
       success: json['success'] as bool?,
       traceId: json['traceId'] as String?,
       error: json['error'] != null
-          ? OtpCodeResponsErrorModel.fromJson(json['error'])
+          ? OtpCodeResponseErrorModel.fromJson(json['error'])
           : null,
     );
   }
 }
 
-class OtpCodeResponsDataModel {
+class OtpCodeResponseDataModel {
   final String? token;
   final DateTime? expireAt;
   final String? displayName;
   final String? mobileNumber;
 
-  OtpCodeResponsDataModel({
+  OtpCodeResponseDataModel({
     this.token,
     this.expireAt,
     this.displayName,
     this.mobileNumber,
   });
 
-  factory OtpCodeResponsDataModel.fromJson(Map<String, dynamic> json) {
-    return OtpCodeResponsDataModel(
+  factory OtpCodeResponseDataModel.fromJson(Map<String, dynamic> json) {
+    return OtpCodeResponseDataModel(
       token: json['token'] as String,
       displayName: json['displayName'] as String,
       mobileNumber: json['mobileNumber'] as String,
@@ -45,15 +45,15 @@ class OtpCodeResponsDataModel {
   }
 }
 
-class OtpCodeResponsErrorModel {
+class OtpCodeResponseErrorModel {
   final int? errorCode;
   final String? errorMessage;
   final String? owner;
 
-  OtpCodeResponsErrorModel({this.errorCode, this.errorMessage, this.owner});
+  OtpCodeResponseErrorModel({this.errorCode, this.errorMessage, this.owner});
 
-  factory OtpCodeResponsErrorModel.fromJson(Map<String, dynamic> json) {
-    return OtpCodeResponsErrorModel(
+  factory OtpCodeResponseErrorModel.fromJson(Map<String, dynamic> json) {
+    return OtpCodeResponseErrorModel(
       errorCode: json['errorCode'] as int?,
       errorMessage: json['errorMessage'] as String?,
       owner: json['owner'] as String?,

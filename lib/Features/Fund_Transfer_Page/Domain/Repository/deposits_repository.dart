@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/Models/all_cards_pans_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/Models/deposits_model.dart';
 
 class DepositsRepository {
@@ -10,6 +9,7 @@ class DepositsRepository {
   Future<DepositsModel> getUserAllAccount() async {
     try {
       final token = await LocalStorage.read('access_token');
+      if (token == null) throw Exception('Token not found');
 
       final response = await dio.post(
         "${APIKey.baseUrl}/api/deposits/get-all",
@@ -17,19 +17,18 @@ class DepositsRepository {
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            'Authorization': '$token',
+            'Authorization': token,
           },
         ),
       );
 
       if (response.statusCode == 200) {
-        final data = response.data;
-
-        return DepositsModel.fromJson(data);
+        return DepositsModel.fromJson(response.data);
+      } else {
+        throw Exception('Failed to fetch deposits');
       }
     } catch (e) {
-      rethrow; // بزار Bloc تصمیم بگیره
+      rethrow; // Bloc handle
     }
-    return DepositsModel();
   }
 }

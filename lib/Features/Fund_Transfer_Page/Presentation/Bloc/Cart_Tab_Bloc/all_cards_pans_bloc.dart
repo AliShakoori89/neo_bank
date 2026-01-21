@@ -25,11 +25,11 @@ class AllCardsPansBloc extends Bloc<AllCardsPansEvent, AllCardsPansState> {
         state.copyWith(status: AllCardsPanStatus.success, cardsPan: cardsPan),
       );
     } on DioException catch (e) {
-      // if (e.error == 'TOKEN_EXPIRED' || e.response?.statusCode == 401) {
-      //   emit(state.copyWith(status: GetAllCardsStatus.tokenExpired));
-      // } else {
-      //   emit(state.copyWith(status: GetAllCardsStatus.error));
-      // }
+      if (e.response?.statusCode == 401) {
+        emit(state.copyWith(status: AllCardsPanStatus.tokenExpired));
+      } else {
+        emit(state.copyWith(status: AllCardsPanStatus.error));
+      }
     } catch (error) {
       emit(state.copyWith(status: AllCardsPanStatus.error));
     }

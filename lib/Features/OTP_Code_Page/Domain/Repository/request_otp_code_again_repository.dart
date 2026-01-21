@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/user_login_auth_success_model.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Models/otp_request_result.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Models/otp_request_result_model.dart';
 
 class RequestOtpCodeAgainRepository {
   final dio = Dio();
 
-  Future<OtpRequestResult> requestOTPAgain(
+  Future<OtpRequestResultModel> requestOTPAgain(
     String nationalNumber,
     String mobileNumber,
   ) async {
@@ -54,7 +53,7 @@ class RequestOtpCodeAgainRepository {
           data.data!.expireTime!.toIso8601String(),
         );
 
-        return OtpRequestResult(
+        return OtpRequestResultModel(
           success: true,
           message: '',
           secretKey: data.data!.secretKey!,
@@ -62,14 +61,14 @@ class RequestOtpCodeAgainRepository {
         );
       }
 
-      return OtpRequestResult(
+      return OtpRequestResultModel(
         success: false,
         message: data.error?.errorMessage ?? 'خطای نامشخص',
         secretKey: '',
         deviceId: '',
       );
     } catch (e) {
-      return OtpRequestResult(
+      return OtpRequestResultModel(
         success: false,
         message: 'خطا در ارتباط با سرور',
         secretKey: '',

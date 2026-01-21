@@ -5,12 +5,13 @@ import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/user_login_auth_success_model.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Models/otp_request_result_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLoginAuthRepository {
   final dio = Dio();
 
-  FutureOr<List<dynamic>?> userLogin(
+  FutureOr<OtpRequestResultModel> userLogin(
     String nationalNumber,
     String mobileNumber,
   ) async {
@@ -41,10 +42,11 @@ class UserLoginAuthRepository {
       if (response.statusCode == 200) {
         final data = UserLoginAuthModel.fromJson(response.data);
 
-        print('111111111111111111');
-        print('data.data!.code     ' + data.data!.code.toString());
-        print('data.data!.deviceId     ' + data.data!.deviceId.toString());
-        print('data.data!.secretKey     ' + data.data!.secretKey.toString());
+        print('*************************************************');
+        print('otpcode     ${data.data!.code}');
+        print('deviceId     ${data.data!.deviceId}');
+        print('secretKey     ${data.data!.secretKey}');
+        print('*************************************************');
 
         if (data.success!) {
           LocalStorage.save('secret_key', data.data!.secretKey!);
@@ -54,23 +56,28 @@ class UserLoginAuthRepository {
           );
         }
 
-        return [
-          data.success,
-          data.success == true ? '' : data.error!.errorMessage,
-          data.success == true ? data.data!.secretKey! : '',
-          data.success == true ? data.data!.deviceId : '',
-        ];
+        return OtpRequestResultModel(
+          success: true,
+          message: '',
+          secretKey: data.data!.secretKey!,
+          deviceId: data.data!.deviceId!,
+        );
       } else {
         final data = UserLoginAuthModel.fromJson(response.data);
-        return [
-          data.success,
-          data.error!.errorMessage,
-          data.data!.secretKey,
-          data.data!.deviceId,
-        ];
+        return OtpRequestResultModel(
+        success: false,
+        message: data.error?.errorMessage ?? 'خطای نامشخص',
+        secretKey: '',
+        deviceId: '',
+      );
       }
     } catch (e) {
-      return null;
+      return OtpRequestResultModel(
+        success: false,
+        message: 'خطا در ارتباط با سرور',
+        secretKey: '',
+        deviceId: '',
+      );
     }
   }
 
