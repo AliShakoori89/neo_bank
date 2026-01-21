@@ -65,11 +65,11 @@ class UserLoginAuthRepository {
       } else {
         final data = UserLoginAuthModel.fromJson(response.data);
         return OtpRequestResultModel(
-        success: false,
-        message: data.error?.errorMessage ?? 'خطای نامشخص',
-        secretKey: '',
-        deviceId: '',
-      );
+          success: false,
+          message: data.error?.errorMessage ?? 'خطای نامشخص',
+          secretKey: '',
+          deviceId: '',
+        );
       }
     } catch (e) {
       return OtpRequestResultModel(

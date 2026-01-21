@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
@@ -26,7 +27,9 @@ class CustomButton extends StatelessWidget {
     return BlocConsumer<UserLoginAuthBloc, UserLoginAuthState>(
       listener: (context, state) {
         if (state.status.isSuccess) {
+          print('11111');
           if (state.loginStatus) {
+            print(state.loginStatus);
             context.go(
               '/otp_code_page',
               extra: {
@@ -37,15 +40,7 @@ class CustomButton extends StatelessWidget {
               },
             );
           } else {
-            Fluttertoast.showToast(
-              msg: state.loginMessage,
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
+            AppSnackBar.error(context, state.loginMessage);
           }
         }
       },

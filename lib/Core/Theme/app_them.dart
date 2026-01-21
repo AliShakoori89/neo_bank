@@ -38,13 +38,6 @@ class AppTheme {
 
     cardTheme: CardThemeData(color: Color(0xFFF5F5F5)),
 
-    buttonTheme: ButtonThemeData(
-      colorScheme: ColorScheme.light(
-        primary: Color(0xFFD92D20), // رنگ دکمه‌ها
-        secondary: Color(0xFFFDA29B), // رنگ ثانویه
-      ),
-    ),
-
     tabBarTheme: TabBarThemeData(indicatorColor: Color(0xFFE3FBCC)),
 
     textTheme: TextTheme(titleMedium: TextStyle(color: Color(0xFF181D27))),
@@ -93,19 +86,21 @@ class AppTheme {
     fontFamily: 'IRANSans',
 
     colorScheme: ColorScheme.dark(
-      primary: Color(0xFF13161B), // آبی اصلی ثابت می‌مونه
-      secondary: Color(0xFF0E4052),
-      tertiary: Color(0xff66C61C),
+      primary: Color(0xff4CA30D), // آبی اصلی بانک
+      secondary: Color(0xff66C61C), // آبی مکمل
+      primaryContainer: Color(0xFF13161B), // پس‌زمینه اصلی صفحه
+      secondaryContainer: Color(0xFFB8D8A1), // پس‌زمینه اصلی صفحه
       outline: Color(0xFF0C0E12),
       surface: Color(0xFF85888E),
+      scrim: Color(0xFFFFFFFF), // اپ لوگو
       onSurface: Color(0xFF94979C),
       surfaceDim: Color(0xFF373A41),
       surfaceTint: Color(0xFF0D2D3A),
       surfaceBright: Color(0xFFCECFD2),
       surfaceContainer: Color(0xFF0C0E12),
       surfaceContainerHigh: Color(0xFFCECFD2),
-      surfaceContainerLow: Color(0xFF61656C),
-      onTertiary: Color(0xFF47CD89),
+      surfaceContainerLow: Color(0xFF66C61C),
+      onTertiary: Color(0xFF079455),
       onPrimary: Color(0xFF94979C),
       onSecondary: Color(0xFF079354),
       onInverseSurface: Color(0xFF70757F),
@@ -119,13 +114,6 @@ class AppTheme {
     cardTheme: CardThemeData(color: Color(0xFF22262F)),
 
     iconTheme: IconThemeData(color: Color(0xFFECECED)),
-
-    buttonTheme: ButtonThemeData(
-      colorScheme: ColorScheme.light(
-        primary: Color(0xFFF97066), // رنگ دکمه‌ها
-        secondary: Color(0xFFF04438), // رنگ ثانویه
-      ),
-    ),
 
     tabBarTheme: TabBarThemeData(indicatorColor: Color(0xFFE3FBCC)),
 
@@ -150,9 +138,9 @@ class AppTheme {
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFF00A5CF),
+        backgroundColor: Color(0xFF414651),
         foregroundColor: Colors.white,
-        iconColor: Color(0xFFE3FBCC),
+        iconColor: Color(0xFFA6EF67),
       ),
     ),
 
