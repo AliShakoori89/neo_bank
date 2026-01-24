@@ -6,7 +6,6 @@ import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
 import '../../../../Core/Const/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
@@ -35,6 +34,7 @@ class CustomButton extends StatelessWidget {
               nationalCode: nationalCodeController.text,
               deviceId: state.deviceId,
               secretKey: state.secretKey,
+              expireTime: state.expireTime,
             ),
           );
         }

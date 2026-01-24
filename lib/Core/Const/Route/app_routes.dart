@@ -34,6 +34,7 @@ final GoRouter router = GoRouter(
             nationalCode: args.nationalCode,
             deviceId: args.deviceId,
             secretKey: args.secretKey,
+            expireTime: args.expireTime,
           ),
         );
       },

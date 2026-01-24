@@ -6,6 +6,7 @@ import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/login_result_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/user_login_auth_success_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/calcute_expire_time.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLoginAuthRepository {
@@ -46,6 +47,7 @@ class UserLoginAuthRepository {
         print('otpcode     ${data.data!.code}');
         print('deviceId     ${data.data!.deviceId}');
         print('secretKey     ${data.data!.secretKey}');
+        print(calculateExpireTime(data.data!.expireTime.toString()));
         print('**');
 
         LocalStorage.save('secret_key', data.data!.secretKey!);
@@ -59,6 +61,7 @@ class UserLoginAuthRepository {
           message: '',
           secretKey: data.data!.secretKey!,
           deviceId: data.data!.deviceId!,
+          expireTime: calculateExpireTime(data.data!.expireTime.toString()),
         );
       }
 
@@ -67,6 +70,7 @@ class UserLoginAuthRepository {
         message: data.error?.errorMessage ?? 'خطای نامشخص',
         secretKey: '',
         deviceId: '',
+        expireTime: '',
       );
     } catch (e) {
       return LoginResultModel(
@@ -74,6 +78,7 @@ class UserLoginAuthRepository {
         message: 'خطا در ارتباط با سرور',
         secretKey: '',
         deviceId: '',
+        expireTime: '',
       );
     }
   }

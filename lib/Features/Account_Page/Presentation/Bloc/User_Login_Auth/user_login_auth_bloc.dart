@@ -33,6 +33,7 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
             loginMessage: result.message,
             secretKey: result.secretKey,
             deviceId: result.deviceId,
+            expireTime: int.parse(result.expireTime),
           ),
         );
       } else {
@@ -43,6 +44,7 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
             loginMessage: result.message,
             secretKey: '',
             deviceId: '',
+            expireTime: 0,
           ),
         );
       }

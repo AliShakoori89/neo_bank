@@ -17,6 +17,7 @@ class UserLoginAuthState extends Equatable {
     required this.isLogin,
     required this.secretKey,
     required this.deviceId,
+    required this.expireTime,
   });
 
   static UserLoginAuthState initial() => UserLoginAuthState(
@@ -26,6 +27,7 @@ class UserLoginAuthState extends Equatable {
     isLogin: false,
     secretKey: '',
     deviceId: '',
+    expireTime: 0,
   );
 
   final UserLoginAuthStatus status;
@@ -34,6 +36,7 @@ class UserLoginAuthState extends Equatable {
   final bool isLogin;
   final String secretKey;
   final String deviceId;
+  final int expireTime;
 
   @override
   List<Object?> get props => [
@@ -43,6 +46,7 @@ class UserLoginAuthState extends Equatable {
     isLogin,
     secretKey,
     deviceId,
+    expireTime,
   ];
 
   UserLoginAuthState copyWith({
@@ -52,6 +56,7 @@ class UserLoginAuthState extends Equatable {
     bool? isLogin,
     String? secretKey,
     String? deviceId,
+    int? expireTime,
   }) {
     return UserLoginAuthState(
       status: status ?? this.status,
@@ -60,6 +65,7 @@ class UserLoginAuthState extends Equatable {
       isLogin: isLogin ?? this.isLogin,
       secretKey: secretKey ?? this.secretKey,
       deviceId: deviceId ?? this.deviceId,
+      expireTime: expireTime ?? this.expireTime,
     );
   }
 }

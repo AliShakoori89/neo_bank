@@ -21,12 +21,14 @@ class OtpCodePage extends StatefulWidget {
     required this.secretKey,
     required this.deviceId,
     required this.nationalCode,
+    required this.expireTime,
   });
 
   final String phoneNumber;
   final String nationalCode;
   final String secretKey;
   final String deviceId;
+  final int expireTime;
 
   @override
   State<OtpCodePage> createState() => _OtpCodePageState();
@@ -48,8 +50,8 @@ class _OtpCodePageState extends State<OtpCodePage> {
     });
   }
 
-  void _startTimer() {
-    resendTimer = 120;
+  void _startTimer(int expireTime) {
+    resendTimer = expireTime;
     timer?.cancel();
     timer = Timer.periodic(Duration(seconds: 1), (t) {
       if (resendTimer == 0) {
@@ -71,14 +73,12 @@ class _OtpCodePageState extends State<OtpCodePage> {
   @override
   void initState() {
     super.initState();
-    _restartTimerSafely();
-    print('widget.secretKey    ' + widget.secretKey);
-    print('widget.deviceId    ' + widget.deviceId);
+    _restartTimerSafely(widget.expireTime);
   }
 
-  void _restartTimerSafely() {
+  void _restartTimerSafely(int expireTime) {
     timer?.cancel();
-    resendTimer = 120;
+    resendTimer = expireTime;
 
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (!mounted) {
@@ -106,7 +106,7 @@ class _OtpCodePageState extends State<OtpCodePage> {
         newSecretKey = state.secretKey;
         newDeviceId = state.deviceId;
 
-        _restartTimerSafely();
+        _restartTimerSafely(widget.expireTime);
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -227,7 +227,13 @@ class _OtpCodePageState extends State<OtpCodePage> {
                                   )
                                 : GestureDetector(
                                     onTap: () {
-                                      _startTimer(); // ارسال مجدد OTP
+                                      _startTimer(
+                                        widget.expireTime,
+                                      ); // ارسال مجدد OTP
+
+                                      _otpController.clear();
+                                      _onOtpChanged(false);
+
                                       context.read<RequerstOtpAgainBloc>().add(
                                         RequestOTPCodeAgainEvent(
                                           nationalCode: widget.nationalCode,
