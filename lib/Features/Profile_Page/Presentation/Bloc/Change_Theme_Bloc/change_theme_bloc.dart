@@ -6,21 +6,15 @@ import '../../../../../Core/Theme/app_them.dart';
 enum ThemeEvent { toggle, load }
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeData> {
-  ThemeBloc() : super(AppTheme.lightTheme) {
+  ThemeBloc(super.initialTheme) {
     on<ThemeEvent>(_onEvent);
   }
 
   Future<void> _onEvent(ThemeEvent event, Emitter<ThemeData> emit) async {
     final prefs = await SharedPreferences.getInstance();
 
-    if (event == ThemeEvent.load) {
-      final isDark = prefs.getBool('isDarkTheme') ?? false;
-      emit(isDark ? AppTheme.darkTheme : AppTheme.lightTheme);
-    }
-
     if (event == ThemeEvent.toggle) {
       final isDark = state.brightness == Brightness.light;
-
       await prefs.setBool('isDarkTheme', isDark);
       emit(isDark ? AppTheme.darkTheme : AppTheme.lightTheme);
     }

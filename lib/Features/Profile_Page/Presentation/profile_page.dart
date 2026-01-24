@@ -265,7 +265,9 @@ class _ProfilePageState extends State<ProfilePage> {
           scale: 0.7,
           child: Switch(
             value: Theme.of(context).brightness == Brightness.dark,
-            onChanged: (_) => context.read<ThemeBloc>().add(ThemeEvent.toggle),
+            onChanged: (_) {
+              context.read<ThemeBloc>().add(ThemeEvent.toggle);
+            },
           ),
         ),
       ),
