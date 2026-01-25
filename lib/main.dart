@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,25 +63,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  StreamSubscription<List<ConnectivityResult>>? subscription;
-  late bool isOffline = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // subscription = Connectivity().onConnectivityChanged.listen((result) {
-    //   final isOnline = !result.contains(ConnectivityResult.none);
-
-    //   context.read<ConnectivityCubit>().update(isOnline);
-    // });
-  }
-
-  @override
-  void dispose() {
-    subscription?.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -96,7 +75,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (_) => MainNavigationBloc(initialIndex: 0), // ⭐ اضافه شود
         ),
-        // BlocProvider(create: (_) => ConnectivityCubit()),
         BlocProvider(
           create: (BuildContext context) =>
               UserLoginAuthBloc(UserLoginAuthRepository()),

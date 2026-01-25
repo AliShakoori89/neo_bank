@@ -9,7 +9,7 @@ import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/set_pass_button.dart';
 
 class SetPassPage extends StatefulWidget {
-  SetPassPage({super.key});
+  const SetPassPage({super.key});
 
   @override
   State<SetPassPage> createState() => _SetPassPageState();
@@ -82,9 +82,7 @@ class _SetPassPageState extends State<SetPassPage> {
                     children: [
                       Text(
                         'برای دسترسی آسان به اپلیکیشن رمز عبور مورد نظر خود را تعیین نمایید.',
-                        style: TextStyle(
-                          color: AppColors.homePageCardTitleColor,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       SizedBox(height: 50),
                       PassField(

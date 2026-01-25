@@ -2,7 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Box_Background_UI/circle_1.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Box_Background_UI/circle_2.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/Card_Box_Background_UI/circle_3.dart';
@@ -31,9 +33,17 @@ Widget buildBankCardSlider(
       //   context.go('/login_page');
       // }
 
+      if (state.status == GetAllCardsStatus.refreshLimitExceeded) {
+        AppSnackBar.errorTop(
+          context,
+          'تعداد دفعات بروزرسانی بیش از حد مجاز است',
+        );
+      }
+
       if (state.status == GetAllCardsStatus.success &&
           state.cards != null &&
-          state.cards!.isNotEmpty) {
+          state.cards!.isNotEmpty &&
+          state.refreshCount == 1) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           controller.animateToPage(0);
         });
@@ -44,7 +54,7 @@ Widget buildBankCardSlider(
         if (state.status.isLoading) {
           return BankCardShimmer();
         }
-        if (state.status.isSuccess) {
+        if (state.cards != null && state.cards!.isNotEmpty) {
           final cards = state.cards ?? [];
 
           final cardItems = [
@@ -99,6 +109,15 @@ Widget buildBankCardSlider(
                     buildIndicator(cardItems.length, current),
                   ],
                 ),
+              ),
+
+              IconButton(
+                onPressed: () {
+                  BlocProvider.of<AllCardsBloc>(
+                    context,
+                  ).add(GetUserAllCardsEvent());
+                },
+                icon: Icon(Icons.refresh),
               ),
             ],
           );

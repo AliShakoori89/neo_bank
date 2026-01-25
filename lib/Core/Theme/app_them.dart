@@ -117,7 +117,9 @@ class AppTheme {
 
     tabBarTheme: TabBarThemeData(indicatorColor: Color(0xFFE3FBCC)),
 
-    textTheme: TextTheme(titleMedium: TextStyle(color: Color(0xFFCECFD2))),
+    textTheme: TextTheme(
+      titleMedium: TextStyle(color: Color.fromRGBO(238, 239, 241, 1)),
+    ),
 
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Color(0xFF0C0E12),

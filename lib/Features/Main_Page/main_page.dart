@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/check_internet.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Report_Page/Presentation/account_report_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import '../Bank_Services_Page/bank_services_page.dart';
 import '../Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
@@ -23,10 +26,30 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   DateTime? _lastBackPress;
 
+  bool? hasInternet;
+  bool isChecking = true;
+
   @override
   void initState() {
     super.initState();
+    _checkConnectionAndInit();
     context.read<ThemeBloc>().add(ThemeEvent.load);
+    BlocProvider.of<AllCardsBloc>(context).add(GetUserAllCardsEvent());
+  }
+
+  Future<void> _checkConnectionAndInit() async {
+    final connected = await checkInternetConnection();
+    if (!mounted) return;
+    setState(() {
+      hasInternet = connected;
+      isChecking = false;
+    });
+
+    if (connected) {
+      // لود کارت‌ها و تم
+      context.read<ThemeBloc>().add(ThemeEvent.load);
+      BlocProvider.of<AllCardsBloc>(context).add(GetUserAllCardsEvent());
+    }
   }
 
   final List<Widget> _pages = [

@@ -1,9 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/build_bank_card_slider.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/build_second_slider.dart';
 import '../../../Core/Const/app_colors.dart';
@@ -43,12 +40,6 @@ class _HomePageState extends State<HomePage> {
       'card_image': 'assets/image/banking-finance-bank-money.png',
     },
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<AllCardsBloc>(context).add(GetUserAllCardsEvent());
-  }
 
   @override
   Widget build(BuildContext context) {
