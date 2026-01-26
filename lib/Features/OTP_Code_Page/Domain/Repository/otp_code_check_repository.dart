@@ -47,6 +47,8 @@ class OtpCodeCheckRepository {
           'access_token_expire_time',
           data.data!.expireAt!.toIso8601String(),
         );
+        LocalStorage.save('user_name', data.data!.displayName!);
+        LocalStorage.save('mobile_number', data.data!.mobileNumber!);
 
         return OtpRequestResultModel(
           message: data.success == true ? '' : data.error!.errorMessage!,

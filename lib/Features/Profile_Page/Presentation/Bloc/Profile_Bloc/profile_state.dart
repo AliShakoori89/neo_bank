@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Model/profile_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Model/profile_result_model.dart';
 
 enum ProfileStatus { initial, success, error, loading }
 
@@ -11,23 +11,30 @@ extension ProfileStatusX on ProfileStatus {
 }
 
 class ProfileState extends Equatable {
-  const ProfileState({required this.status, required this.profileFields});
+  const ProfileState({required this.status, this.userName, this.mobileNumber});
 
   static ProfileState initial() => ProfileState(
     status: ProfileStatus.initial,
-    profileFields: ProfileModel(),
+    userName: '',
+    mobileNumber: '',
   );
 
   final ProfileStatus status;
-  final ProfileModel? profileFields;
+  final String? userName;
+  final String? mobileNumber;
 
   @override
-  List<Object?> get props => [status, profileFields];
+  List<Object?> get props => [status, userName, mobileNumber];
 
-  ProfileState copyWith({ProfileStatus? status, ProfileModel? profileFields}) {
+  ProfileState copyWith({
+    ProfileStatus? status,
+    String? userName,
+    String? mobileNumber,
+  }) {
     return ProfileState(
       status: status ?? this.status,
-      profileFields: profileFields ?? this.profileFields,
+      userName: userName ?? this.userName,
+      mobileNumber: mobileNumber ?? this.mobileNumber,
     );
   }
 }

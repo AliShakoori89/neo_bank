@@ -56,7 +56,7 @@ class _ProfilePageState extends State<ProfilePage> {
               /// --- User Info ---
               BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
-                  print(state.profileFields!.data);
+                  print(state.userName);
 
                   return Padding(
                     padding: const EdgeInsets.all(16),
@@ -66,7 +66,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             const UserImage(),
                             AppSpace.widthSpace_12,
-                            NameAndPhone(profileDetail: state.profileFields!),
+                            NameAndPhone(
+                              userName: state.userName!,
+                              mobileNumber: state.mobileNumber!,
+                            ),
                           ],
                         ),
                         AppSpace.heightSpace_24,
@@ -78,11 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ProfilePageCustomRow(
                               iconPath: 'assets/svg/user-03.svg',
                               title: 'نام کاربری',
-                              value: state.profileFields != null
-                                  ? state.profileFields!.data != null
-                                        ? state.profileFields!.data!.lastName
-                                        : ''
-                                  : '',
+                              value: state.userName!,
                               widget: const Icon(
                                 Icons.arrow_forward_ios_outlined,
                                 size: 20,
@@ -167,7 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     // TODO: Handle logout action
-                    LocalStorage.clear();
+                    LocalStorage.clearPrefsExcept(['isDarkTheme']);
                     context.go('/');
                   },
                   style: ElevatedButton.styleFrom(

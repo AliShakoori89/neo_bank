@@ -38,7 +38,7 @@ class _AuthGateState extends State<AuthGate> {
         context.go('/set_pass_page');
       }
     } else {
-      await LocalStorage.clear();
+      await LocalStorage.clearPrefsExcept([]);
       context.go('/login_page');
     }
   }

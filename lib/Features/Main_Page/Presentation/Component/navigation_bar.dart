@@ -13,25 +13,26 @@ class CustomBottomNavigationBar extends StatefulWidget {
   });
 
   @override
-  State<CustomBottomNavigationBar> createState() => _CustomBottomNavigationBarState();
+  State<CustomBottomNavigationBar> createState() =>
+      _CustomBottomNavigationBarState();
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-
   @override
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-        canvasColor: Theme.of(context).navigationBarTheme.backgroundColor!, // پس‌زمینه نوار پایین
+        canvasColor: Theme.of(
+          context,
+        ).navigationBarTheme.backgroundColor!, // پس‌زمینه نوار پایین
       ),
       child: Container(
         height: 85,
         decoration: BoxDecoration(
-            color: Theme.of(context).navigationBarTheme.indicatorColor,
-            border: Border(top: BorderSide(
-                width: 1,
-                color: AppColors.homePageDividerColor
-            ))
+          color: Theme.of(context).navigationBarTheme.indicatorColor,
+          border: Border(
+            top: BorderSide(width: 1, color: AppColors.homePageDividerColor),
+          ),
         ),
         child: BottomNavigationBar(
           currentIndex: widget.currentIndex,
@@ -39,8 +40,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           showUnselectedLabels: false,
           onTap: widget.onTap,
           items: [
-            widget.currentIndex == 0
-                ? BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: SizedBox(
                 width: 48,
                 height: 48,
@@ -52,28 +52,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                     height: 24,
                     colorFilter: ColorFilter.mode(
                       widget.currentIndex == 0
-                          ? AppColors.splashGradiantColor2 // رنگ انتخاب‌شده
-                          : AppColors.loginPageIconColor, // رنگ انتخاب‌نشده
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-              ),
-              label: '',
-            )
-                : BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 48,
-                height: 48,
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: SvgPicture.asset(
-                    'assets/icon/navigation_bar_icon/home-line.svg',
-                    width: 24,
-                    height: 24,
-                    colorFilter: ColorFilter.mode(
-                      widget.currentIndex == 0
-                          ? AppColors.splashGradiantColor2 // رنگ انتخاب‌شده
+                          ? AppColors
+                                .splashGradiantColor2 // رنگ انتخاب‌شده
                           : AppColors.loginPageIconColor, // رنگ انتخاب‌نشده
                       BlendMode.srcIn,
                     ),
@@ -82,7 +62,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               ),
               label: '',
             ),
-            widget.currentIndex == 1 ? BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: SizedBox(
                 width: 48,
                 height: 48,
@@ -94,29 +74,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                     height: 24,
                     colorFilter: ColorFilter.mode(
                       widget.currentIndex == 1
-                          ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
-                          : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-              ),
-              label: '',
-            )
-                : BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 48,
-                height: 48,
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: SvgPicture.asset(
-                    'assets/icon/navigation_bar_icon/switch-vertical-02.svg',
-                    width: 24,
-                    height: 24,
-                    colorFilter: ColorFilter.mode(
-                      widget.currentIndex == 1
-                          ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
-                          : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
+                          ? AppColors
+                                .splashGradiantColor2 // رنگ انتخاب‌شده
+                          : AppColors.loginPageIconColor, // رنگ انتخاب‌نشده
                       BlendMode.srcIn,
                     ),
                   ),
@@ -124,8 +84,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               ),
               label: '',
             ),
-            widget.currentIndex == 2
-                ? BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: SizedBox(
                 width: 48,
                 height: 48,
@@ -137,29 +96,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                     height: 24,
                     colorFilter: ColorFilter.mode(
                       widget.currentIndex == 2
-                          ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
-                          : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-              ),
-              label: '',
-            )
-                : BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 48,
-                height: 48,
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: SvgPicture.asset(
-                    'assets/icon/navigation_bar_icon/grid-01.svg',
-                    width: 24,
-                    height: 24,
-                    colorFilter: ColorFilter.mode(
-                      widget.currentIndex == 2
-                          ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
-                          : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
+                          ? AppColors
+                                .splashGradiantColor2 // رنگ انتخاب‌شده
+                          : AppColors.loginPageIconColor, // رنگ انتخاب‌نشده
                       BlendMode.srcIn,
                     ),
                   ),
@@ -167,8 +106,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               ),
               label: '',
             ),
-            widget.currentIndex == 3
-                ? BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: SizedBox(
                 width: 48,
                 height: 48,
@@ -180,29 +118,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                     height: 24,
                     colorFilter: ColorFilter.mode(
                       widget.currentIndex == 3
-                          ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
-                          : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-              ),
-              label: '',
-            )
-                : BottomNavigationBarItem(
-              icon: SizedBox(
-                width: 48,
-                height: 48,
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: SvgPicture.asset(
-                    'assets/icon/navigation_bar_icon/bar-chart-07.svg',
-                    width: 24,
-                    height: 24,
-                    colorFilter: ColorFilter.mode(
-                      widget.currentIndex == 3
-                          ? AppColors.splashGradiantColor2   // رنگ انتخاب‌شده
-                          : AppColors.loginPageIconColor,   // رنگ انتخاب‌نشده
+                          ? AppColors
+                                .splashGradiantColor2 // رنگ انتخاب‌شده
+                          : AppColors.loginPageIconColor, // رنگ انتخاب‌نشده
                       BlendMode.srcIn,
                     ),
                   ),
@@ -210,26 +128,23 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               ),
               label: '',
             ),
-            widget.currentIndex == 4
-                ? BottomNavigationBarItem(
+            BottomNavigationBarItem(
               icon: SizedBox(
                 width: 48,
                 height: 48,
-                child: Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Image.asset('assets/icon/navigation_bar_icon/Avatar.png'),
+                child: Icon(
+                  Icons.person_2_outlined,
+                  color: widget.currentIndex == 4
+                      ? AppColors
+                            .splashGradiantColor2 // رنگ انتخاب‌شده
+                      : AppColors.loginPageIconColor, // رنگ انتخاب‌نشده,),
                 ),
               ),
-              label: '',
-            )
-                : BottomNavigationBarItem(
-              icon: Image.asset('assets/icon/navigation_bar_icon/Avatar.png'),
               label: '',
             ),
           ],
         ),
       ),
-    )
-    ;
+    );
   }
 }

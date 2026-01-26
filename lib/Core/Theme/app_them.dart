@@ -8,8 +8,8 @@ class AppTheme {
     fontFamily: 'IRANSans',
 
     colorScheme: const ColorScheme.light(
-      primary: Color(0xff4CA30D), // آبی اصلی بانک
-      secondary: Color(0xff66C61C), // آبی مکمل
+      primary: Color(0xff4CA30D), // سبز اصلی بانک
+      secondary: Color(0xff66C61C), // سبز مکمل
       primaryContainer: Color(0xFFE6E6FA), // پس‌زمینه اصلی صفحه
       secondaryContainer: Color(0xFFB8D8A1), // پس‌زمینه اصلی صفحه
       surface: Color(0xFF717680), // هینت تکست ها

@@ -26,8 +26,40 @@ class LocalStorage {
   //   return expire == null || DateTime.now().isAfter(DateTime.parse(expire));
   // }
 
-  static Future<void> clear() async {
+  static clearPrefsExcept(List<String> keepKeys) async {
     final prefs = await SharedPreferences.getInstance();
+
+    // ذخیره مقدار کلیدهای مهم
+    final Map<String, Object> backup = {};
+
+    for (final key in keepKeys) {
+      if (prefs.containsKey(key)) {
+        final value = prefs.get(key);
+        if (value != null) {
+          backup[key] = value;
+        }
+      }
+    }
+
+    // پاک کردن همه چیز
     await prefs.clear();
+
+    // برگرداندن کلیدهای مهم
+    for (final entry in backup.entries) {
+      final key = entry.key;
+      final value = entry.value;
+
+      if (value is String)
+        await prefs.setString(key, value);
+      else if (value is int)
+        await prefs.setInt(key, value);
+      else if (value is bool)
+        await prefs.setBool(key, value);
+      else if (value is double)
+        await prefs.setDouble(key, value);
+      else if (value is List<String>) {
+        await prefs.setStringList(key, value);
+      }
+    }
   }
 }

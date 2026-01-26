@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Model/profile_result_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/profile_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_state.dart';
@@ -18,12 +19,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       emit(state.copyWith(status: ProfileStatus.loading));
 
-      final profileFields = await getProfileRepository.getProfileField();
+      final ProfileResultModel result = await getProfileRepository
+          .getProfileField();
 
       emit(
         state.copyWith(
           status: ProfileStatus.success,
-          profileFields: profileFields,
+          userName: result.userName,
+          mobileNumber: result.mobileNumber,
         ),
       );
     } on DioException catch (e) {
@@ -32,7 +35,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       } else {
         emit(state.copyWith(status: ProfileStatus.error));
       }
-    }  catch (error) {
+    } catch (error) {
       emit(state.copyWith(status: ProfileStatus.error));
     }
   }
