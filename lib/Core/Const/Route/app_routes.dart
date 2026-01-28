@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/Route/otp_args.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/local_login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Main_Page/Presentation/Component/internet_check_page.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/request_otp_code_again_repository.dart';
@@ -11,6 +13,7 @@ import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_
 import '../../../Features/Main_Page/main_page.dart';
 
 final GoRouter router = GoRouter(
+  navigatorKey: rootNavigatorKey,
   initialLocation: '/',
   routes: [
     GoRoute(path: '/', builder: (context, state) => const AuthGate()),
@@ -59,6 +62,11 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         return InternetCheckPage(child: SetPassPage());
       },
+    ),
+
+    GoRoute(
+      path: '/local_login_page',
+      builder: (context, state) => const LocalLoginPage(),
     ),
 
     // GoRoute(

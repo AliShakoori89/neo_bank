@@ -26,7 +26,7 @@ class AppSnackBar {
     required String message,
     required Color backgroundColor,
     required IconData icon,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = const Duration(seconds: 5),
   }) {
     final overlay = Overlay.of(context);
 

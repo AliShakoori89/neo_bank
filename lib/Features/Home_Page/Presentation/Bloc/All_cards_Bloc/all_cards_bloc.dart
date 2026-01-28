@@ -16,23 +16,8 @@ class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
     GetUserAllCardsEvent event,
     Emitter<AllCardsState> emit,
   ) async {
-    if (state.refreshCount >= maxRefreshCount) {
-      emit(
-        state.copyWith(
-          status: GetAllCardsStatus.refreshLimitExceeded,
-          cards: state.cards,
-        ),
-      );
-      return;
-    }
-
     try {
-      emit(
-        state.copyWith(
-          status: GetAllCardsStatus.loading,
-          refreshCount: state.refreshCount + 1,
-        ),
-      );
+      emit(state.copyWith(status: GetAllCardsStatus.loading));
 
       final cards = await allCardRepository.getAllCards();
 

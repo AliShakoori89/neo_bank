@@ -33,13 +33,13 @@ class _AuthGateState extends State<AuthGate> {
     // && !isExpired
     ) {
       if (localPass != null) {
-        context.go('/main_page');
+        GoRouter.of(context).go('/local_login_page');
       } else {
-        context.go('/set_pass_page');
+        GoRouter.of(context).go('/set_pass_page');
       }
     } else {
       await LocalStorage.clearPrefsExcept([]);
-      context.go('/login_page');
+      GoRouter.of(context).go('/login_page');
     }
   }
 

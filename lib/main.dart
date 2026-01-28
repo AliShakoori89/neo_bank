@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/App_Lock/app_lock_observer.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repository/user_login_auth_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repository/Deposits_repository.dart';
@@ -12,6 +13,7 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/all_card_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/otp_code_check_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/profile_repository.dart';
@@ -38,7 +40,7 @@ void main() async {
     // child:
     // builder:
     //     (context) =>
-    MyApp(isDark: isDark),
+    AppLockObserver(child: MyApp(isDark: isDark)),
     // )
   );
 }
@@ -98,6 +100,7 @@ class _MyAppState extends State<MyApp> {
               UserAllAccountBloc(DepositsRepository()),
         ),
         BlocProvider(create: (_) => BalanceVisibilityCubit()),
+        BlocProvider(create: (BuildContext context) => RefreshCountBloc()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeData>(
         builder: (context, theme) {

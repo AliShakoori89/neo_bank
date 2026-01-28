@@ -4,7 +4,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class SetPassButton extends StatelessWidget {
-  SetPassButton({
+  const SetPassButton({
     super.key,
     required this.passField,
     required this.onpassFieldsIsFill,

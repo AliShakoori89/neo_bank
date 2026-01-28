@@ -16,39 +16,27 @@ extension GetAllCardsStatusX on GetAllCardsStatus {
   bool get isError => this == GetAllCardsStatus.error;
   bool get isLoading => this == GetAllCardsStatus.loading;
   bool get isTokenExpired => this == GetAllCardsStatus.tokenExpired;
-  bool get isRefreshLimitExceeded =>
-      this == GetAllCardsStatus.refreshLimitExceeded;
 }
 
 class AllCardsState extends Equatable {
-  const AllCardsState({
-    required this.status,
-    required this.cards,
-    required this.refreshCount,
-  });
+  const AllCardsState({required this.status, required this.cards});
 
-  static AllCardsState initial() => AllCardsState(
-    status: GetAllCardsStatus.initial,
-    cards: [],
-    refreshCount: 0,
-  );
+  static AllCardsState initial() =>
+      AllCardsState(status: GetAllCardsStatus.initial, cards: []);
 
   final GetAllCardsStatus status;
   final List<CardDataModel>? cards;
-  final int refreshCount;
 
   @override
-  List<Object?> get props => [status, cards, refreshCount];
+  List<Object?> get props => [status, cards];
 
   AllCardsState copyWith({
     GetAllCardsStatus? status,
     List<CardDataModel>? cards,
-    int? refreshCount,
   }) {
     return AllCardsState(
       status: status ?? this.status,
       cards: cards ?? this.cards,
-      refreshCount: refreshCount ?? this.refreshCount,
     );
   }
 }
