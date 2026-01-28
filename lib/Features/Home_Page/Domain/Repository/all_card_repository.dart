@@ -7,17 +7,17 @@ class AllCardRepository {
   final dio = Dio();
 
   Future<CardListModel> getAllCards() async {
-    try {
-      final token = await LocalStorage.read('access_token');
-      if (token == null) throw Exception('Token not found');
+    final token = await LocalStorage.read('access_token');
+    if (token == null) throw Exception('Token not found');
 
+    try {
       final response = await dio.post(
         "${APIKey.baseUrl}/api/cards/get-all",
         options: Options(
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            'Authorization': '$token',
+            'Authorization': token,
           },
         ),
       );
