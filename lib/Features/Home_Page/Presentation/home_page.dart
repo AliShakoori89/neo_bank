@@ -1,8 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/build_bank_card_slider.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/build_second_slider.dart';
+import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Statement_Bloc/statement_event.dart';
 import '../../../Core/Const/app_colors.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
 import 'Component/icon_row_widget.dart';
@@ -23,6 +26,8 @@ class _HomePageState extends State<HomePage> {
   int currentBankCard = 0;
   int facilitiesCardCurrent = 0;
 
+  String? selectedCardDepositNumber;
+
   final List<Map<String, String>> facilitiesCard = [
     {
       'card_title': 'تسهیلات فوری تا سقف',
@@ -40,6 +45,12 @@ class _HomePageState extends State<HomePage> {
       'card_image': 'assets/image/banking-finance-bank-money.png',
     },
   ];
+
+  // @override
+  // void initState() {
+  //   BlocProvider.of<StatementBloc>(context).add(GetLastestStatmentEvent());
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +75,15 @@ class _HomePageState extends State<HomePage> {
                 context,
                 bankCardController,
                 currentBankCard,
-                (index) {
-                  setState(() => currentBankCard = index);
+                (index, depositNumber) {
+                  setState(() {
+                    currentBankCard = index;
+                    selectedCardDepositNumber = depositNumber;
+                  });
+
+                  context.read<StatementBloc>().add(
+                    GetLastestStatmentEvent(depositNumber: depositNumber),
+                  );
                 },
               ),
               buildIconRow(),
@@ -79,7 +97,8 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               //لست تراکنش ها
-              buildTransactionsList(context),
+              buildTransactionsList(context, selectedCardDepositNumber),
+              SizedBox(height: 100),
             ],
           ),
         ),

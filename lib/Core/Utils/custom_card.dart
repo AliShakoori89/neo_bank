@@ -83,10 +83,11 @@ class CustomCard extends StatelessWidget {
                             ),
                             AppSpace.heightSpace_4,
                             Text(
-                              'خلق ثروت سرزمین پارسه',
+                              subtitle,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
                               ),
+                              maxLines: 1,
                             ),
                           ],
                         ),

@@ -5,8 +5,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 
 import '../../../Home_Page/Presentation/Component/transactions_list.dart';
 
-
-Widget buildBalanceAndTransactionBody(BuildContext context){
+Widget buildBalanceAndTransactionBody(BuildContext context) {
   return SingleChildScrollView(
     child: Column(
       children: [
@@ -19,14 +18,14 @@ Widget buildBalanceAndTransactionBody(BuildContext context){
               left: 20.0,
               bottom: 16,
               top: 30,
-              right: 20
+              right: 20,
             ),
             child: Container(
               decoration: BoxDecoration(
                 border: BoxBorder.all(
-                  color: Theme.of(context).colorScheme.surfaceDim
+                  color: Theme.of(context).colorScheme.surfaceDim,
                 ),
-                borderRadius: BorderRadius.circular(12)
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(right: 10, left: 10),
@@ -37,11 +36,14 @@ Widget buildBalanceAndTransactionBody(BuildContext context){
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Icon(Icons.circle,
+                          Icon(
+                            Icons.circle,
                             size: 8,
-                            color: AppColors.splashGradiantColor1,),
+                            color: AppColors.splashGradiantColor1,
+                          ),
                           AppSpace.widthSpace_5,
-                          Text('موجودی ماه جاری',
+                          Text(
+                            'موجودی ماه جاری',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -73,14 +75,23 @@ Widget buildBalanceAndTransactionBody(BuildContext context){
                             ),
                             titlesData: FlTitlesData(
                               show: true,
-                              rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                              rightTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
+                              topTitles: AxisTitles(
+                                sideTitles: SideTitles(showTitles: false),
+                              ),
 
                               // محور X
                               bottomTitles: AxisTitles(
                                 axisNameWidget: Text(
                                   'ماه',
-                                  style: TextStyle(color: Theme.of(context).colorScheme.primaryFixed, fontSize: 12),
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primaryFixed,
+                                    fontSize: 12,
+                                  ),
                                 ),
                                 sideTitles: SideTitles(
                                   showTitles: true,
@@ -88,30 +99,55 @@ Widget buildBalanceAndTransactionBody(BuildContext context){
                                   getTitlesWidget: (value, meta) {
                                     switch (value.toInt()) {
                                       case 1:
-                                        return Text('۱', style: TextStyle(
-                                          color: Theme.of(context).colorScheme.primaryFixed,
-                                          fontSize: 11,
-                                        ));
+                                        return Text(
+                                          '۱',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.primaryFixed,
+                                            fontSize: 11,
+                                          ),
+                                        );
                                       case 8:
-                                        return Text('۸', style: TextStyle(
-                                          color: Theme.of(context).colorScheme.primaryFixed,
-                                          fontSize: 11,
-                                        ));
+                                        return Text(
+                                          '۸',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.primaryFixed,
+                                            fontSize: 11,
+                                          ),
+                                        );
                                       case 15:
-                                        return Text('۱۵', style: TextStyle(
-                                          color: Theme.of(context).colorScheme.primaryFixed,
-                                          fontSize: 11,
-                                        ));
+                                        return Text(
+                                          '۱۵',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.primaryFixed,
+                                            fontSize: 11,
+                                          ),
+                                        );
                                       case 23:
-                                        return Text('۲۳', style: TextStyle(
-                                          color: Theme.of(context).colorScheme.primaryFixed,
-                                          fontSize: 11,
-                                        ));
+                                        return Text(
+                                          '۲۳',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.primaryFixed,
+                                            fontSize: 11,
+                                          ),
+                                        );
                                       case 30:
-                                        return Text('۳۰', style: TextStyle(
-                                          color: Theme.of(context).colorScheme.primaryFixed,
-                                          fontSize: 11,
-                                        ));
+                                        return Text(
+                                          '۳۰',
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.primaryFixed,
+                                            fontSize: 11,
+                                          ),
+                                        );
                                     }
                                     return const SizedBox.shrink();
                                   },
@@ -129,42 +165,67 @@ Widget buildBalanceAndTransactionBody(BuildContext context){
                                       case 100:
                                         return Padding(
                                           padding: EdgeInsets.only(right: 5),
-                                          child:  Text('۱۰۰م', style: TextStyle(
-                                            color: Theme.of(context).colorScheme.primaryFixed,
-                                            fontSize: 11,
-                                          )),
+                                          child: Text(
+                                            '۱۰۰م',
+                                            style: TextStyle(
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.primaryFixed,
+                                              fontSize: 11,
+                                            ),
+                                          ),
                                         );
                                       case 200:
                                         return Padding(
                                           padding: EdgeInsets.only(right: 5),
-                                          child: Text('۲۰۰م', style: TextStyle(
-                                            color: Theme.of(context).colorScheme.primaryFixed,
-                                            fontSize: 11,
-                                          )),
+                                          child: Text(
+                                            '۲۰۰م',
+                                            style: TextStyle(
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.primaryFixed,
+                                              fontSize: 11,
+                                            ),
+                                          ),
                                         );
                                       case 300:
                                         return Padding(
                                           padding: EdgeInsets.only(right: 5),
-                                          child: Text('۳۰۰م', style: TextStyle(
-                                            color: Theme.of(context).colorScheme.primaryFixed,
-                                            fontSize: 11,
-                                          )),
+                                          child: Text(
+                                            '۳۰۰م',
+                                            style: TextStyle(
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.primaryFixed,
+                                              fontSize: 11,
+                                            ),
+                                          ),
                                         );
                                       case 400:
                                         return Padding(
                                           padding: EdgeInsets.only(right: 5),
-                                          child: Text('۴۰۰م', style: TextStyle(
-                                            color: Theme.of(context).colorScheme.primaryFixed,
-                                            fontSize: 11,
-                                          )),
+                                          child: Text(
+                                            '۴۰۰م',
+                                            style: TextStyle(
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.primaryFixed,
+                                              fontSize: 11,
+                                            ),
+                                          ),
                                         );
                                       case 500:
                                         return Padding(
                                           padding: EdgeInsets.only(right: 5),
-                                          child: Text('۵۰۰م', style: TextStyle(
-                                            color: Theme.of(context).colorScheme.primaryFixed,
-                                            fontSize: 11,
-                                          )),
+                                          child: Text(
+                                            '۵۰۰م',
+                                            style: TextStyle(
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.primaryFixed,
+                                              fontSize: 11,
+                                            ),
+                                          ),
                                         );
                                     }
                                     return const SizedBox.shrink();
@@ -174,7 +235,9 @@ Widget buildBalanceAndTransactionBody(BuildContext context){
                             ),
                             borderData: FlBorderData(
                               show: true,
-                              border: Border.all(color: Colors.white.withOpacity(0.1)),
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.1),
+                              ),
                             ),
                             minX: 1,
                             maxX: 30,
@@ -200,17 +263,17 @@ Widget buildBalanceAndTransactionBody(BuildContext context){
                             ],
                           ),
                         ),
-                      )
+                      ),
                     ),
                     AppSpace.heightSpace_24,
                   ],
                 ),
               ),
-            )
+            ),
           ),
         ),
         AppSpace.heightSpace_24,
-        buildTransactionsList(context),
+        // buildTransactionsList(context),
       ],
     ),
   );
