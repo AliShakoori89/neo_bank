@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/Route/transaction_detail_args.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/persian_date_format_H.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/persian_date_format_Y_M_D.dart';
 import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 class AllTransactionListWidget extends StatelessWidget {
@@ -51,22 +54,35 @@ class AllTransactionListWidget extends StatelessWidget {
             final item = state.allStatement[index];
             final isDeposit = item.actionDescription == 'واریز';
 
-            return SizedBox(
-              height: screenWidth < 400 ? 100 : 70,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Row(
-                      children: [
-                        _ActionIcon(isDeposit: isDeposit),
-                        const SizedBox(width: 12),
-                        Expanded(child: _TransactionInfo(item: item)),
-                      ],
-                    ),
+            return InkWell(
+              onTap: () {
+                context.push(
+                  '/transaction_detail_page',
+                  extra: TransactionDetailArgs(
+                    title: item.actionDescription ?? '',
+                    transferAmount: item.transferAmount!.toString(),
+                    date: item.date.toString(),
+                    description: item.description ?? '',
                   ),
-                  Divider(height: 1, color: Theme.of(context).dividerColor),
-                ],
+                );
+              },
+              child: SizedBox(
+                height: screenWidth < 400 ? 100 : 70,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Row(
+                        children: [
+                          _ActionIcon(isDeposit: isDeposit),
+                          const SizedBox(width: 12),
+                          Expanded(child: _TransactionInfo(item: item)),
+                        ],
+                      ),
+                    ),
+                    Divider(height: 1, color: Theme.of(context).dividerColor),
+                  ],
+                ),
               ),
             );
           },

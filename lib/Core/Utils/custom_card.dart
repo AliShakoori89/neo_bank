@@ -98,13 +98,31 @@ class CustomCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              mount.seRagham(),
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Theme.of(context).colorScheme.onTertiary,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  mount.seRagham(),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onTertiary,
+                                  ),
+                                ),
+                                AppSpace.widthSpace_5,
+                                Text(
+                                  'ریال',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onTertiary,
+                                  ),
+                                ),
+                              ],
                             ),
                             AppSpace.heightSpace_4,
                             Text(
@@ -117,14 +135,6 @@ class CustomCard extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                    color: AppColors.loginPageIconColor,
                   ),
                 ),
               ],

@@ -22,7 +22,7 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
 
   bool? localPassFieldsIsFill;
 
-  void onLocalpassFieldsIsFill(bool value) {
+  void onLocalPassFieldsIsFill(bool value) {
     setState(() {
       localPassFieldsIsFill = value;
     });
@@ -77,7 +77,7 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
                               AppSpace.heightSpace_32,
                               PassField(
                                 passFieldController: localPassController,
-                                onpassFieldsIsFill: onLocalpassFieldsIsFill,
+                                onpassFieldsIsFill: onLocalPassFieldsIsFill,
                               ),
 
                               // ورود
@@ -123,9 +123,6 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
                                     final localPass = await LocalStorage.read(
                                       'local_password',
                                     );
-
-                                    print(localPass);
-                                    print(localPassController.text);
 
                                     if (localPassController.text ==
                                         localPass.toString()) {

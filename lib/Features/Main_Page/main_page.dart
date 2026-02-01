@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> _checkConnectionAndInit() async {
-    final connected = await checkInternetConnection();
+    final connected = await NetworkUtils.hasInternet();
     if (!mounted) return;
     setState(() {
       hasInternet = connected;

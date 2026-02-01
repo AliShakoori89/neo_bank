@@ -1,18 +1,21 @@
-import 'dart:async';
 import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
-Future<bool> checkInternetConnection({
-  Duration timeout = const Duration(seconds: 5),
-}) async {
-  try {
-    final result = await InternetAddress.lookup('example.com').timeout(timeout);
-    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-      return true;
+class NetworkUtils {
+  static Future<bool> hasInternet() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+
+    if (connectivityResult == ConnectivityResult.none) {
+      return false;
     }
-    return false;
-  } on SocketException catch (_) {
-    return false;
-  } on TimeoutException catch (_) {
-    return false;
+
+    try {
+      final result = await InternetAddress.lookup('example.com')
+          .timeout(const Duration(seconds: 5));
+
+      return result.isNotEmpty && result.first.rawAddress.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
   }
 }

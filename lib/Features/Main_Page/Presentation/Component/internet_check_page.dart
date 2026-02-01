@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/check_internet.dart';
@@ -25,11 +28,31 @@ class _InternetCheckPageState extends State<InternetCheckPage> {
 
   Future<void> _checkConnection() async {
     setState(() => isChecking = true);
-    final result = await checkInternetConnection();
+    final result = await NetworkUtils.hasInternet();
     setState(() {
       hasInternet = result;
       isChecking = false;
     });
+  }
+
+  Future<bool> isVpnActive() async {
+    try {
+      final response = await http.get(Uri.parse('https://ipapi.co/json'));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final country = data['country_name'];
+        final org = data['org']; // بعضی وقت‌ها نام VPN در org است
+        print('Country: $country, Org: $org');
+
+        // شرط ساده: اگر org شامل VPN بود
+        if (org != null && org.toLowerCase().contains('vpn')) {
+          return true;
+        }
+      }
+    } catch (_) {
+      return false;
+    }
+    return false;
   }
 
   @override

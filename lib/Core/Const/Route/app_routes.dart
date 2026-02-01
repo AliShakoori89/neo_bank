@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/Route/otp_args.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/Route/transaction_detail_args.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/local_login_page.dart';
@@ -10,6 +11,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/requ
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/statment_page.dart';
 import '../../../Features/Main_Page/main_page.dart';
 
@@ -73,6 +75,20 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/statement_page',
       builder: (context, state) => const StatmentPage(),
+    ),
+
+    GoRoute(
+      path: '/transaction_detail_page',
+      builder: (context, state) {
+        final args = state.extra as TransactionDetailArgs;
+
+        return TransactionDetailPage(
+          date: args.date,
+          title: args.title,
+          transferAmount: args.transferAmount,
+          description: args.description,
+        );
+      },
     ),
 
     // GoRoute(

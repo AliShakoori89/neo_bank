@@ -47,15 +47,15 @@ void main() async {
   );
 }
 
-// enum ConnectivityStatus { online, offline }
+enum ConnectivityStatus { online, offline }
 
-// class ConnectivityCubit extends Cubit<ConnectivityStatus> {
-//   ConnectivityCubit() : super(ConnectivityStatus.online);
+class ConnectivityCubit extends Cubit<ConnectivityStatus> {
+  ConnectivityCubit() : super(ConnectivityStatus.online);
 
-//   void update(bool isOnline) {
-//     emit(isOnline ? ConnectivityStatus.online : ConnectivityStatus.offline);
-//   }
-// }
+  void update(bool isOnline) {
+    emit(isOnline ? ConnectivityStatus.online : ConnectivityStatus.offline);
+  }
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key, required this.isDark});

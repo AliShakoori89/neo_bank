@@ -7,6 +7,9 @@ import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_logo.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/pass_field.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/set_pass_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Profile_Page/Presentation/Component/Biometric_Service/biometric_service.dart';
 
 class SetPassPage extends StatefulWidget {
   const SetPassPage({super.key});
@@ -16,11 +19,39 @@ class SetPassPage extends StatefulWidget {
 }
 
 class _SetPassPageState extends State<SetPassPage> {
+  final BiometricService _biometricService = BiometricService();
+  bool isSupported = false;
+  bool isSwitchOn = false;
   bool? passFieldsIsFill;
+
+  static const _prefKey = 'biometric_enabled';
+
+  @override
+  void initState() async {
+    await _checkBiometricSupport();
+    await _loadSwitchState();
+    super.initState();
+  }
+
+  // بارگذاری وضعیت سوئیچ از SharedPreferences
+  Future<void> _loadSwitchState() async {
+    final prefs = await SharedPreferences.getInstance();
+    final storedValue = prefs.getBool(_prefKey) ?? false;
+    setState(() {
+      isSwitchOn = storedValue;
+    });
+  }
 
   void _onpassFieldsIsFill(bool value) {
     setState(() {
       passFieldsIsFill = value;
+    });
+  }
+
+  Future<void> _checkBiometricSupport() async {
+    final supported = await _biometricService.isSupported();
+    setState(() {
+      isSupported = supported;
     });
   }
 

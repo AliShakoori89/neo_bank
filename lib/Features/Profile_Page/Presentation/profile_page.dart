@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
@@ -13,6 +14,12 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profi
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/name_and_phone.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/profile_page_custom_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/user_image.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Component/Biometric_Service/biometric_service.dart';
+import '../../../Core/Const/custom_divider.dart';
+import 'Component/profile_main_container.dart';
+import 'Component/switch_theme.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -22,12 +29,44 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool isBiometricEnabled = false;
+  final BiometricService _biometricService = BiometricService();
+  bool isSupported = false;
+  bool isSwitchOn = false;
+
+  static const _prefKey = 'biometric_enabled';
 
   @override
   void initState() {
     BlocProvider.of<ProfileBloc>(context).add(GetProfileEventEvent());
+    _initState();
     super.initState();
+  }
+
+  Future<void> _initState() async {
+    await _checkBiometricSupport();
+    await _loadSwitchState();
+  }
+
+  Future<void> _checkBiometricSupport() async {
+    final supported = await _biometricService.isSupported();
+    setState(() {
+      isSupported = supported;
+    });
+  }
+
+  // بارگذاری وضعیت سوئیچ از SharedPreferences
+  Future<void> _loadSwitchState() async {
+    final prefs = await SharedPreferences.getInstance();
+    final storedValue = prefs.getBool(_prefKey) ?? false;
+    setState(() {
+      isSwitchOn = storedValue;
+    });
+  }
+
+  // ذخیره وضعیت سوئیچ در SharedPreferences
+  Future<void> _saveSwitchState(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_prefKey, value);
   }
 
   @override
@@ -75,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         AppSpace.heightSpace_24,
 
                         /// --- Account Section ---
-                        _buildProfileCard(
+                        profileMainContainer(
                           context,
                           children: [
                             ProfilePageCustomRow(
@@ -88,7 +127,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: AppColors.loginPageIconColor,
                               ),
                             ),
-                            _divider(),
+                            divider(),
                             ProfilePageCustomRow(
                               iconPath:
                                   'assets/svg/bank_services_page/passcode.svg',
@@ -99,19 +138,53 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: AppColors.loginPageIconColor,
                               ),
                             ),
-                            _divider(),
+                            divider(),
                             ProfilePageCustomRow(
                               iconPath: 'assets/svg/fingerprint-03.svg',
                               title: 'ورود بیومتریک',
-                              widget: _buildBiometricSwitch(),
-                            ),
+                              widget: isSupported
+                                  ? Switch(
+                                value: isSwitchOn,
+                                onChanged: (val) async {
+                                  if (val) {
+                                    // اگر سوئیچ روشن می‌شود، ابتدا احراز هویت بیومتریک
+                                    final success = await _biometricService.authenticate();
+                                    if (success) {
+                                      setState(() {
+                                        isSwitchOn = true;
+                                      });
+                                      await _saveSwitchState(true);
+                                    } else {
+                                      // اگر شکست خورد، سوئیچ خاموش باقی بماند
+                                      setState(() {
+                                        isSwitchOn = false;
+                                      });
+                                    }
+                                  } else {
+                                    // خاموش کردن سوئیچ بدون احراز هویت
+                                    setState(() {
+                                      isSwitchOn = false;
+                                    });
+                                    await _saveSwitchState(false);
+                                  }
+                                },
+                              )
+                                  : Text(
+                                'ساپورت نمی‌کند',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            )
                           ],
                         ),
 
                         AppSpace.heightSpace_24,
 
                         /// --- Settings Section ---
-                        _buildProfileCard(
+                        profileMainContainer(
                           context,
                           children: [
                             ProfilePageCustomRow(
@@ -123,7 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: AppColors.loginPageIconColor,
                               ),
                             ),
-                            _divider(),
+                            divider(),
                             ProfilePageCustomRow(
                               iconPath: 'assets/svg/arrow-up.svg',
                               title: 'درباره برنامه',
@@ -133,7 +206,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: AppColors.loginPageIconColor,
                               ),
                             ),
-                            _divider(),
+                            divider(),
                             ProfilePageCustomRow(
                               iconPath: 'assets/svg/info-circle.svg',
                               title: 'راهنما',
@@ -143,11 +216,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: AppColors.loginPageIconColor,
                               ),
                             ),
-                            _divider(),
+                            divider(),
                             ProfilePageCustomRow(
                               iconPath: 'assets/svg/theme.svg',
                               title: 'زمینه',
-                              widget: _buildThemeSwitch(context),
+                              widget: buildThemeSwitch(context),
                             ),
                           ],
                         ),
@@ -214,67 +287,5 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   /// --- Helper Widgets ---
-  Widget _buildProfileCard(
-    BuildContext context, {
-    required List<Widget> children,
-  }) {
-    final theme = Theme.of(context);
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: theme.colorScheme.surfaceContainer,
-      ),
-      child: Column(children: children),
-    );
-  }
 
-  Widget _divider() => const Padding(
-    padding: EdgeInsets.symmetric(vertical: 8),
-    child: Divider(height: 1, color: AppColors.homePageDividerColor),
-  );
-
-  Widget _buildBiometricSwitch() => Transform.scale(
-    scale: 0.8,
-    child: RotatedBox(
-      quarterTurns: 90,
-      child: Switch(
-        value: isBiometricEnabled,
-        activeThumbColor: Colors.white,
-        activeTrackColor: AppColors.splashGradiantColor1,
-        inactiveThumbColor: Colors.white,
-        inactiveTrackColor: Colors.grey,
-        onChanged: (value) => setState(() => isBiometricEnabled = value),
-      ),
-    ),
-  );
-
-  Widget _buildThemeSwitch(BuildContext context) => Row(
-    children: [
-      const Icon(
-        Icons.light_mode,
-        size: 20,
-        color: AppColors.loginPageIconColor,
-      ),
-      SizedBox(
-        height: 24,
-        width: 40,
-        child: Transform.scale(
-          scale: 0.7,
-          child: Switch(
-            value: Theme.of(context).brightness == Brightness.dark,
-            onChanged: (_) {
-              context.read<ThemeBloc>().add(ThemeEvent.toggle);
-            },
-          ),
-        ),
-      ),
-      const Icon(
-        Icons.dark_mode,
-        size: 20,
-        color: AppColors.loginPageIconColor,
-      ),
-    ],
-  );
 }

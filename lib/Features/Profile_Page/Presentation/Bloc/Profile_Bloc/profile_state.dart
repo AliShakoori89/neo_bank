@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Model/profile_result_model.dart';
 
 enum ProfileStatus { initial, success, error, loading }
 

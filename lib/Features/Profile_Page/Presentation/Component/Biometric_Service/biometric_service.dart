@@ -1,0 +1,28 @@
+import 'package:local_auth/local_auth.dart';
+
+class BiometricService {
+  final LocalAuthentication _auth = LocalAuthentication();
+
+  // بررسی اینکه دستگاه از بیومتریک پشتیبانی می‌کند یا نه
+  Future<bool> isSupported() async {
+    try {
+      final canCheck = await _auth.canCheckBiometrics;
+      final isDeviceSupported = await _auth.isDeviceSupported();
+      return canCheck && isDeviceSupported;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // احراز هویت بیومتریک
+  Future<bool> authenticate() async {
+    try {
+      return await _auth.authenticate(
+        localizedReason: 'برای فعال‌سازی ورود بیومتریک احراز هویت شوید',
+        biometricOnly: true,
+      );
+    } catch (_) {
+      return false;
+    }
+  }
+}
