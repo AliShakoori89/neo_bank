@@ -5,24 +5,21 @@ import 'package:neo_bank_mehr_iran/Core/Const/to_persian_number.dart';
 
 typedef MenuEntry = DropdownMenuEntry<String>;
 
-class CustomDropdownMenu extends StatefulWidget {
-  const CustomDropdownMenu({super.key, required this.cardsPan});
+class CustomDropdownButton extends StatefulWidget {
+  const CustomDropdownButton({super.key, required this.cardsPan});
 
   final List<String> cardsPan;
 
   @override
-  State<CustomDropdownMenu> createState() => _CustomDropdownMenuState();
+  State<CustomDropdownButton> createState() => _CustomDropdownMenuState();
 }
 
-class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
+class _CustomDropdownMenuState extends State<CustomDropdownButton> {
   late String dropdownValue = widget.cardsPan.first;
 
   late final List<MenuEntry> menuEntries = UnmodifiableListView<MenuEntry>(
     widget.cardsPan.map<MenuEntry>(
-      (String card) => MenuEntry(
-        value: card,
-        label: toPersianNumber(card), // اعداد فارسی اینجا قرار می‌گیرن
-      ),
+      (String card) => MenuEntry(value: card, label: toPersianNumber(card)),
     ),
   );
 

@@ -2,14 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards/build_bank_card_slider.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Widget/build_bank_card_slider.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/build_second_slider.dart';
 import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Statement_Bloc/statement_event.dart';
 import '../../../Core/Const/app_colors.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
-import 'Component/icon_row_widget.dart';
-import 'Component/transactions_list.dart';
+import 'Component/Icon_Row_Widget/icon_row_widget.dart';
+import 'Component/Transaction_List_Widget/transactions_list_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -82,7 +82,10 @@ class _HomePageState extends State<HomePage> {
                   });
 
                   context.read<StatementBloc>().add(
-                    GetLastestStatmentEvent(depositNumber: depositNumber),
+                    FetchStatementEvent(
+                      depositNumber: depositNumber,
+                      latestCount: 4,
+                    ),
                   );
                 },
               ),
@@ -97,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               //لست تراکنش ها
-              buildTransactionsList(context, selectedCardDepositNumber),
+              buildTransactionsListWidget(context, selectedCardDepositNumber),
               SizedBox(height: 100),
             ],
           ),

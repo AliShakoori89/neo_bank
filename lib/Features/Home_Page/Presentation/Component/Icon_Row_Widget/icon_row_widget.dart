@@ -13,7 +13,7 @@ Widget buildIconRow() {
         separatorBuilder: (_, __) => const SizedBox(width: 24),
         padding: const EdgeInsets.only(left: 24, top: 20),
         itemBuilder: (context, index) =>
-        const CustomIcon(imagePath: 'assets/svg/simcard.svg'),
+            const CustomIcon(imagePath: 'assets/svg/simcard.svg'),
       ),
     ),
   );

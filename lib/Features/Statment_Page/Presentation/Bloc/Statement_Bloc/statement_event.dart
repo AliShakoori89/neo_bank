@@ -1,12 +1,8 @@
-abstract class StatementEvent {
-  List<Object> get props => [];
-}
+abstract class StatementEvent {}
 
-class GetLastestStatmentEvent extends StatementEvent {
+class FetchStatementEvent extends StatementEvent {
   final String depositNumber;
+  final int? latestCount; // اگر null بود یعنی همه
 
-  GetLastestStatmentEvent({required this.depositNumber});
-
-  @override
-  List<Object> get props => [depositNumber];
+  FetchStatementEvent({required this.depositNumber, this.latestCount});
 }

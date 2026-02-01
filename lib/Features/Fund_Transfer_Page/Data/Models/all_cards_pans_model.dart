@@ -24,14 +24,12 @@ class AllCardsPansdDataModel {
   final String? depositNumber;
   final DateTime? expireDate;
   final String? pan;
-  final String? cardDeposit;
   final int? availableBalance;
 
   AllCardsPansdDataModel({
     this.depositNumber,
     this.expireDate,
     this.pan,
-    this.cardDeposit,
     this.availableBalance,
   });
 
@@ -42,7 +40,6 @@ class AllCardsPansdDataModel {
           ? DateTime.parse(json['expireDate'])
           : null,
       pan: json['pan'] as String?,
-      cardDeposit: json['cardDeposit'] as String?,
       availableBalance: json['availableBalance'] as int?,
     );
   }

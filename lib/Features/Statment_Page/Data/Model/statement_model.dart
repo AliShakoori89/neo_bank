@@ -25,25 +25,27 @@ class StatementModel {
 class StatementDataModel {
   final DateTime? date;
   final int? transferAmount;
-  final int? balance;
-  final int? action;
+  final String? actionDescription;
   final String? description;
 
   StatementDataModel({
     this.date,
     this.transferAmount,
-    this.balance,
-    this.action,
+    this.actionDescription,
     this.description,
   });
 
   factory StatementDataModel.fromJson(Map<String, dynamic> json) {
     return StatementDataModel(
-      date: json['date'] != null ? DateTime.parse(json['date']) : null,
-      transferAmount: json['transferAmount'] as int,
-      balance: json['balance'] as int,
-      action: json['action'] as int,
-      description: json['description'] as String,
+      date: json['date'] != null
+          ? DateTime.tryParse(json['date'].toString())
+          : null,
+
+      transferAmount: (json['transferAmount'] as num?)?.toInt(),
+
+      actionDescription: (json['actionDescription']?.toString()),
+
+      description: json['description']?.toString(),
     );
   }
 }

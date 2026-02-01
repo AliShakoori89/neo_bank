@@ -4,10 +4,10 @@ import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_event.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_pans_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_pans_event.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/build_account_tab_body.dart';
-import 'component/build_cart_tab_body.dart';
+import 'component/Card/build_cart_tab_body.dart';
 import 'component/build_tab_item.dart';
 
 class FundTransferPage extends StatefulWidget {
@@ -34,7 +34,7 @@ class _FundTransferPageState extends State<FundTransferPage>
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<AllCardsPansBloc>(context).add(GetAllCardsPanEvent());
+    BlocProvider.of<AllCardsDetailBloc>(context).add(GetAllCardsDetailEvent());
     BlocProvider.of<UserAllAccountBloc>(context).add(GetUserAllAccountEvent());
     _tabController = TabController(length: _tabs.length, vsync: this)
       ..addListener(() => setState(() {}));

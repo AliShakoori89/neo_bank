@@ -3,7 +3,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 
-import '../../../Home_Page/Presentation/Component/transactions_list.dart';
+import '../../../Home_Page/Presentation/Component/Transaction_List_Widget/transactions_list_widget.dart';
 
 Widget buildBalanceAndTransactionBody(BuildContext context) {
   return SingleChildScrollView(

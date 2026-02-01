@@ -10,6 +10,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/requ
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/statment_page.dart';
 import '../../../Features/Main_Page/main_page.dart';
 
 final GoRouter router = GoRouter(
@@ -67,6 +68,11 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/local_login_page',
       builder: (context, state) => const LocalLoginPage(),
+    ),
+
+    GoRoute(
+      path: '/statement_page',
+      builder: (context, state) => const StatmentPage(),
     ),
 
     // GoRoute(

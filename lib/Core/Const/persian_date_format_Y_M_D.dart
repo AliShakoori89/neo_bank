@@ -1,7 +1,7 @@
 import 'package:shamsi_date/shamsi_date.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
-String formatPersianDate(String isoDate) {
+String formatPersianDateYMD(String isoDate) {
   final dateTime = DateTime.parse(isoDate).toLocal();
 
   final now = DateTime.now();
@@ -20,9 +20,7 @@ String formatPersianDate(String isoDate) {
   final j = Jalali.fromDateTime(dateTime);
 
   final formatted =
-      // '
-      // ${j.year}/
-      '${j.month.toString().padLeft(2, '0')}/${j.day.toString().padLeft(2, '0')}';
+      '${j.year}/${j.month.toString().padLeft(2, '0')}/${j.day.toString().padLeft(2, '0')}';
 
   return formatted.toPersianDigit();
 }

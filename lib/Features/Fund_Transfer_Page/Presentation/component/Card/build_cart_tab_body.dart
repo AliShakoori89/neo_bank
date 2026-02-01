@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_pans_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_pans_state.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Card/dropdown_button.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
-import '../../../../Core/Const/app_colors.dart';
-import '../../../../Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Card/custom_drop_down_shimmer.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Card/custom_dropdown_button.dart';
+import '../../../../../Core/Const/app_colors.dart';
+import '../../../../../Core/Const/app_space.dart';
 
 Widget buildCartTabBody(BuildContext context) {
   return SizedBox(
@@ -17,38 +17,14 @@ Widget buildCartTabBody(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         AppSpace.heightSpace_24,
-        BlocBuilder<AllCardsPansBloc, AllCardsPansState>(
+        BlocBuilder<AllCardsDetailBloc, AllCardsDetailState>(
           builder: (context, state) {
             final cardsPan = state.cardsPan;
             if (state.status.isLoading) {
-              return Container(
-                width: MediaQuery.of(context).size.width - 60,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: AppColors.circleBorderColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                constraints: const BoxConstraints(minWidth: 320, minHeight: 40),
-                child: Shimmer(
-                  duration: Duration(seconds: 1), //Default value
-                  interval: Duration(
-                    microseconds: 1,
-                  ), //Default value: Duration(seconds: 0)
-                  //Default value
-                  colorOpacity: 5, //Default value
-                  enabled: true, //Default value
-                  direction: ShimmerDirection.fromLTRB(), //Default Value
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-              );
+              return CustomDropDownShimmer();
             }
             if (state.status.isSuccess) {
-              return CustomDropdownMenu(cardsPan: cardsPan!);
+              return CustomDropdownButton(cardsPan: cardsPan!);
             }
             if (state.status.isError) {
               return Text('error');
