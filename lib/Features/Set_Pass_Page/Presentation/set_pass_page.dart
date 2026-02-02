@@ -27,16 +27,21 @@ class _SetPassPageState extends State<SetPassPage> {
   static const _prefKey = 'biometric_enabled';
 
   @override
-  void initState() async {
+  void initState() {
+    super.initState();
+    _initAsync();
+  }
+
+  Future<void> _initAsync() async {
     await _checkBiometricSupport();
     await _loadSwitchState();
-    super.initState();
   }
 
   // بارگذاری وضعیت سوئیچ از SharedPreferences
   Future<void> _loadSwitchState() async {
     final prefs = await SharedPreferences.getInstance();
     final storedValue = prefs.getBool(_prefKey) ?? false;
+    if (!mounted) return;
     setState(() {
       isSwitchOn = storedValue;
     });
@@ -50,6 +55,7 @@ class _SetPassPageState extends State<SetPassPage> {
 
   Future<void> _checkBiometricSupport() async {
     final supported = await _biometricService.isSupported();
+    if (!mounted) return;
     setState(() {
       isSupported = supported;
     });

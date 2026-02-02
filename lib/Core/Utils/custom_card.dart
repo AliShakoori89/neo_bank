@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-
-import '../Const/app_colors.dart';
 import '../Const/app_space.dart';
 
 class CustomCard extends StatelessWidget {
@@ -83,7 +81,7 @@ class CustomCard extends StatelessWidget {
                             ),
                             AppSpace.heightSpace_4,
                             Text(
-                              subtitle,
+                              subtitle.toPersianDigit(),
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onPrimary,
                               ),

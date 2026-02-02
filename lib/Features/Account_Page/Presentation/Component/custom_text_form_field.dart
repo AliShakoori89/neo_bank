@@ -30,6 +30,9 @@ class CustomTextFormField extends StatelessWidget {
           textAlignVertical: TextAlignVertical.center,
           keyboardType: textInputType,
           obscureText: obscureText,
+          style: TextStyle(
+            color: Theme.of(context).appBarTheme.titleTextStyle!.color,
+          ),
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
             hintText == 'شماره همراه'

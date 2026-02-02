@@ -46,6 +46,12 @@ class CardDataModel {
       availableBalance: json['availableBalance'] as int?,
     );
   }
+
+  @override
+  List<Object?> get props => [
+    pan, // 👈 identity اصلی
+    availableBalance, // اگه تغییر کرد → rebuild
+  ];
 }
 
 class ApiError {

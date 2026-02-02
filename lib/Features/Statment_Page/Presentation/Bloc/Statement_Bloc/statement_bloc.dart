@@ -17,7 +17,7 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
   ) async {
     try {
       // ⛔️ loading فقط وقتی دیتا نداری
-      if (state.topStatement.isEmpty) {
+      if (state.allStatement.isEmpty) {
         emit(state.copyWith(status: StatementStateStatus.loading));
       }
 
@@ -28,15 +28,10 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
       final allList = List<StatementDataModel>.from(result.data ?? [])
         ..sort((a, b) => b.date!.compareTo(a.date!));
 
-      final topList = event.latestCount == null
-          ? allList
-          : allList.take(event.latestCount!).toList();
-
       emit(
         state.copyWith(
           status: StatementStateStatus.success,
           allStatement: allList,
-          topStatement: topList,
         ),
       );
     } catch (_) {

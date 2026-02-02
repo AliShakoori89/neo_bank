@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:local_auth/local_auth.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_state.dart';
@@ -15,7 +13,6 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/profile_page_custom_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/user_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Component/Biometric_Service/biometric_service.dart';
 import '../../../Core/Const/custom_divider.dart';
 import 'Component/profile_main_container.dart';
@@ -144,40 +141,42 @@ class _ProfilePageState extends State<ProfilePage> {
                               title: 'ورود بیومتریک',
                               widget: isSupported
                                   ? Switch(
-                                value: isSwitchOn,
-                                onChanged: (val) async {
-                                  if (val) {
-                                    // اگر سوئیچ روشن می‌شود، ابتدا احراز هویت بیومتریک
-                                    final success = await _biometricService.authenticate();
-                                    if (success) {
-                                      setState(() {
-                                        isSwitchOn = true;
-                                      });
-                                      await _saveSwitchState(true);
-                                    } else {
-                                      // اگر شکست خورد، سوئیچ خاموش باقی بماند
-                                      setState(() {
-                                        isSwitchOn = false;
-                                      });
-                                    }
-                                  } else {
-                                    // خاموش کردن سوئیچ بدون احراز هویت
-                                    setState(() {
-                                      isSwitchOn = false;
-                                    });
-                                    await _saveSwitchState(false);
-                                  }
-                                },
-                              )
+                                      value: isSwitchOn,
+                                      onChanged: (val) async {
+                                        if (val) {
+                                          // اگر سوئیچ روشن می‌شود، ابتدا احراز هویت بیومتریک
+                                          final success =
+                                              await _biometricService
+                                                  .authenticate();
+                                          if (success) {
+                                            setState(() {
+                                              isSwitchOn = true;
+                                            });
+                                            await _saveSwitchState(true);
+                                          } else {
+                                            // اگر شکست خورد، سوئیچ خاموش باقی بماند
+                                            setState(() {
+                                              isSwitchOn = false;
+                                            });
+                                          }
+                                        } else {
+                                          // خاموش کردن سوئیچ بدون احراز هویت
+                                          setState(() {
+                                            isSwitchOn = false;
+                                          });
+                                          await _saveSwitchState(false);
+                                        }
+                                      },
+                                    )
                                   : Text(
-                                'ساپورت نمی‌کند',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            )
+                                      'ساپورت نمی‌کند',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                            ),
                           ],
                         ),
 
@@ -287,5 +286,4 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   /// --- Helper Widgets ---
-
 }

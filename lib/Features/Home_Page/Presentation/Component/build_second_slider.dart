@@ -11,9 +11,8 @@ Widget buildSecondSlider(
   BuildContext context,
   CarouselSliderController controller,
   int currentIndex,
-  List<Map<String, String>> sampleCard2, {
-  required Function(int) onPageChanged,
-}) {
+  List<Map<String, String>> sampleCard2,
+) {
   final cardItems2 = sampleCard2
       .map(
         (card) => BlocBuilder<ThemeBloc, ThemeData>(
@@ -83,13 +82,7 @@ Widget buildSecondSlider(
           CarouselSlider(
             items: cardItems2,
             carouselController: controller,
-            options: CarouselOptions(
-              height: 120,
-              viewportFraction: 1,
-              onPageChanged: (index, reason) {
-                onPageChanged(index);
-              },
-            ),
+            options: CarouselOptions(height: 120, viewportFraction: 1),
           ),
           Align(
             alignment: Alignment.bottomCenter,

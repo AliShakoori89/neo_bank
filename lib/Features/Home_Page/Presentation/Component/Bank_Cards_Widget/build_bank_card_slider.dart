@@ -22,7 +22,6 @@ Widget buildBankCardSlider(
   BuildContext context,
   CarouselSliderController controller,
   int current,
-  void Function(int index, String depositNumber) onPageChanged,
 ) {
   return BlocListener<RefreshCountBloc, RefreshCountState>(
     listener: (context, state) {
@@ -59,14 +58,6 @@ Widget buildBankCardSlider(
           },
           child: BlocBuilder<AllCardsBloc, AllCardsState>(
             builder: (context, state) {
-              if (state.cards != null && state.cards!.isNotEmpty) {
-                final cards = state.cards!;
-
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  onPageChanged(0, cards.first.depositNumber!);
-                });
-              }
-
               if (state.status.isLoading) {
                 return BankCardShimmer();
               }
@@ -116,13 +107,6 @@ Widget buildBankCardSlider(
                                 autoPlay: false,
                                 enlargeCenterPage: true,
                                 viewportFraction: 0.8,
-                                onPageChanged: (index, reason) {
-                                  if (index < cards.length) {
-                                    final depositNumber =
-                                        cards[index].depositNumber;
-                                    onPageChanged(index, depositNumber!);
-                                  }
-                                },
                               ),
                             ),
                           ),

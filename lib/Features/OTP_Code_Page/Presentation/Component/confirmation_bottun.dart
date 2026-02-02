@@ -34,50 +34,80 @@ class ConfirmationBottun extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: isOtpComplete
-                  ? AppColors.splashGradiantColor1
-                  : Colors.grey.shade400, // حالت غیرفعال
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
+        return isOtpComplete
+            ? SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        AppColors.splashGradiantColor1, // حالت غیرفعال
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
 
-            onPressed: () {
-              final otp = otpController.text;
+                  onPressed: () {
+                    final otp = otpController.text;
 
-              context.read<OtpCodeCheckBloc>().add(
-                OtpCodeCheckValueEvent(
-                  deviceId: deviceId,
-                  otpCode: otp,
-                  secretKey: secretKey,
+                    context.read<OtpCodeCheckBloc>().add(
+                      OtpCodeCheckValueEvent(
+                        deviceId: deviceId,
+                        otpCode: otp,
+                        secretKey: secretKey,
+                      ),
+                    );
+                  }, // 👈 وقتی null باشه دکمه قفله
+
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: const [
+                        Text(
+                          'تایید و ادامه',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Positioned(
+                          left: 5,
+                          child: Icon(Icons.arrow_forward, size: 24),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            : Container(
+                width: double.infinity,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade400,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: const [
+                      Text(
+                        'تایید و ادامه',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Positioned(
+                        left: 5,
+                        child: Icon(Icons.arrow_forward, size: 24),
+                      ),
+                    ],
+                  ),
                 ),
               );
-            }, // 👈 وقتی null باشه دکمه قفله
-
-            child: SizedBox(
-              width: double.infinity,
-              child: Stack(
-                alignment: Alignment.center,
-                children: const [
-                  Text(
-                    'تایید و ادامه',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  Positioned(
-                    left: 5,
-                    child: Icon(Icons.arrow_forward, size: 24),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
       },
     );
   }

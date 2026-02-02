@@ -11,33 +11,23 @@ extension UserLoginAuthStatusX on StatementStateStatus {
 }
 
 class StatementState extends Equatable {
-  const StatementState({
-    required this.status,
-    required this.topStatement,
-    required this.allStatement,
-  });
+  const StatementState({required this.status, required this.allStatement});
 
-  static StatementState initial() => StatementState(
-    status: StatementStateStatus.initial,
-    topStatement: [],
-    allStatement: [],
-  );
+  static StatementState initial() =>
+      StatementState(status: StatementStateStatus.initial, allStatement: []);
 
   final StatementStateStatus status;
-  final List<StatementDataModel> topStatement;
   final List<StatementDataModel> allStatement;
 
   @override
-  List<Object?> get props => [status, topStatement, allStatement];
+  List<Object?> get props => [status, allStatement];
 
   StatementState copyWith({
     StatementStateStatus? status,
-    List<StatementDataModel>? topStatement,
     List<StatementDataModel>? allStatement,
   }) {
     return StatementState(
       status: status ?? this.status,
-      topStatement: topStatement ?? this.topStatement,
       allStatement: allStatement ?? this.allStatement,
     );
   }

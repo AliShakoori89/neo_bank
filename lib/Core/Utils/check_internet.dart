@@ -10,8 +10,9 @@ class NetworkUtils {
     }
 
     try {
-      final result = await InternetAddress.lookup('example.com')
-          .timeout(const Duration(seconds: 5));
+      final result = await InternetAddress.lookup(
+        'example.com',
+      ).timeout(const Duration(seconds: 5));
 
       return result.isNotEmpty && result.first.rawAddress.isNotEmpty;
     } catch (_) {
