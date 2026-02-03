@@ -29,8 +29,10 @@ class RefreshCountBloc extends Bloc<RefreshCountEvent, RefreshCountState> {
 
       emit(state.copyWith(status: RefreshCountStatus.success));
     } on DioException catch (e) {
+      print('DioException: ${e.message}');
       emit(state.copyWith(status: RefreshCountStatus.error));
-    } catch (error) {
+    } catch (e) {
+      print('Other error: $e');
       emit(state.copyWith(status: RefreshCountStatus.error));
     }
   }
