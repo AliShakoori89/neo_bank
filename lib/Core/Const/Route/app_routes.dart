@@ -6,7 +6,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/local_login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
-import 'package:neo_bank_mehr_iran/Features/Main_Page/Presentation/Component/internet_check_page.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/internet_check_page.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/request_otp_code_again_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';

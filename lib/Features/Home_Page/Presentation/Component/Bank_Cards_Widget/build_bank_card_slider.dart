@@ -138,10 +138,16 @@ Widget buildBankCardSlider(
                 );
               }
               if (state.status.isError) {
-                return Center(child: Text('لطفا بعدا تلاش کنید.'));
+                return SizedBox(
+                    height: 200,
+                    width: double.infinity,
+                    child: Center(child: Text('لطفا بعدا تلاش کنید.')));
               }
 
-              return Center(child: Text('لطفا بعدا تلاش کنید.'));
+              return SizedBox(
+                  height: 200,
+                  width: double.infinity,
+                  child: Center(child: Text('لطفا بعدا تلاش کنید.')));
             },
           ),
         );

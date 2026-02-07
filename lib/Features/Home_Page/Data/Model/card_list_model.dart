@@ -47,7 +47,6 @@ class CardDataModel {
     );
   }
 
-  @override
   List<Object?> get props => [
     pan, // 👈 identity اصلی
     availableBalance, // اگه تغییر کرد → rebuild

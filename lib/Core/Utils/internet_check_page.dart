@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/check_internet.dart';
@@ -35,30 +33,31 @@ class _InternetCheckPageState extends State<InternetCheckPage> {
     });
   }
 
-  Future<bool> isVpnActive() async {
-    try {
-      final response = await http.get(Uri.parse('https://ipapi.co/json'));
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final country = data['country_name'];
-        final org = data['org']; // بعضی وقت‌ها نام VPN در org است
-        print('Country: $country, Org: $org');
-
-        // شرط ساده: اگر org شامل VPN بود
-        if (org != null && org.toLowerCase().contains('vpn')) {
-          return true;
-        }
-      }
-    } catch (_) {
-      return false;
-    }
-    return false;
-  }
-
   @override
   Widget build(BuildContext context) {
     if (isChecking) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return Scaffold(
+        body: BlocBuilder<ThemeBloc, ThemeData>(
+          builder: (context, theme) {
+            return Container(
+              height: double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: Alignment(0, 1),
+                  radius: 2,
+                  colors: [
+                    Theme.of(context).colorScheme.secondaryContainer,
+                    theme == AppTheme.lightTheme ? Colors.white : Colors.black,
+                  ],
+                  stops: [0.0, 0.5],
+                ),
+              ),
+              child: const Center(child: CircularProgressIndicator()),
+            );
+          },
+        ),
+      );
     }
 
     if (hasInternet == true) {
@@ -72,20 +71,14 @@ class _InternetCheckPageState extends State<InternetCheckPage> {
           return Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: theme == AppTheme.lightTheme
-                    ? [
-                        Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.secondaryContainer,
-                      ]
-                    : [
-                        Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.secondaryContainer,
-                        Theme.of(context).colorScheme.secondaryContainer,
-                      ],
+              gradient: RadialGradient(
+                center: Alignment(0, 1),
+                radius: 2,
+                colors: [
+                  Theme.of(context).colorScheme.secondary,
+                  theme == AppTheme.lightTheme ? Colors.white : Colors.black,
+                ],
+                stops: [0.0, 0.5],
               ),
             ),
             child: Center(
@@ -96,11 +89,12 @@ class _InternetCheckPageState extends State<InternetCheckPage> {
                   children: [
                     const Icon(Icons.wifi_off, size: 80, color: Colors.red),
                     const SizedBox(height: 20),
-                    const Text(
+                    Text(
                       'اتصال اینترنت برقرار نیست',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        color: theme == AppTheme.lightTheme ? Colors.black : Colors.grey,
                       ),
                       textAlign: TextAlign.center,
                     ),

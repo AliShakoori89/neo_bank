@@ -47,12 +47,15 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
           children: [
             Padding(
               padding: EdgeInsets.only(left: 12, right: 25, bottom: 10),
-              child: Text(
-                'آخرین تراکنش‌ها',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.surfaceContainerHigh,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'آخرین تراکنش‌ها',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.surfaceContainerHigh,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
@@ -68,9 +71,16 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
                 }
 
                 if (state.status == SLastTransactionStatus.error) {
-                  return Text(
-                    'خطا در دریافت تراکنش‌ها',
-                    style: TextStyle(color: Colors.red),
+                  return Center(
+                    child: Padding(
+                      padding: EdgeInsetsGeometry.only(
+                        top: 120
+                      ),
+                      child: Text(
+                        'خطا در دریافت تراکنش‌ها !',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
                   );
                 }
 

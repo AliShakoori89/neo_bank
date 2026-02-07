@@ -32,20 +32,14 @@ class _LoginPageState extends State<LoginPage> {
           return Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: theme == AppTheme.lightTheme
-                    ? [
-                        Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.secondaryContainer,
-                      ]
-                    : [
-                        Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.secondaryContainer,
-                        Theme.of(context).colorScheme.secondaryContainer,
-                      ],
+              gradient: RadialGradient(
+                center: Alignment(0, 1),
+                radius: 2,
+                colors: [
+                  Theme.of(context).colorScheme.secondary,
+                  theme == AppTheme.lightTheme ? Colors.white : Colors.black,
+                ],
+                stops: [0.0, 0.5],
               ),
             ),
             child: SafeArea(
