@@ -115,20 +115,14 @@ class _OtpCodePageState extends State<OtpCodePage> {
             return Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: theme == AppTheme.lightTheme
-                      ? [
-                          Theme.of(context).colorScheme.primaryContainer,
-                          Theme.of(context).colorScheme.secondaryContainer,
-                        ]
-                      : [
-                          Theme.of(context).colorScheme.primaryContainer,
-                          Theme.of(context).colorScheme.primaryContainer,
-                          Theme.of(context).colorScheme.secondaryContainer,
-                          Theme.of(context).colorScheme.secondaryContainer,
-                        ],
+                gradient: RadialGradient(
+                  center: Alignment(0, 1),
+                  radius: 2,
+                  colors: [
+                    Theme.of(context).colorScheme.secondary,
+                    theme == AppTheme.lightTheme ? Colors.white : Colors.black,
+                  ],
+                  stops: [0.0, 0.5],
                 ),
               ),
               child: Column(
@@ -184,12 +178,12 @@ class _OtpCodePageState extends State<OtpCodePage> {
                         AppSpace.heightSpace_24,
                         Container(
                           margin: const EdgeInsets.only(bottom: 24),
-                          child: const Text(
+                          child: Text(
                             'کد تایید را وارد کنید',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.primaryFixed,
                             ),
                           ),
                         ),
@@ -213,14 +207,14 @@ class _OtpCodePageState extends State<OtpCodePage> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.customHeaderTextColor,
+                                color: Theme.of(context).colorScheme.primaryFixed,
                               ),
                             ),
                             resendTimer > 0
                                 ? Text(
                                     '$resendTimer ثانیه',
                                     style: TextStyle(
-                                      color: AppColors.customHeaderTextColor,
+                                      color: Theme.of(context).colorScheme.primaryFixed,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),

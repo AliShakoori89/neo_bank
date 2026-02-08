@@ -246,7 +246,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                       side: BorderSide(
-                        color: theme.buttonTheme.colorScheme!.secondary,
+                        color: Color(0xFFFDA29B),
                         width: 1,
                       ),
                     ),
@@ -259,7 +259,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         width: 18,
                         height: 18,
                         colorFilter: ColorFilter.mode(
-                          theme.buttonTheme.colorScheme!.primary,
+                          Color(0xFFFDA29B),
                           BlendMode.srcIn,
                         ),
                       ),
@@ -268,7 +268,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         "خروج از حساب",
                         style: TextStyle(
                           fontSize: 14,
-                          color: theme.buttonTheme.colorScheme!.primary,
+                          color: Color(0xFFFDA29B),
                           fontWeight: FontWeight.w600,
                         ),
                       ),

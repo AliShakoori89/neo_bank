@@ -30,14 +30,14 @@ class OtpCodeBox extends StatelessWidget {
         onCompleted: (value) {
           onCompleted(true);
         },
-        cursor: const Icon(Icons.circle, color: Colors.black),
+        cursor: Icon(Icons.circle, color: Theme.of(context).colorScheme.primaryFixed),
         defaultPinTheme: PinTheme(
           width: 50,
           height: 55,
-          textStyle: const TextStyle(
+          textStyle: TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.w600,
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.primaryFixed,
           ),
           decoration: BoxDecoration(
             border: Border.all(width: 2, color: AppColors.splashGradiantColor1),

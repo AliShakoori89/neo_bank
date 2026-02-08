@@ -79,6 +79,19 @@ class AppTheme {
     dividerColor: Color(0xFFE9EAEB),
   );
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   // 🌚 تم تاریک
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,

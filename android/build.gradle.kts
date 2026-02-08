@@ -1,16 +1,3 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        // اگر Gradle Wrapper 8.14 هست، از AGP 8.x استفاده کن
-        classpath("com.android.tools.build:gradle:8.1.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
-    }
-}
-
-
 allprojects {
     repositories {
         google()
@@ -32,4 +19,13 @@ subprojects {
 
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
+}
+
+subprojects {
+    configurations.all {
+        resolutionStrategy {
+            force("androidx.core:core-ktx:1.17.0")
+            force("androidx.core:core:1.17.0")
+        }
+    }
 }
