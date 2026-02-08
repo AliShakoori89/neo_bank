@@ -14,7 +14,7 @@ class LastTransactionRepository {
     ),
   );
 
-  Future<StatementModel> getLastestStatement(String depositNumber) async {
+  Future<StatementResponseModel> getLastestStatement(String depositNumber) async {
     try {
       /// 🔐 read token
       final token = await LocalStorage.read('access_token');
@@ -22,7 +22,15 @@ class LastTransactionRepository {
         throw Exception('Access token not found');
       }
 
-      final body = {"depositNumber": depositNumber};
+      final body = {
+        "depositNumber": depositNumber,
+        "useDefaultFilter": true,
+        "description": "string",
+        "length": 10,
+        "offset": 0,
+        "statementActionType": 0,
+        "fromDate": "2026-02-08T10:57:39.462Z",
+        "toDate": "2026-02-08T10:57:39.462Z"};
 
       final response = await _dio.post(
         '${APIKey.baseUrl}/api/Statements/get-all',
@@ -36,9 +44,11 @@ class LastTransactionRepository {
         ),
       );
 
+      print(response);
+
       /// 🛡️ defensive parsing
       if (response.data is Map<String, dynamic>) {
-        final result = StatementModel.fromJson(response.data);
+        final result = StatementResponseModel.fromJson(response.data);
 
         if (response.statusCode == 200 && result.success == true) {
           return result;
@@ -46,14 +56,14 @@ class LastTransactionRepository {
       }
 
       /// fallback
-      return StatementModel();
+      return StatementResponseModel();
     }
     /// 🌐 dio specific errors
     on DioException catch (e, s) {
       debugPrint('DioException in getAllStatement: ${e.message}');
       debugPrintStack(stackTrace: s);
 
-      return StatementModel(
+      return StatementResponseModel(
         success: false,
         error: e.response?.data ?? e.message,
       );
@@ -63,7 +73,7 @@ class LastTransactionRepository {
       debugPrint('Unexpected error in getAllStatement: $e');
       debugPrintStack(stackTrace: s);
 
-      return StatementModel(
+      return StatementResponseModel(
         success: false,
         error: ApiErrorModel(errorMessage: e.toString()),
       );

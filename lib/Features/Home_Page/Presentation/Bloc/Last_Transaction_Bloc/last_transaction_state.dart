@@ -22,14 +22,14 @@ class LastTransactionState extends Equatable {
   );
 
   final SLastTransactionStatus status;
-  final List<StatementDataModel> topStatement;
+  final List<StatementModel> topStatement;
 
   @override
   List<Object?> get props => [status, topStatement];
 
   LastTransactionState copyWith({
     SLastTransactionStatus? status,
-    List<StatementDataModel>? topStatement,
+    List<StatementModel>? topStatement,
   }) {
     return LastTransactionState(
       status: status ?? this.status,

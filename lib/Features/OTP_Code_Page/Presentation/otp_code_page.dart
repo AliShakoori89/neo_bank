@@ -168,7 +168,7 @@ class _OtpCodePageState extends State<OtpCodePage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                EditPhoneNumberBottun(),
+                                EditPhoneNumberButton(),
                                 AppSpace.widthSpace_48,
                                 PhoneNumber(phoneNumber: widget.phoneNumber),
                               ],

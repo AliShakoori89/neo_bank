@@ -27,7 +27,7 @@ class LastTransactionBloc
         event.depositNumber,
       );
 
-      final allList = List<StatementDataModel>.from(result.data ?? [])
+      final allList = List<StatementModel>.from(result.data!.statements ?? [])
         ..sort((a, b) => b.date!.compareTo(a.date!));
 
       final topList = event.latestCount == null

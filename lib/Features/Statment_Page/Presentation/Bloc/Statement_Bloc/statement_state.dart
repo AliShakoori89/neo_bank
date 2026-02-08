@@ -17,14 +17,14 @@ class StatementState extends Equatable {
       StatementState(status: StatementStateStatus.initial, allStatement: []);
 
   final StatementStateStatus status;
-  final List<StatementDataModel> allStatement;
+  final List<StatementModel> allStatement;
 
   @override
   List<Object?> get props => [status, allStatement];
 
   StatementState copyWith({
     StatementStateStatus? status,
-    List<StatementDataModel>? allStatement,
+    List<StatementModel>? allStatement,
   }) {
     return StatementState(
       status: status ?? this.status,
