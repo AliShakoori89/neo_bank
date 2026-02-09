@@ -18,6 +18,7 @@ Widget buildThemeSwitch(BuildContext context) => Row(
         scale: 0.7,
         child: Switch(
           value: Theme.of(context).brightness == Brightness.dark,
+          activeTrackColor: AppColors.splashGradiantColor1,
           onChanged: (_) {
             context.read<ThemeBloc>().add(ThemeEvent.toggle);
           },
