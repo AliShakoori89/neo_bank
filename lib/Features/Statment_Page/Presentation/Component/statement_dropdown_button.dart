@@ -3,8 +3,8 @@ import 'package:neo_bank_mehr_iran/Core/Const/to_persian_number.dart';
 
 typedef MenuEntry = DropdownMenuEntry<String>;
 
-class CustomDropdownButton extends StatefulWidget {
-  const CustomDropdownButton({
+class StatementDropdownButton extends StatefulWidget {
+  const StatementDropdownButton({
     super.key,
     required this.cardsDeposit,
     this.onChanged,
@@ -16,10 +16,10 @@ class CustomDropdownButton extends StatefulWidget {
   final String selectedValue;
 
   @override
-  State<CustomDropdownButton> createState() => _CustomDropdownMenuState();
+  State<StatementDropdownButton> createState() => _CustomDropdownMenuState();
 }
 
-class _CustomDropdownMenuState extends State<CustomDropdownButton> {
+class _CustomDropdownMenuState extends State<StatementDropdownButton> {
   late String dropdownValue;
 
   @override
@@ -29,7 +29,7 @@ class _CustomDropdownMenuState extends State<CustomDropdownButton> {
   }
 
   @override
-  void didUpdateWidget(covariant CustomDropdownButton oldWidget) {
+  void didUpdateWidget(covariant StatementDropdownButton oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.selectedValue != widget.selectedValue) {
       dropdownValue = widget.selectedValue;
