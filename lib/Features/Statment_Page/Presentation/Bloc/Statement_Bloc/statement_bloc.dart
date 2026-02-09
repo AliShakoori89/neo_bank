@@ -9,6 +9,7 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
 
   StatementBloc(this.statementRepository) : super(StatementState.initial()) {
     on<FetchStatementEvent>(_onFetchStatement);
+    on<LoadMoreStatementEvent>(_onLoadMore);
   }
 
   Future<void> _onFetchStatement(
@@ -22,7 +23,8 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
       }
 
       final result = await statementRepository.getLastestStatement(
-        event.depositNumber,
+        depositNumber: event.depositNumber,
+        offset: 0,
       );
 
       final allList = List<StatementModel>.from(result.data!.statements ?? [])
@@ -32,10 +34,35 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
         state.copyWith(
           status: StatementStateStatus.success,
           allStatement: allList,
+          hasMore: allList.length == 10,
         ),
       );
     } catch (_) {
       emit(state.copyWith(status: StatementStateStatus.error));
     }
+  }
+
+  Future<void> _onLoadMore(
+      LoadMoreStatementEvent event,
+      Emitter<StatementState> emit,
+      ) async {
+    if (state.isLoadingMore || !state.hasMore) return;
+
+    emit(state.copyWith(isLoadingMore: true));
+
+    final res = await statementRepository.getLastestStatement(
+      depositNumber: event.depositNumber,
+      offset: state.allStatement.length,
+    );
+
+    final newList = res.data?.statements ?? [];
+
+    emit(
+      state.copyWith(
+        allStatement: [...state.allStatement, ...newList],
+        hasMore: newList.length == 10,
+        isLoadingMore: false,
+      ),
+    );
   }
 }

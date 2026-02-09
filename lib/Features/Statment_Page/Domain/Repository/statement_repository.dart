@@ -14,23 +14,27 @@ class StatementRepository {
     ),
   );
 
-  Future<StatementResponseModel> getLastestStatement(String depositNumber) async {
+  Future<StatementResponseModel> getLastestStatement({
+    required String depositNumber,
+    required int offset,
+  }) async {
     try {
       /// 🔐 read token
       final token = await LocalStorage.read('access_token');
+
       if (token == null || token.isEmpty) {
         throw Exception('Access token not found');
       }
 
       final body = {
         "depositNumber": depositNumber,
-        "useDefaultFilter": true,
-        "description": "string",
+        "useDefaultFilter": false,
+        "description": "",
         "length": 10,
-        "offset": 0,
+        "offset": offset,
         "statementActionType": 0,
-        "fromDate": "2026-02-08T10:57:39.462Z",
-        "toDate": "2026-02-08T10:57:39.462Z"};
+        "fromDate": "2026-02-03T05:39:52.955Z",
+        "toDate": "2026-02-11T05:39:52.955Z"};
 
       final response = await _dio.post(
         '${APIKey.baseUrl}/api/Statements/get-all',
@@ -47,6 +51,8 @@ class StatementRepository {
       /// 🛡️ defensive parsing
       if (response.data is Map<String, dynamic>) {
         final result = StatementResponseModel.fromJson(response.data);
+
+        print(result.data!.statements!.length);
 
         if (response.statusCode == 200 && result.success == true) {
           return result;

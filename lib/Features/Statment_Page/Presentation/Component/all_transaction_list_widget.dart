@@ -9,6 +9,8 @@ import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Stat
 import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
+import '../Bloc/Statement_Bloc/statement_event.dart';
+
 class AllTransactionListWidget extends StatelessWidget {
   final String? depositNumber;
 
@@ -46,41 +48,64 @@ class AllTransactionListWidget extends StatelessWidget {
         }
 
         return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: state.allStatement.length,
+          itemCount: state.allStatement.length + (state.hasMore ? 1 : 0),
           itemBuilder: (context, index) {
-            final item = state.allStatement[index];
-            final isDeposit = item.actionDescription == 'واریز';
+            if (index < state.allStatement.length) {
+              final item = state.allStatement[index];
+              final isDeposit = item.actionDescription == 'واریز';
 
-            return InkWell(
-              onTap: () {
-                context.push(
-                  '/transaction_detail_page',
-                  extra: TransactionDetailArgs(
-                    title: item.actionDescription ?? '',
-                    transferAmount: item.transferAmount!.toString(),
-                    date: item.date.toString(),
-                    description: item.description ?? '',
-                  ),
-                );
-              },
-              child: SizedBox(
-                height: screenWidth < 400 ? 100 : 70,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Row(
-                        children: [
-                          _ActionIcon(isDeposit: isDeposit),
-                          const SizedBox(width: 12),
-                          Expanded(child: _TransactionInfo(item: item)),
-                        ],
-                      ),
+              return InkWell(
+                onTap: () {
+                  context.push(
+                    '/transaction_detail_page',
+                    extra: TransactionDetailArgs(
+                      title: item.actionDescription ?? '',
+                      transferAmount: item.transferAmount!.toString(),
+                      date: item.date.toString(),
+                      description: item.description ?? '',
                     ),
-                    Divider(height: 1, color: Theme.of(context).dividerColor),
-                  ],
+                  );
+                },
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.width < 400 ? 100 : 70,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            _ActionIcon(isDeposit: isDeposit),
+                            const SizedBox(width: 12),
+                            Expanded(child: _TransactionInfo(item: item)),
+                          ],
+                        ),
+                      ),
+                      Divider(height: 1, color: Theme.of(context).dividerColor),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            /// 🔽 مشاهده بیشتر
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Center(
+                child: state.isLoadingMore
+                    ? const LinearProgressIndicator(
+                  minHeight: 1,
+                )
+                    : TextButton(
+                  onPressed: () {
+                    context.read<StatementBloc>().add(
+                      LoadMoreStatementEvent(depositNumber!),
+                    );
+                  },
+                  child: Text('مشاهده بیشتر ...',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onTertiary
+                    ),
+                  ),
                 ),
               ),
             );

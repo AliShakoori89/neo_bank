@@ -28,9 +28,7 @@ class LastTransactionRepository {
         "description": "string",
         "length": 10,
         "offset": 0,
-        "statementActionType": 0,
-        "fromDate": "2026-02-08T10:57:39.462Z",
-        "toDate": "2026-02-08T10:57:39.462Z"};
+        };
 
       final response = await _dio.post(
         '${APIKey.baseUrl}/api/Statements/get-all',

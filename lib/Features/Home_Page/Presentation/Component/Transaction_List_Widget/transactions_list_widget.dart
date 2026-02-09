@@ -19,13 +19,12 @@ class TransactionsListWidget extends StatefulWidget {
 }
 
 class _TransactionsListWidgetState extends State<TransactionsListWidget> {
+
   @override
   void initState() {
     BlocProvider.of<LastTransactionBloc>(context).add(
       FetchLastTransactionEvent(
-        depositNumber: widget.depositNumber!,
-        latestCount: 4,
-      ),
+        depositNumber: widget.depositNumber!),
     );
     super.initState();
   }
@@ -36,83 +35,93 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
       return const SizedBox(); // یا shimmer
     }
 
-    return InkWell(
-      onTap: () {
-        context.push('/statement_page');
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 12, right: 25, bottom: 10),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  'آخرین تراکنش‌ها',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.surfaceContainerHigh,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 0, right: 25, bottom: 10),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Row(
+                children: [
+                  Text(
+                    'تراکنش‌ها',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primaryFixed,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
+                  Spacer(),
+                  IconButton(
+                    icon: Icon(
+                      Icons.arrow_forward_ios,
+                      color: Theme.of(context).colorScheme.primaryFixed,
+                      size: 16,
+                    ),
+                    onPressed: (){
+                      context.push('/statement_page');
+                    },
+                  ),
+                ],
               ),
             ),
-            AppSpace.heightSpace_24,
-            BlocBuilder<LastTransactionBloc, LastTransactionState>(
-              // buildWhen: (prev, curr) =>
-              //     prev.topStatement != curr.topStatement ||
-              //     prev.status != curr.status,
-              builder: (context, state) {
-                if (state.status == SLastTransactionStatus.loading &&
-                    state.topStatement.isEmpty) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+          ),
+          AppSpace.heightSpace_24,
+          BlocBuilder<LastTransactionBloc, LastTransactionState>(
+            // buildWhen: (prev, curr) =>
+            //     prev.topStatement != curr.topStatement ||
+            //     prev.status != curr.status,
+            builder: (context, state) {
+              if (state.status == SLastTransactionStatus.loading &&
+                  state.topStatement.isEmpty) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-                if (state.status == SLastTransactionStatus.error) {
-                  return Center(
-                    child: Padding(
-                      padding: EdgeInsetsGeometry.only(
-                        top: 120
-                      ),
-                      child: Text(
-                        'خطا در دریافت تراکنش‌ها !',
-                        style: TextStyle(color: Colors.red),
-                      ),
+              if (state.status == SLastTransactionStatus.error) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsetsGeometry.only(
+                        top: 40
                     ),
-                  );
-                }
+                    child: Text(
+                      'خطا در دریافت تراکنش‌ها !',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                );
+              }
 
-                if (state.status == SLastTransactionStatus.success) {
-                  return ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: state.topStatement.length,
-                    itemBuilder: (context, index) {
-                      final item = state.topStatement[index];
-                      final amount = item.transferAmount ?? 0;
+              if (state.status == SLastTransactionStatus.success) {
+                return ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: state.topStatement.length,
+                  itemBuilder: (context, index) {
+                    final item = state.topStatement[index];
+                    final amount = item.transferAmount ?? 0;
 
-                      return CustomCard(
-                        deposit: amount >= 0,
-                        title: state.topStatement[index].actionDescription!,
-                        subtitle: item.description ?? '',
-                        date: formatPersianDateMD(item.date!.toString()),
-                        mount: amount
-                            .abs()
-                            .toString()
-                            .seRagham()
-                            .toPersianDigit(),
-                      );
-                    },
-                  );
-                }
+                    return CustomCard(
+                      deposit: item.actionDescription! == 'برداشت' ? false : true,
+                      title: state.topStatement[index].actionDescription!,
+                      subtitle: item.description ?? '',
+                      date: formatPersianDateMD(item.date!.toString()),
+                      mount: amount
+                          .abs()
+                          .toString()
+                          .seRagham()
+                          .toPersianDigit(),
+                    );
+                  },
+                );
+              }
 
-                return Container();
-              },
-            ),
-          ],
-        ),
+              return Container();
+            },
+          ),
+        ],
       ),
     );
   }

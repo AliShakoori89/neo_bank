@@ -46,12 +46,6 @@ class _HomePageState extends State<HomePage> {
     },
   ];
 
-  // @override
-  // void initState() {
-  //   BlocProvider.of<StatementBloc>(context).add(GetLastestStatmentEvent());
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

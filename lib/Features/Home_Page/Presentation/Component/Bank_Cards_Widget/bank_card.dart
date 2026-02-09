@@ -22,14 +22,14 @@ Widget buildBankCard(CardDataModel card) {
             color: AppColors.splashGradiantColor2.withValues(alpha: 0.3),
           ),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 20, 10),
+            padding: const EdgeInsets.fromLTRB(10, 0, 20, 5),
             child: Column(
               children: [
-                buildCardHeader(),
+                Expanded(child: buildCardHeader()),
                 const SizedBox(height: 16),
-                buildCardNumberAndDate(card),
+                Expanded(child: buildCardNumberAndDate(card)),
                 AppSpace.heightSpace_24,
-                CardBalanceWidget(balance: card.availableBalance!),
+                Expanded(child: CardBalanceWidget(balance: card.availableBalance!)),
               ],
             ),
           ),

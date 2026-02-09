@@ -132,7 +132,9 @@ Widget buildBankCardSlider(
                           );
                         }
                       },
-                      icon: Icon(Icons.refresh),
+                      icon: Icon(Icons.refresh,
+                        color: AppColors.appWhite,
+                      ),
                     ),
                   ],
                 );

@@ -25,9 +25,9 @@ class _StatmentPageState extends State<StatmentPage> {
     context.read<AllCardsDetailBloc>().add(GetAllCardsDetailEvent());
   }
 
-  void _fetchStatement(String depositNumber, int count) {
+  void _fetchStatement(String depositNumber) {
     context.read<StatementBloc>().add(
-      FetchStatementEvent(depositNumber: depositNumber, latestCount: count),
+      FetchStatementEvent(depositNumber: depositNumber),
     );
   }
 
@@ -41,7 +41,7 @@ class _StatmentPageState extends State<StatmentPage> {
           children: [
             _buildHeaderRow(),
             const SizedBox(height: 12),
-            AllTransactionListWidget(depositNumber: _selectedDepositNumber),
+            Expanded(child: AllTransactionListWidget(depositNumber: _selectedDepositNumber)),
           ],
         ),
       ),
@@ -71,7 +71,7 @@ class _StatmentPageState extends State<StatmentPage> {
                 final firstCard = state.cardsDeposit!.first;
 
                 setState(() => _selectedDepositNumber = firstCard);
-                _fetchStatement(firstCard, state.cardsDeposit!.length);
+                _fetchStatement(firstCard);
               }
             },
             child: BlocBuilder<AllCardsDetailBloc, AllCardsDetailState>(
@@ -95,7 +95,7 @@ class _StatmentPageState extends State<StatmentPage> {
                   selectedValue: _selectedDepositNumber ?? cards.first,
                   onChanged: (value) {
                     setState(() => _selectedDepositNumber = value);
-                    _fetchStatement(value, cards.length);
+                    _fetchStatement(value);
                   },
                 );
               },

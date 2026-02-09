@@ -2,7 +2,11 @@ abstract class StatementEvent {}
 
 class FetchStatementEvent extends StatementEvent {
   final String depositNumber;
-  final int? latestCount; // اگر null بود یعنی همه
 
-  FetchStatementEvent({required this.depositNumber, this.latestCount});
+  FetchStatementEvent({required this.depositNumber});
+}
+
+class LoadMoreStatementEvent extends StatementEvent {
+  final String depositNumber;
+  LoadMoreStatementEvent(this.depositNumber);
 }
