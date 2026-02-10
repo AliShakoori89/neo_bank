@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/App_Lock/app_lock_service.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../Features/Profile_Page/Presentation/Component/Biometric_Service/biometric_service.dart';
 
 class AppLockObserver extends StatefulWidget {
   final Widget child;
@@ -28,7 +31,7 @@ class _AppLockObserverState extends State<AppLockObserver>
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
     debugPrint('🔄 lifecycle = $state');
 
     if (state == AppLifecycleState.paused ||
@@ -43,12 +46,30 @@ class _AppLockObserverState extends State<AppLockObserver>
       final shouldLock = AppLockService.shouldLock();
       debugPrint('🔐 shouldLock = $shouldLock');
 
-      if (shouldLock) {
-        debugPrint('🚨 LOCK NAVIGATION');
-        rootNavigatorKey.currentContext?.go('/local_login_page');
-      } else {
+      if (!shouldLock) {
         debugPrint('✅ no lock needed');
+        return;
       }
+
+      // --- STEP 1: Check if biometric is enabled ---
+      final prefs = await SharedPreferences.getInstance();
+      final biometricEnabled = prefs.getBool('biometric_enabled') ?? false;
+
+      if (biometricEnabled) {
+        debugPrint('🟢 Biometric is enabled, trying authentication...');
+        final success = await BiometricService().authenticate();
+
+        if (success) {
+          debugPrint('✅ Biometric success, unlock app');
+          return; // اجازه ورود بدون نشان دادن local login
+        } else {
+          debugPrint('❌ Biometric failed, fallback to local login');
+        }
+      }
+
+      // --- STEP 2: Fallback to local login page ---
+      debugPrint('🚨 LOCK NAVIGATION');
+      rootNavigatorKey.currentContext?.go('/local_login_page');
     }
   }
 

@@ -6,6 +6,12 @@ class BiometricService {
   // بررسی اینکه دستگاه از بیومتریک پشتیبانی می‌کند یا نه
   Future<bool> isSupported() async {
     try {
+      final biometrics = await _auth.getAvailableBiometrics();
+      print('Available biometrics: $biometrics');
+      print('Biometrics supported: ${await _auth.canCheckBiometrics}');
+      print('Device supported: ${await _auth.isDeviceSupported()}');
+
+
       final canCheck = await _auth.canCheckBiometrics;
       final isDeviceSupported = await _auth.isDeviceSupported();
       return canCheck && isDeviceSupported;
