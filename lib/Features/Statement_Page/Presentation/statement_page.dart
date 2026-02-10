@@ -122,14 +122,25 @@ class _StatementPageState extends State<StatementPage> {
                             child: ListView(
                               controller: scrollController,
                               children: [
-                                 Text(
-                                  'فیلتر تراکنش‌ها',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.primaryFixed,
-                                  ),
-                                ),
+                                 Row(
+                                   children: [
+                                     Text(
+                                      'فیلتر تراکنش‌ها',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context).colorScheme.primaryFixed,
+                                      ),
+                                     ),
+                                     Spacer(),
+                                     IconButton(
+                                       icon: Icon(Icons.close),
+                                       onPressed: (){
+                                         context.pop();
+                                       },
+                                     )
+                                   ],
+                                 ),
 
                                 AppSpace.heightSpace_32,
                                 SelectTransactionTypes(selectedType: selectedType),
