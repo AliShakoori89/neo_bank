@@ -120,7 +120,7 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
 
     emit(
       state.copyWith(
-        allStatement: [...state.filteredStatement, ...newList],
+        filteredStatement: [...state.filteredStatement, ...newList],
         hasMore: newList.length == 10,
         isLoadingMore: false,
       ),

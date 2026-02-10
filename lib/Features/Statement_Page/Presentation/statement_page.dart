@@ -18,6 +18,7 @@ import '../../../Core/Const/Route/transaction_detail_args.dart';
 import 'Bloc/Statement_Bloc/statement_state.dart';
 import 'Component/action_icon.dart';
 import 'Component/jalali_to_Utc_Iso.dart';
+import 'Component/statement_list_shimmer.dart';
 import 'Component/transaction_info.dart';
 
 enum TransactionType { all, deposit, withdraw }
@@ -81,7 +82,7 @@ class _StatementPageState extends State<StatementPage> {
               ? BlocBuilder<StatementBloc, StatementState>(
             builder: (context, state) {
               if (state.status == StatementStateStatus.loading) {
-                return const Center(child: CircularProgressIndicator());
+                return StatementListShimmer();
               }
 
               if (state.status == StatementStateStatus.error) {
@@ -93,8 +94,7 @@ class _StatementPageState extends State<StatementPage> {
               }
 
               return ListView.builder(
-                itemCount: state.filteredStatement.length +
-                    (state.hasMore ? 1 : 0),
+                itemCount: state.hasMore ? state.filteredStatement.length + 1 : state.filteredStatement.length,
                 itemBuilder: (context, index) {
                   if (index < state.filteredStatement.length) {
                     final item = state.filteredStatement[index];
@@ -182,7 +182,7 @@ class _StatementPageState extends State<StatementPage> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -199,8 +199,8 @@ class _StatementPageState extends State<StatementPage> {
                     builder: (_) {
                       return DraggableScrollableSheet(
                         expand: false,
-                        initialChildSize: 0.4,
-                        minChildSize: 0.4,
+                        initialChildSize: 0.45,
+                        minChildSize: 0.45,
                         maxChildSize: 0.85,
                         builder: (context, scrollController) {
                           return Padding(

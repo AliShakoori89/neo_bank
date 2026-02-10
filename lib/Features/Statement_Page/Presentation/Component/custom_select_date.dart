@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import '../../../../Core/Const/app_colors.dart';
 import 'convert_time_format.dart';
 
 class CustomDatePicker extends StatefulWidget {
@@ -94,14 +95,35 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
               lastDate: Jalali(1450, 12),
               initialEntryMode: PersianDatePickerEntryMode.calendarOnly,
               initialDatePickerMode: PersianDatePickerMode.day,
-              builder: (context, child) {
-                return Theme(
-                  data: Theme.of(context).brightness == Brightness.dark
-                      ? ThemeData.dark()
-                      : ThemeData.light(),
-                  child: child!,
-                );
-              },
+                builder: (context, child) {
+                  final isDark = Theme.of(context).brightness == Brightness.dark;
+
+                  return Theme(
+                    data: ThemeData(
+                      brightness: isDark ? Brightness.dark : Brightness.light,
+                      colorScheme: isDark
+                          ? const ColorScheme.dark(
+                        primary: AppColors.splashGradiantColor1, // 🟢 رنگ روز انتخاب‌شده
+                        onPrimary: Colors.black,     // رنگ متن روز انتخاب‌شده
+                        surface: Color(0xff1E1E1E),  // بک‌گراند دیالوگ
+                        onSurface: Colors.white,     // متن‌ها
+                      )
+                          : const ColorScheme.light(
+                        primary: AppColors.splashGradiantColor1, // 🔵 رنگ روز انتخاب‌شده
+                        onPrimary: Colors.white,
+                        surface: Colors.white,
+                        onSurface: Colors.black,
+                      ),
+                      textButtonTheme: TextButtonThemeData(
+                        style: TextButton.styleFrom(
+                          foregroundColor:
+                          isDark ? AppColors.splashGradiantColor1 : AppColors.splashGradiantColor1,
+                        ),
+                      ),
+                    ),
+                    child: child!,
+                  );
+                },
             );
 
             if (picked != null) {

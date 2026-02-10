@@ -19,16 +19,16 @@ class StatementListShimmer extends StatelessWidget {
             child: Shimmer(
               duration: Duration(seconds: 1), //Default value
               interval: Duration(
-                seconds: 1,
+                seconds: 3,
               ), //Default value: Duration(seconds: 0)
               color: Colors.white, //Default value
-              colorOpacity: 0.4, //Default value
+              colorOpacity: 0.1, //Default value
               enabled: true, //Default value
               direction: ShimmerDirection.fromLTRB(), //Default Value
               child: Container(
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),

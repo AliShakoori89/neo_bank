@@ -92,7 +92,6 @@ class _ProfilePageState extends State<ProfilePage> {
               /// --- User Info ---
               BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
-                  print(state.userName);
 
                   return Padding(
                     padding: const EdgeInsets.all(16),

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/Route/transaction_detail_args.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/no_data_receive.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/persian_date_format_H.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/persian_date_format_Y_M_D.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
-import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/statement_list_shimmer.dart';
-import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_info.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
+
 import '../Bloc/Statement_Bloc/statement_event.dart';
-import 'action_icon.dart';
 
 class AllTransactionListWidget extends StatelessWidget {
   final String? depositNumber;
@@ -24,19 +25,28 @@ class AllTransactionListWidget extends StatelessWidget {
     return BlocBuilder<StatementBloc, StatementState>(
       builder: (context, state) {
         if (state.status == StatementStateStatus.loading) {
-          return StatementListShimmer();
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (state.status == StatementStateStatus.error) {
-          return NoDataReceive(description: 'خطا در دریافت تراکنش‌ها');
+          return const Text(
+            'خطا در دریافت تراکنش‌ها',
+            style: TextStyle(color: Colors.red),
+          );
         }
 
         if (state.allStatement.isEmpty) {
-          return NoDataReceive(description: 'تراکنشی وجود ندارد');
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              'تراکنشی وجود ندارد',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          );
         }
 
         return ListView.builder(
-          itemCount: state.hasMore ? state.allStatement.length + 1 : state.allStatement.length,
+          itemCount: state.allStatement.length + (state.hasMore ? 1 : 0),
           itemBuilder: (context, index) {
             if (index < state.allStatement.length) {
               final item = state.allStatement[index];
@@ -62,9 +72,9 @@ class AllTransactionListWidget extends StatelessWidget {
                         padding: const EdgeInsets.all(8),
                         child: Row(
                           children: [
-                            ActionIcon(isDeposit: isDeposit),
+                            _ActionIcon(isDeposit: isDeposit),
                             const SizedBox(width: 12),
-                            Expanded(child: TransactionInfo(item: item)),
+                            Expanded(child: _TransactionInfo(item: item)),
                           ],
                         ),
                       ),
@@ -104,4 +114,99 @@ class AllTransactionListWidget extends StatelessWidget {
   }
 }
 
+class _ActionIcon extends StatelessWidget {
+  final bool isDeposit;
 
+  const _ActionIcon({required this.isDeposit});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 32,
+      width: 32,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isDeposit
+            ? Theme.of(context).colorScheme.inverseSurface
+            : Theme.of(context).colorScheme.surfaceContainerHighest,
+      ),
+      child: Icon(
+        isDeposit ? Icons.arrow_downward : Icons.arrow_upward,
+        size: 16,
+        color: isDeposit
+            ? Theme.of(context).colorScheme.onSecondary
+            : Theme.of(context).colorScheme.onInverseSurface,
+      ),
+    );
+  }
+}
+
+class _TransactionInfo extends StatelessWidget {
+  final dynamic item;
+
+  const _TransactionInfo({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              item.actionDescription ?? '',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
+            AppSpace.heightSpace_4,
+            Text(
+              formatPersianDateH(item.date.toString()),
+              style: TextStyle(
+                fontSize: 11,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  item.transferAmount.toString().seRagham().toPersianDigit(),
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.onTertiary,
+                  ),
+                ),
+                AppSpace.widthSpace_5,
+                Text(
+                  'ریال',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.onTertiary,
+                  ),
+                ),
+              ],
+            ),
+            AppSpace.heightSpace_4,
+            Text(
+              formatPersianDateYMD(item.date.toString()),
+              style: TextStyle(
+                fontSize: 11,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
