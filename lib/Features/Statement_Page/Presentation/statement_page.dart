@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/no_data_receive.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_state.dart';
@@ -13,6 +14,11 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Componen
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/custom_select_date.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/select_transaction_types.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/statement_dropdown_button.dart';
+import '../../../Core/Const/Route/transaction_detail_args.dart';
+import 'Bloc/Statement_Bloc/statement_state.dart';
+import 'Component/action_icon.dart';
+import 'Component/jalali_to_Utc_Iso.dart';
+import 'Component/transaction_info.dart';
 
 enum TransactionType { all, deposit, withdraw }
 
@@ -27,6 +33,9 @@ class _StatementPageState extends State<StatementPage> {
 
   String? _selectedDepositNumber;
   bool isFilterActive = false;
+
+  DateTime? _filterStart;
+  DateTime? _filterEnd;
 
   TransactionType selectedType = TransactionType.all;
 
@@ -48,6 +57,20 @@ class _StatementPageState extends State<StatementPage> {
     );
   }
 
+  loadMoreFiltered() {
+    if (_filterStart != null && _filterEnd != null && _selectedDepositNumber != null) {
+      context.read<StatementBloc>().add(
+        LoadMoreFilteredStatementEvent(
+          _selectedDepositNumber!,
+          selectedType == TransactionType.deposit ? 0
+              : selectedType == TransactionType.withdraw ? 1 : null,
+          _filterStart!.toIso8601String(),
+          _filterEnd!.toIso8601String(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,29 +78,92 @@ class _StatementPageState extends State<StatementPage> {
       body: Padding(
           padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
           child: isFilterActive
-              ? Container(
-            margin: const EdgeInsets.only(bottom: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: Theme
-                  .of(context)
-                  .colorScheme
-                  .surfaceVariant,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'filterSummaryText',
-                  style: const TextStyle(fontSize: 12),
-                ),
-                GestureDetector(
-                  onTap: (){},
-                  child: const Icon(Icons.close, size: 18),
-                )
-              ],
-            ),
+              ? BlocBuilder<StatementBloc, StatementState>(
+            builder: (context, state) {
+              if (state.status == StatementStateStatus.loading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (state.status == StatementStateStatus.error) {
+                return NoDataReceive(description: 'خطا در دریافت تراکنش‌ها');
+              }
+
+              if (state.filteredStatement.isEmpty) {
+                return NoDataReceive(description: 'تراکنشی وجود ندارد');
+              }
+
+              return ListView.builder(
+                itemCount: state.filteredStatement.length +
+                    (state.hasMore ? 1 : 0),
+                itemBuilder: (context, index) {
+                  if (index < state.filteredStatement.length) {
+                    final item = state.filteredStatement[index];
+                    final isDeposit = item.actionDescription == 'واریز';
+
+                    return InkWell(
+                      onTap: () {
+                        context.push(
+                          '/transaction_detail_page',
+                          extra: TransactionDetailArgs(
+                            title: item.actionDescription ?? '',
+                            transferAmount: item.transferAmount!.toString(),
+                            date: item.date.toString(),
+                            description: item.description ?? '',
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .width < 400 ? 100 : 70,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                children: [
+                                  ActionIcon(isDeposit: isDeposit),
+                                  const SizedBox(width: 12),
+                                  Expanded(child: TransactionInfo(item: item)),
+                                ],
+                              ),
+                            ),
+                            Divider(height: 1, color: Theme
+                                .of(context)
+                                .dividerColor),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+
+                  /// 🔽 مشاهده بیشتر
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Center(
+                      child: state.isLoadingMore
+                          ? const LinearProgressIndicator(
+                        minHeight: 1,
+                      )
+                          : TextButton(
+                        onPressed: () {
+                          loadMoreFiltered();
+                        },
+                        child: Text('مشاهده بیشتر ...',
+                          style: TextStyle(
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .onTertiary
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
           )
               : Column(
             children: [
@@ -200,20 +286,34 @@ class _StatementPageState extends State<StatementPage> {
                                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                                   onPressed: (){
 
-                                    print(startTimeController.text);
+                                    final rawStart = jalaliToUtcDate(startTimeController.text);
+                                    final rawEnd = jalaliToUtcDate(endTimeController.text);
+
+                                    final startDate = startOfDay(rawStart);
+                                    final endDate = endOfDay(rawEnd);
+
+                                    final fixedStart = startDate.isAfter(endDate) ? endDate : startDate;
+                                    final fixedEnd   = startDate.isAfter(endDate) ? startDate : endDate;
 
                                     if(startTimeFormKey.currentState!.validate() && endTimeFormKey.currentState!.validate()){
                                       if(endTimeController.text != '' && startTimeController.text != ''){
                                         context.pop();
-                                        // context.read<StatementBloc>().add(
-                                        //   FetchFilterStatementEvent(
-                                        //     depositNumber: _selectedDepositNumber!,
-                                        //     statementActionType: selectedType == TransactionType.deposit ? 0
-                                        //         : selectedType == TransactionType.withdraw ? 1 : null,
-                                        //     startDate: ,
-                                        //     endDate:
-                                        //   ),
-                                        // );
+
+                                        context.read<StatementBloc>().add(
+                                          FetchFilterStatementEvent(
+                                            depositNumber: _selectedDepositNumber!,
+                                            statementActionType: selectedType == TransactionType.deposit ? 0
+                                                : selectedType == TransactionType.withdraw ? 1 : null,
+                                            startDate: fixedStart.toIso8601String(),
+                                            endDate: fixedEnd.toIso8601String(),
+                                          ),
+                                        );
+
+                                        setState(() {
+                                          isFilterActive = true;
+                                          _filterStart = fixedStart;
+                                          _filterEnd = fixedEnd;
+                                        });
                                       }
                                     }
 

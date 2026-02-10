@@ -22,6 +22,7 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/profi
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/Repository/statement_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/Const/Route/app_routes.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
@@ -126,6 +127,8 @@ class _MyAppState extends State<MyApp> {
               locale: const Locale("fa", "IR"),
               supportedLocales: const [Locale("fa", "IR")],
               localizationsDelegates: const [
+                PersianMaterialLocalizations.delegate,
+                PersianCupertinoLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,

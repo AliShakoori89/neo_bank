@@ -52,8 +52,6 @@ class StatementRepository {
       if (response.data is Map<String, dynamic>) {
         final result = StatementResponseModel.fromJson(response.data);
 
-        print(result.data!.statements!.length);
-
         if (response.statusCode == 200 && result.success == true) {
           return result;
         }
@@ -87,11 +85,13 @@ class StatementRepository {
   Future<StatementResponseModel> getFilterStatement({
     required String depositNumber,
     required int offset,
-    required int statementActionType,
+    int? statementActionType,
     required String startDate,
     required String endDate,
   }) async {
     try {
+
+      print('2222222222222222222222222222222');
       /// 🔐 read token
       final token = await LocalStorage.read('access_token');
 
@@ -101,11 +101,12 @@ class StatementRepository {
 
       final body = {
         "depositNumber": depositNumber,
-        "useDefaultFilter": true,
+        "useDefaultFilter": false,
         "description": "",
         "length": 10,
         "offset": offset,
-        "statementActionType": statementActionType,
+        if (statementActionType != null)
+          "statementActionType": statementActionType,
         "fromDate": startDate,
         "toDate": endDate};
 
@@ -124,8 +125,6 @@ class StatementRepository {
       /// 🛡️ defensive parsing
       if (response.data is Map<String, dynamic>) {
         final result = StatementResponseModel.fromJson(response.data);
-
-        print(result.data!.statements!.length);
 
         if (response.statusCode == 200 && result.success == true) {
           return result;
