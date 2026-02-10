@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/last_transaction_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_state.dart';
-import 'package:neo_bank_mehr_iran/Features/Statment_Page/Data/Model/statement_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
 
 class LastTransactionBloc
     extends Bloc<LastTransactionEvent, LastTransactionState> {

@@ -20,13 +20,22 @@ class TransactionsListWidget extends StatefulWidget {
 
 class _TransactionsListWidgetState extends State<TransactionsListWidget> {
 
+  String? _lastDeposit;
+
   @override
-  void initState() {
-    BlocProvider.of<LastTransactionBloc>(context).add(
-      FetchLastTransactionEvent(
-        depositNumber: widget.depositNumber!),
-    );
-    super.initState();
+  void didUpdateWidget(covariant TransactionsListWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.depositNumber != null &&
+        widget.depositNumber != _lastDeposit) {
+      _lastDeposit = widget.depositNumber;
+
+      BlocProvider.of<LastTransactionBloc>(context).add(
+        FetchLastTransactionEvent(
+          depositNumber: widget.depositNumber!,
+        ),
+      );
+    }
   }
 
   @override

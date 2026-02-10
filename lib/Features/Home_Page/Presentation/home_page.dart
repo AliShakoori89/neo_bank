@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   return TransactionsListWidget(
                     depositNumber: state.cards!.isNotEmpty
                         ? state.cards!.first.depositNumber
-                        : '',
+                        : null,
                   );
                 },
               ),

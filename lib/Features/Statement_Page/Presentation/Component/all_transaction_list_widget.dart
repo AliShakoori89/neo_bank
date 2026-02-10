@@ -5,8 +5,8 @@ import 'package:neo_bank_mehr_iran/Core/Const/Route/transaction_detail_args.dart
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/persian_date_format_H.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/persian_date_format_Y_M_D.dart';
-import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 import '../Bloc/Statement_Bloc/statement_event.dart';

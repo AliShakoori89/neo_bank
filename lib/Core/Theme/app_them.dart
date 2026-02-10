@@ -81,17 +81,6 @@ class AppTheme {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
   // 🌚 تم تاریک
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,

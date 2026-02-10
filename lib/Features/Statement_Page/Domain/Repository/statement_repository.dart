@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
-import 'package:neo_bank_mehr_iran/Features/Statment_Page/Data/Model/statement_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
 import 'package:flutter/foundation.dart';
 
 class StatementRepository {
@@ -83,4 +83,78 @@ class StatementRepository {
       );
     }
   }
+
+  Future<StatementResponseModel> getFilterStatement({
+    required String depositNumber,
+    required int offset,
+    required int statementActionType,
+    required String startDate,
+    required String endDate,
+  }) async {
+    try {
+      /// 🔐 read token
+      final token = await LocalStorage.read('access_token');
+
+      if (token == null || token.isEmpty) {
+        throw Exception('Access token not found');
+      }
+
+      final body = {
+        "depositNumber": depositNumber,
+        "useDefaultFilter": true,
+        "description": "",
+        "length": 10,
+        "offset": offset,
+        "statementActionType": statementActionType,
+        "fromDate": startDate,
+        "toDate": endDate};
+
+      final response = await _dio.post(
+        '${APIKey.baseUrl}/api/Statements/get-all',
+        data: jsonEncode(body),
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': token,
+          },
+        ),
+      );
+
+      /// 🛡️ defensive parsing
+      if (response.data is Map<String, dynamic>) {
+        final result = StatementResponseModel.fromJson(response.data);
+
+        print(result.data!.statements!.length);
+
+        if (response.statusCode == 200 && result.success == true) {
+          return result;
+        }
+      }
+
+      /// fallback
+      return StatementResponseModel();
+    }
+    /// 🌐 dio specific errors
+    on DioException catch (e, s) {
+      debugPrint('DioException in getAllStatement: ${e.message}');
+      debugPrintStack(stackTrace: s);
+
+      return StatementResponseModel(
+        success: false,
+        error: e.response?.data ?? e.message,
+      );
+    }
+    /// ❌ any other error
+    catch (e, s) {
+      debugPrint('Unexpected error in getAllStatement: $e');
+      debugPrintStack(stackTrace: s);
+
+      return StatementResponseModel(
+        success: false,
+        error: ApiErrorModel(errorMessage: e.toString()),
+      );
+    }
+  }
+
 }

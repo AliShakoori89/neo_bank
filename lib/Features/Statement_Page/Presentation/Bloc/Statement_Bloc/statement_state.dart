@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:neo_bank_mehr_iran/Features/Statment_Page/Data/Model/statement_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
 
 enum StatementStateStatus { initial, success, error, loading }
 

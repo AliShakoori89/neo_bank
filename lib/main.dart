@@ -20,8 +20,8 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/otp_
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/profile_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Statment_Page/Domain/Repository/statement_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Statment_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/Repository/statement_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/Const/Route/app_routes.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';

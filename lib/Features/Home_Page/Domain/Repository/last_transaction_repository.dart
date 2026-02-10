@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
-import 'package:neo_bank_mehr_iran/Features/Statment_Page/Data/Model/statement_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
 import 'package:flutter/foundation.dart';
 
 class LastTransactionRepository {
