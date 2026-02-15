@@ -27,6 +27,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/Const/Route/app_routes.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
+import 'package:device_preview/device_preview.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,22 +44,11 @@ void main() async {
 
   runApp(
     // DevicePreview(
-    // child:
     // builder:
     //     (context) =>
     AppLockObserver(child: MyApp(isDark: isDark)),
     // )
   );
-}
-
-enum ConnectivityStatus { online, offline }
-
-class ConnectivityCubit extends Cubit<ConnectivityStatus> {
-  ConnectivityCubit() : super(ConnectivityStatus.online);
-
-  void update(bool isOnline) {
-    emit(isOnline ? ConnectivityStatus.online : ConnectivityStatus.offline);
-  }
 }
 
 class MyApp extends StatefulWidget {

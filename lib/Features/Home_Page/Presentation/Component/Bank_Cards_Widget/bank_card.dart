@@ -25,11 +25,10 @@ Widget buildBankCard(CardDataModel card) {
             padding: const EdgeInsets.fromLTRB(10, 0, 20, 5),
             child: Column(
               children: [
-                Expanded(child: buildCardHeader()),
-                const SizedBox(height: 16),
-                Expanded(child: buildCardNumberAndDate(card)),
-                AppSpace.heightSpace_24,
-                Expanded(child: CardBalanceWidget(balance: card.availableBalance!)),
+                buildCardHeader(),
+                AppSpace.heightSpace_32,
+                buildCardNumberAndDate(card),
+                CardBalanceWidget(balance: card.availableBalance!),
               ],
             ),
           ),

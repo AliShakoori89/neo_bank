@@ -7,6 +7,7 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
 import '../../../../Core/Const/app_colors.dart';
+import '../../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -68,12 +69,18 @@ class CustomButton extends StatelessWidget {
                 : () {
                     if (nationalCodeFormKey.currentState!.validate() &&
                         phoneNumberFormKey.currentState!.validate()) {
-                      context.read<UserLoginAuthBloc>().add(
-                        UserLoginEvent(
-                          nationalCode: nationalCodeController.text,
-                          phoneNumber: phoneNumberController.text,
-                        ),
-                      );
+
+                      ButtonInternetChecker.checkInternet(
+                        context: context,
+                        onSuccess: () {
+                          context.read<UserLoginAuthBloc>().add(
+                            UserLoginEvent(
+                              nationalCode: nationalCodeController.text,
+                              phoneNumber: phoneNumberController.text,
+                            ),
+                          );
+                        });
+
                     }
                   },
             child: Padding(

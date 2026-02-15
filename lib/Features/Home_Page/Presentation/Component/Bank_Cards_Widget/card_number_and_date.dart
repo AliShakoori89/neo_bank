@@ -7,31 +7,35 @@ Widget buildCardNumberAndDate(card) {
 
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 5),
-    child: Row(
-      children: [
-        Text(
-          card.pan.toString().replaceAllMapped(
-            RegExp(r".{1,4}"),
-            (match) => "${match.group(0)} ".toPersianDigit(),
+    child: SizedBox(
+      width: 272,
+      height: 20,
+      child: Row(
+        children: [
+          Text(
+            card.pan.toString().replaceAllMapped(
+              RegExp(r".{1,4}"),
+              (match) => "${match.group(0)} ".toPersianDigit(),
+            ),
+            textDirection: TextDirection.ltr,
+            style: const TextStyle(
+              color: AppColors.appWhite,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-          textDirection: TextDirection.ltr,
-          style: const TextStyle(
-            color: AppColors.appWhite,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+          const Spacer(),
+          Text(
+            '${(date.year % 100).toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}'
+                .toPersianDigit(),
+            style: const TextStyle(
+              color: AppColors.appWhite,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        ),
-        const Spacer(),
-        Text(
-          '${(date.year % 100).toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}'
-              .toPersianDigit(),
-          style: const TextStyle(
-            color: AppColors.appWhite,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }

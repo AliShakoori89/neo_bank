@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
+import '../../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
+
 class SetPassButton extends StatelessWidget {
   const SetPassButton({
     super.key,
@@ -35,9 +37,15 @@ class SetPassButton extends StatelessWidget {
           if (onpassFieldsIsFill != null &&
               onpassFieldsIsFill == true &&
               passField.length == 4) {
-            context.go('/main_page');
 
-            LocalStorage.save('local_password', passField);
+            ButtonInternetChecker.checkInternet(
+                context: context,
+                onSuccess: () {
+
+                  context.go('/main_page');
+                  LocalStorage.save('local_password', passField);
+                });
+
           }
         },
         child: SizedBox(

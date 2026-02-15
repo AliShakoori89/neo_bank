@@ -13,6 +13,8 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/profile_page_custom_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/user_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
+import '../../Main_Page/main_page.dart';
 import 'Component/Biometric_Service/biometric_service.dart';
 import '../../../Core/Const/custom_divider.dart';
 import 'Component/profile_main_container.dart';
@@ -35,6 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     BlocProvider.of<ProfileBloc>(context).add(GetProfileEventEvent());
+    _checkConnection();
     _initState();
     super.initState();
   }
@@ -42,6 +45,19 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _initState() async {
     await _checkBiometricSupport();
     await _loadSwitchState();
+  }
+
+  void _refreshPage() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 4,)),
+    );
+  }
+
+  Future<void> _checkConnection() async {
+    await InternetChecker.checkInternet(
+      context: context,
+      onSuccess: _refreshPage,
+    );
   }
 
   Future<void> _checkBiometricSupport() async {

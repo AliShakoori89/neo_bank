@@ -2,11 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Features/Bank_Services_Page/Presentation/Component/custom_icon_widget.dart';
 import 'package:neo_bank_mehr_iran/Features/Bank_Services_Page/Presentation/Component/widget_container.dart';
 import '../../Core/Const/app_space.dart';
+import '../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../Core/Utils/custom_header.dart';
+import '../Main_Page/main_page.dart';
 import 'Presentation/Component/widget_title.dart';
 
-class BankServicesPage extends StatelessWidget {
+class BankServicesPage extends StatefulWidget {
   const BankServicesPage({super.key});
+
+  @override
+  State<BankServicesPage> createState() => _BankServicesPageState();
+}
+
+class _BankServicesPageState extends State<BankServicesPage> {
+
+  @override
+  void initState() {
+    _checkConnection();
+    super.initState();
+  }
+
+  void _refreshPage() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 2,)),
+    );
+  }
+
+  Future<void> _checkConnection() async {
+    await InternetChecker.checkInternet(
+      context: context,
+      onSuccess: _refreshPage,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

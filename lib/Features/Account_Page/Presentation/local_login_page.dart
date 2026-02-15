@@ -6,6 +6,7 @@ import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/pass_field.dart';
 import '../../../Core/Theme/app_them.dart';
+import '../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
 import '../../Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -118,16 +119,35 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
                                       final localPass = await LocalStorage.read(
                                         'local_password',
                                       );
-                            
-                                      if (localPassController.text ==
-                                          localPass.toString()) {
-                                        context.go('/main_page', extra: 0);
-                                      } else {
+
+
+
+                                      if(localPassController.text.length < 4){
+
                                         AppSnackBar.errorTop(
                                           context,
-                                          'پسورد اشتباه است.',
+                                          'پسورد را کامل وارد نمایید.',
                                         );
+                                      } else{
+                                        if (localPassController.text ==
+                                            localPass.toString()) {
+
+                                          ButtonInternetChecker.checkInternet(
+                                            context: context,
+                                            onSuccess: () {
+                                              context.go('/main_page', extra: 0);
+                                            },
+                                          );
+
+                                        } else {
+                                          AppSnackBar.errorTop(
+                                            context,
+                                            'پسورد اشتباه است.',
+                                          );
+                                        }
                                       }
+                            
+
                                     },
                                     child: SizedBox(
                                       width: double.infinity,

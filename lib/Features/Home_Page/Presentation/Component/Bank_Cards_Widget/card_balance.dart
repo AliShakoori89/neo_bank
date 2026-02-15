@@ -52,7 +52,9 @@ class CardBalanceWidget extends StatelessWidget {
                 ),
               ),
               AppSpace.widthSpace_5,
-              const Text('ریال', style: TextStyle(color: AppColors.appWhite)),
+              const Text('ریال', style: TextStyle(color: AppColors.appWhite,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,)),
             ],
           );
         },

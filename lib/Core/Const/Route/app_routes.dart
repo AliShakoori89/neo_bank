@@ -6,7 +6,6 @@ import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/local_login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/internet_check_page.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/request_otp_code_again_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
@@ -26,9 +25,7 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final index = state.extra as int? ?? 0;
 
-        return InternetCheckPage(
-          child: MainPage(initialIndex: index), // صفحه واقعی
-        );
+        return MainPage(initialIndex: index);
       },
     ),
 
@@ -37,17 +34,15 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final args = state.extra as OtpArgs;
 
-        return InternetCheckPage(
-          child: BlocProvider(
-            create: (_) =>
-                RequerstOtpAgainBloc(RequestOtpCodeAgainRepository()),
-            child: OtpCodePage(
-              phoneNumber: args.phoneNumber,
-              nationalCode: args.nationalCode,
-              deviceId: args.deviceId,
-              secretKey: args.secretKey,
-              expireTime: args.expireTime,
-            ),
+        return BlocProvider(
+          create: (_) =>
+              RequerstOtpAgainBloc(RequestOtpCodeAgainRepository()),
+          child: OtpCodePage(
+            phoneNumber: args.phoneNumber,
+            nationalCode: args.nationalCode,
+            deviceId: args.deviceId,
+            secretKey: args.secretKey,
+            expireTime: args.expireTime,
           ),
         );
       },
@@ -56,14 +51,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/login_page',
       builder: (context, state) {
-        return InternetCheckPage(child: LoginPage());
+        return LoginPage();
       },
     ),
 
     GoRoute(
       path: '/set_pass_page',
       builder: (context, state) {
-        return InternetCheckPage(child: SetPassPage());
+        return SetPassPage();
       },
     ),
 

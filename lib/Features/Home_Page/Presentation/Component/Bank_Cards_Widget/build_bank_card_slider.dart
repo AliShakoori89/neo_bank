@@ -15,6 +15,8 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Ban
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Widget/bank_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Widget/bank_card_shimmer.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Widget/custom_Indicator.dart';
+import '../../../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
+import '../../../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../Bloc/All_cards_Bloc/all_cards_state.dart';
 
 /// 🔹 اسلایدر کارت‌ها + بک‌گراند
@@ -117,20 +119,28 @@ Widget buildBankCardSlider(
 
                     IconButton(
                       onPressed: () {
-                        BlocProvider.of<RefreshCountBloc>(
-                          context,
-                        ).add(GetRefreshCountEvent());
 
-                        if (refreshCount < 5) {
-                          BlocProvider.of<AllCardsBloc>(
-                            context,
-                          ).add(GetUserAllCardsEvent());
-                        } else {
-                          AppSnackBar.errorTop(
-                            context,
-                            'تعداد دفعات بروزرسانی بیش از حد مجاز است',
-                          );
-                        }
+                        ButtonInternetChecker.checkInternet(
+                          context: context,
+                          onSuccess: () {
+                            BlocProvider.of<RefreshCountBloc>(
+                              context,
+                            ).add(GetRefreshCountEvent());
+
+                            if (refreshCount < 5) {
+                              BlocProvider.of<AllCardsBloc>(
+                                context,
+                              ).add(GetUserAllCardsEvent());
+                            } else {
+                              AppSnackBar.errorTop(
+                                context,
+                                'تعداد دفعات بروزرسانی بیش از حد مجاز است',
+                              );
+                            }
+                          },
+                        );
+
+
                       },
                       icon: Icon(Icons.refresh,
                         color: AppColors.appWhite,

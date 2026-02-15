@@ -7,7 +7,9 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_card
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Widget/build_bank_card_slider.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/build_second_slider.dart';
 import '../../../Core/Const/app_colors.dart';
+import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
+import '../../Main_Page/main_page.dart';
 import 'Component/Icon_Row_Widget/icon_row_widget.dart';
 import 'Component/Transaction_List_Widget/transactions_list_widget.dart';
 
@@ -19,6 +21,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    _checkConnection();
+    super.initState();
+  }
+
+  void _refreshPage() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 0,)),
+    );
+  }
+
+  Future<void> _checkConnection() async {
+    await InternetChecker.checkInternet(
+      context: context,
+      onSuccess: _refreshPage,
+    );
+  }
+
   final CarouselSliderController bankCardController =
       CarouselSliderController();
   final CarouselSliderController facilitiesCardController =

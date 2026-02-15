@@ -7,6 +7,8 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/build_account_tab_body.dart';
+import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
+import '../../Main_Page/main_page.dart';
 import 'component/Card/build_cart_tab_body.dart';
 import 'component/build_tab_item.dart';
 
@@ -34,6 +36,9 @@ class _FundTransferPageState extends State<FundTransferPage>
   @override
   void initState() {
     super.initState();
+
+    _checkConnection();
+
     BlocProvider.of<AllCardsDetailBloc>(context).add(GetAllCardsDetailEvent());
     BlocProvider.of<UserAllAccountBloc>(context).add(GetUserAllAccountEvent());
     _tabController = TabController(length: _tabs.length, vsync: this)
@@ -44,6 +49,19 @@ class _FundTransferPageState extends State<FundTransferPage>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  void _refreshPage() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 1)),
+    );
+  }
+
+  Future<void> _checkConnection() async {
+    await InternetChecker.checkInternet(
+      context: context,
+      onSuccess: _refreshPage,
+    );
   }
 
   @override

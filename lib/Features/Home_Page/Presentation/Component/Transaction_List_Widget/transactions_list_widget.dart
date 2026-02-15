@@ -7,6 +7,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Tra
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_state.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../Core/Const/app_space.dart';
+import '../../../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../../../../Core/Utils/custom_card.dart';
 
 class TransactionsListWidget extends StatefulWidget {

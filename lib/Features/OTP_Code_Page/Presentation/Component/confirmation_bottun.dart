@@ -7,6 +7,8 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_event.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_state.dart';
 
+import '../../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
+
 class ConfirmationBottun extends StatelessWidget {
   const ConfirmationBottun({
     super.key,
@@ -51,13 +53,19 @@ class ConfirmationBottun extends StatelessWidget {
                   onPressed: () {
                     final otp = otpController.text;
 
-                    context.read<OtpCodeCheckBloc>().add(
-                      OtpCodeCheckValueEvent(
-                        deviceId: deviceId,
-                        otpCode: otp,
-                        secretKey: secretKey,
-                      ),
-                    );
+                    ButtonInternetChecker.checkInternet(
+                      context: context,
+                      onSuccess: () {
+                        context.read<OtpCodeCheckBloc>().add(
+                          OtpCodeCheckValueEvent(
+                            deviceId: deviceId,
+                            otpCode: otp,
+                            secretKey: secretKey,
+                          ),
+                        );
+                      });
+
+
                   }, // 👈 وقتی null باشه دکمه قفله
 
                   child: SizedBox(

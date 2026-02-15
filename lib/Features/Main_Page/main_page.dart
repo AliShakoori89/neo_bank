@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/check_internet.dart';
+import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/App_Lock/Internet/network_utils.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Report_Page/Presentation/account_report_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
+import '../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../Bank_Services_Page/bank_services_page.dart';
 import '../Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../Home_Page/Presentation/home_page.dart';
@@ -32,24 +34,22 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    _checkConnectionAndInit();
+    _checkConnection();
     context.read<ThemeBloc>().add(ThemeEvent.load);
     BlocProvider.of<AllCardsBloc>(context).add(GetUserAllCardsEvent());
   }
 
-  Future<void> _checkConnectionAndInit() async {
-    final connected = await NetworkUtils.hasInternet();
-    if (!mounted) return;
-    setState(() {
-      hasInternet = connected;
-      isChecking = false;
-    });
+  void _refreshPage() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const MainPage()),
+    );
+  }
 
-    if (connected) {
-      // لود کارت‌ها و تم
-      context.read<ThemeBloc>().add(ThemeEvent.load);
-      BlocProvider.of<AllCardsBloc>(context).add(GetUserAllCardsEvent());
-    }
+  Future<void> _checkConnection() async {
+    await InternetChecker.checkInternet(
+      context: context,
+      onSuccess: _refreshPage,
+    );
   }
 
   final List<Widget> _pages = [
@@ -95,18 +95,11 @@ class _MainPageState extends State<MainPage> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),
       color: Theme.of(context).scaffoldBackgroundColor,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: PopScope(
-          canPop: false,
-          onPopInvoked: (didPop) async {
-            if (await _handleBack()) {
-              Future.delayed(Duration.zero, () {
-                Navigator.of(context).maybePop();
-              });
-            }
-          },
-          child: SafeArea(
+      child: WillPopScope(
+        onWillPop: _handleBack,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: BlocBuilder<MainNavigationBloc, MainNavigationState>(
@@ -126,7 +119,7 @@ class _MainPageState extends State<MainPage> {
                 },
               ),
             ),
-          ),
+          )
         ),
       ),
     );

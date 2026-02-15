@@ -15,6 +15,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Componen
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/select_transaction_types.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/statement_dropdown_button.dart';
 import '../../../Core/Const/Route/transaction_detail_args.dart';
+import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import 'Bloc/Statement_Bloc/statement_state.dart';
 import 'Component/action_icon.dart';
 import 'Component/jalali_to_Utc_Iso.dart';
@@ -49,12 +50,26 @@ class _StatementPageState extends State<StatementPage> {
   @override
   void initState() {
     super.initState();
+    _checkConnection();
     context.read<AllCardsDetailBloc>().add(GetAllCardsDetailEvent());
   }
 
   void _fetchStatement(String depositNumber) {
     context.read<StatementBloc>().add(
       FetchStatementEvent(depositNumber: depositNumber),
+    );
+  }
+
+  void _refreshPage() {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => StatementPage()),
+    );
+  }
+
+  Future<void> _checkConnection() async {
+    await InternetChecker.checkInternet(
+      context: context,
+      onSuccess: _refreshPage,
     );
   }
 
