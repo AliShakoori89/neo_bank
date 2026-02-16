@@ -27,7 +27,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/Const/Route/app_routes.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
-import 'package:device_preview/device_preview.dart';
+import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_bloc.dart';
+import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_event.dart';
 
 
 void main() async {
@@ -63,12 +64,16 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (_) => ThemeBloc(
             widget.isDark ? AppTheme.darkTheme : AppTheme.lightTheme,
           ),
+        ),
+        BlocProvider(
+          create: (_) => VpnBloc()..add(CheckVpnEvent()),
         ),
         BlocProvider(
           create: (_) => MainNavigationBloc(initialIndex: 0), // ⭐ اضافه شود
