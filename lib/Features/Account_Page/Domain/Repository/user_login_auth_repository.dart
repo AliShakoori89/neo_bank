@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
@@ -83,9 +84,13 @@ class UserLoginAuthRepository {
     }
   }
 
-  FutureOr<bool?> userIsLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    return token != null ? true : false;
+  Future<bool> userIsLogin() async {
+    final encryptedPrefs = EncryptedSharedPreferences();
+
+    // خواندن توکن
+    final token = await encryptedPrefs.getString('token');
+
+    // اگر توکن موجود بود true، در غیر این صورت false
+    return token != null && token.isNotEmpty;
   }
 }

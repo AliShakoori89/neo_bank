@@ -1,19 +1,35 @@
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
+
+  static final EncryptedSharedPreferences _prefs =
+  EncryptedSharedPreferences();
+
   static Future<void> save(String key, String value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(key, value);
+    try {
+      await _prefs.setString(key, value);
+    } catch (e) {
+      // خطا در ذخیره‌سازی امن
+      print("Error saving encrypted value: $e");
+    }
   }
 
   static Future<void> remove(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(key);
+    try {
+      await _prefs.remove(key);
+    } catch (e) {
+      print("Error removing encrypted value: $e");
+    }
   }
 
   static Future<String?> read(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(key);
+    try {
+      return await _prefs.getString(key);
+    } catch (e) {
+      print("Error reading encrypted value: $e");
+      return null;
+    }
   }
 
   static Future<bool> isLoggedIn() async {
