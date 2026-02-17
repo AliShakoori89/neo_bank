@@ -6,6 +6,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Tra
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_state.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import '../../../../../Core/Const/Route/transaction_detail_args.dart';
 import '../../../../../Core/Const/app_space.dart';
 import '../../../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../../../../Core/Utils/custom_card.dart';
@@ -65,16 +66,23 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
                     ),
                   ),
                   Spacer(),
-                  IconButton(
-                    icon: Icon(
-                      Icons.arrow_forward_ios,
-                      color: Theme.of(context).colorScheme.primaryFixed,
-                      size: 16,
+                  Center( // 👈 آیکون رو وسط می‌کنه
+                    child: IconButton(
+                      padding: EdgeInsets.all(5), // 👈 padding داخلی IconButton رو حذف می‌کنیم
+                      constraints: BoxConstraints(), // 👈 محدودیت سایز خودش رو حذف
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(Colors.white.withAlpha(50)),
+                      ),
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Theme.of(context).colorScheme.primaryFixed,
+                        size: 16,
+                      ),
+                      onPressed: () {
+                        context.push('/statement_page');
+                      },
                     ),
-                    onPressed: (){
-                      context.push('/statement_page');
-                    },
-                  ),
+                  )
                 ],
               ),
             ),
@@ -113,16 +121,29 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
                     final item = state.topStatement[index];
                     final amount = item.transferAmount ?? 0;
 
-                    return CustomCard(
-                      deposit: item.actionDescription! == 'برداشت' ? false : true,
-                      title: state.topStatement[index].actionDescription!,
-                      subtitle: item.description ?? '',
-                      date: formatPersianDateMD(item.date!.toString()),
-                      mount: amount
-                          .abs()
-                          .toString()
-                          .seRagham()
-                          .toPersianDigit(),
+                    return InkWell(
+                      onTap: (){
+                        context.push(
+                          '/transaction_detail_page',
+                          extra: TransactionDetailArgs(
+                            title: item.actionDescription ?? '',
+                            transferAmount: item.transferAmount!.toString(),
+                            date: item.date.toString(),
+                            description: item.description ?? '',
+                          ),
+                        );
+                      },
+                      child: CustomCard(
+                        deposit: item.actionDescription! == 'برداشت' ? false : true,
+                        title: state.topStatement[index].actionDescription!,
+                        subtitle: item.description ?? '',
+                        date: formatPersianDateMD(item.date!.toString()),
+                        mount: amount
+                            .abs()
+                            .toString()
+                            .seRagham()
+                            .toPersianDigit(),
+                      ),
                     );
                   },
                 );

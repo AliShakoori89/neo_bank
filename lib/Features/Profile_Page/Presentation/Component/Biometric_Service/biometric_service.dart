@@ -27,7 +27,8 @@ class BiometricService {
         localizedReason: 'برای فعال‌سازی ورود بیومتریک احراز هویت شوید',
         biometricOnly: true,
       );
-    } catch (_) {
+    } catch (e) {
+      print('Biometric auth error: $e');
       return false;
     }
   }

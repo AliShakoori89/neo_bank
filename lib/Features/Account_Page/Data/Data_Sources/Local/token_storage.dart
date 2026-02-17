@@ -25,12 +25,15 @@ class LocalStorage {
 
   static Future<String?> read(String key) async {
     try {
-      return await _prefs.getString(key);
+      final value = await _prefs.getString(key);
+      if (value == null || value.isEmpty || value == 'null') return null;
+      return value;
     } catch (e) {
       print("Error reading encrypted value: $e");
       return null;
     }
   }
+
 
   static Future<bool> isLoggedIn() async {
     final token = await read('secret_key');
@@ -77,5 +80,15 @@ class LocalStorage {
         await prefs.setStringList(key, value);
       }
     }
+  }
+
+  static Future<void> clear() async {
+    try {
+      await _prefs.remove('token');
+      await _prefs.remove('token_expire_at');
+    } catch (e) {
+      print("Error removing encrypted value: $e");
+    }
+
   }
 }

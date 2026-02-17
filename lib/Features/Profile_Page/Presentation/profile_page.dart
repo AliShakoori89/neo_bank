@@ -154,42 +154,50 @@ class _ProfilePageState extends State<ProfilePage> {
                             ProfilePageCustomRow(
                               iconPath: 'assets/svg/fingerprint-03.svg',
                               title: 'ورود بیومتریک',
-                              widget: Switch(
-                                value: isSwitchOn,
-                                onChanged: isSupported
-                                    ? (val) async {
-                                  if (val == true) {
-                                    // تلاش برای احراز هویت
-                                    final success = await _biometricService.authenticate();
+                              widget: SizedBox(
+                                height: 24,
+                                width: 40,
+                                child: Transform.scale(
+                                  scale: 0.7,
+                                  child: Switch(
+                                    activeTrackColor: AppColors.splashGradiantColor1,
+                                    value: isSwitchOn,
+                                    onChanged: isSupported
+                                        ? (val) async {
+                                      if (val == true) {
+                                        // تلاش برای احراز هویت
+                                        final success = await _biometricService.authenticate();
 
-                                    if (!mounted) return;
+                                        if (!mounted) return;
 
-                                    if (success) {
-                                      setState(() {
-                                        isSwitchOn = true;
-                                      });
-                                      await _saveSwitchState(true);
-                                    } else {
-                                      // اگر احراز هویت ناموفق بود
-                                      setState(() {
-                                        isSwitchOn = false;
-                                      });
+                                        if (success) {
+                                          setState(() {
+                                            isSwitchOn = true;
+                                          });
+                                          await _saveSwitchState(true);
+                                        } else {
+                                          // اگر احراز هویت ناموفق بود
+                                          setState(() {
+                                            isSwitchOn = false;
+                                          });
 
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                          content: Text('احراز هویت بیومتریک ناموفق بود'),
-                                        ),
-                                      );
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text('احراز هویت بیومتریک ناموفق بود'),
+                                            ),
+                                          );
+                                        }
+                                      } else {
+                                        // خاموش کردن بدون احراز هویت
+                                        setState(() {
+                                          isSwitchOn = false;
+                                        });
+                                        await _saveSwitchState(false);
+                                      }
                                     }
-                                  } else {
-                                    // خاموش کردن بدون احراز هویت
-                                    setState(() {
-                                      isSwitchOn = false;
-                                    });
-                                    await _saveSwitchState(false);
-                                  }
-                                }
-                                    : null,
+                                        : null,
+                                  ),
+                                ),
                               )
                             ),
                           ],

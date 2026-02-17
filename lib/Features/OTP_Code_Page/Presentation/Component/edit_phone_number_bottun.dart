@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/local_storag.dart';
+import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class EditPhoneNumberButton extends StatelessWidget {
   const EditPhoneNumberButton({super.key});
@@ -10,7 +10,7 @@ class EditPhoneNumberButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        TokenStorage.clear();
+        LocalStorage.clear();
         context.go('/login_page');
       },
       child: Container(

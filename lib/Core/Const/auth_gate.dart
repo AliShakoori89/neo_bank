@@ -31,8 +31,8 @@ class _AuthGateState extends State<AuthGate> {
 
     if (!mounted) return;
 
-    if (accessToken != null) {
-      if (localPass != null) {
+    if (accessToken != null && accessToken.isNotEmpty && accessToken != 'null') {
+      if (localPass != null && localPass.isNotEmpty) {
         // اگه بیومتریک فعال بود، ابتدا احراز هویت بیومتریک
         if (biometricEnabled) {
           final success = await _biometricService.authenticate();
@@ -59,6 +59,7 @@ class _AuthGateState extends State<AuthGate> {
       }
     } else {
       // توکن نبود → صفحه لاگین
+      print('// توکن نبود → صفحه لاگین');
       await LocalStorage.clearPrefsExcept([]);
       GoRouter.of(context).go('/login_page');
       return;

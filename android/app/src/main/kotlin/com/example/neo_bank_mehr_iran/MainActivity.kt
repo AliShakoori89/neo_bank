@@ -3,11 +3,11 @@ package com.example.neo_bank_mehr_iran
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
-class MainActivity: FlutterActivity() {
+class MainActivity: FlutterFragmentActivity() { // <-- FlutterFragmentActivity مهم است
 
     private val CHANNEL = "vpn_checker"
 
