@@ -33,7 +33,7 @@ class CardBalanceWidget extends StatelessWidget {
                   context.read<BalanceVisibilityCubit>().toggle();
                 },
                 icon: Icon(
-                  isVisible
+                  !isVisible
                       ? Icons.remove_red_eye_outlined
                       : Icons.visibility_off_outlined,
                   color: AppColors.appWhite,
@@ -42,7 +42,7 @@ class CardBalanceWidget extends StatelessWidget {
               ),
               AppSpace.widthSpace_12,
               Text(
-                isVisible
+                !isVisible
                     ? balance.toString().seRagham().toPersianDigit()
                     : '••••••',
                 style: const TextStyle(
