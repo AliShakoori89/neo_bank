@@ -70,16 +70,25 @@ class CustomButton extends StatelessWidget {
                     if (nationalCodeFormKey.currentState!.validate() &&
                         phoneNumberFormKey.currentState!.validate()) {
 
-                      ButtonInternetChecker.checkInternet(
-                        context: context,
-                        onSuccess: () {
-                          context.read<UserLoginAuthBloc>().add(
-                            UserLoginEvent(
-                              nationalCode: nationalCodeController.text,
-                              phoneNumber: phoneNumberController.text,
-                            ),
-                          );
-                        });
+                      //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
+
+                      // ButtonInternetChecker.checkInternet(
+                      //   context: context,
+                      //   onSuccess: () {
+                      //     context.read<UserLoginAuthBloc>().add(
+                      //       UserLoginEvent(
+                      //         nationalCode: nationalCodeController.text,
+                      //         phoneNumber: phoneNumberController.text,
+                      //       ),
+                      //     );
+                      //   });
+
+                      context.read<UserLoginAuthBloc>().add(
+                        UserLoginEvent(
+                          nationalCode: nationalCodeController.text,
+                          phoneNumber: phoneNumberController.text,
+                        ),
+                      );
 
                     }
                   },

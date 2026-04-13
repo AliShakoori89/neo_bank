@@ -34,7 +34,8 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    _checkConnection();
+    //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
+    // _checkConnection();
     context.read<ThemeBloc>().add(ThemeEvent.load);
     BlocProvider.of<AllCardsBloc>(context).add(GetUserAllCardsEvent());
   }

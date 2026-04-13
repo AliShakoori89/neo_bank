@@ -24,7 +24,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _checkConnection();
+    //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
+    // _checkConnection();
     super.initState();
   }
 

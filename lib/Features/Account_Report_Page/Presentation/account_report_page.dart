@@ -21,7 +21,8 @@ class _AccountReportPageState extends State<AccountReportPage>
   @override
   void initState() {
 
-    _checkConnection();
+    //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
+    // _checkConnection();
 
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {

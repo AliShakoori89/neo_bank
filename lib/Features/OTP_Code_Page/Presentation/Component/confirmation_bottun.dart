@@ -53,17 +53,27 @@ class ConfirmationBottun extends StatelessWidget {
                   onPressed: () {
                     final otp = otpController.text;
 
-                    ButtonInternetChecker.checkInternet(
-                      context: context,
-                      onSuccess: () {
-                        context.read<OtpCodeCheckBloc>().add(
-                          OtpCodeCheckValueEvent(
-                            deviceId: deviceId,
-                            otpCode: otp,
-                            secretKey: secretKey,
-                          ),
-                        );
-                      });
+                    //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
+
+                    // ButtonInternetChecker.checkInternet(
+                    //   context: context,
+                    //   onSuccess: () {
+                    //     context.read<OtpCodeCheckBloc>().add(
+                    //       OtpCodeCheckValueEvent(
+                    //         deviceId: deviceId,
+                    //         otpCode: otp,
+                    //         secretKey: secretKey,
+                    //       ),
+                    //     );
+                    //   });
+
+                    context.read<OtpCodeCheckBloc>().add(
+                      OtpCodeCheckValueEvent(
+                        deviceId: deviceId,
+                        otpCode: otp,
+                        secretKey: secretKey,
+                      ),
+                    );
 
 
                   }, // 👈 وقتی null باشه دکمه قفله
