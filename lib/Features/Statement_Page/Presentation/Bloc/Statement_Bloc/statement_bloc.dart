@@ -114,6 +114,7 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
       offset: state.filteredStatement.length,
       endDate: event.endDate,
       startDate: event.startDate,
+      statementActionType: event.statementActionType
     );
 
     final newList = res.data?.statements ?? [];

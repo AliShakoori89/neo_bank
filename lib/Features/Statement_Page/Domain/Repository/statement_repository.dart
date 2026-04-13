@@ -26,13 +26,14 @@ class StatementRepository {
         throw Exception('Access token not found');
       }
 
+      print(depositNumber);
+
       final body = {
         "depositNumber": depositNumber,
-        "useDefaultFilter": false,
+        "useDefaultFilter": true,
         "description": "",
         "length": 10,
         "offset": offset,
-        "statementActionType": 0,
         "fromDate": "2026-02-03T05:39:52.955Z",
         "toDate": "2026-02-11T05:39:52.955Z"};
 
