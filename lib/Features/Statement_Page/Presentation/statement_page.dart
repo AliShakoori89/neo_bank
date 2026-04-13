@@ -41,6 +41,12 @@ class _StatementPageState extends State<StatementPage> {
 
   TransactionType selectedType = TransactionType.all;
 
+  void _onOtpChanged(TransactionType value) {
+    setState(() {
+      selectedType = value;
+    });
+  }
+
   final startTimeFormKey = GlobalKey<FormState>();
   final TextEditingController startTimeController = TextEditingController();
 
@@ -75,17 +81,34 @@ class _StatementPageState extends State<StatementPage> {
     );
   }
 
-  loadMoreFiltered() {
+  loadMoreFiltered(selectedType) {
     if (_filterStart != null && _filterEnd != null && _selectedDepositNumber != null) {
-      context.read<StatementBloc>().add(
-        LoadMoreFilteredStatementEvent(
-          _selectedDepositNumber!,
-          selectedType == TransactionType.deposit ? 0
-              : selectedType == TransactionType.withdraw ? 1 : null,
-          _filterStart!.toIso8601String(),
-          _filterEnd!.toIso8601String(),
-        ),
-      );
+
+      print('333333333333333');
+      print(selectedType);
+
+      if(selectedType == TransactionType.all){
+
+        context.read<StatementBloc>().add(
+          LoadMoreFilteredStatementEvent(
+            _selectedDepositNumber!,
+            null,
+            _filterStart!.toIso8601String(),
+            _filterEnd!.toIso8601String(),
+          ),
+        );
+      }else{
+        context.read<StatementBloc>().add(
+          LoadMoreFilteredStatementEvent(
+            _selectedDepositNumber!,
+            selectedType == TransactionType.deposit ? 1
+                : 0,
+            _filterStart!.toIso8601String(),
+            _filterEnd!.toIso8601String(),
+          ),
+        );
+      }
+
     }
   }
 
@@ -165,7 +188,7 @@ class _StatementPageState extends State<StatementPage> {
                       )
                           : TextButton(
                         onPressed: () {
-                          loadMoreFiltered();
+                          loadMoreFiltered(selectedType);
                         },
                         child: Text('مشاهده بیشتر ...',
                           style: TextStyle(
@@ -246,7 +269,7 @@ class _StatementPageState extends State<StatementPage> {
                                  ),
 
                                 AppSpace.heightSpace_32,
-                                SelectTransactionTypes(selectedType: selectedType),
+                                SelectTransactionTypes(selectedType: selectedType, onCompleted: _onOtpChanged,),
 
                                 AppSpace.heightSpace_32,
                                 Row(
@@ -303,28 +326,41 @@ class _StatementPageState extends State<StatementPage> {
                                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                                   onPressed: (){
 
-                                    final rawStart = jalaliToUtcDate(startTimeController.text);
-                                    final rawEnd = jalaliToUtcDate(endTimeController.text);
-
-                                    final startDate = startOfDay(rawStart);
-                                    final endDate = endOfDay(rawEnd);
-
-                                    final fixedStart = startDate.isAfter(endDate) ? endDate : startDate;
-                                    final fixedEnd   = startDate.isAfter(endDate) ? startDate : endDate;
+                                    print(selectedType);
 
                                     if(startTimeFormKey.currentState!.validate() && endTimeFormKey.currentState!.validate()){
+
+                                      final rawStart = jalaliToUtcDate(startTimeController.text);
+                                      final rawEnd = jalaliToUtcDate(endTimeController.text);
+
+                                      final startDate = startOfDay(rawStart);
+                                      final endDate = endOfDay(rawEnd);
+
+                                      final fixedStart = startDate.isAfter(endDate) ? endDate : startDate;
+                                      final fixedEnd   = startDate.isAfter(endDate) ? startDate : endDate;
+
                                       if(endTimeController.text != '' && startTimeController.text != ''){
                                         context.pop();
 
-                                        context.read<StatementBloc>().add(
-                                          FetchFilterStatementEvent(
-                                            depositNumber: _selectedDepositNumber!,
-                                            statementActionType: selectedType == TransactionType.deposit ? 0
-                                                : selectedType == TransactionType.withdraw ? 1 : null,
-                                            startDate: fixedStart.toIso8601String(),
-                                            endDate: fixedEnd.toIso8601String(),
-                                          ),
-                                        );
+                                        selectedType == TransactionType.all
+                                            ?
+                                            context.read<StatementBloc>().add(
+                                              FetchFilterStatementEvent(
+                                                depositNumber: _selectedDepositNumber!,
+                                                startDate: fixedStart.toIso8601String(),
+                                                endDate: fixedEnd.toIso8601String(),
+                                              ),
+                                            )
+                                            :
+                                            context.read<StatementBloc>().add(
+                                              FetchFilterStatementEvent(
+                                                depositNumber: _selectedDepositNumber!,
+                                                statementActionType: selectedType == TransactionType.deposit ? 1
+                                                    : 0,
+                                                startDate: fixedStart.toIso8601String(),
+                                                endDate: fixedEnd.toIso8601String(),
+                                              ),
+                                            );
 
                                         setState(() {
                                           isFilterActive = true;

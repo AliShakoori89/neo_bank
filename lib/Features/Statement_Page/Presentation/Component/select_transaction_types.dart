@@ -4,9 +4,12 @@ import '../statement_page.dart';
 
 
 class SelectTransactionTypes extends StatefulWidget {
-  SelectTransactionTypes({super.key, required this.selectedType});
+  SelectTransactionTypes({super.key,
+    required this.selectedType,
+    required this.onCompleted});
 
   late TransactionType selectedType;
+  final Function onCompleted;
 
   @override
   State<SelectTransactionTypes> createState() => _SelectTransactionTypesState();
@@ -68,7 +71,8 @@ class _SelectTransactionTypesState extends State<SelectTransactionTypes> {
                     child: InkWell(
                       onTap: () {
                         setState(() => widget.selectedType = type);
-                        print(widget.selectedType);
+                        widget.onCompleted(type);
+                        print(type);
                       },
                       splashColor: Colors.white24,
                       highlightColor: Colors.white10,
