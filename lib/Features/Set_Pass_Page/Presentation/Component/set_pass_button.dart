@@ -38,15 +38,13 @@ class SetPassButton extends StatelessWidget {
               onpassFieldsIsFill == true &&
               passField.length == 4) {
 
-            //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
-
-            // ButtonInternetChecker.checkInternet(
-            //     context: context,
-            //     onSuccess: () {
+            ButtonInternetChecker.checkInternet(
+                context: context,
+                onSuccess: () {
 
                   context.go('/main_page');
                   LocalStorage.save('local_password', passField);
-                // });
+                });
 
           }
         },

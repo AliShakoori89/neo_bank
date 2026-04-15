@@ -18,8 +18,7 @@ class _BankServicesPageState extends State<BankServicesPage> {
 
   @override
   void initState() {
-    //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
-    // _checkConnection();
+    _checkConnection();
     super.initState();
   }
 

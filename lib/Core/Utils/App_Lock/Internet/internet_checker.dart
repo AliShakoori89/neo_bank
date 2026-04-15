@@ -9,13 +9,13 @@ class InternetChecker {
   static Future<bool> hasConnection() async {
     try {
       final request = await HttpClient()
-          .getUrl(Uri.parse("https://clients3.google.com/generate_204"))
-          .timeout(const Duration(seconds: 3));
+          .getUrl(Uri.parse("https://www.tala.ir/favicon.ico"))
+          .timeout(const Duration(seconds: 5));
 
       final response =
-      await request.close().timeout(const Duration(seconds: 3));
+      await request.close().timeout(const Duration(seconds: 5));
 
-      return response.statusCode == 204;
+      return response.statusCode == 200;
     } catch (_) {
       return false;
     }

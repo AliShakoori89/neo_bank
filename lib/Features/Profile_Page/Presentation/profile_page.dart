@@ -37,8 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     BlocProvider.of<ProfileBloc>(context).add(GetProfileEventEvent());
-    //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
-    // _checkConnection();
+    _checkConnection();
     _initState();
     super.initState();
   }

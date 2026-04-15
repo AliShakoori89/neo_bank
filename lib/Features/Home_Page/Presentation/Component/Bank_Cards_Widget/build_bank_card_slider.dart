@@ -120,11 +120,9 @@ Widget buildBankCardSlider(
                     IconButton(
                       onPressed: () {
 
-                        //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
-
-                        // ButtonInternetChecker.checkInternet(
-                        //   context: context,
-                        //   onSuccess: () {
+                        ButtonInternetChecker.checkInternet(
+                          context: context,
+                          onSuccess: () {
                             BlocProvider.of<RefreshCountBloc>(
                               context,
                             ).add(GetRefreshCountEvent());
@@ -139,8 +137,8 @@ Widget buildBankCardSlider(
                                 'تعداد دفعات بروزرسانی بیش از حد مجاز است',
                               );
                             }
-                        //   },
-                        // );
+                          },
+                        );
 
 
                       },

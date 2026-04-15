@@ -16,18 +16,26 @@ class ButtonInternetChecker {
 
     try {
 
+      print("START REQUEST");
+
+
       final request = await HttpClient()
-          .getUrl(Uri.parse("https://clients3.google.com/generate_204"))
-          .timeout(const Duration(seconds: 3));
+          .getUrl(Uri.parse("https://www.tala.ir/favicon.ico"))
+          .timeout(const Duration(seconds: 5));
+      print("REQUEST SENT");
 
       final response = await request.close()
-          .timeout(const Duration(seconds: 3));
+          .timeout(const Duration(seconds: 5));
 
-      if (response.statusCode == 204) {
+      print("STATUS: ${response.statusCode}");
+
+      if (response.statusCode == 200) {
         hasInternet = true;
       }
 
-    } catch (_) {
+    } catch (e, s) {
+      print("ERROR: $e");
+      print("STACK: $s");
       hasInternet = false;
     }
 

@@ -132,14 +132,12 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
                                         if (localPassController.text ==
                                             localPass.toString()) {
 
-                                          //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
-
-                                          // ButtonInternetChecker.checkInternet(
-                                          //   context: context,
-                                          //   onSuccess: () {
+                                          ButtonInternetChecker.checkInternet(
+                                            context: context,
+                                            onSuccess: () {
                                               context.go('/main_page', extra: 0);
-                                          //   },
-                                          // );
+                                            },
+                                          );
 
                                         } else {
                                           AppSnackBar.errorTop(

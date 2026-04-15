@@ -57,8 +57,7 @@ class _StatementPageState extends State<StatementPage> {
   void initState() {
     super.initState();
 
-    //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
-    // _checkConnection();
+    _checkConnection();
     context.read<AllCardsDetailBloc>().add(GetAllCardsDetailEvent());
   }
 

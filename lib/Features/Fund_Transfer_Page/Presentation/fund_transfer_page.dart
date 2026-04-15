@@ -37,8 +37,7 @@ class _FundTransferPageState extends State<FundTransferPage>
   void initState() {
     super.initState();
 
-    //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
-    // _checkConnection();
+    _checkConnection();
 
     BlocProvider.of<AllCardsDetailBloc>(context).add(GetAllCardsDetailEvent());
     BlocProvider.of<UserAllAccountBloc>(context).add(GetUserAllAccountEvent());

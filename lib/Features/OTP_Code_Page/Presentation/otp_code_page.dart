@@ -225,11 +225,9 @@ class _OtpCodePageState extends State<OtpCodePage> {
                                   : GestureDetector(
                                       onTap: () {
 
-                                        //این تغییر به دلیل قطعی اینترنت در زمان جنگ ایجاد گردیده
-
-                                        // ButtonInternetChecker.checkInternet(
-                                        //     context: context,
-                                        //     onSuccess: () {
+                                        ButtonInternetChecker.checkInternet(
+                                            context: context,
+                                            onSuccess: () {
                                               _startTimer(
                                                 widget.expireTime,
                                               ); // ارسال مجدد OTP
@@ -243,7 +241,7 @@ class _OtpCodePageState extends State<OtpCodePage> {
                                                   phoneNumber: widget.phoneNumber,
                                                 ),
                                               );
-                                            // });
+                                            });
 
                                       },
                                       child: Text(
