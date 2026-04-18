@@ -36,6 +36,7 @@ class AllCardDetailRepository {
         throw Exception('Failed to fetch cards');
       }
     } catch (e) {
+      print('❌ Dio Error: $e');
       rethrow; // Bloc handle
     }
   }
@@ -55,6 +56,8 @@ class AllCardDetailRepository {
           },
         ),
       );
+
+      print('getAllCardsDeposit');
 
       if (response.statusCode == 200) {
         final cards = AllCardsPansModel.fromJson(response.data);
