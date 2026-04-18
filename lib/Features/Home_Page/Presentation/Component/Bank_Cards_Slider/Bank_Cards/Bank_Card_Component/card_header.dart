@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../Core/Const/app_colors.dart';
+import '../../../../../../../Core/Const/app_colors.dart';
 
 Widget buildCardHeader() => Padding(
   padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),

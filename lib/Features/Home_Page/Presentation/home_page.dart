@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_state.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Widget/build_bank_card_slider.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/build_bank_card_slider.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/build_second_slider.dart';
 import '../../../Core/Const/app_colors.dart';
 import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';

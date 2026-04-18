@@ -83,9 +83,6 @@ class _StatementPageState extends State<StatementPage> {
   loadMoreFiltered(selectedType) {
     if (_filterStart != null && _filterEnd != null && _selectedDepositNumber != null) {
 
-      print('333333333333333');
-      print(selectedType);
-
       if(selectedType == TransactionType.all){
 
         context.read<StatementBloc>().add(
@@ -324,8 +321,6 @@ class _StatementPageState extends State<StatementPage> {
                                   child: Text('تایید',
                                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                                   onPressed: (){
-
-                                    print(selectedType);
 
                                     if(startTimeFormKey.currentState!.validate() && endTimeFormKey.currentState!.validate()){
 

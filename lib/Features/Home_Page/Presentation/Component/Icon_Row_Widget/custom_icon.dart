@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 
 import '../../../../../Core/Const/app_colors.dart';
+import '../custom_linear_gradient.dart';
 
 class CustomIcon extends StatelessWidget {
   const CustomIcon({super.key, required this.imagePath});
@@ -43,21 +44,7 @@ class CustomIcon extends StatelessWidget {
                 margin: EdgeInsets.all(1), // ضخامت بوردر
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors:
-                        Theme.of(context).colorScheme.tertiaryFixed ==
-                            const Color(0xFFFFFFFF)
-                        ? [
-                            const Color(0xFFF3FEE7),
-                            const Color(0xFFF3FEE7).withAlpha(0),
-                          ]
-                        : [
-                            const Color(0xFF2B5314),
-                            const Color(0xFF2B5314).withAlpha(0),
-                          ],
-                  ),
+                  gradient: customLinearGradient(context),
                 ),
               ),
             ),
