@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
@@ -10,16 +9,12 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_card
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_state.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Card_Box_Background_UI/Component/circle_1.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Card_Box_Background_UI/Component/circle_2.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Card_Box_Background_UI/Component/circle_3.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/add_card_button.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/bank_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Card_Box_Background_UI/card_box_background.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/bank_card_shimmer.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/custom_Indicator.dart';
 import '../../../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
-import '../../../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../../../Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import '../../../../Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import '../../../../Main_Page/main_page.dart';
@@ -47,14 +42,15 @@ Widget buildBankCardSlider(
 
         return BlocListener<AllCardsBloc, AllCardsState>(
           listener: (context, state) {
-            if (state.status == GetAllCardsStatus.tokenExpired) {
-              context.read<UserLoginAuthBloc>().add(LogoutEvent());
-              AppSnackBar.errorTop(
-                context,
-                'نشست شما منقضی شده، دوباره وارد شوید',
-              );
-              context.go('/login_page');
-            }
+
+            // if (state.status == GetAllCardsStatus.tokenExpired) {
+            //   context.read<UserLoginAuthBloc>().add(LogoutEvent());
+            //   AppSnackBar.errorTop(
+            //     context,
+            //     'نشست شما منقضی شده، دوباره وارد شوید',
+            //   );
+            //   context.go('/login_page');
+            // }
 
             if (state.status == GetAllCardsStatus.success &&
                 state.cards != null &&
@@ -159,9 +155,9 @@ Widget buildBankCardSlider(
                   CardBoxBackground(),
                   InkWell(
                       onTap: (){
-                        // Navigator.of(context).pushReplacement(
-                        //   MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 0,)),
-                        // );
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 0,)),
+                        );
                       },
                       child: FutureBuilder(
                         future: Future.delayed(Duration(seconds: 5)),
