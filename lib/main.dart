@@ -20,6 +20,8 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/otp_
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/profile_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Domain/Repository/local_pass_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/Repository/statement_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
@@ -83,7 +85,8 @@ class _MyAppState extends State<MyApp> {
               UserLoginAuthBloc(UserLoginAuthRepository()),
         ),
         BlocProvider(
-          create: (BuildContext context) => AllCardsBloc(AllCardRepository()),
+          create: (BuildContext context) =>
+              AllCardsBloc(AllCardRepository()),
         ),
         BlocProvider(
           create: (BuildContext context) =>
@@ -107,6 +110,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (BuildContext context) =>
               UserAllAccountBloc(DepositsRepository()),
+        ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              LocalPassBloc(LocalPassRepository()),
         ),
         BlocProvider(create: (_) => BalanceVisibilityCubit()),
         BlocProvider(create: (BuildContext context) => RefreshCountBloc()),
