@@ -27,7 +27,8 @@ class AllCardRepository {
         return CardListModel.fromJson(data);
       }
     } catch (e) {
-      rethrow; // بزار Bloc تصمیم بگیره
+      print('خطا در دریافت کارت‌ها: $e');
+      rethrow;
     }
     return CardListModel();
   }

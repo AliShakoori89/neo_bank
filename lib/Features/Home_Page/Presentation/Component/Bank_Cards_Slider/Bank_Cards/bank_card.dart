@@ -4,9 +4,9 @@ import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/card_list_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Widget/card_balance.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Widget/card_header.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Widget/card_number_and_date.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_balance.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_header.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_number_and_date.dart';
 
 /// 🔹 کارت بانکی
 Widget buildBankCard(CardDataModel card) {
