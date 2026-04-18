@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
 
 import '../../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
+import '../Bloc/Local_Pass_Bloc/local_pass_event.dart';
 
 class SetPassButton extends StatelessWidget {
   const SetPassButton({
@@ -43,7 +47,8 @@ class SetPassButton extends StatelessWidget {
                 onSuccess: () {
 
                   context.go('/main_page');
-                  LocalStorage.save('local_password', passField);
+                  context.read<LocalPassBloc>().add(
+                      SetPassEvent(pass: passField));
                 });
 
           }
