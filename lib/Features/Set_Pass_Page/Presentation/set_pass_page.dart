@@ -92,16 +92,15 @@ class _SetPassPageState extends State<SetPassPage> {
                       ),
                       child: IntrinsicHeight(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            AppSpace.heightSpace_64,
+                            AppSpace.heightSpace_128,
                             NeoBankLogo(
                               logoColor: AppColors.splashGradiantColor1,
                               logoWidth: 98,
                               logoHeight: 24,
                               space: 5,
                             ),
-                            AppSpace.heightSpace_128,
+                            AppSpace.heightSpace_32,
                             Container(
                               margin: const EdgeInsets.only(
                                 left: 24,
