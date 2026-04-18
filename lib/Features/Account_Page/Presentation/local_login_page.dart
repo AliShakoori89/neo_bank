@@ -31,157 +31,148 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        body: BlocBuilder<ThemeBloc, ThemeData>(
-          builder: (context, theme) {
-            return Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: RadialGradient(
-                  center: Alignment(0, 1),
-                  radius: 2,
-                  colors: [
-                    Theme.of(context).colorScheme.secondary,
-                    theme == AppTheme.lightTheme ? Colors.white : Colors.black,
-                  ],
-                  stops: [0.0, 0.5],
-                ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: BlocBuilder<ThemeBloc, ThemeData>(
+        builder: (context, theme) {
+          return Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: Alignment(0, 1),
+                radius: 2,
+                colors: [
+                  Theme.of(context).colorScheme.secondary,
+                  theme == AppTheme.lightTheme ? Colors.white : Colors.black,
+                ],
+                stops: [0.0, 0.5],
               ),
-              child: SafeArea(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return SingleChildScrollView(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minHeight: constraints.maxHeight,
-                        ),
-                        child: IntrinsicHeight(
-                          child: SingleChildScrollView(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                top: 50
+            ),
+            child: SafeArea(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: IntrinsicHeight(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AppSpace.heightSpace_64,
+                            NeoBankLogo(
+                              logoColor: AppColors.splashGradiantColor1,
+                              logoWidth: 98,
+                              logoHeight: 24,
+                              space: 5,
+                            ),
+                            AppSpace.heightSpace_32,
+                            PassField(
+                              passFieldController: localPassController,
+                              onpassFieldsIsFill: onLocalPassFieldsIsFill,
+                            ),
+                            AppSpace.heightSpace_16,
+
+                            // ورود
+                            localPassFieldsIsFill != true
+                                ? Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 20,
+                                  bottom: 5,
+                                ),
+                                child: Text(
+                                  'رمز عبور خود را وارد نمایید.',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  AppSpace.heightSpace_128,
-                                  NeoBankLogo(
-                                    logoColor: AppColors.splashGradiantColor1,
-                                    logoWidth: 98,
-                                    logoHeight: 24,
-                                    space: 5,
+                            )
+                                : Text(''),
+                            Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                  WidgetStateProperty.all<Color>(
+                                    AppColors.splashGradiantColor1,
                                   ),
-                                  AppSpace.heightSpace_32,
-                                  PassField(
-                                    passFieldController: localPassController,
-                                    onpassFieldsIsFill: onLocalPassFieldsIsFill,
+                                  shape:
+                                  WidgetStateProperty.all<
+                                      RoundedRectangleBorder
+                                  >(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        7.0,
+                                      ), // Adjust for desired corner radius
+                                    ),
                                   ),
-                                  AppSpace.heightSpace_16,
-
-                                  // ورود
-                                  localPassFieldsIsFill != true
-                                      ? Align(
-                                          alignment: Alignment.topRight,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                              right: 20,
-                                              bottom: 5,
-                                            ),
-                                            child: Text(
-                                              'رمز عبور خود را وارد نمایید.',
-                                              style: TextStyle(
-                                                color: Colors.red,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      : Text(''),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 20, right: 20),
-                                    width: double.infinity,
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            WidgetStateProperty.all<Color>(
-                                              AppColors.splashGradiantColor1,
-                                            ),
-                                        shape:
-                                            WidgetStateProperty.all<
-                                              RoundedRectangleBorder
-                                            >(
-                                              RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(
-                                                  7.0,
-                                                ), // Adjust for desired corner radius
-                                              ),
-                                            ),
-                                      ),
-                                      onPressed: () async {
-                                        final localPass = await LocalStorage.read(
-                                          'local_password',
-                                        );
+                                ),
+                                onPressed: () async {
+                                  final localPass = await LocalStorage.read(
+                                    'local_password',
+                                  );
 
 
 
-                                        if(localPassController.text.length < 4){
+                                  if(localPassController.text.length < 4){
 
-                                          AppSnackBar.errorTop(
-                                            context,
-                                            'پسورد را کامل وارد نمایید.',
-                                          );
-                                        } else{
-                                          if (localPassController.text ==
-                                              localPass.toString()) {
+                                    AppSnackBar.errorTop(
+                                      context,
+                                      'پسورد را کامل وارد نمایید.',
+                                    );
+                                  } else{
+                                    if (localPassController.text ==
+                                        localPass.toString()) {
 
-                                            ButtonInternetChecker.checkInternet(
-                                              context: context,
-                                              onSuccess: () {
-                                                context.go('/main_page', extra: 0);
-                                              },
-                                            );
+                                      ButtonInternetChecker.checkInternet(
+                                        context: context,
+                                        onSuccess: () {
+                                          context.go('/main_page', extra: 0);
+                                        },
+                                      );
 
-                                          } else {
-                                            AppSnackBar.errorTop(
-                                              context,
-                                              'پسورد اشتباه است.',
-                                            );
-                                          }
-                                        }
+                                    } else {
+                                      AppSnackBar.errorTop(
+                                        context,
+                                        'پسورد اشتباه است.',
+                                      );
+                                    }
+                                  }
 
 
-                                      },
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                        child: Center(
-                                          child: Text(
-                                            'تایید',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
+                                },
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Center(
+                                    child: Text(
+                                      'تایید',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ),
-
-                                  AppSpace.heightSpace_128,
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+
+                            AppSpace.heightSpace_128,
+                          ],
+                        )
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

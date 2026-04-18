@@ -66,11 +66,11 @@ class _SetPassPageState extends State<SetPassPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: BlocBuilder<ThemeBloc, ThemeData>(
         builder: (context, theme) {
           return Container(
             width: double.infinity,
-            height: double.infinity,
             decoration: BoxDecoration(
               gradient: RadialGradient(
                 center: Alignment(0, 1),
@@ -82,73 +82,87 @@ class _SetPassPageState extends State<SetPassPage> {
                 stops: [0.0, 0.5],
               ),
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  AppSpace.heightSpace_128,
-                  NeoBankLogo(
-                    logoColor: AppColors.splashGradiantColor1,
-                    logoWidth: 98,
-                    logoHeight: 24,
-                    space: 5,
-                  ),
-                  AppSpace.heightSpace_128,
-                  Container(
-                    margin: const EdgeInsets.only(
-                      left: 24,
-                      right: 24,
-                      bottom: 24,
-                      top: 24,
-                    ),
-                    width: double.infinity,
-                    padding: const EdgeInsets.only(
-                      left: 24,
-                      right: 24,
-                      top: 24,
-                      bottom: 24,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.splashGradiantColor2.withAlpha(30),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          'برای دسترسی آسان به اپلیکیشن رمز عبور مورد نظر خود را تعیین نمایید.',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        SizedBox(height: 50),
-                        PassField(
-                          passFieldController: _passFieldController,
-                          onpassFieldsIsFill: _onpassFieldsIsFill,
-                        ),
-                        SizedBox(height: 50),
-                        passFieldsIsFill != true
-                            ? Align(
-                                alignment: Alignment.topRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    right: 20,
-                                    bottom: 5,
+            child: SafeArea(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: IntrinsicHeight(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AppSpace.heightSpace_64,
+                            NeoBankLogo(
+                              logoColor: AppColors.splashGradiantColor1,
+                              logoWidth: 98,
+                              logoHeight: 24,
+                              space: 5,
+                            ),
+                            AppSpace.heightSpace_128,
+                            Container(
+                              margin: const EdgeInsets.only(
+                                left: 24,
+                                right: 24,
+                                bottom: 24,
+                                top: 24,
+                              ),
+                              width: double.infinity,
+                              padding: const EdgeInsets.only(
+                                left: 24,
+                                right: 24,
+                                top: 24,
+                                bottom: 24,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.splashGradiantColor2.withAlpha(30),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'برای دسترسی آسان به اپلیکیشن رمز عبور مورد نظر خود را تعیین نمایید.',
+                                    style: Theme.of(context).textTheme.titleMedium,
                                   ),
-                                  child: Text(
-                                    'رمز عبور باید از چهار رقم تشکیل شده باشد.',
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  SizedBox(height: 50),
+                                  PassField(
+                                    passFieldController: _passFieldController,
+                                    onpassFieldsIsFill: _onpassFieldsIsFill,
                                   ),
-                                ),
-                              )
-                            : Text(''),
-                        SetPassButton(
-                          passField: _passFieldController.text,
-                          onpassFieldsIsFill: passFieldsIsFill,
+                                  SizedBox(height: 50),
+                                  passFieldsIsFill != true
+                                      ? Align(
+                                          alignment: Alignment.topRight,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 20,
+                                              bottom: 5,
+                                            ),
+                                            child: Text(
+                                              'رمز عبور باید از چهار رقم تشکیل شده باشد.',
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Text(''),
+                                  SetPassButton(
+                                    passField: _passFieldController.text,
+                                    onpassFieldsIsFill: passFieldsIsFill,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ],
+                  );
+                }
               ),
             ),
           );

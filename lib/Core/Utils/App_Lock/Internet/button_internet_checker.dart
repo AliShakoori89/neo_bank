@@ -171,7 +171,7 @@ class _TopInternetBannerState extends State<_TopInternetBanner>
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 20,
+      top: 50,
       left: 0,
       right: 0,
       child: SlideTransition(
