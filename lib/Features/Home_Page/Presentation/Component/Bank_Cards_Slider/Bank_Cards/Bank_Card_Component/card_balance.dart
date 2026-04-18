@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
-import '../../../../../Core/Const/app_colors.dart';
-import '../../../../../Core/Const/app_space.dart';
+import '../../../../../../../Core/Const/app_colors.dart';
+import '../../../../../../../Core/Const/app_space.dart';
 
 class CardBalanceWidget extends StatelessWidget {
   final int balance;
