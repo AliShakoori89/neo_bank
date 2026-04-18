@@ -27,9 +27,9 @@ Widget buildCartTabBody(BuildContext context) {
               return CustomDropdownButton(cardsPan: cardsPan!);
             }
             if (state.status.isError) {
-              return Text('error');
+              return Text('error',style: TextStyle(color: Colors.white),);
             }
-            return Container();
+            return Text('error',style: TextStyle(color: Colors.white),);
           },
         ),
         AppSpace.heightSpace_24,
