@@ -19,9 +19,9 @@ class CustomDropDownShimmer extends StatelessWidget {
           ),
           constraints: const BoxConstraints(minWidth: 320, minHeight: 40),
           child: Shimmer(
-            duration: Duration(seconds: 3), //Default value
+            duration: Duration(seconds: 2), //Default value
             interval: Duration(
-              microseconds: 2,
+              milliseconds: 100,
             ), //Default value: Duration(seconds: 0)
             //Default value
             colorOpacity: 5, //Default value
@@ -39,7 +39,7 @@ class CustomDropDownShimmer extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 62,
           height: 38,
           decoration: BoxDecoration(
-            color: Colors.black,
+            color: Colors.white.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(8),
           ),
         )

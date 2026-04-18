@@ -29,17 +29,15 @@ class BankCardShimmer extends StatelessWidget {
 
         Padding(
           padding: const EdgeInsets.only(top: 30, left: 45, right: 45),
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             height: 192,
-            constraints: const BoxConstraints(minWidth: 320, minHeight: 192),
             child: Shimmer(
-              duration: Duration(seconds: 3), //Default value
               interval: Duration(
-                seconds: 5,
+                microseconds: 100,
               ), //Default value: Duration(seconds: 0)
               color: Colors.white, //Default value
-              colorOpacity: 0, //Default value
+              colorOpacity: 0.5, //Default value
               enabled: true, //Default value
               direction: ShimmerDirection.fromLTRB(), //Default Value
               child: Container(
