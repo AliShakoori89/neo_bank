@@ -117,6 +117,7 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: state.topStatement.length,
+                  itemExtent: 70,
                   itemBuilder: (context, index) {
                     final item = state.topStatement[index];
                     final amount = item.transferAmount ?? 0;
