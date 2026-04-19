@@ -26,6 +26,7 @@ Widget buildBankCardSlider(
   BuildContext context,
   CarouselSliderController controller,
   int current,
+  {required Function(int) onPageChanged}
 ) {
   return BlocListener<RefreshCountBloc, RefreshCountState>(
     listener: (context, state) {
@@ -101,6 +102,9 @@ Widget buildBankCardSlider(
                                   autoPlay: false,
                                   enlargeCenterPage: true,
                                   viewportFraction: 0.8,
+                                  onPageChanged: (index, reason) {
+                                    onPageChanged(index); // 👈 پدر را خبر کن
+                                  },
                                 ),
                               ),
                             ),

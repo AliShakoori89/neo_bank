@@ -87,13 +87,18 @@ class _HomePageState extends State<HomePage> {
                   space: 4,
                 ),
               ),
-              buildBankCardSlider(context, bankCardController, currentBankCard),
+              buildBankCardSlider(
+                  context,
+                  bankCardController,
+                  currentBankCard,
+                  onPageChanged: (index) => setState(() => currentBankCard = index)),
               allServicesList(),
               buildSecondSlider(
                 context,
                 facilitiesCardController,
                 facilitiesCardCurrent,
                 facilitiesCard,
+                onPageChanged: (index) => setState(() => facilitiesCardCurrent = index)
               ),
               //لست تراکنش ها
               BlocBuilder<AllCardsBloc, AllCardsState>(

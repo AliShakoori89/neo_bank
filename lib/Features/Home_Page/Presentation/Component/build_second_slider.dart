@@ -12,6 +12,7 @@ Widget buildSecondSlider(
   CarouselSliderController controller,
   int currentIndex,
   List<Map<String, String>> sampleCard2,
+  {required Function(int) onPageChanged}
 ) {
   final cardItems2 = sampleCard2
       .map(
@@ -82,7 +83,9 @@ Widget buildSecondSlider(
           CarouselSlider(
             items: cardItems2,
             carouselController: controller,
-            options: CarouselOptions(height: 120, viewportFraction: 1),
+            options: CarouselOptions(height: 120, viewportFraction: 1, onPageChanged: (index, reason) {
+              onPageChanged(index); // 👈 پدر را خبر کن
+            },),
           ),
           Align(
             alignment: Alignment.bottomCenter,
