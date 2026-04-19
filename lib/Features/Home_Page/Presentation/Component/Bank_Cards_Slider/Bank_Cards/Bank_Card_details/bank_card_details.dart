@@ -26,16 +26,17 @@ bankCardDetails(context, String cardPan, String cardDeposit){
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (_) {
-      return DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.55,
-        minChildSize: 0.55,
-        maxChildSize: 0.85,
-        builder: (context, scrollController) {
-          return Padding(
+      {
+        return Container(
+          height: 450, // 👈 ارتفاع ثابت اینجاست
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(22),
+            ),
+          ),
+          child: Padding(
             padding: const EdgeInsets.all(16),
-            child: ListView(
-              controller: scrollController,
+            child: Column(
               children: [
                 Row(
                   children: [
@@ -47,73 +48,83 @@ bankCardDetails(context, String cardPan, String cardDeposit){
                         color: Theme.of(context).colorScheme.primaryFixed,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: (){
-                        context.pop();
-                      },
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
                     )
                   ],
                 ),
-                AppSpace.heightSpace_32,
-                GridView.builder(
+
+                const SizedBox(height: 16),
+
+                Expanded(
+                  child: GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // تعداد ستون‌ها در هر سطر
-                      crossAxisSpacing: 30.0, // فاصله افقی بین آیتم‌ها
-                      mainAxisSpacing: 30.0, // فاصله عمودی بین آیتم‌ها
-                      childAspectRatio: 2.5, // نسبت عرض به ارتفاع هر آیتم (1.0 یعنی مربع)
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 30.0,
+                      mainAxisSpacing: 30.0,
+                      childAspectRatio: 2.5,
                     ),
-                    shrinkWrap: true,
                     itemCount: detailsItem.length,
-                    itemBuilder: (BuildContext context, int index){
+                    itemBuilder: (context, index) {
                       return InkWell(
+                        onTap: () {
+                          final id = detailsItem[index]['id'];
+                          if (id == 1) {
+                            copyAndShare(context, cardPan, cardDeposit);
+                          } else if (id == 2) {
+                            context.push('/statement_page');
+                          }
+                        },
                         child: Container(
-                          width: 50,
-                          height: 20,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             gradient: customLinearGradient(context),
-                            border: Border.all(color: AppColors.loginPageHintFontColor)
+                            border: Border.all(
+                              color: AppColors.loginPageHintFontColor,
+                            ),
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                detailsItem[index]['icon'],
-                                color: Theme.of(context).colorScheme.surfaceBright,
-                              ),
-                              AppSpace.widthSpace_8,
-                              Text(detailsItem[index]['itemName'],
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.surfaceBright,
-                                  fontWeight: FontWeight.w100,
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Spacer(),
+                                Expanded(
+                                  flex: 1,
+                                  child: Icon(
+                                    detailsItem[index]['icon'],
+                                    color: Theme.of(context).colorScheme.surfaceBright,
+                                    size: 20,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                AppSpace.widthSpace_5,
+                                Expanded(
+                                  flex: 5,
+                                  child: Text(
+                                    detailsItem[index]['itemName'],
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.surfaceBright,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
                           ),
                         ),
-                        onTap: (){
-                          if(detailsItem[index]['id'] == 1){
-                            copyAndShare(context, cardPan, cardDeposit);
-                          }
-                          else if(detailsItem[index]['id'] == 2){
-                            context.push('/statement_page');
-                          }
-                          else if(detailsItem[index]['id'] == 3){
-
-                          }
-                        },
                       );
-
-
-                    })
+                    },
+                  ),
+                )
               ],
             ),
-          );
-        },
-      );
+          ),
+        );
+      }
     },
   );
 }
