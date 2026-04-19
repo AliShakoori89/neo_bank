@@ -47,6 +47,9 @@ class AllTransactionListWidget extends StatelessWidget {
 
         return ListView.builder(
           itemCount: state.allStatement.length + (state.hasMore ? 1 : 0),
+          itemExtent: 70,
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
           itemBuilder: (context, index) {
             if (index < state.allStatement.length) {
               final item = state.allStatement[index];

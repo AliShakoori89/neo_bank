@@ -113,7 +113,7 @@ class _StatementPageState extends State<StatementPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
       body: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 100, 20, 0),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
           child: isFilterActive
               ? BlocBuilder<StatementBloc, StatementState>(
             builder: (context, state) {
@@ -131,6 +131,7 @@ class _StatementPageState extends State<StatementPage> {
 
               return ListView.builder(
                 itemCount: state.hasMore ? state.filteredStatement.length + 1 : state.filteredStatement.length,
+                shrinkWrap: true,
                 itemBuilder: (context, index) {
                   if (index < state.filteredStatement.length) {
                     final item = state.filteredStatement[index];
@@ -149,10 +150,7 @@ class _StatementPageState extends State<StatementPage> {
                         );
                       },
                       child: SizedBox(
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .width < 400 ? 100 : 70,
+                        height: 70,
                         child: Column(
                           children: [
                             Padding(
@@ -170,7 +168,7 @@ class _StatementPageState extends State<StatementPage> {
                                 .dividerColor),
                           ],
                         ),
-                      ),
+                      )
                     );
                   }
 
@@ -233,143 +231,142 @@ class _StatementPageState extends State<StatementPage> {
                       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                     ),
                     builder: (_) {
-                      return DraggableScrollableSheet(
-                        expand: false,
-                        initialChildSize: 0.45,
-                        minChildSize: 0.45,
-                        maxChildSize: 0.85,
-                        builder: (context, scrollController) {
-                          return Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: ListView(
-                              controller: scrollController,
-                              children: [
-                                 Row(
-                                   children: [
-                                     Text(
-                                      'فیلتر تراکنش‌ها',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).colorScheme.primaryFixed,
-                                      ),
-                                     ),
-                                     Spacer(),
-                                     IconButton(
-                                       icon: Icon(Icons.close),
-                                       onPressed: (){
-                                         context.pop();
-                                       },
-                                     )
-                                   ],
-                                 ),
-
-                                AppSpace.heightSpace_32,
-                                SelectTransactionTypes(selectedType: selectedType, onCompleted: _onOtpChanged,),
-
-                                AppSpace.heightSpace_32,
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('از تاریخ',
-                                          style: TextStyle(
-                                              color: Theme.of(context).colorScheme.surface,
-                                              fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                        AppSpace.heightSpace_12,
-                                        CustomDatePicker(
-                                          timeFormKey: startTimeFormKey,
-                                          timeController: startTimeController,
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text('تا تاریخ',
-                                          style: TextStyle(
-                                              color: Theme.of(context).colorScheme.surface,
-                                              fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                        AppSpace.heightSpace_12,
-                                        CustomDatePicker(
-                                          timeFormKey: endTimeFormKey,
-                                          timeController: endTimeController,
-                                        ),
-                                      ],
-                                    )
-
-                                  ],
-                                ),
-
-                                AppSpace.heightSpace_32,
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.splashGradiantColor1,
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                        color: Color.fromRGBO(255, 255, 255, 0.12),
-                                      ),
-                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      return Container(
+                        height: 380, // 👈 ارتفاع ثابت اینجاست
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(22),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: ListView(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    'فیلتر تراکنش‌ها',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).colorScheme.primaryFixed,
                                     ),
                                   ),
-                                  child: Text('تایید',
+                                  Spacer(),
+                                  IconButton(
+                                    icon: Icon(Icons.close),
+                                    onPressed: (){
+                                      context.pop();
+                                    },
+                                  )
+                                ],
+                              ),
+
+                              AppSpace.heightSpace_32,
+                              SelectTransactionTypes(selectedType: selectedType, onCompleted: _onOtpChanged,),
+
+                              AppSpace.heightSpace_32,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('از تاریخ',
+                                        style: TextStyle(
+                                            color: Theme.of(context).colorScheme.surface,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      AppSpace.heightSpace_12,
+                                      CustomDatePicker(
+                                        timeFormKey: startTimeFormKey,
+                                        timeController: startTimeController,
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('تا تاریخ',
+                                        style: TextStyle(
+                                            color: Theme.of(context).colorScheme.surface,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      AppSpace.heightSpace_12,
+                                      CustomDatePicker(
+                                        timeFormKey: endTimeFormKey,
+                                        timeController: endTimeController,
+                                      ),
+                                    ],
+                                  )
+
+                                ],
+                              ),
+
+                              AppSpace.heightSpace_32,
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.splashGradiantColor1,
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      color: Color.fromRGBO(255, 255, 255, 0.12),
+                                    ),
+                                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  ),
+                                ),
+                                child: Text('تایید',
                                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                  onPressed: (){
+                                onPressed: (){
 
-                                    if(startTimeFormKey.currentState!.validate() && endTimeFormKey.currentState!.validate()){
+                                  if(startTimeFormKey.currentState!.validate() && endTimeFormKey.currentState!.validate()){
 
-                                      final rawStart = jalaliToUtcDate(startTimeController.text);
-                                      final rawEnd = jalaliToUtcDate(endTimeController.text);
+                                    final rawStart = jalaliToUtcDate(startTimeController.text);
+                                    final rawEnd = jalaliToUtcDate(endTimeController.text);
 
-                                      final startDate = startOfDay(rawStart);
-                                      final endDate = endOfDay(rawEnd);
+                                    final startDate = startOfDay(rawStart);
+                                    final endDate = endOfDay(rawEnd);
 
-                                      final fixedStart = startDate.isAfter(endDate) ? endDate : startDate;
-                                      final fixedEnd   = startDate.isAfter(endDate) ? startDate : endDate;
+                                    final fixedStart = startDate.isAfter(endDate) ? endDate : startDate;
+                                    final fixedEnd   = startDate.isAfter(endDate) ? startDate : endDate;
 
-                                      if(endTimeController.text != '' && startTimeController.text != ''){
-                                        context.pop();
+                                    if(endTimeController.text != '' && startTimeController.text != ''){
+                                      context.pop();
 
-                                        selectedType == TransactionType.all
-                                            ?
-                                            context.read<StatementBloc>().add(
-                                              FetchFilterStatementEvent(
-                                                depositNumber: _selectedDepositNumber!,
-                                                startDate: fixedStart.toIso8601String(),
-                                                endDate: fixedEnd.toIso8601String(),
-                                              ),
-                                            )
-                                            :
-                                            context.read<StatementBloc>().add(
-                                              FetchFilterStatementEvent(
-                                                depositNumber: _selectedDepositNumber!,
-                                                statementActionType: selectedType == TransactionType.deposit ? 1
-                                                    : 0,
-                                                startDate: fixedStart.toIso8601String(),
-                                                endDate: fixedEnd.toIso8601String(),
-                                              ),
-                                            );
+                                      selectedType == TransactionType.all
+                                          ?
+                                      context.read<StatementBloc>().add(
+                                        FetchFilterStatementEvent(
+                                          depositNumber: _selectedDepositNumber!,
+                                          startDate: fixedStart.toIso8601String(),
+                                          endDate: fixedEnd.toIso8601String(),
+                                        ),
+                                      )
+                                          :
+                                      context.read<StatementBloc>().add(
+                                        FetchFilterStatementEvent(
+                                          depositNumber: _selectedDepositNumber!,
+                                          statementActionType: selectedType == TransactionType.deposit ? 1
+                                              : 0,
+                                          startDate: fixedStart.toIso8601String(),
+                                          endDate: fixedEnd.toIso8601String(),
+                                        ),
+                                      );
 
-                                        setState(() {
-                                          isFilterActive = true;
-                                          _filterStart = fixedStart;
-                                          _filterEnd = fixedEnd;
-                                        });
-                                      }
+                                      setState(() {
+                                        isFilterActive = true;
+                                        _filterStart = fixedStart;
+                                        _filterEnd = fixedEnd;
+                                      });
                                     }
+                                  }
 
-                                  },
-                                )
-                              ],
-                            ),
-                          );
-                        },
+                                },
+                              )
+                            ],
+                          ),
+                        )
                       );
                     },
                   );
