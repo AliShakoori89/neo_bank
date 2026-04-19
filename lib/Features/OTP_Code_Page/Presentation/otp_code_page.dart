@@ -8,7 +8,7 @@ import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_logo.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_event.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_state.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/confirmation_bottun.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/confirmation_button.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/edit_phone_number_bottun.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/otp_code_box.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/phone_number.dart';
@@ -204,7 +204,7 @@ class _OtpCodePageState extends State<OtpCodePage> {
                                       onCompleted: _onOtpChanged,
                                     ),
                                     AppSpace.heightSpace_24,
-                                    ConfirmationBottun(
+                                    ConfirmationButton(
                                       otpController: _otpController,
                                       isOtpComplete: isOtpComplete,
                                       secretKey: newSecretKey ?? widget.secretKey,
