@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               buildBankCardSlider(context, bankCardController, currentBankCard),
-              buildIconRow(),
+              allServicesList(),
               buildSecondSlider(
                 context,
                 facilitiesCardController,

@@ -6,9 +6,10 @@ import '../../../../../Core/Const/app_colors.dart';
 import '../custom_linear_gradient.dart';
 
 class CustomIcon extends StatelessWidget {
-  const CustomIcon({super.key, required this.imagePath});
+  const CustomIcon({super.key, required this.imagePath, required this.serviceName});
 
   final String imagePath;
+  final String serviceName;
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +56,13 @@ class CustomIcon extends StatelessWidget {
                 color: AppColors.splashGradiantColor1,
                 shape: BoxShape.circle,
               ),
-              child: Center(child: SvgPicture.asset(imagePath)),
+              child: Center(child: SvgPicture.asset(imagePath, color: Colors.white,)),
             ),
           ],
         ),
         AppSpace.heightSpace_8,
         Text(
-          'شارژ و اینترنت',
+          serviceName,
           style: TextStyle(
             fontSize: 12,
             color: Theme.of(context).colorScheme.surfaceBright,

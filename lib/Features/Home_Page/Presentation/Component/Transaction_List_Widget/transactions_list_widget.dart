@@ -47,12 +47,12 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 0, right: 25, bottom: 10),
+            padding: EdgeInsets.only(left: 0, right: 25),
             child: Align(
               alignment: Alignment.centerRight,
               child: Row(
@@ -87,7 +87,7 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
               ),
             ),
           ),
-          AppSpace.heightSpace_24,
+          AppSpace.heightSpace_12,
           BlocBuilder<LastTransactionBloc, LastTransactionState>(
             // buildWhen: (prev, curr) =>
             //     prev.topStatement != curr.topStatement ||
