@@ -58,7 +58,8 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/set_pass_page',
       builder: (context, state) {
-        return SetPassPage();
+        final bool? inputFromProfile = state.extra as bool?;
+        return SetPassPage(inputFromProfile: inputFromProfile);
       },
     ),
 

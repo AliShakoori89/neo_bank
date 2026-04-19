@@ -12,7 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../Profile_Page/Presentation/Component/Biometric_Service/biometric_service.dart';
 
 class SetPassPage extends StatefulWidget {
-  const SetPassPage({super.key});
+  SetPassPage({super.key, this.inputFromProfile});
+
+  final bool? inputFromProfile;
 
   @override
   State<SetPassPage> createState() => _SetPassPageState();
@@ -121,10 +123,20 @@ class _SetPassPageState extends State<SetPassPage> {
                               ),
                               child: Column(
                                 children: [
-                                  Text(
+                                  widget.inputFromProfile == null
+                                      ? Text(
                                     'برای دسترسی آسان به اپلیکیشن رمز عبور مورد نظر خود را تعیین نمایید.',
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                  ),
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .titleMedium,)
+                                      : Text(
+                                          'پسورد مورد نظر خود را وارد نمایید.',
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .titleMedium,)
+                                  ,
                                   SizedBox(height: 50),
                                   PassField(
                                     passFieldController: _passFieldController,
@@ -133,21 +145,21 @@ class _SetPassPageState extends State<SetPassPage> {
                                   SizedBox(height: 50),
                                   passFieldsIsFill != true
                                       ? Align(
-                                          alignment: Alignment.topRight,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                              right: 20,
-                                              bottom: 5,
-                                            ),
-                                            child: Text(
-                                              'رمز عبور باید از چهار رقم تشکیل شده باشد.',
-                                              style: TextStyle(
-                                                color: Colors.red,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                        )
+                                    alignment: Alignment.topRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        right: 20,
+                                        bottom: 5,
+                                      ),
+                                      child: Text(
+                                        'رمز عبور باید از چهار رقم تشکیل شده باشد.',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  )
                                       : Text(''),
                                   SetPassButton(
                                     passField: _passFieldController.text,

@@ -148,7 +148,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             /// رمز همراه بانک
                             InkWell(
                               onTap: (){
-                                context.push('/set_pass_page');
+                                context.push('/set_pass_page', extra: true);
                               },
                               child: ProfilePageCustomCard(
                                 iconPath:
