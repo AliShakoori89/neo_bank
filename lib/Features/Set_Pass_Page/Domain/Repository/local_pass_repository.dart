@@ -6,19 +6,21 @@ import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 class LocalPassRepository {
   final dio = Dio();
 
-  setPass(passField){
-    LocalStorage.save('local_password', passField);
+  setPass(passField) async{
+    await LocalStorage.save('local_password', passField);
   }
 
-  Future<bool> isFirstLogin() async{
-
+  Future<String> readPass() async{
     final localPass = await LocalStorage.read(
       'local_password',
     );
+    return localPass!;
+  }
 
-    print("localPass");
-    print(localPass);
-
+  Future<bool> isFirstLogin() async{
+    final localPass = await LocalStorage.read(
+      'local_password',
+    );
     return localPass == null ? true : false;
   }
 }

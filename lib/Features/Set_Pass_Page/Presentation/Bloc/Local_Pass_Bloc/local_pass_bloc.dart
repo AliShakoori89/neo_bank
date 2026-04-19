@@ -10,6 +10,7 @@ class LocalPassBloc extends Bloc<LocalPassEvent, LocalPassState> {
       : super(LocalPassState.initial()) {
     on<SetPassEvent>(_mapSetPassEventEventToState);
     on<IsFirstLoginEvent>(_mapIsFirstLoginEventToState);
+    on<FetchLocalPassEvent>(_mapFetchLocalPassEventToState);
   }
 
   void _mapSetPassEventEventToState(
@@ -20,6 +21,10 @@ class LocalPassBloc extends Bloc<LocalPassEvent, LocalPassState> {
       emit(state.copyWith(status: LocalPassStatus.loading));
 
       await setPassRepository.setPass(event.pass);
+
+      emit(
+        state.copyWith(status: LocalPassStatus.success),
+      );
 
     } catch (error) {
       emit(state.copyWith(status: LocalPassStatus.error));
@@ -35,11 +40,25 @@ class LocalPassBloc extends Bloc<LocalPassEvent, LocalPassState> {
 
       final isFirstLogin = await setPassRepository.isFirstLogin();
 
-      print("isFirstLogin");
-      print(isFirstLogin);
-
       emit(
         state.copyWith(status: LocalPassStatus.success, isFirstLoginStatus: isFirstLogin),
+      );
+    } catch (error) {
+      emit(state.copyWith(status: LocalPassStatus.error));
+    }
+  }
+
+  void _mapFetchLocalPassEventToState(
+      FetchLocalPassEvent event,
+      Emitter<LocalPassState> emit,
+      ) async {
+    try {
+      emit(state.copyWith(status: LocalPassStatus.loading));
+
+      final localPass = await setPassRepository.readPass();
+
+      emit(
+        state.copyWith(status: LocalPassStatus.success, localPass: localPass),
       );
     } catch (error) {
       emit(state.copyWith(status: LocalPassStatus.error));

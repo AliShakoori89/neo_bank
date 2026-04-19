@@ -13,29 +13,35 @@ class LocalPassState extends Equatable {
   const LocalPassState({
     required this.status,
     required this.isFirstLoginStatus,
+    required this.localPass
   });
 
   static LocalPassState initial() => LocalPassState(
     status: LocalPassStatus.initial,
     isFirstLoginStatus: false,
+    localPass: ''
   );
 
   final LocalPassStatus status;
   final bool isFirstLoginStatus;
+  final String localPass;
 
   @override
   List<Object?> get props => [
     status,
     isFirstLoginStatus,
+    localPass
   ];
 
   LocalPassState copyWith({
     LocalPassStatus? status,
     bool? isFirstLoginStatus,
+    String? localPass
   }) {
     return LocalPassState(
       status: status ?? this.status,
       isFirstLoginStatus: isFirstLoginStatus ?? this.isFirstLoginStatus,
+      localPass: localPass ?? this.localPass
     );
   }
 }

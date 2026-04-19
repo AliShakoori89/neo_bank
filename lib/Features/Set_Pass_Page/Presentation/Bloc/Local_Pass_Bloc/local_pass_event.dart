@@ -13,3 +13,5 @@ class SetPassEvent extends LocalPassEvent{
 
 class IsFirstLoginEvent extends LocalPassEvent{}
 
+class FetchLocalPassEvent extends LocalPassEvent{}
+
