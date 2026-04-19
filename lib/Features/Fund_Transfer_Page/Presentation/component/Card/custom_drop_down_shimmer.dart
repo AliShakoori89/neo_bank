@@ -7,6 +7,9 @@ class CustomDropDownShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -14,7 +17,7 @@ class CustomDropDownShimmer extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 60,
           height: 40,
           decoration: BoxDecoration(
-            color: AppColors.circleBorderColor,
+            color: theme.colorScheme.primaryContainer,
             borderRadius: BorderRadius.circular(8),
           ),
           constraints: const BoxConstraints(minWidth: 320, minHeight: 40),
