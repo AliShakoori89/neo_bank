@@ -21,20 +21,8 @@ Widget customHeader(BuildContext context, Widget widget) {
       ),
     ),
     child: Align(
-      alignment: Alignment.bottomCenter,
-      child: Row(
-        children: [
-          widget,
-          const Spacer(),
-          SvgPicture.asset(
-            'assets/svg/search-md.svg',
-            colorFilter: ColorFilter.mode(
-              Theme.of(context).appBarTheme.iconTheme!.color!,
-              BlendMode.srcIn,
-            ),
-          ),
-        ],
-      ),
+      alignment: Alignment.centerRight,
+      child: widget
     ),
   );
 }

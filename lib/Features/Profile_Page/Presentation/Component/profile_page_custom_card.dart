@@ -4,8 +4,8 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/
 import '../../../../Core/Const/app_space.dart';
 import 'card_custom_column.dart';
 
-class ProfilePageCustomRow extends StatelessWidget {
-  ProfilePageCustomRow({
+class ProfilePageCustomCard extends StatelessWidget {
+  const ProfilePageCustomCard({
     super.key,
     required this.iconPath,
     required this.title,

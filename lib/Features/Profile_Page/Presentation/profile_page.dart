@@ -92,6 +92,8 @@ class _ProfilePageState extends State<ProfilePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+
+
               /// --- Header ---
               customHeader(
                 context,
@@ -129,7 +131,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         profileMainContainer(
                           context,
                           children: [
-                            ProfilePageCustomRow(
+
+                            /// نام کاربری
+                            ProfilePageCustomCard(
                               iconPath: 'assets/svg/user-03.svg',
                               title: 'نام کاربری',
                               value: state.userName!,
@@ -140,18 +144,27 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             divider(),
-                            ProfilePageCustomRow(
-                              iconPath:
-                                  'assets/svg/bank_services_page/passcode.svg',
-                              title: 'رمز همراه بانک',
-                              widget: const Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                size: 20,
-                                color: AppColors.loginPageIconColor,
+
+                            /// رمز همراه بانک
+                            InkWell(
+                              onTap: (){
+                                context.push('/set_pass_page');
+                              },
+                              child: ProfilePageCustomCard(
+                                iconPath:
+                                    'assets/svg/bank_services_page/passcode.svg',
+                                title: 'رمز همراه بانک',
+                                widget: const Icon(
+                                  Icons.arrow_forward_ios_outlined,
+                                  size: 20,
+                                  color: AppColors.loginPageIconColor,
+                                ),
                               ),
                             ),
                             divider(),
-                            ProfilePageCustomRow(
+
+                            /// ورود بیومتریک
+                            ProfilePageCustomCard(
                               iconPath: 'assets/svg/fingerprint-03.svg',
                               title: 'ورود بیومتریک',
                               widget: SizedBox(
@@ -209,7 +222,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         profileMainContainer(
                           context,
                           children: [
-                            ProfilePageCustomRow(
+
+                            /// تنظیمات
+                            ProfilePageCustomCard(
                               iconPath: 'assets/svg/settings-02.svg',
                               title: 'تنظیمات',
                               widget: const Icon(
@@ -219,7 +234,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             divider(),
-                            ProfilePageCustomRow(
+
+                            /// درباره برنامه
+                            ProfilePageCustomCard(
                               iconPath: 'assets/svg/arrow-up.svg',
                               title: 'درباره برنامه',
                               widget: const Icon(
@@ -229,7 +246,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             divider(),
-                            ProfilePageCustomRow(
+
+                            /// درباره برنامه
+                            ProfilePageCustomCard(
                               iconPath: 'assets/svg/info-circle.svg',
                               title: 'راهنما',
                               widget: const Icon(
@@ -239,7 +258,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             divider(),
-                            ProfilePageCustomRow(
+
+                            /// درباره برنامه
+                            ProfilePageCustomCard(
                               iconPath: 'assets/svg/theme.svg',
                               title: 'زمینه',
                               widget: buildThemeSwitch(context),
