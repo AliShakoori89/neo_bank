@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/custom_linear_gradient.dart';
 import '../../../../../../../Core/Const/app_space.dart';
 import 'Component/Copy_And_Share/copy_and_share.dart';
@@ -14,7 +15,7 @@ bankCardDetails(context, String cardPan, String cardDeposit){
     {'id' : 5 ,'itemName': 'تعیین رمز دوم', 'icon': Icons.key_sharp},
     {'id' : 6 ,'itemName': 'مسدود کردن', 'icon': Icons.block},
     {'id' : 7 ,'itemName': 'غیر فعال سازی رمز دوم', 'icon': Icons.key_off},
-    {'id' : 8 ,'itemName': 'بیشتر', 'icon': Icons.more_horiz},
+    // {'id' : 8 ,'itemName': 'بیشتر', 'icon': Icons.more_horiz},
   ];
 
   return showModalBottomSheet(
@@ -61,10 +62,10 @@ bankCardDetails(context, String cardPan, String cardDeposit){
                       crossAxisCount: 2, // تعداد ستون‌ها در هر سطر
                       crossAxisSpacing: 30.0, // فاصله افقی بین آیتم‌ها
                       mainAxisSpacing: 30.0, // فاصله عمودی بین آیتم‌ها
-                      childAspectRatio: 3.0, // نسبت عرض به ارتفاع هر آیتم (1.0 یعنی مربع)
+                      childAspectRatio: 2.5, // نسبت عرض به ارتفاع هر آیتم (1.0 یعنی مربع)
                     ),
                     shrinkWrap: true,
-                    itemCount: 8,
+                    itemCount: detailsItem.length,
                     itemBuilder: (BuildContext context, int index){
                       return InkWell(
                         child: Container(
@@ -73,6 +74,7 @@ bankCardDetails(context, String cardPan, String cardDeposit){
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             gradient: customLinearGradient(context),
+                            border: Border.all(color: AppColors.loginPageHintFontColor)
                           ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,6 +97,12 @@ bankCardDetails(context, String cardPan, String cardDeposit){
                         onTap: (){
                           if(detailsItem[index]['id'] == 1){
                             copyAndShare(context, cardPan, cardDeposit);
+                          }
+                          else if(detailsItem[index]['id'] == 2){
+                            context.push('/statement_page');
+                          }
+                          else if(detailsItem[index]['id'] == 3){
+
                           }
                         },
                       );
