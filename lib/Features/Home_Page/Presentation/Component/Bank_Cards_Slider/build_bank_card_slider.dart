@@ -17,7 +17,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Ban
 import '../../../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
 import '../../../../Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import '../../../../Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
-import '../../../../Main_Page/main_page.dart';
+import '../../../../Main_Page/Presentation/main_page.dart';
 import '../../Bloc/All_cards_Bloc/all_cards_state.dart';
 import 'Bank_Cards/Bank_Card_details/bank_card_details.dart';
 
