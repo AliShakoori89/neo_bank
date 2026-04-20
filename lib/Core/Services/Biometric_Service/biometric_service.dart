@@ -21,10 +21,10 @@ class BiometricService {
   }
 
   // احراز هویت بیومتریک
-  Future<bool> authenticate() async {
+  Future<bool> authenticate(bool comeFromLogin) async {
     try {
       return await _auth.authenticate(
-        localizedReason: 'برای فعال‌سازی ورود بیومتریک احراز هویت شوید',
+        localizedReason: comeFromLogin ? 'برای ورود بیومتریک احراز هویت شوید' : 'برای فعال‌سازی ورود بیومتریک احراز هویت شوید',
         biometricOnly: true,
       );
     } catch (e) {
