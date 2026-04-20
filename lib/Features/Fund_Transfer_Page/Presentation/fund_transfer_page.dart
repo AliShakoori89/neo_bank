@@ -9,7 +9,7 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/build_account_tab_body.dart';
 import '../../../Core/Services/check_connection_service.dart';
 import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
-import '../../Main_Page/main_page.dart';
+import '../../Main_Page/Presentation/main_page.dart';
 import 'component/Card/build_cart_tab_body.dart';
 import 'component/build_tab_item.dart';
 
