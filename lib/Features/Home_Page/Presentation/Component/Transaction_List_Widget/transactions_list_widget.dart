@@ -100,17 +100,31 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
 
               if (state.status == SLastTransactionStatus.error) {
                 return Center(
-                  child: Padding(
-                    padding: EdgeInsetsGeometry.only(
-                        top: 40
-                    ),
-                    child: Text(
-                      'خطا در دریافت تراکنش‌ها !',
-                      style: TextStyle(color: Colors.red),
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: (){
+                          context.read<LastTransactionBloc>().add(
+                            FetchLastTransactionEvent(
+                              depositNumber: widget.depositNumber!,
+                            ),
+                          );
+                        },
+                        icon: Icon(Icons.refresh),
+                      ),
+                      const Text(
+                        'خطا در دریافت تراکنش‌ها!',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
                 );
               }
+
 
               if (state.status == SLastTransactionStatus.success) {
                 return ListView.builder(
