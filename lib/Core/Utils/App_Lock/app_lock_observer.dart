@@ -3,8 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/App_Lock/app_lock_service.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../Features/Profile_Page/Presentation/Component/Biometric_Service/biometric_service.dart';
+import '../../Services/Biometric_Service/biometric_service.dart';
 
 class AppLockObserver extends StatefulWidget {
   final Widget child;
@@ -57,7 +56,7 @@ class _AppLockObserverState extends State<AppLockObserver>
 
       if (biometricEnabled) {
         debugPrint('🟢 Biometric is enabled, trying authentication...');
-        final success = await BiometricService().authenticate();
+        final success = await BiometricService().authenticate(true);
 
         if (success) {
           debugPrint('✅ Biometric success, unlock app');

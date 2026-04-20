@@ -12,7 +12,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
-import '../../../Features/Main_Page/main_page.dart';
+import '../../../Features/Main_Page/Presentation/main_page.dart';
 
 final GoRouter router = GoRouter(
   navigatorKey: rootNavigatorKey,

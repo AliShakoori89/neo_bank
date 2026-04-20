@@ -3,7 +3,8 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Features/Splash_Screen_Page/Presentation/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Features/Profile_Page/Presentation/Component/Biometric_Service/biometric_service.dart';
+
+import '../Services/Biometric_Service/biometric_service.dart';
 
 class AuthGate extends StatefulWidget {
   const AuthGate({super.key});
@@ -35,7 +36,7 @@ class _AuthGateState extends State<AuthGate> {
       if (localPass != null && localPass.isNotEmpty) {
         // اگه بیومتریک فعال بود، ابتدا احراز هویت بیومتریک
         if (biometricEnabled) {
-          final success = await _biometricService.authenticate();
+          final success = await _biometricService.authenticate(false);
           if (!mounted) return;
 
           if (success) {

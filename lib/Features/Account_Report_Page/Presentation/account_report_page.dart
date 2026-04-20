@@ -4,7 +4,7 @@ import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Report_Page/Presentation/Component/custom_tab_bar.dart';
 import '../../../Core/Services/check_connection_service.dart';
 import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
-import '../../Main_Page/main_page.dart';
+import '../../Main_Page/Presentation/main_page.dart';
 import 'Component/build_balance_and_transaction_body.dart';
 import 'Component/dropdown_button.dart';
 

@@ -5,7 +5,7 @@ import '../../Core/Const/app_space.dart';
 import '../../Core/Services/check_connection_service.dart';
 import '../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../Core/Utils/custom_header.dart';
-import '../Main_Page/main_page.dart';
+import '../Main_Page/Presentation/main_page.dart';
 import 'Presentation/Component/widget_title.dart';
 
 class BankServicesPage extends StatefulWidget {
