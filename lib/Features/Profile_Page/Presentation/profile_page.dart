@@ -48,19 +48,6 @@ class _ProfilePageState extends State<ProfilePage> {
     await _loadSwitchState();
   }
 
-  // void _refreshPage() {
-  //   Navigator.of(context).pushReplacement(
-  //     MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 4,)),
-  //   );
-  // }
-  //
-  // Future<void> _checkConnection() async {
-  //   await InternetChecker.checkInternet(
-  //     context: context,
-  //     onSuccess: _refreshPage,
-  //   );
-  // }
-
   Future<void> _checkBiometricSupport() async {
     final supported = await _biometricService.isSupported();
     setState(() {

@@ -68,19 +68,6 @@ class _StatementPageState extends State<StatementPage> {
     );
   }
 
-  // void _refreshPage() {
-  //   Navigator.of(context).pushReplacement(
-  //     MaterialPageRoute(builder: (_) => StatementPage()),
-  //   );
-  // }
-  //
-  // Future<void> _checkConnection() async {
-  //   await InternetChecker.checkInternet(
-  //     context: context,
-  //     onSuccess: _refreshPage,
-  //   );
-  // }
-
   loadMoreFiltered(selectedType) {
     if (_filterStart != null && _filterEnd != null && _selectedDepositNumber != null) {
 
