@@ -9,7 +9,7 @@ import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/set_pass_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Profile_Page/Presentation/Component/Biometric_Service/biometric_service.dart';
+import '../../../Core/Services/Biometric_Service/biometric_service.dart';
 
 class SetPassPage extends StatefulWidget {
   SetPassPage({super.key, this.inputFromProfile});
@@ -36,11 +36,11 @@ class _SetPassPageState extends State<SetPassPage> {
 
   Future<void> _initAsync() async {
     await _checkBiometricSupport();
-    await _loadSwitchState();
+    await _isEnableBiometricLogin();
   }
 
   // بارگذاری وضعیت سوئیچ از SharedPreferences
-  Future<void> _loadSwitchState() async {
+  Future<void> _isEnableBiometricLogin() async {
     final prefs = await SharedPreferences.getInstance();
     final storedValue = prefs.getBool(_prefKey) ?? false;
     if (!mounted) return;
