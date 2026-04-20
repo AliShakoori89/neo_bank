@@ -7,8 +7,10 @@ import 'package:neo_bank_mehr_iran/Core/Const/persian_date_format_H.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/persian_date_format_Y_M_D.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/statement_list_shimmer.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
+import '../../../../Core/Const/no_data_receive.dart';
 import '../Bloc/Statement_Bloc/statement_event.dart';
 
 class AllTransactionListWidget extends StatelessWidget {
@@ -25,18 +27,13 @@ class AllTransactionListWidget extends StatelessWidget {
     return BlocBuilder<StatementBloc, StatementState>(
       builder: (context, state) {
         if (state.status == StatementStateStatus.loading) {
-          return const Center(child: CircularProgressIndicator());
+          return StatementListShimmer(itemCount: 5,);
         }
 
         if (state.status == StatementStateStatus.error) {
-          return Center(
-            child: const Text(
-              'خطا در دریافت تراکنش‌ها',
-              style: TextStyle(color: Colors.grey),
-            ),
-          );
+          return Center(child: NoDataReceive(description: 'خطا در دریافت تراکنش‌ها'));
         }
-
+        
         if (state.allStatement.isEmpty) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
