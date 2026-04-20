@@ -7,12 +7,13 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_state.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/pass_field.dart';
+import '../../../Core/Services/Biometric_Service/biometric_service.dart';
 import '../../../Core/Theme/app_them.dart';
 import '../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
 import '../../Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_event.dart';
 
 class LocalLoginPage extends StatefulWidget {
@@ -24,8 +25,12 @@ class LocalLoginPage extends StatefulWidget {
 
 class _LocalLoginPageState extends State<LocalLoginPage> {
   TextEditingController localPassController = TextEditingController();
+  final BiometricService _biometricService = BiometricService();
 
   bool? localPassFieldsIsFill;
+  bool isSwitchOn = false;
+
+  static const _prefKey = 'biometric_enabled';
 
   void onLocalPassFieldsIsFill(bool value) {
     setState(() {
@@ -36,7 +41,21 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
   @override
   void initState() {
     BlocProvider.of<LocalPassBloc>(context).add(FetchLocalPassEvent());
+    _initAsync();
     super.initState();
+  }
+
+  Future<void> _initAsync() async {
+    await _isEnableBiometricLogin();
+  }
+
+  Future<void> _isEnableBiometricLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    final storedValue = prefs.getBool(_prefKey) ?? false;
+    if (!mounted) return;
+    setState(() {
+      isSwitchOn = storedValue;
+    });
   }
 
   @override
@@ -172,6 +191,19 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
                                 );
                               },
                             ),
+                            isSwitchOn ? AppSpace.heightSpace_64 : Container(),
+                            isSwitchOn ? IconButton(
+                                onPressed: () async{
+                                  final success = await _biometricService.authenticate(true);
+                                  if(success){
+                                    context.go('/main_page', extra: 0);
+                                  }
+                                },
+                                icon: Icon(
+                                  Icons.fingerprint,
+                                  size: 50,
+                                  color: theme.colorScheme.primary,))
+                                : Container(),
                             AppSpace.heightSpace_128,
                           ],
                         )
