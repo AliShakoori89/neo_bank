@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 class StatementListShimmer extends StatelessWidget {
-  const StatementListShimmer({super.key});
+  const StatementListShimmer({super.key, required this.itemCount});
+
+  final int itemCount;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 12,
+      itemCount: itemCount,
       cacheExtent: 50,
       itemBuilder: (context, index){
         return Padding(

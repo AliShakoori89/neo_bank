@@ -106,11 +106,11 @@ class _StatementPageState extends State<StatementPage> {
               ? BlocBuilder<StatementBloc, StatementState>(
             builder: (context, state) {
               if (state.status == StatementStateStatus.loading) {
-                return StatementListShimmer();
+                return StatementListShimmer(itemCount: 15,);
               }
 
               if (state.status == StatementStateStatus.error) {
-                return NoDataReceive(description: 'خطا در دریافت تراکنش‌ها');
+                return Center(child: NoDataReceive(description: 'خطا در دریافت تراکنش‌ها'));
               }
 
               if (state.filteredStatement.isEmpty) {
