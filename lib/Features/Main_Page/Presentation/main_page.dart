@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/App_Lock/Internet/network_utils.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Report_Page/Presentation/account_report_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import '../../../Core/Services/check_connection_service.dart';
-import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../Bank_Services_Page/bank_services_page.dart';
 import '../../Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../../Home_Page/Presentation/home_page.dart';
@@ -83,8 +81,16 @@ class _MainPageState extends State<MainPage> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 500),
       color: Theme.of(context).scaffoldBackgroundColor,
-      child: WillPopScope(
-        onWillPop: _handleBack,
+      child: PopScope(
+        canPop: false, // کنترل کامل خروج با خودتان
+        onPopInvoked: (didPop) async {
+          if (didPop) return;
+
+          final shouldExit = await _handleBack();
+          if (shouldExit) {
+            SystemNavigator.pop();
+          }
+        },
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: SafeArea(
