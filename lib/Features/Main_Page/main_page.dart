@@ -40,17 +40,6 @@ class _MainPageState extends State<MainPage> {
     BlocProvider.of<AllCardsBloc>(context).add(GetUserAllCardsEvent());
   }
 
-  // void _refreshPage() {
-  //   context.pushReplacement('/main_page');
-  // }
-  //
-  // Future<void> _checkConnection() async {
-  //   await InternetChecker.checkInternet(
-  //     context: context,
-  //     onSuccess: _refreshPage,
-  //   );
-  // }
-
   final List<Widget> _pages = [
     HomePage(),
     FundTransferPage(),
