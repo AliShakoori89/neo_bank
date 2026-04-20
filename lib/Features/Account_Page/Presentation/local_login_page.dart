@@ -129,9 +129,6 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
 
                                       final localPass = state.localPass;
 
-                                      print('state.localPass');
-                                      print(state.localPass);
-
                                       if(localPassController.text.length < 4){
 
                                         AppSnackBar.errorTop(

@@ -15,6 +15,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Componen
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/select_transaction_types.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/statement_dropdown_button.dart';
 import '../../../Core/Const/Route/transaction_detail_args.dart';
+import '../../../Core/Services/check_connection_service.dart';
 import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import 'Bloc/Statement_Bloc/statement_state.dart';
 import 'Component/action_icon.dart';
@@ -57,7 +58,7 @@ class _StatementPageState extends State<StatementPage> {
   void initState() {
     super.initState();
 
-    _checkConnection();
+    checkConnection(context);
     context.read<AllCardsDetailBloc>().add(GetAllCardsDetailEvent());
   }
 
@@ -67,18 +68,18 @@ class _StatementPageState extends State<StatementPage> {
     );
   }
 
-  void _refreshPage() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => StatementPage()),
-    );
-  }
-
-  Future<void> _checkConnection() async {
-    await InternetChecker.checkInternet(
-      context: context,
-      onSuccess: _refreshPage,
-    );
-  }
+  // void _refreshPage() {
+  //   Navigator.of(context).pushReplacement(
+  //     MaterialPageRoute(builder: (_) => StatementPage()),
+  //   );
+  // }
+  //
+  // Future<void> _checkConnection() async {
+  //   await InternetChecker.checkInternet(
+  //     context: context,
+  //     onSuccess: _refreshPage,
+  //   );
+  // }
 
   loadMoreFiltered(selectedType) {
     if (_filterStart != null && _filterEnd != null && _selectedDepositNumber != null) {

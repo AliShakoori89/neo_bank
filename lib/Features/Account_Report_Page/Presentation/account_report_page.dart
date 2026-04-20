@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Report_Page/Presentation/Component/custom_tab_bar.dart';
+import '../../../Core/Services/check_connection_service.dart';
 import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../Main_Page/main_page.dart';
 import 'Component/build_balance_and_transaction_body.dart';
@@ -21,25 +22,12 @@ class _AccountReportPageState extends State<AccountReportPage>
   @override
   void initState() {
 
-    _checkConnection();
+    checkConnection(context);
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {
       setState(() {});
     });
     super.initState();
-  }
-
-  void _refreshPage() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 3,)),
-    );
-  }
-
-  Future<void> _checkConnection() async {
-    await InternetChecker.checkInternet(
-      context: context,
-      onSuccess: _refreshPage,
-    );
   }
 
   @override
