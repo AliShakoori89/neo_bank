@@ -5,6 +5,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/persian_date_format_M_D.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Transaction_List_Widget/transaction_list_shimmer.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../Core/Const/Route/transaction_detail_args.dart';
 import '../../../../../Core/Const/app_space.dart';
@@ -95,7 +96,7 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
             builder: (context, state) {
               if (state.status == SLastTransactionStatus.loading &&
                   state.topStatement.isEmpty) {
-                return const Center(child: CircularProgressIndicator());
+                return TransactionListShimmer();
               }
 
               if (state.status == SLastTransactionStatus.error) {

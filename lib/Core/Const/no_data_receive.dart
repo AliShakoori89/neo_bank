@@ -16,7 +16,7 @@ class NoDataReceive extends StatelessWidget {
         AppSpace.heightSpace_12,
         Text(
           description,
-          style: TextStyle(color: Colors.red),
+          style: TextStyle(color: Colors.grey),
         ),
       ],
     );
