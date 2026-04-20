@@ -13,10 +13,8 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/profile_page_custom_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/user_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../Core/Services/Biometric_Service/biometric_service.dart';
 import '../../../Core/Services/check_connection_service.dart';
-import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
-import '../../Main_Page/main_page.dart';
-import 'Component/Biometric_Service/biometric_service.dart';
 import '../../../Core/Const/custom_divider.dart';
 import 'Component/profile_main_container.dart';
 import 'Component/switch_theme.dart';
@@ -80,7 +78,6 @@ class _ProfilePageState extends State<ProfilePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-
 
               /// --- Header ---
               customHeader(
@@ -167,7 +164,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ? (val) async {
                                       if (val == true) {
                                         // تلاش برای احراز هویت
-                                        final success = await _biometricService.authenticate();
+                                        final success = await _biometricService.authenticate(false);
 
                                         if (!mounted) return;
 
