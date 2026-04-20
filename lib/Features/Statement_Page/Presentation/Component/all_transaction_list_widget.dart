@@ -29,9 +29,11 @@ class AllTransactionListWidget extends StatelessWidget {
         }
 
         if (state.status == StatementStateStatus.error) {
-          return const Text(
-            'خطا در دریافت تراکنش‌ها',
-            style: TextStyle(color: Colors.red),
+          return Center(
+            child: const Text(
+              'خطا در دریافت تراکنش‌ها',
+              style: TextStyle(color: Colors.grey),
+            ),
           );
         }
 
@@ -67,24 +69,18 @@ class AllTransactionListWidget extends StatelessWidget {
                     ),
                   );
                 },
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.width < 400 ? 100 : 70,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Row(
-                          children: [
-                            _ActionIcon(isDeposit: isDeposit),
-                            const SizedBox(width: 12),
-                            Expanded(child: _TransactionInfo(item: item)),
-                          ],
-                        ),
-                      ),
-                      Divider(height: 1, color: Theme.of(context).dividerColor),
-                    ],
-                  ),
-                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        _ActionIcon(isDeposit: isDeposit),
+                        const SizedBox(width: 12),
+                        Expanded(child: _TransactionInfo(item: item)),
+                      ],
+                    ),
+                    Divider(height: 1, color: Theme.of(context).dividerColor),
+                  ],
+                )
               );
             }
 

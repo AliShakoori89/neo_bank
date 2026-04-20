@@ -189,8 +189,8 @@ class _StatementPageState extends State<StatementPage> {
           )
               : Column(
             children: [
+              AppSpace.heightSpace_42,
               _buildHeaderRow(),
-              const SizedBox(height: 12),
               Expanded(
                   child: AllTransactionListWidget(
                       depositNumber: _selectedDepositNumber)),
@@ -203,9 +203,7 @@ class _StatementPageState extends State<StatementPage> {
   Widget _buildHeaderRow() {
     return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 0),
-          child: Row(
+        Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
@@ -220,141 +218,141 @@ class _StatementPageState extends State<StatementPage> {
                     ),
                     builder: (_) {
                       return Container(
-                        height: 380, // 👈 ارتفاع ثابت اینجاست
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(22),
+                          height: 380, // 👈 ارتفاع ثابت اینجاست
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(22),
+                            ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: ListView(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    'فیلتر تراکنش‌ها',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context).colorScheme.primaryFixed,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: ListView(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      'فیلتر تراکنش‌ها',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context).colorScheme.primaryFixed,
+                                      ),
                                     ),
-                                  ),
-                                  Spacer(),
-                                  IconButton(
-                                    icon: Icon(Icons.close),
-                                    onPressed: (){
-                                      context.pop();
-                                    },
-                                  )
-                                ],
-                              ),
-
-                              AppSpace.heightSpace_32,
-                              SelectTransactionTypes(selectedType: selectedType, onCompleted: _onOtpChanged,),
-
-                              AppSpace.heightSpace_32,
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('از تاریخ',
-                                        style: TextStyle(
-                                            color: Theme.of(context).colorScheme.surface,
-                                            fontWeight: FontWeight.bold
-                                        ),
-                                      ),
-                                      AppSpace.heightSpace_12,
-                                      CustomDatePicker(
-                                        timeFormKey: startTimeFormKey,
-                                        timeController: startTimeController,
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text('تا تاریخ',
-                                        style: TextStyle(
-                                            color: Theme.of(context).colorScheme.surface,
-                                            fontWeight: FontWeight.bold
-                                        ),
-                                      ),
-                                      AppSpace.heightSpace_12,
-                                      CustomDatePicker(
-                                        timeFormKey: endTimeFormKey,
-                                        timeController: endTimeController,
-                                      ),
-                                    ],
-                                  )
-
-                                ],
-                              ),
-
-                              AppSpace.heightSpace_32,
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.splashGradiantColor1,
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      color: Color.fromRGBO(255, 255, 255, 0.12),
-                                    ),
-                                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                                  ),
+                                    Spacer(),
+                                    IconButton(
+                                      icon: Icon(Icons.close),
+                                      onPressed: (){
+                                        context.pop();
+                                      },
+                                    )
+                                  ],
                                 ),
-                                child: Text('تایید',
-                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                onPressed: (){
 
-                                  if(startTimeFormKey.currentState!.validate() && endTimeFormKey.currentState!.validate()){
+                                AppSpace.heightSpace_32,
+                                SelectTransactionTypes(selectedType: selectedType, onCompleted: _onOtpChanged,),
 
-                                    final rawStart = jalaliToUtcDate(startTimeController.text);
-                                    final rawEnd = jalaliToUtcDate(endTimeController.text);
-
-                                    final startDate = startOfDay(rawStart);
-                                    final endDate = endOfDay(rawEnd);
-
-                                    final fixedStart = startDate.isAfter(endDate) ? endDate : startDate;
-                                    final fixedEnd   = startDate.isAfter(endDate) ? startDate : endDate;
-
-                                    if(endTimeController.text != '' && startTimeController.text != ''){
-                                      context.pop();
-
-                                      selectedType == TransactionType.all
-                                          ?
-                                      context.read<StatementBloc>().add(
-                                        FetchFilterStatementEvent(
-                                          depositNumber: _selectedDepositNumber!,
-                                          startDate: fixedStart.toIso8601String(),
-                                          endDate: fixedEnd.toIso8601String(),
+                                AppSpace.heightSpace_32,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('از تاریخ',
+                                          style: TextStyle(
+                                              color: Theme.of(context).colorScheme.surface,
+                                              fontWeight: FontWeight.bold
+                                          ),
                                         ),
-                                      )
-                                          :
-                                      context.read<StatementBloc>().add(
-                                        FetchFilterStatementEvent(
-                                          depositNumber: _selectedDepositNumber!,
-                                          statementActionType: selectedType == TransactionType.deposit ? 1
-                                              : 0,
-                                          startDate: fixedStart.toIso8601String(),
-                                          endDate: fixedEnd.toIso8601String(),
+                                        AppSpace.heightSpace_12,
+                                        CustomDatePicker(
+                                          timeFormKey: startTimeFormKey,
+                                          timeController: startTimeController,
                                         ),
-                                      );
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('تا تاریخ',
+                                          style: TextStyle(
+                                              color: Theme.of(context).colorScheme.surface,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                        AppSpace.heightSpace_12,
+                                        CustomDatePicker(
+                                          timeFormKey: endTimeFormKey,
+                                          timeController: endTimeController,
+                                        ),
+                                      ],
+                                    )
 
-                                      setState(() {
-                                        isFilterActive = true;
-                                        _filterStart = fixedStart;
-                                        _filterEnd = fixedEnd;
-                                      });
+                                  ],
+                                ),
+
+                                AppSpace.heightSpace_32,
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.splashGradiantColor1,
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(
+                                        color: Color.fromRGBO(255, 255, 255, 0.12),
+                                      ),
+                                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                                    ),
+                                  ),
+                                  child: Text('تایید',
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                  onPressed: (){
+
+                                    if(startTimeFormKey.currentState!.validate() && endTimeFormKey.currentState!.validate()){
+
+                                      final rawStart = jalaliToUtcDate(startTimeController.text);
+                                      final rawEnd = jalaliToUtcDate(endTimeController.text);
+
+                                      final startDate = startOfDay(rawStart);
+                                      final endDate = endOfDay(rawEnd);
+
+                                      final fixedStart = startDate.isAfter(endDate) ? endDate : startDate;
+                                      final fixedEnd   = startDate.isAfter(endDate) ? startDate : endDate;
+
+                                      if(endTimeController.text != '' && startTimeController.text != ''){
+                                        context.pop();
+
+                                        selectedType == TransactionType.all
+                                            ?
+                                        context.read<StatementBloc>().add(
+                                          FetchFilterStatementEvent(
+                                            depositNumber: _selectedDepositNumber!,
+                                            startDate: fixedStart.toIso8601String(),
+                                            endDate: fixedEnd.toIso8601String(),
+                                          ),
+                                        )
+                                            :
+                                        context.read<StatementBloc>().add(
+                                          FetchFilterStatementEvent(
+                                            depositNumber: _selectedDepositNumber!,
+                                            statementActionType: selectedType == TransactionType.deposit ? 1
+                                                : 0,
+                                            startDate: fixedStart.toIso8601String(),
+                                            endDate: fixedEnd.toIso8601String(),
+                                          ),
+                                        );
+
+                                        setState(() {
+                                          isFilterActive = true;
+                                          _filterStart = fixedStart;
+                                          _filterEnd = fixedEnd;
+                                        });
+                                      }
                                     }
-                                  }
 
-                                },
-                              )
-                            ],
-                          ),
-                        )
+                                  },
+                                )
+                              ],
+                            ),
+                          )
                       );
                     },
                   );
@@ -368,7 +366,6 @@ class _StatementPageState extends State<StatementPage> {
                 },
               )
             ]
-          ),
         ),
 
         /// 🔽 Dropdown کارت‌ها

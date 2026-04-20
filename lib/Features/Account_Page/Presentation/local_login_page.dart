@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_state.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/pass_field.dart';
@@ -56,6 +55,17 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
     setState(() {
       isSwitchOn = storedValue;
     });
+
+    if(isSwitchOn){
+      final success = await _biometricService.authenticate(true);
+      if (success) {
+        context.go('/main_page');
+      }else{
+        return;
+      }
+    }else{
+      return;
+    }
   }
 
   @override

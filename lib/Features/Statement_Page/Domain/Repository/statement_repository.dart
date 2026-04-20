@@ -92,7 +92,6 @@ class StatementRepository {
   }) async {
     try {
 
-      print('2222222222222222222222222222222');
       /// 🔐 read token
       final token = await LocalStorage.read('access_token');
 
