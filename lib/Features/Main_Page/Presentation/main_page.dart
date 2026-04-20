@@ -7,16 +7,16 @@ import 'package:neo_bank_mehr_iran/Features/Account_Report_Page/Presentation/acc
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
-import '../../Core/Services/check_connection_service.dart';
-import '../../Core/Utils/App_Lock/Internet/internet_checker.dart';
-import '../Bank_Services_Page/bank_services_page.dart';
-import '../Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
-import '../Home_Page/Presentation/home_page.dart';
-import '../Profile_Page/Presentation/profile_page.dart';
-import 'Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
-import 'Presentation/Bloc/Main_Navigation_Bloc/main_navigation_event.dart';
-import 'Presentation/Bloc/Main_Navigation_Bloc/main_navigation_state.dart';
-import 'Presentation/Component/navigation_bar.dart';
+import '../../../Core/Services/check_connection_service.dart';
+import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
+import '../../Bank_Services_Page/bank_services_page.dart';
+import '../../Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
+import '../../Home_Page/Presentation/home_page.dart';
+import '../../Profile_Page/Presentation/profile_page.dart';
+import 'Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
+import 'Bloc/Main_Navigation_Bloc/main_navigation_event.dart';
+import 'Bloc/Main_Navigation_Bloc/main_navigation_state.dart';
+import 'Component/navigation_bar.dart';
 
 class MainPage extends StatefulWidget {
   final int initialIndex;
