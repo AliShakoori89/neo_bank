@@ -150,7 +150,25 @@ Widget buildBankCardSlider(
                 return SizedBox(
                     height: 200,
                     width: double.infinity,
-                    child: Center(child: Text('لطفا بعدا تلاش کنید.')));
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                            onTap: (){
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 0,)),
+                              );
+                            },
+                            child: FutureBuilder(
+                                future: Future.delayed(Duration(seconds: 5)),
+                                builder: (context, asyncSnapshot) {
+                                  return Icon(Icons.refresh, size: 20,);
+                                }
+                            )),
+                        Text('لطفا بعدا تلاش کنید.'),
+                      ],
+                    ));
               }
 
               return Stack(
