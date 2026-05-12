@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'custom_icon.dart';
 
@@ -23,7 +24,14 @@ Widget allServicesList() {
         separatorBuilder: (_, __) => const SizedBox(width: 24),
         padding: const EdgeInsets.only(left: 24, top: 20),
         itemBuilder: (context, index) =>
-            CustomIcon(serviceName: servicesItem[index]['itemName'], imagePath: servicesItem[index]['imagePath']),
+            InkWell(
+              child: CustomIcon(serviceName: servicesItem[index]['itemName'], imagePath: servicesItem[index]['imagePath']),
+              onTap: (){
+                if(servicesItem[index]['id'] == 1){
+                  context.push('/charge_internet_page');
+                }
+              },
+            ),
       ),
     ),
   );
