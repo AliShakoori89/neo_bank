@@ -143,10 +143,7 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
                                       WidgetStateProperty.all<Color>(
                                         AppColors.splashGradiantColor1,
                                       ),
-                                      shape:
-                                      WidgetStateProperty.all<
-                                          RoundedRectangleBorder
-                                      >(
+                                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                             7.0,

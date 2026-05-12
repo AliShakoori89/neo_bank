@@ -11,6 +11,7 @@ import '../../../../../Core/Const/Route/transaction_detail_args.dart';
 import '../../../../../Core/Const/app_space.dart';
 import '../../../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../../../../Core/Utils/custom_card.dart';
+import '../../../../../Core/Utils/error_refresh_widget.dart';
 
 class TransactionsListWidget extends StatefulWidget {
   const TransactionsListWidget({super.key, required this.depositNumber});
@@ -44,7 +45,51 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.depositNumber == null) {
-      return const SizedBox(); // یا shimmer
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 1),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 0, right: 25),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Row(
+                  children: [
+                    Text(
+                      'تراکنش‌ها',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primaryFixed,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Spacer(),
+                    Center( // 👈 آیکون رو وسط می‌کنه
+                      child: IconButton(
+                        padding: EdgeInsets.all(5), // 👈 padding داخلی IconButton رو حذف می‌کنیم
+                        constraints: BoxConstraints(), // 👈 محدودیت سایز خودش رو حذف
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(Colors.white.withAlpha(50)),
+                        ),
+                        icon: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Theme.of(context).colorScheme.primaryFixed,
+                          size: 16,
+                        ),
+                        onPressed: () {
+                          context.push('/statement_page');
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            AppSpace.heightSpace_90,
+            Text('خطا در دریافت اطلاعات.')
+          ],
+        ),
+      ); // یا shimmer
     }
 
     return Container(
@@ -100,29 +145,14 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
               }
 
               if (state.status == SLastTransactionStatus.error) {
-                return Center(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        onPressed: (){
-                          context.read<LastTransactionBloc>().add(
-                            FetchLastTransactionEvent(
-                              depositNumber: widget.depositNumber!,
-                            ),
-                          );
-                        },
-                        icon: Icon(Icons.refresh),
+                return ErrorRefreshWidget(
+                  refreshFunction: () {
+                    context.read<LastTransactionBloc>().add(
+                      FetchLastTransactionEvent(
+                        depositNumber: widget.depositNumber!,
                       ),
-                      const Text(
-                        'خطا در دریافت تراکنش‌ها!',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 );
               }
 
@@ -165,7 +195,15 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
                 );
               }
 
-              return Container();
+              return ErrorRefreshWidget(
+                refreshFunction: () {
+                  context.read<LastTransactionBloc>().add(
+                    FetchLastTransactionEvent(
+                      depositNumber: widget.depositNumber!,
+                    ),
+                  );
+                },
+              );
             },
           ),
         ],

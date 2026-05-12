@@ -15,7 +15,7 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Core/Services/Biometric_Service/biometric_service.dart';
 import '../../../Core/Services/check_connection_service.dart';
-import '../../../Core/Const/custom_divider.dart';
+import '../../../Core/Utils/custom_divider.dart';
 import 'Component/profile_main_container.dart';
 import 'Component/switch_theme.dart';
 

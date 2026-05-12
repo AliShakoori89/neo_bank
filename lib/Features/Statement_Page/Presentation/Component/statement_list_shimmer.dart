@@ -14,7 +14,7 @@ class StatementListShimmer extends StatelessWidget {
       itemBuilder: (context, index){
         return Padding(
           padding: EdgeInsetsGeometry.only(
-            bottom: 2
+            bottom: 8
           ),
           child: SizedBox(
             width: double.infinity,

@@ -56,7 +56,7 @@ bankCardDetails(context, String cardPan, String cardDeposit){
                   ],
                 ),
 
-                const SizedBox(height: 16),
+                AppSpace.heightSpace_16,
 
                 Expanded(
                   child: GridView.builder(

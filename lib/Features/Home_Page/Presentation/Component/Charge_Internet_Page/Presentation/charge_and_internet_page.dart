@@ -115,52 +115,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                   controller: _tabController,
                   children: [
                     // محتوای تب اول
-                    Container(
-                      margin: EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppSpace.heightSpace_32,
-                          Text('شماره تلفن همراه را وارد نمایید',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primaryFixed,
-                            ),),
-                          AppSpace.heightSpace_8,
-                          TextFormField(
-                            textAlign: TextAlign.end, // hint و متن وسط
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              suffixIcon: Icon(Icons.phone_android, color: AppColors.splashGradiantColor2),
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 10,
-                              ),
-                              hintText: '09123456789',
-                              hintStyle: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).colorScheme.surface,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.surfaceDim,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).colorScheme.surfaceDim,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(color: AppColors.splashGradiantColor2,),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    DirectiveChargeTab(),
                     // محتوای تب دوم
                     Center(
                       child: Text('محتوای تنظیمات', style: Theme.of(context).textTheme.headlineMedium),

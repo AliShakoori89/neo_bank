@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
@@ -15,9 +14,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Ban
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/bank_card_shimmer.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/custom_Indicator.dart';
 import '../../../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
-import '../../../../Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
-import '../../../../Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
-import '../../../../Main_Page/Presentation/main_page.dart';
+import '../../../../../Core/Utils/error_refresh_widget.dart';
 import '../../Bloc/All_cards_Bloc/all_cards_state.dart';
 import 'Bank_Cards/Bank_Card_details/bank_card_details.dart';
 
@@ -147,47 +144,17 @@ Widget buildBankCardSlider(
                 );
               }
               if (state.status.isError) {
-                return SizedBox(
-                    height: 200,
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        InkWell(
-                            onTap: (){
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 0,)),
-                              );
-                            },
-                            child: FutureBuilder(
-                                future: Future.delayed(Duration(seconds: 5)),
-                                builder: (context, asyncSnapshot) {
-                                  return Icon(Icons.refresh, size: 20,);
-                                }
-                            )),
-                        Text('لطفا بعدا تلاش کنید.'),
-                      ],
-                    ));
+                return ErrorRefreshWidget(
+                  refreshFunction: (){
+                    BlocProvider.of<AllCardsBloc>(context).add(GetUserAllCardsEvent());
+                  },
+                );
               }
 
-              return Stack(
-                alignment: AlignmentGeometry.center,
-                children: [
-                  CardBoxBackground(),
-                  InkWell(
-                      onTap: (){
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => const MainPage(initialIndex: 0,)),
-                        );
-                      },
-                      child: FutureBuilder(
-                        future: Future.delayed(Duration(seconds: 5)),
-                        builder: (context, asyncSnapshot) {
-                          return Icon(Icons.refresh, size: 50,);
-                        }
-                      ))
-                ],
+              return ErrorRefreshWidget(
+                refreshFunction: (){
+                  BlocProvider.of<AllCardsBloc>(context).add(GetUserAllCardsEvent());
+                },
               );
             },
           ),
