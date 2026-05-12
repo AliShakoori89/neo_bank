@@ -35,13 +35,11 @@ class _AuthGateState extends State<AuthGate> {
         GoRouter.of(context).go('/local_login_page');
         return;
       } else {
-        // اگه پسورد محلی نبود → تنظیم پسورد
         GoRouter.of(context).go('/set_pass_page');
         return;
       }
     } else {
-      // توکن نبود → صفحه لاگین
-      await LocalStorage.clearPrefsExcept([]);
+
       GoRouter.of(context).go('/login_page');
       return;
     }

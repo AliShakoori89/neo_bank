@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/App_Lock/app_lock_service.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
+import '../../../Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_state.dart';
 import '../../Services/Biometric_Service/biometric_service.dart';
 
 class AppLockObserver extends StatefulWidget {
@@ -68,7 +71,9 @@ class _AppLockObserverState extends State<AppLockObserver>
 
       // --- STEP 2: Fallback to local login page ---
       debugPrint('🚨 LOCK NAVIGATION');
+
       rootNavigatorKey.currentContext?.go('/local_login_page');
+
     }
   }
 
