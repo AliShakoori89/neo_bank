@@ -267,7 +267,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     // TODO: Handle logout action
-                    LocalStorage.clearPrefsExcept(['isDarkTheme']);
+                    LocalStorage.clear();
                     context.go('/');
                   },
                   style: ElevatedButton.styleFrom(
