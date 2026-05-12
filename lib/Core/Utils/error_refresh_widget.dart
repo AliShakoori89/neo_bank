@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+
+class ErrorRefreshWidget extends StatelessWidget {
+  const ErrorRefreshWidget({super.key, required this.refreshFunction});
+
+  final Function refreshFunction;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 200,
+        width: double.infinity,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('برای تلاش مجدد کلیک کنید'),
+            AppSpace.widthSpace_5,
+            InkWell(
+                onTap: (){
+                  refreshFunction();
+                  // BlocProvider.of<AllCardsBloc>(context).add(GetUserAllCardsEvent());
+                },
+                child: FutureBuilder(
+                    future: Future.delayed(Duration(seconds: 5)),
+                    builder: (context, asyncSnapshot) {
+                      return Icon(Icons.refresh, size: 20,);
+                    }
+                )),
+          ],
+        ));
+  }
+}
