@@ -8,9 +8,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Ban
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/build_second_slider.dart';
 import '../../../Core/Const/app_colors.dart';
 import '../../../Core/Services/check_connection_service.dart';
-import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
-import '../../Main_Page/Presentation/main_page.dart';
 import 'Component/Icon_Row_Widget/icon_row_widget.dart';
 import 'Component/Transaction_List_Widget/transactions_list_widget.dart';
 

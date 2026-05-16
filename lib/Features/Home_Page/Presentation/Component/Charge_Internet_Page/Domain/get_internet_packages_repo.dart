@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/Directive_Charge_Tab/Internet_Packages_Page/Data/Model/internet_package_model.dart';
-import '../../../../../../../../../../../Core/Const/api_key.dart';
-import '../../../../../../../../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import '../../../../../../Core/Const/api_key.dart';
+import '../../../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import '../Data/Model/internet_package_model.dart';
 
 class InternetPackagesRepository {
 

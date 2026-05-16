@@ -16,8 +16,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_card
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/Directive_Charge_Tab/Internet_Packages_Page/Domain/Repoaitory/get_internet_packages_repo.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/Directive_Charge_Tab/Internet_Packages_Page/Presentation/Bloc/Get_Internet_Packages_Bloc/get_internet_packages_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Domain/get_internet_packages_repo.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/otp_code_check_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/profile_repository.dart';
@@ -29,6 +28,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Sta
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/Const/Route/app_routes.dart';
+import 'Features/Home_Page/Presentation/Bloc/Get_Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_bloc.dart';
