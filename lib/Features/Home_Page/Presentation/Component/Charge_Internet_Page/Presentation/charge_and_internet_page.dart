@@ -1,12 +1,16 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/disable_custom_button.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/Directive_Charge_Tab/Internet_Packages_Page/Presentation/internet_packages_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/custom_header.dart';
 import '../../../../../../Core/Const/app_space.dart';
-import '../../../../../../Core/Utils/custom_header.dart';
-import '../../../../../Account_Page/Presentation/Component/custom_text_form_field.dart';
-import 'Component/Directive_Charge_Tab/directive_charge_tab.dart';
+import '../../../../../../Core/Utils/app_snackbar.dart';
+import '../../../../../../Core/Utils/custom_button.dart';
+import 'Component/Directive_Charge_Tab/directive_charge_page.dart';
 
 class ChargeAndInternetPage extends StatefulWidget {
   const ChargeAndInternetPage({super.key});
@@ -20,6 +24,11 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
   late TabController _tabController;
   TextEditingController nationalCodeController = TextEditingController();
   final GlobalKey<FormState> nationalCodeFormKey = GlobalKey<FormState>();
+
+  TextEditingController phoneNumberController = TextEditingController();
+  final GlobalKey<FormState> phoneNumberFormKey = GlobalKey<FormState>();
+
+  String? selectedOperator;
 
   @override
   void initState() {
@@ -47,51 +56,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
         backgroundColor: theme.colorScheme.onPrimaryFixed,
         body: Column(
           children: [
-            Container(
-              height: 92,
-              width: double.infinity,
-              padding: const EdgeInsets.only(
-                top: 40, // spacing-5xl (مثلاً)
-                right: 24, // spacing-3xl
-                bottom: 16, // spacing-lg
-                left: 24, // spacing-3xl
-              ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).appBarTheme.backgroundColor,
-                border: Border(
-                  bottom: BorderSide(
-                    color: Theme.of(context).colorScheme.surfaceDim,
-                    width: 1,
-                  ),
-                ),
-              ),
-              child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(Icons.arrow_back),
-                          onPressed: (){
-                            context.pop();
-                          },
-                        ),
-                      ),
-                      Center(
-                        child: Text(
-                          'شارژ و اینترنت',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primaryFixed,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-              ),
-            ),
+            CustomHeader(title: 'شارژ و اینترنت'),
             SizedBox(
               height: 56,
               width: double.infinity,
@@ -110,26 +75,250 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                 splashFactory: NoSplash.splashFactory,
               ),
             ),
-            Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    // محتوای تب اول
-                    DirectiveChargeTab(),
-                    // محتوای تب دوم
-                    Center(
-                      child: Text('محتوای تنظیمات', style: Theme.of(context).textTheme.headlineMedium),
+        Container(
+          margin: EdgeInsets.only(
+              left: 20,
+              right: 20
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppSpace.heightSpace_32,
+              Text(
+                'شماره تلفن همراه را وارد نمایید',
+                style: TextStyle(color: Theme.of(context).colorScheme.primaryFixed),
+              ),
+              AppSpace.heightSpace_8,
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: IconButton(
+                      onPressed: (){},
+                      icon: Icon(Icons.contacts_rounded, color: AppColors.splashGradiantColor2,),
                     ),
-                  ],
-                )
-            )
+                  ),
+                  Expanded(
+                    flex: 9,
+                    child: Form(
+                      key: phoneNumberFormKey,
+                      child: TextFormField(
+                        textDirection: TextDirection.ltr,
+                        controller: phoneNumberController,
+                        textAlignVertical: TextAlignVertical.center,
+                        keyboardType: TextInputType.number,
+                        obscureText: false,
+                        style: TextStyle(
+                          color: Theme.of(context).appBarTheme.titleTextStyle!.color,
+                        ),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(11),
+                        ],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'لطفا شماره همراه خود را وارد نمایید.';
+                          }
+                          if (value.length != 11) {
+                            return 'شماره همراه وارد شده صحیح نمی باشد.';
+                          }
+                          if (value.startsWith('09') == false) {
+                            return 'شماره همراه وارد شده صحیح نمی باشد.';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          hintText: '09123456789',
+                          hintStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.surface,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 0,
+                          ),
+                          hintTextDirection: TextDirection.ltr,
+                          contentPadding: EdgeInsets.symmetric(vertical: 12.0),
+                          // تنظیم پدینگ عمودی
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.surfaceDim,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.surfaceDim,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: AppColors.splashGradiantColor2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 4), // پدینگ کم
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.sim_card, color: Colors.amber),
+                            const SizedBox(width: 2), // فاصله بسیار کم
+                            Icon(Icons.keyboard_arrow_down),
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+                        showBottomSheet(context, selectedOperator);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              AppSpace.heightSpace_32,
+              CustomButton(
+                buttonTitle: 'تایید',
+                buttonOnPressed: (){
+                  print(selectedOperator);
+                  print(_tabController.index);
+                  if (phoneNumberFormKey.currentState!.validate()) {
+
+                    if (selectedOperator == null) {
+                      AppSnackBar.errorTop(context, 'لطفاً اپراتور خود را انتخاب کنید');
+                      return;
+                    }
+
+                    if(_tabController.index == 0){
+                      context.push('/directive_charge_page');
+                    }else{
+                      context.push('/internet_package_page', extra: {
+                        'phoneNumber': phoneNumberController.text,
+                        'selectedOperator': selectedOperator,
+                      });
+                    }
+                  }
 
 
 
-            ,
+                },
+              )
+            ],
+          ),
+        ),
           ],
         )
       ),
     );
   }
-}
+
+  void showBottomSheet(BuildContext context, String? selectedOperator) {
+    String? tempSelectedOperator = selectedOperator;
+
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.4,
+          expand: false,
+          builder: (context, scrollController) {
+            return StatefulBuilder(
+              builder: (context, setStateSheet) {  // به setStateSheet تغییر نام دادم
+                return Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          width: 40,
+                          height: 5,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Text(
+                            'انتخاب اپراتور',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primaryFixed,
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      Expanded(
+                        child: RadioGroup<String>(
+                          groupValue: tempSelectedOperator,  // استفاده از tempSelectedOperator
+                          onChanged: (String? value) {
+                            setStateSheet(() {  // استفاده از setStateSheet
+                              tempSelectedOperator = value;  // تغییر tempSelectedOperator
+                            });
+                          },
+                          child: ListView(
+                            controller: scrollController,
+                            children: [
+                              ...['همراه اول', 'ایرانسل', 'رایتل'].asMap().entries.map((entry) {
+                                int index = entry.key;
+                                String operator = entry.value;
+                                return Column(
+                                  children: [
+                                    RadioListTile<String>(
+                                      title: Text(operator),
+                                      value: operator,
+                                    ),
+                                    if (index < 2)
+                                      Divider(height: 1, color: Theme.of(context).dividerColor),
+                                  ],
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      tempSelectedOperator != null  // این شرط الان درست کار می‌کند
+                          ? CustomButton(
+                        buttonTitle: 'تایید',
+                        buttonOnPressed: () {
+                          setState(() {
+                            this.selectedOperator = tempSelectedOperator;
+                          });
+                          Navigator.pop(context);
+                        },
+                      )
+                          : DisableCustomButton(),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    ).then((_) {
+      print('Selected operator: $selectedOperator');
+    });
+  }}
