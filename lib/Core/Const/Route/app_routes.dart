@@ -6,6 +6,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/local_login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/Directive_Charge_Tab/Internet_Packages_Page/Presentation/internet_packages_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/charge_and_internet_page.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/request_otp_code_again_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
+import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/Directive_Charge_Tab/directive_charge_page.dart';
 import '../../../Features/Main_Page/Presentation/main_page.dart';
 
 final GoRouter router = GoRouter(
@@ -91,6 +93,22 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/charge_internet_page',
       builder: (context, state) => const ChargeAndInternetPage(),
+    ),
+
+    GoRoute(
+      path: '/directive_charge_page',
+      builder: (context, state) => DirectiveChargePage(),
+    ),
+
+    GoRoute(
+      path: '/internet_package_page',
+      builder: (context, state) {
+        final extra = state.extra as Map?;
+        return InternetPackagesPage(
+          selectedOperator: extra?['selectedOperator'],
+          phoneNumber: extra?['phoneNumber'],
+        );
+      },
     ),
 
     // GoRoute(
