@@ -16,6 +16,8 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_card
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/Directive_Charge_Tab/Internet_Packages_Page/Domain/Repoaitory/get_internet_packages_repo.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/Directive_Charge_Tab/Internet_Packages_Page/Presentation/Bloc/Get_Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/otp_code_check_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/profile_repository.dart';
@@ -117,6 +119,10 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(create: (_) => BalanceVisibilityCubit()),
         BlocProvider(create: (BuildContext context) => RefreshCountBloc()),
+        BlocProvider(
+          create: (BuildContext context) =>
+              InternetPackageBloc(InternetPackagesRepository()),
+        ),
       ],
       child: BlocBuilder<ThemeBloc, ThemeData>(
         builder: (context, theme) {
