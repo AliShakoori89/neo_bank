@@ -8,7 +8,30 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
   final InternetPackagesRepository internetPackagesRepository;
 
   InternetPackageBloc( this.internetPackagesRepository) : super(InternetPackageState.initial()) {
+    on<FetchAllInternetPackages>(_onFetchAllInternetPackages);
     on<FetchInternetPackages>(_onFetchInternetPackages);
+  }
+
+  void _onFetchAllInternetPackages(
+      FetchAllInternetPackages event,
+      Emitter<InternetPackageState> emit,
+      ) async {
+    try {
+      emit(state.copyWith(status: InternetPackageStatus.loading));
+
+      final internetPackage = await internetPackagesRepository.getAllInternetPackages(event.operatorCode);
+      print(internetPackage);
+
+      emit(
+        state.copyWith(status: InternetPackageStatus.success, internetPackages: internetPackage),
+      );
+    } on DioException catch (e) {
+
+      emit(state.copyWith(status: InternetPackageStatus.error));
+
+    } catch (error) {
+      emit(state.copyWith(status: InternetPackageStatus.error));
+    }
   }
 
   void _onFetchInternetPackages(
