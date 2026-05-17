@@ -36,7 +36,7 @@ class InternetPackageModel {
       packageTimeCode: json['packageTimeCode'] as int?,
       packageTime: json['packageTime'] as String?,
       duration: json['duration'] as String?,
-      traffic: json['traffic'] as String?,
+      traffic: json['traffic'],
       nightTraffic: json['nightTraffic'],
       price: json['price'] as int?,
       priceWithTax: json['priceWithTax'] as int?,
