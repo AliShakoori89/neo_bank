@@ -7,7 +7,12 @@ abstract class InternetPackageEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-// رویداد برای دریافت لیست بسته‌ها
+class FetchAllInternetPackages extends InternetPackageEvent {
+  final int operatorCode;
+
+  const FetchAllInternetPackages({required this.operatorCode});
+}
+
 class FetchInternetPackages extends InternetPackageEvent {
   final int operatorCode;
   final int packageTimeCode;
