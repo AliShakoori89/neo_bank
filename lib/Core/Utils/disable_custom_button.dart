@@ -11,15 +11,22 @@ class DisableCustomButton extends StatelessWidget {
       style: ButtonStyle(
         enableFeedback: false,
         backgroundColor: WidgetStateProperty.all<Color>(
-          AppColors.loginPageIconColor,
+          AppColors.loginPageIconColor.withOpacity(0.5), // کمرنگ‌تر
         ),
+        overlayColor: WidgetStateProperty.all<Color>(
+          Colors.transparent, // بدون افکت هنگام لمس
+        ),
+        shadowColor: WidgetStateProperty.all<Color>(
+          Colors.transparent, // بدون سایه در حالت دیزیبل
+        ),
+        elevation: WidgetStateProperty.all<double>(0), // بدون ارتفاع
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(7.0),
           ),
         ),
       ),
-      onPressed: null, // ← این خط باعث دیزیبل شدن می‌شود
+      onPressed: null,
       child: SizedBox(
         width: double.infinity,
         child: Center(
@@ -28,7 +35,7 @@ class DisableCustomButton extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
-              color: AppColors.darkModeIconIconColor
+              color: AppColors.darkModeIconIconColor.withOpacity(0.6), // متن کمرنگ‌تر
             ),
           ),
         ),
