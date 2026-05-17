@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/disable_custom_button.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/custom_header.dart';
-import 'package:permission_handler/permission_handler.dart';
 import '../../../../../../Core/Const/app_space.dart';
 import '../../../../../../Core/Utils/app_snackbar.dart';
 import '../../../../../../Core/Utils/custom_button.dart';
@@ -29,6 +28,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
   final GlobalKey<FormState> phoneNumberFormKey = GlobalKey<FormState>();
 
   String? selectedOperator;
+  String? selectedSimType;
 
   final FlutterContactPickerPlus _contactPicker = FlutterContactPickerPlus();
   List<Contact>? _contacts;
@@ -185,7 +185,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                         ),
                       ),
                       onTap: () {
-                        showBottomSheet(context, selectedOperator);
+                        selectOperatorType(context, selectedOperator);
                       },
                     ),
                   ),
@@ -196,6 +196,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                 buttonTitle: 'تایید',
                 buttonOnPressed: (){
                   print(selectedOperator);
+                  print(selectedSimType);
                   print(_tabController.index);
                   if (phoneNumberFormKey.currentState!.validate()) {
 
@@ -204,17 +205,26 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                       return;
                     }
 
+                    if (selectedSimType == null) {
+                      AppSnackBar.errorTop(context, 'لطفاً نوع سیم کارت خود را انتخاب کنید');
+                      return;
+                    }
+
                     if(_tabController.index == 0){
                       context.push('/directive_charge_page');
                     }else{
                       context.push('/internet_package_page', extra: {
+                        'selectedOperator': selectedOperator == 'همراه اول' ? 2 : selectedOperator == 'ایرانسل' ? 1 : 15,
+                        'selectedSimType': selectedSimType == 'دائمی' ? 1
+                            : selectedSimType == 'اعتباری' ? 2
+                            : selectedSimType == 'دائمی- اعتباری' ? 3
+                            : selectedSimType == 'دیتا – دائمی' ? 4
+                            : 5,
                         'phoneNumber': phoneNumberController.text,
-                        'selectedOperator': selectedOperator,
+
                       });
                     }
                   }
-
-
 
                 },
               )
@@ -234,7 +244,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
     return phoneNumber;
   }
 
-  void showBottomSheet(BuildContext context, String? selectedOperator) {
+  void selectOperatorType(BuildContext context, String? selectedOperator) {
     String? tempSelectedOperator = selectedOperator;
 
     showModalBottomSheet(
@@ -323,6 +333,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                             this.selectedOperator = tempSelectedOperator;
                           });
                           Navigator.pop(context);
+                          selectSimType(context, selectedSimType);
                         },
                       )
                           : DisableCustomButton(),
@@ -338,4 +349,113 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
     ).then((_) {
       print('Selected operator: $selectedOperator');
     });
-  }}
+  }
+
+
+  void selectSimType(BuildContext context, String? selectedSimType) {
+    String? tempSelectedSimType = selectedSimType;
+
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.5,
+          expand: false,
+          builder: (context, scrollController) {
+            return StatefulBuilder(
+              builder: (context, setStateSheet) {  // به setStateSheet تغییر نام دادم
+                return Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Container(
+                          width: 40,
+                          height: 5,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Text(
+                            'انتخاب نوع سیم کارت',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primaryFixed,
+                            ),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      Expanded(
+                        child: RadioGroup<String>(
+                          groupValue: tempSelectedSimType,  // استفاده از tempSelectedOperator
+                          onChanged: (String? value) {
+                            setStateSheet(() {  // استفاده از setStateSheet
+                              tempSelectedSimType = value;  // تغییر tempSelectedOperator
+                            });
+                          },
+                          child: ListView(
+                            controller: scrollController,
+                            children: [
+                              ...['دائمی', 'اعتباری', 'دائمی-اعتباری', 'دیتا -دائمی', 'دیتا - اعتباری'].asMap().entries.map((entry) {
+                                int index = entry.key;
+                                String operator = entry.value;
+                                return Column(
+                                  children: [
+                                    RadioListTile<String>(
+                                      title: Text(operator),
+                                      value: operator,
+                                    ),
+                                    if (index < 4)
+                                      Divider(height: 1, color: Theme.of(context).dividerColor),
+                                  ],
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      tempSelectedSimType != null  // این شرط الان درست کار می‌کند
+                          ? CustomButton(
+                        buttonTitle: 'تایید',
+                        buttonOnPressed: () {
+                          setState(() {
+                            this.selectedSimType = tempSelectedSimType;
+                          });
+                          Navigator.pop(context);
+
+                        },
+                      )
+                          : DisableCustomButton(),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    ).then((_) {
+      print('Selected operator: $selectedOperator');
+    });
+  }
+}
