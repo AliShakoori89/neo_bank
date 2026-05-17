@@ -106,6 +106,7 @@ final GoRouter router = GoRouter(
         final extra = state.extra as Map?;
         return InternetPackagesPage(
           selectedOperator: extra?['selectedOperator'],
+          selectedSimType: extra?['selectedSimType'],
           phoneNumber: extra?['phoneNumber'],
         );
       },
