@@ -20,6 +20,8 @@ dependencies:
   dio: ^5.9.0
   equatable: ^2.0.7
   encrypted_shared_preferences: ^3.0.1
+  permission_handler: ^12.0.1
+  flutter_native_contact_picker_plus: ^1.3.1
 
   # UI / Widgets
   persian_flutter: ^0.2.0

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_contact_picker_plus/model/contact_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/disable_custom_button.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/custom_header.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../../../Core/Const/app_space.dart';
 import '../../../../../../Core/Utils/app_snackbar.dart';
 import '../../../../../../Core/Utils/custom_button.dart';
+import 'package:flutter_native_contact_picker_plus/flutter_native_contact_picker_plus.dart';
+
 
 class ChargeAndInternetPage extends StatefulWidget {
   const ChargeAndInternetPage({super.key});
@@ -25,6 +29,10 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
   final GlobalKey<FormState> phoneNumberFormKey = GlobalKey<FormState>();
 
   String? selectedOperator;
+
+  final FlutterContactPickerPlus _contactPicker = FlutterContactPickerPlus();
+  List<Contact>? _contacts;
+
 
   @override
   void initState() {
@@ -90,7 +98,13 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                   Expanded(
                     flex: 1,
                     child: IconButton(
-                      onPressed: (){},
+                      onPressed: () async{
+                        Contact? contact = await _contactPicker.selectContact();
+                        setState(() {
+                          _contacts = contact == null ? null : [contact];
+                          phoneNumberController.text = convertPhoneNumber(_contacts!.first.phoneNumbers![0].toString());
+                        });
+                      },
                       icon: Icon(Icons.contacts_rounded, color: AppColors.splashGradiantColor2,),
                     ),
                   ),
@@ -211,6 +225,13 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
         )
       ),
     );
+  }
+
+  String convertPhoneNumber(String phoneNumber) {
+    if (phoneNumber.startsWith('+98')) {
+      return phoneNumber.replaceFirst('+98', '0');
+    }
+    return phoneNumber;
   }
 
   void showBottomSheet(BuildContext context, String? selectedOperator) {
