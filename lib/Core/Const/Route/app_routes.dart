@@ -8,6 +8,7 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/local_logi
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/Component/internet_packages_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Presentation/charge_and_internet_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Presentation/wallet_page.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/request_otp_code_again_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
@@ -98,6 +99,11 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/directive_charge_page',
       builder: (context, state) => DirectiveChargePage(),
+    ),
+
+    GoRoute(
+      path: '/wallet_page',
+      builder: (context, state) => WalletPage(),
     ),
 
     GoRoute(
