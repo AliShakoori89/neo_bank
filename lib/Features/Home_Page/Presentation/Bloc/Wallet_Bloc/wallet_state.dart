@@ -1,9 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/wallet_model.dart';
 
-import '../../../Data/Model/internet_package_model.dart';
-
-
 enum WalletStateStatus {
   initial,
   success,
@@ -19,24 +16,24 @@ extension WalletStateStatusX on WalletStateStatus {
 }
 
 class WalletState extends Equatable {
-  const WalletState({required this.status, required this.internetPackages});
+  const WalletState({required this.status, required this.walletDetails});
 
   static WalletState initial() =>
-      WalletState(status: WalletStateStatus.initial, internetPackages: []);
+      WalletState(status: WalletStateStatus.initial, walletDetails: []);
 
   final WalletStateStatus status;
-  final List<WalletModel>? internetPackages;
+  final List<WalletModel>? walletDetails;
 
   @override
-  List<Object?> get props => [status, internetPackages];
+  List<Object?> get props => [status, walletDetails];
 
   WalletState copyWith({
     WalletStateStatus? status,
-    List<WalletModel>? internetPackages,
+    List<WalletModel>? walletDetails,
   }) {
     return WalletState(
       status: status ?? this.status,
-      internetPackages: internetPackages ?? this.internetPackages,
+      walletDetails: walletDetails ?? this.walletDetails,
     );
   }
 }

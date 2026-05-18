@@ -20,11 +20,11 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     try {
       emit(state.copyWith(status: WalletStateStatus.loading));
 
-      final internetPackage = await walletRepository.getWalletDetails();
-      print(internetPackage);
+      final walletDetails = await walletRepository.getWalletDetails();
+      print(walletDetails);
 
       emit(
-        state.copyWith(status: WalletStateStatus.success, internetPackages: internetPackage),
+        state.copyWith(status: WalletStateStatus.success, walletDetails: walletDetails),
       );
     } on DioException catch (e) {
 
