@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 
 class ErrorRefreshWidget extends StatelessWidget {
-  const ErrorRefreshWidget({super.key, required this.refreshFunction});
+  const ErrorRefreshWidget({super.key, required this.refreshFunction, this.heightSize, this.title});
 
   final Function refreshFunction;
+  final double? heightSize;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 200,
+        height: heightSize ?? 200,
         width: double.infinity,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('برای تلاش مجدد کلیک کنید'),
+            Text(title ?? 'برای تلاش مجدد کلیک کنید'),
             AppSpace.widthSpace_5,
             InkWell(
                 onTap: (){
