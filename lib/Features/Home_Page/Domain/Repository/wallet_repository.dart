@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Data/Model/wallet_model.dart';
-import '../../../../../../../Core/Const/api_key.dart';
-import '../../../../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/wallet_model.dart';
+import '../../../../Core/Const/api_key.dart';
+import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class InternetPackagesRepository {
 

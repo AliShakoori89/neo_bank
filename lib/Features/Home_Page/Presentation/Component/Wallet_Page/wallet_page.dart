@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
-import '../../Charge_Internet_Page/Presentation/Component/custom_header.dart';
+
+import '../Charge_Internet_Page/Component/custom_header.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
