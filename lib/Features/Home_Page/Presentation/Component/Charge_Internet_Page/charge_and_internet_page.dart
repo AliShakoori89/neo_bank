@@ -352,7 +352,6 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
     });
   }
 
-
   void selectSimType(BuildContext context, String? selectedSimType) {
     String? tempSelectedSimType = selectedSimType;
 
