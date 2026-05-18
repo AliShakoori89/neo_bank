@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 Widget customHeader(BuildContext context, Widget widget) {
   return Container(
@@ -20,9 +21,18 @@ Widget customHeader(BuildContext context, Widget widget) {
         ),
       ),
     ),
-    child: Align(
-      alignment: Alignment.centerRight,
-      child: widget
-    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        widget,
+        IconButton(
+          icon: Icon(Icons.account_balance_wallet_outlined),
+          onPressed: (){
+            context.push('/wallet_page');
+          },
+        ),
+      ],
+    )
+
   );
 }
