@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import '../../../../../../../Core/Const/api_key.dart';
-import '../../../../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import '../../../../Core/Const/api_key.dart';
+import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import '../../Data/Model/internet_package_model.dart';
 
 class InternetPackagesRepository {

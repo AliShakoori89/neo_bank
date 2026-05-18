@@ -6,8 +6,8 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_Inte
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Get_Internet_Packages_Bloc/get_internet_packages_state.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../../Core/Const/app_colors.dart';
-import '../../../../Bloc/Get_Internet_Packages_Bloc/get_internet_packages_event.dart';
-import '../../Data/Model/internet_package_model.dart';
+import '../../../../Data/Model/internet_package_model.dart';
+import '../../../Bloc/Get_Internet_Packages_Bloc/get_internet_packages_event.dart';
 import 'custom_header.dart';
 import 'internet_package_time_box.dart';
 

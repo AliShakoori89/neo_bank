@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../Component/Charge_Internet_Page/Data/Model/internet_package_model.dart';
+import '../../../Data/Model/internet_package_model.dart';
 
 
 enum InternetPackageStatus {
