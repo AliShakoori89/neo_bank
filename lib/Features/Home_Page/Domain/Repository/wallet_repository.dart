@@ -3,7 +3,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/wallet_model.da
 import '../../../../Core/Const/api_key.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
-class InternetPackagesRepository {
+class WalletRepository {
 
   final dio = Dio();
 
