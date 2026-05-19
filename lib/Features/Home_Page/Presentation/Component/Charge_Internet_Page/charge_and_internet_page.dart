@@ -9,6 +9,7 @@ import '../../../../../Core/Utils/app_snackbar.dart';
 import '../../../../../Core/Utils/custom_button.dart';
 import 'package:flutter_native_contact_picker_plus/flutter_native_contact_picker_plus.dart';
 
+import 'Component/convert_phonenumber.dart';
 import 'Component/custom_header.dart';
 
 
@@ -22,10 +23,8 @@ class ChargeAndInternetPage extends StatefulWidget {
 class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with SingleTickerProviderStateMixin{
 
   late TabController _tabController;
-  TextEditingController nationalCodeController = TextEditingController();
-  final GlobalKey<FormState> nationalCodeFormKey = GlobalKey<FormState>();
 
-  TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
   final GlobalKey<FormState> phoneNumberFormKey = GlobalKey<FormState>();
 
   String? selectedOperator;
@@ -38,14 +37,11 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
   @override
   void initState() {
     super.initState();
-    // ایجاد TabController با تعداد تب‌های مورد نیاز
-    // و مشخص کردن TickerProvider برای انیمیشن‌ها
     _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
-    // همیشه Controller را dispose کنید
     _tabController.dispose();
     super.dispose();
   }
@@ -196,11 +192,8 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
               CustomButton(
                 buttonTitle: 'تایید',
                 buttonOnPressed: (){
-                  print(selectedOperator);
-                  print(selectedSimType);
-                  print(_tabController.index);
-                  if (phoneNumberFormKey.currentState!.validate()) {
 
+                  if (phoneNumberFormKey.currentState!.validate()) {
                     if (selectedOperator == null) {
                       AppSnackBar.errorTop(context, 'لطفاً اپراتور خود را انتخاب کنید');
                       return;
@@ -236,13 +229,6 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
         )
       ),
     );
-  }
-
-  String convertPhoneNumber(String phoneNumber) {
-    if (phoneNumber.startsWith('+98')) {
-      return phoneNumber.replaceFirst('+98', '0');
-    }
-    return phoneNumber;
   }
 
   void selectOperatorType(BuildContext context, String? selectedOperator) {
