@@ -251,16 +251,7 @@ class _WalletPageState extends State<WalletPage> {
                             ],
                           ),
                           AppSpace.heightSpace_32,
-                          Center(child: Icon(Icons.wallet_giftcard_outlined, size: 80, color: Colors.grey.withAlpha(10))),
-                          AppSpace.heightSpace_16,
-                          Center(
-                            child: Text('موجودی کارت های هدیه اینجا نمایش داده میشود',
-                              style: TextStyle(
-                                  color: Colors.grey.withAlpha(30)
-                              ),
-                            ),
-                          ),
-                          AppSpace.heightSpace_24, // فضای انتهایی
+
                         ],
                       ),
                     ),
