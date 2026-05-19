@@ -20,7 +20,7 @@ class AddGiftCard extends StatelessWidget {
           height: 50,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(30)),
-              color: Colors.grey.withAlpha(10)
+              color: Colors.grey.withAlpha(30),
           ),
           child: Center(
             child: Row(
