@@ -175,9 +175,9 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.sim_card, color: Colors.amber),
+                            Expanded(child: Icon(Icons.sim_card, color: Colors.amber)),
                             const SizedBox(width: 2), // فاصله بسیار کم
-                            Icon(Icons.keyboard_arrow_down),
+                            Expanded(child: Icon(Icons.keyboard_arrow_down)),
                           ],
                         ),
                       ),
