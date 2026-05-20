@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Component/add_gift_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Component/balance_value.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Component/custom_card.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Component/input_value_text_field.dart';
 import '../../../../../Core/Const/app_colors.dart';
 import '../../../../../Core/Utils/custom_refresh_button.dart';
+import '../../../../Fund_Transfer_Page/Presentation/component/bank_card_selector.dart';
 import '../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../Bloc/Wallet_Bloc/wallet_event.dart';
 import '../Charge_Internet_Page/Component/custom_header.dart';
-import 'Component/add_balance_Text_Field.dart';
 import 'Component/custom_formatter.dart';
+import 'Component/wallet_types_list.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
@@ -79,7 +81,7 @@ class _WalletPageState extends State<WalletPage> {
                                               ),),
                                             RefreshButtonWithAnimation(
                                               onPressed: () async {
-                                                context.read<WalletBloc>().add(WalletDetailsPackages());
+                                                context.read<WalletBloc>().add(WalletDetailsPackagesEvent());
                                               },
                                               color: Theme.of(context).colorScheme.primaryFixed,
                                               size: 24,
@@ -113,8 +115,42 @@ class _WalletPageState extends State<WalletPage> {
                           ),
                           AppSpace.heightSpace_16,
                           AddGiftCard(),
+                          AppSpace.heightSpace_32,
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Colors.grey.withAlpha(25)
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  Text('شماره کارت مبدا خود را انتخاب نمایید:',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Theme.of(context).colorScheme.primaryFixed,
+                                    ),
+                                  ),
+                                  AppSpace.heightSpace_16,
+                                  BankCardSelector(widthSize: double.infinity, heightSize: 55,),
+                                  AppSpace.heightSpace_48,
+                                  Text('مبلغ مورد نظر جهت شارژ کیف پول خود را وارد نمایید:',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Theme.of(context).colorScheme.primaryFixed,
+                                    ),
+                                  ),
+                                  AppSpace.heightSpace_16,
+                                  InputValueTextField(balanceController: balanceController, balanceFormKey: balanceFormKey)
+                                ],
+                              ),
+                            ),
+                          ),
                           AppSpace.heightSpace_48,
-                          Text('برای افزایش موجودی کیف پول، مبلغ را وارد نمایید:',
+                          Text('لیست کیف ها:',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -122,104 +158,14 @@ class _WalletPageState extends State<WalletPage> {
                             ),
                           ),
                           AppSpace.heightSpace_16,
-                          Row(
-                            children: [
-                              Container(
-                                width: 50,
-                                height: 55,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.withAlpha(30),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: IconButton(
-                                  onPressed: () {
-                                    int current = balanceController.rawValue;
-                                    current -= 10000;
-
-                                    if (current < 0) current = 0;
-
-                                    balanceController.text = current.toString();
-                                  },
-                                  icon: const Icon(Icons.remove),
-                                ),
-                              ),
-
-                              const SizedBox(width: 10),
-
-                              Expanded(
-                                child: AddBalanceTextField(
-                                  balanceController: balanceController,
-                                  balanceFormKey: balanceFormKey,
-                                ),
-                              ),
-
-                              const SizedBox(width: 10),
-
-                              Container(
-                                width: 50,
-                                height: 55,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.withAlpha(30),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: IconButton(
-                                  onPressed: () {
-                                    int current = balanceController.rawValue;
-                                    current += 10000;
-
-                                    balanceController.text = current.toString();
-                                  },
-                                  icon: const Icon(Icons.add),
-                                ),
-                              ),
-                            ],
-                          ),
-                          AppSpace.heightSpace_48,
-                          Text('درگاه پرداختی خود را انتخاب نمایید:',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Theme.of(context).colorScheme.primaryFixed,
-                            ),
-                          ),
-                          AppSpace.heightSpace_16,
-                          CustomCard(
-                            theme: theme,
-                            isSelected: _selectedCardIndex == 0,
-                            onTap: () {
-                              setState(() {
-                                _selectedCardIndex = 0;
-                              });
-                            },
-                          ),
-                          AppSpace.heightSpace_16,
-                          CustomCard(
-                            theme: theme,
-                            isSelected: _selectedCardIndex == 1,
-                            onTap: () {
-                              setState(() {
-                                _selectedCardIndex = 1;
-                              });
-                            },
-                          ),
-                          AppSpace.heightSpace_16,
-                          CustomCard(
-                            theme: theme,
-                            isSelected: _selectedCardIndex == 2,
-                            onTap: () {
-                              setState(() {
-                                _selectedCardIndex = 2;
-                              });
-                            },
-                          ),
+                          // PayTypesList(theme: theme, selectedCardIndex: _selectedCardIndex),
+                          WalletTypesList(),
                           AppSpace.heightSpace_48,
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
                                 if (balanceFormKey.currentState?.validate() ?? false) {
-                                  // انجام عملیات افزایش موجودی
-                                  print('مبلغ: ${balanceController.text}');
                                   Navigator.pop(context);
                                 }
                               },
@@ -231,7 +177,7 @@ class _WalletPageState extends State<WalletPage> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              child: const Text('تایید و ادامه'),
+                              child: const Text('پرداخت'),
                             ),
                           ),
                           AppSpace.heightSpace_48,
