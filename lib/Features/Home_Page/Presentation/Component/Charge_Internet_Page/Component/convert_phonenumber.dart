@@ -1,6 +1,8 @@
 String convertPhoneNumber(String phoneNumber) {
-  if (phoneNumber.startsWith('+98')) {
-    return phoneNumber.replaceFirst('+98', '0');
+  String cleaned = phoneNumber.replaceAll(RegExp(r'[\s\-()]'), '');
+
+  if (cleaned.startsWith('+98')) {
+    return cleaned.replaceFirst('+98', '0');
   }
-  return phoneNumber;
+  return cleaned;
 }
