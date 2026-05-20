@@ -3,11 +3,13 @@ import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import '../../../../../../Core/Const/app_colors.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({super.key, required this.theme, required this.isSelected, required this.onTap});
+  const CustomCard({super.key, required this.theme, required this.isSelected, required this.onTap, required this.title, this.description});
 
   final ThemeData theme;
   final bool isSelected;
   final VoidCallback onTap;
+  final String title;
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class CustomCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('پرداخت اینترنتی',
+                          Text(title,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -58,7 +60,7 @@ class CustomCard extends StatelessWidget {
                             ),
                           ),
                           AppSpace.heightSpace_8,
-                          Text('پرداخت از طریق درگاه اینترنتی',
+                          Text(description ?? 'پرداخت $title',
                             style: TextStyle(
                               fontSize: 12,
                               color: Theme.of(context).colorScheme.onPrimary,
