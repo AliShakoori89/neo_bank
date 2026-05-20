@@ -35,6 +35,7 @@ import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigatio
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_bloc.dart';
 import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_event.dart';
+import 'package:device_preview/device_preview.dart';
 
 
 void main() async {
@@ -54,7 +55,7 @@ void main() async {
     // builder:
     //     (context) =>
     AppLockObserver(child: MyApp(isDark: isDark)),
-    // )
+  //   )
   );
 }
 
