@@ -6,9 +6,11 @@ import 'package:neo_bank_mehr_iran/Core/Const/to_persian_number.dart';
 typedef MenuEntry = DropdownMenuEntry<String>;
 
 class CustomDropdownButton extends StatefulWidget {
-  const CustomDropdownButton({super.key, required this.cardsPan});
+  const CustomDropdownButton({super.key, required this.cardsPan, this.widthSize, this.heightSize});
 
   final List<String> cardsPan;
+  final double? widthSize;
+  final double? heightSize;
 
   @override
   State<CustomDropdownButton> createState() => _CustomDropdownMenuState();
@@ -25,9 +27,11 @@ class _CustomDropdownMenuState extends State<CustomDropdownButton> {
 
   @override
   Widget build(BuildContext context) {
+    print('widget.widthSize');
+    print(widget.widthSize);
     return Container(
-      width: MediaQuery.of(context).size.width - 60,
-      height: 40,
+      width: widget.widthSize ?? MediaQuery.of(context).size.width - 60,
+      height: widget.heightSize ?? 40,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(8),
@@ -54,38 +58,40 @@ class _CustomDropdownMenuState extends State<CustomDropdownButton> {
           ),
         ],
       ),
-      child: DropdownMenu<String>(
-        width: MediaQuery.of(context).size.width - 60,
-        textAlign: TextAlign.center,
-        trailingIcon: Icon(
-          Icons.keyboard_arrow_down_sharp,
-          color: AppColors.loginPageIconColor,
-          size: 20,
+      child: Center(
+        child: DropdownMenu<String>(
+          width: widget.widthSize != null ? MediaQuery.of(context).size.width - 83 : MediaQuery.of(context).size.width - 60,
+          textAlign: TextAlign.center,
+          trailingIcon: Icon(
+            Icons.keyboard_arrow_down_sharp,
+            color: AppColors.loginPageIconColor,
+            size: 20,
+          ),
+          selectedTrailingIcon: Icon(
+            Icons.keyboard_arrow_up_sharp,
+            color: Theme.of(context).colorScheme.surfaceContainerHigh,
+            size: 20,
+          ),
+          textStyle: TextStyle(color: Theme.of(context).colorScheme.primaryFixed),
+          inputDecorationTheme: InputDecorationTheme(
+            isCollapsed: true,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            constraints: BoxConstraints.tight(const Size.fromHeight(40)),
+            // enabledBorder: OutlineInputBorder(
+            //   borderRadius: BorderRadius.circular(8),
+            //   borderSide: BorderSide(
+            //     color: Theme.of(context).colorScheme.surfaceDim,
+            //   ),
+            // ),
+          ),
+          initialSelection: dropdownValue,
+          onSelected: (String? value) {
+            setState(() {
+              dropdownValue = value!;
+            });
+          },
+          dropdownMenuEntries: menuEntries,
         ),
-        selectedTrailingIcon: Icon(
-          Icons.keyboard_arrow_up_sharp,
-          color: Theme.of(context).colorScheme.surfaceContainerHigh,
-          size: 20,
-        ),
-        textStyle: TextStyle(color: Theme.of(context).colorScheme.primaryFixed),
-        inputDecorationTheme: InputDecorationTheme(
-          isCollapsed: true,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-          constraints: BoxConstraints.tight(const Size.fromHeight(40)),
-          // enabledBorder: OutlineInputBorder(
-          //   borderRadius: BorderRadius.circular(8),
-          //   borderSide: BorderSide(
-          //     color: Theme.of(context).colorScheme.surfaceDim,
-          //   ),
-          // ),
-        ),
-        initialSelection: dropdownValue,
-        onSelected: (String? value) {
-          setState(() {
-            dropdownValue = value!;
-          });
-        },
-        dropdownMenuEntries: menuEntries,
       ),
     );
   }
