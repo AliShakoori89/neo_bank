@@ -27,7 +27,7 @@ class AddBalanceTextField extends StatelessWidget {
           ],
           textAlign: TextAlign.center,
           textDirection: TextDirection.ltr,
-          autofocus: true,
+          autofocus: false,
           style: const TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w500,
@@ -56,9 +56,6 @@ class AddBalanceTextField extends StatelessWidget {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(
-                color: Colors.green.shade400,
-              ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
