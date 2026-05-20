@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_state.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Card/custom_drop_down_shimmer.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Card/custom_dropdown_button.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/bank_card_selector.dart';
 import '../../../../../Core/Const/app_colors.dart';
 import '../../../../../Core/Const/app_space.dart';
 
@@ -17,21 +13,7 @@ Widget buildCartTabBody(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         AppSpace.heightSpace_24,
-        BlocBuilder<AllCardsDetailBloc, AllCardsDetailState>(
-          builder: (context, state) {
-            final cardsPan = state.cardsPan;
-            if (state.status.isLoading) {
-              return CustomDropDownShimmer();
-            }
-            if (state.status.isSuccess) {
-              return CustomDropdownButton(cardsPan: cardsPan!);
-            }
-            if (state.status.isError) {
-              return Text('error',style: TextStyle(color: Colors.white),);
-            }
-            return Text('error',style: TextStyle(color: Colors.white),);
-          },
-        ),
+        BankCardSelector(),
         AppSpace.heightSpace_24,
         SizedBox(
           height: 144,
