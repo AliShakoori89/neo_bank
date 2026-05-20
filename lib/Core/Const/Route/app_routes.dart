@@ -14,6 +14,8 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
+import '../../../Features/Home_Page/Data/Model/internet_package_model.dart';
+import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Package_Card_Component/package_details.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/directive_charge_page.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/internet_packages_page.dart';
 import '../../../Features/Main_Page/Presentation/main_page.dart';
@@ -104,6 +106,20 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/wallet_page',
       builder: (context, state) => WalletPage(),
+    ),
+
+    // در فایل router.dart
+    GoRoute(
+      path: '/internet_package_details_page',
+      name: 'internet_package_details_page',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>;
+        return InternetPackageDetailsPage(
+          package: extra['package'] as InternetPackageModel,
+          phoneNumber: extra['phoneNumber'] as String,
+          operatorCode: extra['operatorCode'] as int,
+        );
+      },
     ),
 
     GoRoute(
