@@ -31,6 +31,7 @@ dependencies:
   flutter_svg: ^2.2.1
   fl_chart: ^1.1.1
   shimmer_animation: ^2.2.2
+  shimmer: ^3.0.0
   pinput: ^6.0.1
 
   # Device / Platform
