@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../Core/Const/app_colors.dart';
 import 'custom_formatter.dart';
 
@@ -39,6 +40,10 @@ class AddBalanceTextField extends StatelessWidget {
             return null;
           },
           decoration: InputDecoration(
+            hintText: '10000'.toPersianDigit().seRagham(),
+            hintStyle: TextStyle(
+              color: Colors.grey.shade700
+            ),
             suffixText: 'ریال',
             suffixStyle: TextStyle(
               fontSize: 26,
