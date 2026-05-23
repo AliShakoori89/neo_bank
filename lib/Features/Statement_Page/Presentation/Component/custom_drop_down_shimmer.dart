@@ -7,10 +7,14 @@ class CustomDropDownShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(
+        left: 30,
+        right: 30
+      ),
       height: 40,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Shimmer.fromColors(
