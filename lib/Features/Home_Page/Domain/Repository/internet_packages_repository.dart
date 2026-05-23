@@ -55,7 +55,7 @@ class InternetPackagesRepository {
       "operatorCode": operatorCode,
       "packageTimeCode": packageTimeCode,
       "simType": simType,
-      "traffic": "traffic"
+      "traffic": traffic
     };
 
     try {
