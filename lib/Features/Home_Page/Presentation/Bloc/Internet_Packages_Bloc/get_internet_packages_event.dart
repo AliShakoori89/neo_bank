@@ -19,5 +19,5 @@ class FetchInternetPackages extends InternetPackageEvent {
   final int simType;
   final String traffic;
 
-  FetchInternetPackages({required this.operatorCode, required this.packageTimeCode, required this.simType, required this.traffic});
+  const FetchInternetPackages({required this.operatorCode, required this.packageTimeCode, required this.simType, required this.traffic});
 }
