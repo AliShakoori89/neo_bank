@@ -36,9 +36,9 @@ class _BankCardSelectorState extends State<BankCardSelector> {
           return CustomDropdownButton(cardsPan: cardsPan!, widthSize: widget.widthSize, heightSize: widget.heightSize,);
         }
         if (state.status.isError) {
-          return Text('error',style: TextStyle(color: Colors.white),);
+          return Text('کارت بانکی یافت نگردید',style: TextStyle(color: Colors.white),);
         }
-        return Text('error',style: TextStyle(color: Colors.white),);
+        return Text('کارت بانکی یافت نگردید',style: TextStyle(color: Colors.white),);
       },
     );
   }
