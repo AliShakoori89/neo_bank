@@ -17,6 +17,7 @@ class CustomDropdownButton extends StatefulWidget {
 }
 
 class _CustomDropdownMenuState extends State<CustomDropdownButton> {
+
   late String dropdownValue = widget.cardsPan.first;
 
   late final List<MenuEntry> menuEntries = UnmodifiableListView<MenuEntry>(
@@ -27,8 +28,6 @@ class _CustomDropdownMenuState extends State<CustomDropdownButton> {
 
   @override
   Widget build(BuildContext context) {
-    print('widget.widthSize');
-    print(widget.widthSize);
     return Container(
       width: widget.widthSize ?? MediaQuery.of(context).size.width - 60,
       height: widget.heightSize ?? 40,
