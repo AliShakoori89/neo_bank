@@ -15,7 +15,10 @@ class WalletTypesList extends StatelessWidget {
     return BlocBuilder<WalletBloc, WalletState>(
       builder: (context, state) {
         if (state.status.isLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator()));
         }
 
         if (state.status.isError) {
@@ -33,7 +36,9 @@ class WalletTypesList extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: displayWallets.length,
           itemBuilder: (context, index) {
-            return state.walletDetails![index].title == 'عادی' ? Container() : Padding(
+            return state.walletDetails![index].title == 'عادی'
+                ? Container()
+                : Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 width: double.infinity,
