@@ -126,32 +126,24 @@ Widget buildPackageCard(BuildContext context, InternetPackageModel package, int 
               const SizedBox(height: 16),
               Row(
                 children: [
-                  Expanded(
-                    child: buildInfoChip(
-                      context: context,
-                      icon: Icons.data_usage,
-                      label: formattedTraffic,
-                      color: Theme.of(context).colorScheme.primaryFixed,
-                    ),
+                  buildInfoChip(
+                    context: context,
+                    icon: Icons.data_usage,
+                    label: formattedTraffic,
+                    color: Theme.of(context).colorScheme.primaryFixed,
                   ),
-                  AppSpace.widthSpace_5,
-                  Expanded(
-                    child: buildInfoChip(
-                      context: context,
-                      icon: Icons.access_time,
-                      label: '$duration روزه',
-                      color: Theme.of(context).colorScheme.primaryFixed,
-                    ),
+                  buildInfoChip(
+                    context: context,
+                    icon: Icons.access_time,
+                    label: '$duration روزه',
+                    color: Theme.of(context).colorScheme.primaryFixed,
                   ),
                   if (formattedNightTraffic != null) ...[
-                    AppSpace.widthSpace_5,
-                    Expanded(
-                      child: buildInfoChip(
-                        context: context,
-                        icon: Icons.nightlight_round,
-                        label: 'شبانه: $formattedNightTraffic',
-                        color: Theme.of(context).colorScheme.primaryFixed,
-                      ),
+                    buildInfoChip(
+                      context: context,
+                      icon: Icons.nightlight_round,
+                      label: 'شبانه: $formattedNightTraffic',
+                      color: Theme.of(context).colorScheme.primaryFixed,
                     ),
                   ],
                 ],
