@@ -32,11 +32,11 @@ class PaymentTypesCard extends StatelessWidget {
           border: Border.all(
             color: isSelected
                 ? AppColors.splashGradiantColor1
-                : Colors.grey.withOpacity(0.3),
+                : Colors.grey.withAlpha(30),
             width: isSelected ? 2 : 1,
           ),
           color: isSelected
-              ? AppColors.splashGradiantColor1.withOpacity(0.1)
+              ? AppColors.splashGradiantColor1.withAlpha(10)
               : Colors.transparent,
         ),
         child: Row(

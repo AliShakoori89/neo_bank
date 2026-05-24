@@ -135,7 +135,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                           return null;
                         },
                         decoration: InputDecoration(
-                          hintText: '09123456789',
+                          hintText: '09XXXXXXXXX',
                           hintStyle: TextStyle(
                             color: Theme.of(context).colorScheme.surface,
                             fontWeight: FontWeight.w400,

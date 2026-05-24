@@ -16,7 +16,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Componen
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
 import '../../../Features/Home_Page/Data/Model/internet_package_model.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Inernet_package/Package_Card_Component/Package_Details/package_details.dart';
-import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/directive_charge_page.dart';
+import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Directive_Charge/directive_charge_page.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Inernet_package/internet_packages_page.dart';
 import '../../../Features/Main_Page/Presentation/main_page.dart';
 
