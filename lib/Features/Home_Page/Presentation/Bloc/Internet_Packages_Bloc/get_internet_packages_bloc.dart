@@ -10,6 +10,8 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
   InternetPackageBloc( this.internetPackagesRepository) : super(InternetPackageState.initial()) {
     on<FetchAllInternetPackages>(_onFetchAllInternetPackages);
     on<FetchInternetPackages>(_onFetchInternetPackages);
+    on<BuyInternetPackage>(_onBuyInternetPackage);  // اضافه کردن هندلر خرید
+    on<ResetBuyStatus>(_onResetBuyStatus);          // اضافه کردن هندلر ریست
   }
 
   void _onFetchAllInternetPackages(
@@ -56,4 +58,75 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
     }
   }
 
+  // هندلر خرید بسته اینترنت
+  Future<void> _onBuyInternetPackage(
+      BuyInternetPackage event,
+      Emitter<InternetPackageState> emit,
+      ) async {
+    try {
+      // تغییر وضعیت به در حال خرید
+      emit(state.copyWith(
+        buyStatus: BuyStatus.loading,
+        errorMessage: null,
+        errorCode: null,
+        buyResult: null,
+      ));
+
+      final result = await internetPackagesRepository.buyInternetPackage(
+        event.sourceMobileNumber,
+        event.walletAddress,
+        event.productCode,
+        event.destMobileNumber,
+      );
+
+      if (result.isSuccess) {
+        // خرید موفق
+        emit(state.copyWith(
+          buyStatus: BuyStatus.success,
+          buyResult: result.data ?? 'خرید با موفقیت انجام شد',
+          errorMessage: null,
+          errorCode: null,
+        ));
+      }
+      else if (result.isFailure) {
+        // خطای تجاری (مثل 5001)
+        emit(state.copyWith(
+          buyStatus: BuyStatus.failure,
+          errorMessage: result.errorModel?.errorMessage,
+          errorCode: result.errorModel?.errorCode,
+          buyResult: null,
+        ));
+      }
+      else if (result.isError) {
+        // خطای فنی
+        emit(state.copyWith(
+          buyStatus: BuyStatus.error,
+          errorMessage: result.errorMessage,
+          errorCode: null,
+          buyResult: null,
+        ));
+      }
+    } catch (e) {
+      // خطای پیش‌بینی نشده
+      emit(state.copyWith(
+        buyStatus: BuyStatus.error,
+        errorMessage: 'خطای ناشناخته رخ داده است',
+        errorCode: null,
+        buyResult: null,
+      ));
+    }
+  }
+
+  // ریست کردن وضعیت خرید
+  void _onResetBuyStatus(
+      ResetBuyStatus event,
+      Emitter<InternetPackageState> emit,
+      ) {
+    emit(state.copyWith(
+      buyStatus: BuyStatus.idle,
+      errorMessage: null,
+      errorCode: null,
+      buyResult: null,
+    ));
+  }
 }
