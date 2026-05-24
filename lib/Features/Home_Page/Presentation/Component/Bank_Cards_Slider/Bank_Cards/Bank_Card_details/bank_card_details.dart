@@ -62,9 +62,9 @@ bankCardDetails(context, String cardPan, String cardDeposit){
                   child: GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 30.0,
-                      mainAxisSpacing: 30.0,
-                      childAspectRatio: 2.5,
+                      crossAxisSpacing: 15.0,
+                      mainAxisSpacing: 15.0,
+                      childAspectRatio: 3,
                     ),
                     itemCount: detailsItem.length,
                     itemBuilder: (context, index) {
@@ -79,11 +79,8 @@ bankCardDetails(context, String cardPan, String cardDeposit){
                         },
                         child: Container(
                           decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.surfaceContainerHighest,
                             borderRadius: BorderRadius.circular(15),
-                            gradient: customLinearGradient(context),
-                            border: Border.all(
-                              color: AppColors.loginPageHintFontColor,
-                            ),
                           ),
                           child: Center(
                             child: Row(
