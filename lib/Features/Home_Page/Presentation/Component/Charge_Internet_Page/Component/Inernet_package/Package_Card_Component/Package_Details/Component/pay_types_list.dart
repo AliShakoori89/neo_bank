@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Package_Card_Component/Package_Details/Component/payment_types_card.dart';
-import '../../../../../../../Data/Model/wallet_model.dart';
-import '../../../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
-import '../../../../../../Bloc/Wallet_Bloc/wallet_state.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Inernet_package/Package_Card_Component/Package_Details/Component/payment_types_card.dart';
+
+import '../../../../../../../../Data/Model/wallet_model.dart';
+import '../../../../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
+import '../../../../../../../Bloc/Wallet_Bloc/wallet_state.dart';
 
 class PayTypesList extends StatefulWidget {
   const PayTypesList({

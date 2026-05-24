@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_button.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/disable_custom_button.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Package_Card_Component/Package_Details/Component/pay_types_list.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Inernet_package/Package_Card_Component/Package_Details/Component/pay_types_list.dart';
 
 class WalletSelector {
   static Future<Map<String, String>?> selectWallet({

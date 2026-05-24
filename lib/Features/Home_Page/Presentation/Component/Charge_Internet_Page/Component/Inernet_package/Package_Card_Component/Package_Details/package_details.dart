@@ -5,10 +5,10 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/internet_packag
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_state.dart';
-import '../../../../../../Data/Model/wallet_model.dart';
-import '../../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
-import '../../../../../Bloc/Wallet_Bloc/wallet_event.dart';
-import '../../custom_header.dart';
+import '../../../../../../../Data/Model/wallet_model.dart';
+import '../../../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
+import '../../../../../../Bloc/Wallet_Bloc/wallet_event.dart';
+import '../../../custom_header.dart';
 import '../build_description_section.dart';
 import '../build_details_section.dart';
 import '../build_main_package_card.dart';

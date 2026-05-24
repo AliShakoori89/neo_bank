@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../Data/Model/internet_package_model.dart';
+import '../../../../../../Data/Model/internet_package_model.dart';
 import 'build_detail_row.dart';
 import 'format_traffic.dart';
 

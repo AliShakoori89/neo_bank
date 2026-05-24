@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../../../Core/Const/app_colors.dart';
-import '../../../../../../../../../Core/Const/app_space.dart';
+
+import '../../../../../../../../../../Core/Const/app_colors.dart';
+import '../../../../../../../../../../Core/Const/app_space.dart';
 
 class PaymentTypesCard extends StatelessWidget {
   const PaymentTypesCard({
