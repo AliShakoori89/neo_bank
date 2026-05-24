@@ -49,15 +49,21 @@ class _PayTypesListState extends State<PayTypesList> {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: displayWallets.length,
           itemBuilder: (context, index) {
-            return CustomCard(
-              theme: widget.theme,
-              title: displayWallets[index].title,
-              isSelected: widget.selectedCardIndex == index,
-              onTap: () {
-                setState(() {
-                  widget.selectedCardIndex = index;
-                });
-              },
+            return Padding(
+              padding: EdgeInsetsGeometry.only(
+                bottom: 5,
+                top: 5
+              ),
+              child: CustomCard(
+                theme: widget.theme,
+                title: displayWallets[index].title,
+                isSelected: widget.selectedCardIndex == index,
+                onTap: () {
+                  setState(() {
+                    widget.selectedCardIndex = index;
+                  });
+                },
+              ),
             );
           },
         );
