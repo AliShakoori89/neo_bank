@@ -24,7 +24,7 @@ class CustomCard extends StatelessWidget {
             ),
             child: Container(
                 width: double.infinity,
-                height: 100,
+                height: 70,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                     border: Border.all(
@@ -74,7 +74,7 @@ class CustomCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 35,
+            top: 20,
             child: Container(
               decoration: BoxDecoration(
                   color: theme.colorScheme.onPrimaryFixed,
