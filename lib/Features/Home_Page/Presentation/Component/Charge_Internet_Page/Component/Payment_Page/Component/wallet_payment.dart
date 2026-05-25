@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../../../Core/Const/app_space.dart';
 import '../../../../../../Data/Model/internet_package_model.dart';
 import '../../../../../Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import '../../../../../Bloc/Internet_Packages_Bloc/get_internet_packages_event.dart';
 import '../../../../../Bloc/Internet_Packages_Bloc/get_internet_packages_state.dart';
 import '../../../../Wallet_Page/Component/all_balance_widget.dart';
+import '../../../../Wallet_Page/Component/deposit_button.dart';
+import '../../../../Wallet_Page/Component/withdraw_button.dart';
 import '../../Internet_package/Package_Card_Component/Package_Details/Component/build_payment_button.dart';
 import '../../Internet_package/Package_Card_Component/Package_Details/Component/handle_payment.dart';
 import '../../Internet_package/Package_Card_Component/Package_Details/Component/show_error_dialog.dart';
@@ -27,6 +30,8 @@ class WalletPayment extends StatefulWidget {
 class _WalletPaymentState extends State<WalletPayment> {
 
   bool _isLoading = false;
+  bool showDepositContainer = false;
+  bool showWithdrawContainer = false;
 
   Future<void> _handlePayment() async {
 
@@ -50,6 +55,11 @@ class _WalletPaymentState extends State<WalletPayment> {
     );
   }
 
+  @override
+  void initState() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,13 +107,37 @@ class _WalletPaymentState extends State<WalletPayment> {
               context.read<InternetPackageBloc>().add(ResetBuyStatus());
             }
           },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AllBalanceWidget(),
-            buildPaymentButton(context, _isLoading, _handlePayment ,widget.package.priceWithTax)
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  AllBalanceWidget(),
+                  AppSpace.heightSpace_12,
+                  Row(
+                    children: [
+                      DepositButton(function: (){
+                        setState(() {
+                          showDepositContainer = true;
+                          showWithdrawContainer = false;
+                        });
+                      },),
+                      AppSpace.widthSpace_5,
+                      WithdrawButton(function:(){
+                        setState(() {
+                          showDepositContainer = false;
+                          showWithdrawContainer = true;
+                        });
+                      }),
+                    ],
+                  ),
+                ],
+              ),
+              buildPaymentButton(context, _isLoading, _handlePayment ,widget.package.priceWithTax)
+            ],
+          ),
         )
       ),
     );

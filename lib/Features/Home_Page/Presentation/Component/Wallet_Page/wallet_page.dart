@@ -75,6 +75,7 @@ class _WalletPageState extends State<WalletPage> {
                               child: Column(
                                 children: [
                                   AllBalanceWidget(),
+                                  AppSpace.heightSpace_12,
                                   Row(
                                     children: [
                                       DepositButton(function: (){
