@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Inernet_package/Package_Card_Component/package_icon.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/package_icon.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../../../Core/Const/app_colors.dart';
 import '../../../../../../../../Core/Const/app_space.dart';
@@ -8,6 +8,7 @@ import 'format_price.dart';
 import 'get_package_color.dart';
 
 Widget buildMainPackageCard(BuildContext context, InternetPackageModel package) {
+
   final theme = Theme.of(context);
   final packageTime = package.packageTime ?? '';
 
@@ -18,13 +19,13 @@ Widget buildMainPackageCard(BuildContext context, InternetPackageModel package) 
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          getPackageColor(packageTime).withOpacity(0.1),
-          getPackageColor(packageTime).withOpacity(0.05),
+          getPackageColor(packageTime).withAlpha(30),
+          getPackageColor(packageTime).withAlpha(10),
         ],
       ),
       borderRadius: BorderRadius.circular(24),
       border: Border.all(
-        color: getPackageColor(packageTime).withOpacity(0.3),
+        color: getPackageColor(packageTime).withAlpha(30),
         width: 1.5,
       ),
     ),
@@ -63,7 +64,7 @@ Widget buildMainPackageCard(BuildContext context, InternetPackageModel package) 
           textBaseline: TextBaseline.alphabetic,
           children: [
             Text(
-              '${formatPrice(package.priceWithTax).toPersianDigit()}',
+              formatPrice(package.priceWithTax).toPersianDigit(),
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
