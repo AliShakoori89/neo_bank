@@ -76,7 +76,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                 splashFactory: NoSplash.splashFactory,
               ),
             ),
-        Container(
+            Container(
           margin: EdgeInsets.only(
               left: 20,
               right: 20
