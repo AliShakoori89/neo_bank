@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/this_bank_card_payment.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/This_Bank_Card_Payment/this_bank_card_payment.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_state.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-import '../../../../../../../Core/Const/app_colors.dart';
-import '../../../../../../../Core/Const/app_space.dart';
-import '../../../../../Data/Model/internet_package_model.dart';
-import '../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
-import '../../../../Bloc/Wallet_Bloc/wallet_event.dart';
-import '../../../../Bloc/Wallet_Bloc/wallet_state.dart';
-import '../Internet_package/Package_Card_Component/get_package_color.dart';
-import '../custom_header.dart';
-import 'Component/other_bank_card_payment.dart';
-import 'Component/wallet_payment.dart';
+import '../../../../../../../../../Core/Const/app_colors.dart';
+import '../../../../../../../../../Core/Const/app_space.dart';
+import '../../../../../../../Data/Model/internet_package_model.dart';
+import '../../../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
+import '../../../../../../Bloc/Wallet_Bloc/wallet_event.dart';
+import '../../../../../../Bloc/Wallet_Bloc/wallet_state.dart';
+import '../../../Internet_package/Package_Card_Component/get_package_color.dart';
+import '../../../custom_header.dart';
+import '../Other_Bank_Card_Payment/other_bank_card_payment.dart';
+import '../wallet_payment.dart';
+import 'Component/build_payment_info_card.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key, required this.amount, required this.title, required this.package, required this.phoneNumber});
@@ -77,7 +78,7 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
                 ),
               ),
               AppSpace.heightSpace_24,
-              _buildPaymentInfoCard(theme, widget.package),
+              buildPaymentInfoCard(context, theme, widget.package, widget.title, widget.amount),
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
@@ -111,84 +112,4 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
       ),
     );
   }
-
-  Widget _buildPaymentInfoCard(ThemeData theme, InternetPackageModel package, ) {
-
-    final packageTime = package.packageTime ?? '';
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      margin: EdgeInsets.only(
-        right: 20,
-        left: 20
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            getPackageColor(packageTime).withAlpha(30),
-            getPackageColor(packageTime).withAlpha(10),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.payment, color: Theme.of(context).colorScheme.onPrimary, size: 28),
-              AppSpace.widthSpace_8,
-              Expanded(
-                child: Text(
-                  widget.title,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primaryFixed,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (widget.package.description != null) ...[
-            AppSpace.heightSpace_12,
-            Text(
-              widget.package.description!,
-              style: const TextStyle(color: Colors.white70, fontSize: 14),
-            ),
-          ],
-          AppSpace.heightSpace_16,
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white.withAlpha(20),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'مبلغ قابل پرداخت:',
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.primaryFixed,
-                      fontSize: 14),
-                ),
-                Text(
-                  '${widget.amount.toString().seRagham().toPersianDigit()} تومان',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primaryFixed,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
 }

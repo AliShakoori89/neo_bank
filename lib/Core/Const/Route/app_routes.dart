@@ -19,7 +19,7 @@ import '../../../Features/Home_Page/Data/Model/internet_package_model.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/Package_Details/package_details.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Directive_Charge/directive_charge_page.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/internet_packages_page.dart';
-import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/payment_page.dart';
+import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/Payment_Page/payment_page.dart';
 import '../../../Features/Main_Page/Presentation/main_page.dart';
 
 final GoRouter router = GoRouter(
