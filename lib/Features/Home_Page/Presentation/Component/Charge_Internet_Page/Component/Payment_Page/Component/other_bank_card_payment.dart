@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../../../Core/Const/app_space.dart';
 import '../../../../../../Data/Model/internet_package_model.dart';
-import '../../Internet_package/Package_Card_Component/get_package_color.dart';
 import 'bank_info.dart';
 
-class BankCardPayment extends StatefulWidget {
-  BankCardPayment({
+class OtherBankCardPayment extends StatefulWidget {
+  OtherBankCardPayment({
     super.key,
     required this.amount,
     required this.title,
@@ -25,10 +23,10 @@ class BankCardPayment extends StatefulWidget {
   String? selectedWalletTitle;
 
   @override
-  State<BankCardPayment> createState() => _BankCardPaymentState();
+  State<OtherBankCardPayment> createState() => _OtherBankCardPaymentState();
 }
 
-class _BankCardPaymentState extends State<BankCardPayment> {
+class _OtherBankCardPaymentState extends State<OtherBankCardPayment> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _cardNumberController = TextEditingController();
@@ -168,7 +166,7 @@ class _BankCardPaymentState extends State<BankCardPayment> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildPaymentInfoCard(theme, widget.package),
+
                 AppSpace.heightSpace_24,
                 _buildCardForm(theme),
                 AppSpace.heightSpace_24,
@@ -188,95 +186,13 @@ class _BankCardPaymentState extends State<BankCardPayment> {
 
   }
 
-  Widget _buildPaymentInfoCard(ThemeData theme, InternetPackageModel package, ) {
-
-    final packageTime = package.packageTime ?? '';
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            getPackageColor(packageTime).withAlpha(30),
-            getPackageColor(packageTime).withAlpha(10),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.payment, color: Theme.of(context).colorScheme.onPrimary, size: 28),
-             AppSpace.widthSpace_8,
-              Expanded(
-                child: Text(
-                  widget.title,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primaryFixed,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (widget.description != null) ...[
-            AppSpace.heightSpace_12,
-            Text(
-              widget.description!,
-              style: const TextStyle(color: Colors.white70, fontSize: 14),
-            ),
-          ],
-          AppSpace.heightSpace_16,
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white.withAlpha(20),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'مبلغ قابل پرداخت:',
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.primaryFixed,
-                      fontSize: 14),
-                ),
-                Text(
-                  '${widget.amount.toString().seRagham().toPersianDigit()} تومان',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primaryFixed,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildCardForm(ThemeData theme) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.grey.withAlpha(25),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade200),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withAlpha(10),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,6 +252,11 @@ class _BankCardPaymentState extends State<BankCardPayment> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.grey
+                )
+              ),
               counterText: '',
             ),
             onChanged: (value) {
@@ -378,6 +299,11 @@ class _BankCardPaymentState extends State<BankCardPayment> {
                     prefixIcon: const Icon(Icons.date_range),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey
+                        )
                     ),
                     counterText: '',
                   ),
@@ -444,6 +370,11 @@ class _BankCardPaymentState extends State<BankCardPayment> {
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey
+                        )
                     ),
                     counterText: '',
                   ),
