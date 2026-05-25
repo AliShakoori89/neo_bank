@@ -29,6 +29,8 @@ Widget allServicesList() {
               onTap: (){
                 if(servicesItem[index]['id'] == 1){
                   context.push('/charge_internet_page');
+                }else if(servicesItem[index]['id'] == 2){
+                  context.push('/fund_transfer_page');
                 }
               },
             ),
