@@ -9,7 +9,8 @@ class PaymentHandler {
   static Future<void> handlePayment({
     required BuildContext context,
     required String? selectedWalletAddress,
-    required String phoneNumber,
+    required String sourcePhoneNumber,
+    required String destinationPhoneNumber,
     required int productCode,
     required Function(bool) setLoading,
     required Function() onSuccess,
@@ -45,12 +46,13 @@ class PaymentHandler {
     setLoading(true);
 
     if (context.mounted) {
+
       context.read<InternetPackageBloc>().add(
         BuyInternetPackage(
-          sourceMobileNumber: phoneNumber,
+          sourceMobileNumber: sourcePhoneNumber,
           walletAddress: walletAddress!,
           productCode: productCode,
-          destMobileNumber: phoneNumber,
+          destMobileNumber: destinationPhoneNumber,
         ),
       );
     }
