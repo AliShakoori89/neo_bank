@@ -14,11 +14,13 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
+import '../../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../../../Features/Home_Page/Data/Model/internet_package_model.dart';
-import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Inernet_package/Package_Card_Component/Package_Details/package_details.dart';
+import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/Package_Details/package_details.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Directive_Charge/directive_charge_page.dart';
-import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Inernet_package/internet_packages_page.dart';
+import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/internet_packages_page.dart';
 import '../../../Features/Main_Page/Presentation/main_page.dart';
+import '../../Utils/Payment_Page/payment_page.dart';
 
 final GoRouter router = GoRouter(
   navigatorKey: rootNavigatorKey,
@@ -72,6 +74,25 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/local_login_page',
       builder: (context, state) => const LocalLoginPage(),
+    ),
+
+    GoRoute(
+      path: '/fund_transfer_page',
+      builder: (context, state) => const FundTransferPage(),
+    ),
+
+    GoRoute(
+      path: '/payment_page',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        return PaymentPage(
+          amount: extra?['amount'] ?? '0',
+          title: extra?['title'] ?? 'پرداخت',
+          package: extra?['package'] ?? InternetPackageModel(),
+          phoneNumber: extra?['phoneNumber'] ?? '',
+
+        );
+      },
     ),
 
     GoRoute(
