@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/card_list_model.dart';
 import '../../../../../../Core/Const/app_colors.dart';
+import '../../Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_balance.dart';
+import '../../Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_header.dart';
+import '../../Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_number_and_date.dart';
 
-class CustomCard extends StatelessWidget {
-  const CustomCard({super.key, required this.theme, required this.isSelected, required this.onTap, required this.title, this.description});
+class CustomSelectorCard extends StatelessWidget {
+  const CustomSelectorCard({super.key, required this.theme, required this.isSelected, required this.onTap, required this.bankCard});
 
   final ThemeData theme;
   final bool isSelected;
   final VoidCallback onTap;
-  final String title;
-  final String? description;
+  final CardDataModel bankCard;
 
   @override
   Widget build(BuildContext context) {
@@ -17,25 +20,24 @@ class CustomCard extends StatelessWidget {
       onTap: onTap,
       child: Stack(
         children: [
-
           Padding(
             padding:EdgeInsets.only(
                 right: 15
             ),
             child: Container(
                 width: double.infinity,
-                height: 70,
+                height: 220,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                        color: isSelected ? AppColors.splashGradiantColor1 : Colors.grey.withAlpha(30),
+                        color: isSelected ? AppColors.splashGradiantColor1 : Colors.grey,
                         width: 2
                     )
                 ),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: isSelected ? AppColors.circleBorderColor.withAlpha(500) : Colors.grey.withAlpha(30),
+                    color: isSelected ? AppColors.splashGradiantColor1 : Colors.grey.withAlpha(70),
                   ),
                     margin: EdgeInsets.only(
                         right: 15,
@@ -44,30 +46,21 @@ class CustomCard extends StatelessWidget {
                         top: 3
                     ),
                     child: Container(
-                      margin: EdgeInsets.only(
-                        top: 10,
-                        right: 10
+                      decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xFFE0E0E0), width: 2),
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.splashGradiantColor2.withValues(alpha: 0.1),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(title,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: isSelected ? AppColors.homePageCardTitleColor : Theme.of(context).colorScheme.primaryFixed,
-                            ),
-                          ),
-                          AppSpace.heightSpace_8,
-                          Text(description ?? 'پرداخت $title',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Theme.of(context).colorScheme.onPrimary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          )
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 20, 5),
+                        child: Column(
+                          children: [
+                            buildCardHeader(),
+                            AppSpace.heightSpace_32,
+                            buildCardNumberAndDate(bankCard),
+                            CardBalanceWidget(balance: bankCard.availableBalance!),
+                          ],
+                        ),
                       ),
                     )
                 )
@@ -80,7 +73,7 @@ class CustomCard extends StatelessWidget {
                   color: theme.colorScheme.onPrimaryFixed,
                   shape: BoxShape.circle,
                   border: Border.all(
-                      color: isSelected ? AppColors.splashGradiantColor1 : Colors.grey.withAlpha(30),
+                      color: isSelected ? AppColors.splashGradiantColor1 : Colors.grey,
                       width: 2
                   )
               ),
