@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Component/select_wallet_dropdown.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Component/select_deposit_number_dropdown.dart';
 import '../../../../../../Core/Const/app_space.dart';
 import 'custom_formatter.dart';
 import 'input_value_text_field.dart';
@@ -17,6 +17,9 @@ class WithdrawInputContainer extends StatefulWidget {
 }
 
 class _WithdrawInputContainerState extends State<WithdrawInputContainer> {
+
+  List<String> cardDepositNumber = [];
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -39,7 +42,7 @@ class _WithdrawInputContainerState extends State<WithdrawInputContainer> {
                 ),
               ),
               AppSpace.heightSpace_16,
-              SelectWalletDropdown(walletList: widget.walletList),
+              SelectDepositNumberDropdown(cardDepositNumber: cardDepositNumber,),
               AppSpace.heightSpace_24,
               Text('مبلغ مورد نظر خود را وارد نمایید:',
                 style: TextStyle(
