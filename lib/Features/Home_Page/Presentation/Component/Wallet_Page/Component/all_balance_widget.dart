@@ -16,7 +16,7 @@ class AllBalanceWidget extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: AppColors.circleBorderColor.withAlpha(70)
+        color: Colors.grey.withAlpha(25),
       ),
       child: Padding(
         padding: EdgeInsets.only(
