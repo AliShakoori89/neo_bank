@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-import '../../../../../../../Core/Const/app_space.dart';
-import '../../../../Features/Home_Page/Data/Model/internet_package_model.dart';
-import '../../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/get_package_color.dart';
+import '../../../../../../../../Core/Const/app_space.dart';
+import '../../../../../../Data/Model/internet_package_model.dart';
+import '../../Internet_package/Package_Card_Component/get_package_color.dart';
 import 'bank_info.dart';
 
-class BankCard extends StatefulWidget {
-  BankCard({
+class BankCardPayment extends StatefulWidget {
+  BankCardPayment({
     super.key,
     required this.amount,
     required this.title,
     this.description,
     this.onSuccess,
     required this.package,
-    required this.phoneNumber,
     this.selectedWalletTitle
   });
 
@@ -23,14 +22,13 @@ class BankCard extends StatefulWidget {
   final String? description;
   final VoidCallback? onSuccess;
   final InternetPackageModel package;
-  final String phoneNumber;
   String? selectedWalletTitle;
 
   @override
-  State<BankCard> createState() => _BankCardState();
+  State<BankCardPayment> createState() => _BankCardPaymentState();
 }
 
-class _BankCardState extends State<BankCard> {
+class _BankCardPaymentState extends State<BankCardPayment> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _cardNumberController = TextEditingController();
@@ -290,7 +288,7 @@ class _BankCardState extends State<BankCard> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Divider(height: 24),
+          AppSpace.heightSpace_24,
 
           // شماره کارت
           TextFormField(
@@ -304,6 +302,9 @@ class _BankCardState extends State<BankCard> {
             ],
             decoration: InputDecoration(
               labelText: 'شماره کارت',
+              labelStyle: TextStyle(
+                color: Colors.grey,
+              ),
               hintText: 'XXXX XXXX XXXX XXXX',
               prefixIcon: const Icon(Icons.credit_card),
                 suffixIcon: _detectedBank != null
@@ -314,7 +315,7 @@ class _BankCardState extends State<BankCard> {
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: _detectedBank!.color.withOpacity(0.2),
+                      color: _detectedBank!.color.withAlpha(20),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: _detectedBank!.imageAsset != null
@@ -370,6 +371,9 @@ class _BankCardState extends State<BankCard> {
                   ],
                   decoration: InputDecoration(
                     labelText: 'تاریخ انقضا',
+                    labelStyle: TextStyle(
+                      color: Colors.grey,
+                    ),
                     hintText: 'MM/YY',
                     prefixIcon: const Icon(Icons.date_range),
                     border: OutlineInputBorder(
@@ -422,6 +426,9 @@ class _BankCardState extends State<BankCard> {
                   ],
                   decoration: InputDecoration(
                     labelText: 'CVV2',
+                    labelStyle: TextStyle(
+                      color: Colors.grey,
+                    ),
                     hintText: 'XXX',
                     prefixIcon: const Icon(Icons.security),
                     suffixIcon: IconButton(

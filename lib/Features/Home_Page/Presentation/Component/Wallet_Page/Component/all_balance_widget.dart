@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../Core/Const/app_colors.dart';
 import '../../../../../../Core/Const/app_space.dart';
 import '../../../../../../Core/Utils/custom_refresh_button.dart';
 import '../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
@@ -15,6 +16,7 @@ class AllBalanceWidget extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
+        color: AppColors.circleBorderColor.withAlpha(70)
       ),
       child: Padding(
         padding: EdgeInsets.only(
