@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_state.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Component/all_balance_widget.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Component/confirm_button.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/Component/deposit_button.dart';
@@ -27,8 +29,8 @@ class _WalletPageState extends State<WalletPage> {
 
   int _selectedCardIndex = -1;
 
-  bool showDepositContainer = false;
-  bool showWithdrawContainer = false;
+  bool deposit = false;
+  bool withdraw = false;
 
   List<String> walletList = [];
 
@@ -70,7 +72,7 @@ class _WalletPageState extends State<WalletPage> {
                               width: double.infinity,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
-                                  color: Colors.grey.withAlpha(25)
+                                  color: Colors.transparent
                               ),
                               child: Column(
                                 children: [
@@ -80,15 +82,15 @@ class _WalletPageState extends State<WalletPage> {
                                     children: [
                                       DepositButton(function: (){
                                         setState(() {
-                                          showDepositContainer = true;
-                                          showWithdrawContainer = false;
+                                          deposit = true;
+                                          withdraw = false;
                                         });
                                       },),
                                       AppSpace.widthSpace_5,
                                       WithdrawButton(function:(){
                                         setState(() {
-                                          showDepositContainer = false;
-                                          showWithdrawContainer = true;
+                                          deposit = false;
+                                          withdraw = true;
                                         });
                                       }),
                                     ],
@@ -100,8 +102,8 @@ class _WalletPageState extends State<WalletPage> {
                           // AppSpace.heightSpace_16,
                           // AddGiftCard(),
                           AppSpace.heightSpace_32,
-                          DepositInputContainer(showDepositContainer: showDepositContainer, balanceController: balanceController, balanceFormKey: balanceFormKey),
-                          WithdrawInputContainer(showWithdrawContainer: showWithdrawContainer, walletList: walletList, balanceController: balanceController, balanceFormKey: balanceFormKey),
+                          DepositInputContainer(showDepositContainer: deposit, balanceController: balanceController, balanceFormKey: balanceFormKey),
+                          WithdrawInputContainer(showWithdrawContainer: withdraw, walletList: walletList, balanceController: balanceController, balanceFormKey: balanceFormKey),
                           AppSpace.heightSpace_48,
                           Text('لیست کیف ها:',
                             style: TextStyle(
@@ -114,7 +116,14 @@ class _WalletPageState extends State<WalletPage> {
                           // PayTypesList(theme: theme, selectedCardIndex: _selectedCardIndex),
                           WalletTypesList(),
                           AppSpace.heightSpace_48,
-                          ConfirmButton(showDepositContainer: showDepositContainer, showWithdrawContainer: showWithdrawContainer, balanceFormKey: balanceFormKey),
+                          BlocBuilder<TransactionBloc, TransactionState>(
+                            builder: (context, state) {
+                              return ConfirmButton(
+                                  deposit: deposit,
+                                  withdraw: withdraw,
+                                  balanceFormKey: balanceFormKey);
+                            }
+                          ),
                           AppSpace.heightSpace_48,
                         ],
                       ),
