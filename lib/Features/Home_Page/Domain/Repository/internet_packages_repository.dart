@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import '../../../../Core/Const/api_key.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
-import '../../Data/Model/buy_internet_error_model.dart';
+import '../../Data/Model/buy_internet_model.dart';
 import '../../Data/Model/internet_package_model.dart';
 
 class InternetPackagesRepository {
@@ -126,7 +126,7 @@ class InternetPackagesRepository {
 
           // اگر خطا باشد
           if (jsonResponse.containsKey('success') && jsonResponse['success'] == false) {
-            final errorModel = ServiceErrorModel.fromJson(jsonResponse);
+            final errorModel = BuyInternetModel.fromJson(jsonResponse);
             return BuyInternetPackageResult.failure(errorModel);
           }
 
@@ -147,7 +147,7 @@ class InternetPackagesRepository {
       print('Dio Error: ${e.message}');
       if (e.response?.data != null) {
         try {
-          final errorModel = ServiceErrorModel.fromJson(e.response!.data);
+          final errorModel = BuyInternetModel.fromJson(e.response!.data);
           return BuyInternetPackageResult.failure(errorModel);
         } catch (_) {
           return BuyInternetPackageResult.error('خطا در ارتباط با سرور');
@@ -166,7 +166,7 @@ class BuyInternetPackageResult {
   final bool isSuccess;
   final bool isFailure;
   final bool isError;
-  final ServiceErrorModel? errorModel;
+  final BuyInternetModel? errorModel;
   final String? errorMessage;
   final String? data;
 
@@ -199,7 +199,7 @@ class BuyInternetPackageResult {
   }
 
   // خطای تجاری (مثل errorCode 5001)
-  factory BuyInternetPackageResult.failure(ServiceErrorModel error) {
+  factory BuyInternetPackageResult.failure(BuyInternetModel error) {
     return BuyInternetPackageResult._(
       isSuccess: false,
       isFailure: true,
