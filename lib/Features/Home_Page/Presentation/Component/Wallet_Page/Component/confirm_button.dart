@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import '../../../../../../Core/Const/app_colors.dart';
 
 class ConfirmButton extends StatelessWidget {
-  const ConfirmButton({super.key, required this.showDepositContainer, required this.showWithdrawContainer, required this.balanceFormKey});
+  const ConfirmButton({super.key, required this.balanceFormKey, required this.deposit, required this.withdraw});
 
+  final bool deposit;
+  final bool withdraw;
   final GlobalKey<FormState> balanceFormKey;
-  final bool showDepositContainer;
-  final bool showWithdrawContainer;
 
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: showDepositContainer || showWithdrawContainer,
+      visible: deposit || withdraw,
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
           onPressed: () {
             if (balanceFormKey.currentState?.validate() ?? false) {
-              Navigator.pop(context);
+
             }
           },
           style: ElevatedButton.styleFrom(
