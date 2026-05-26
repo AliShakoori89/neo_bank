@@ -1,19 +1,19 @@
-class ServiceErrorModel {
+class BuyInternetModel {
   final bool success;
   final String traceId;
-  final ErrorDetail error;
+  final BuyInternetErrorDetail error;
 
-  ServiceErrorModel({
+  BuyInternetModel({
     required this.success,
     required this.traceId,
     required this.error,
   });
 
-  factory ServiceErrorModel.fromJson(Map<String, dynamic> json) {
-    return ServiceErrorModel(
+  factory BuyInternetModel.fromJson(Map<String, dynamic> json) {
+    return BuyInternetModel(
       success: json['success'] ?? false,
       traceId: json['traceId'] ?? '',
-      error: ErrorDetail.fromJson(json['error'] ?? {}),
+      error: BuyInternetErrorDetail.fromJson(json['error'] ?? {}),
     );
   }
 
@@ -22,19 +22,19 @@ class ServiceErrorModel {
   String get errorMessage => error.errorMessage;
 }
 
-class ErrorDetail {
+class BuyInternetErrorDetail {
   final int errorCode;
   final String errorMessage;
   final dynamic owner;
 
-  ErrorDetail({
+  BuyInternetErrorDetail({
     required this.errorCode,
     required this.errorMessage,
     this.owner,
   });
 
-  factory ErrorDetail.fromJson(Map<String, dynamic> json) {
-    return ErrorDetail(
+  factory BuyInternetErrorDetail.fromJson(Map<String, dynamic> json) {
+    return BuyInternetErrorDetail(
       errorCode: json['errorCode'] ?? 0,
       errorMessage: json['errorMessage'] ?? 'خطای ناشناخته',
       owner: json['owner'],
