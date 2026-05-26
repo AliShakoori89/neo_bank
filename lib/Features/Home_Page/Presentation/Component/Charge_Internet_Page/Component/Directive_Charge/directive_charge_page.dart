@@ -6,6 +6,8 @@ import '../../../../../../../Core/Utils/custom_button.dart';
 import '../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../../../Bloc/Wallet_Bloc/wallet_event.dart';
 import '../custom_header.dart';
+import 'Component/charge_amount_card.dart';
+import 'Component/charge_amounts.dart';
 
 class DirectiveChargePage extends StatefulWidget {
   const DirectiveChargePage({super.key});
@@ -19,15 +21,6 @@ class _DirectiveChargePageState extends State<DirectiveChargePage> {
   final GlobalKey<FormState> phoneNumberFormKey = GlobalKey<FormState>();
   String? selectedAmount;
   bool isLoading = false;
-
-  final List<Map<String, dynamic>> chargeAmounts = [
-    {'amount': '10,000', 'value': 10000, 'color': AppColors.splashGradiantColor1},
-    {'amount': '20,000', 'value': 20000, 'color': Colors.blue},
-    {'amount': '50,000', 'value': 50000, 'color': Colors.green},
-    {'amount': '100,000', 'value': 100000, 'color': Colors.orange},
-    {'amount': '200,000', 'value': 200000, 'color': Colors.purple},
-    {'amount': '500,000', 'value': 500000, 'color': Colors.red},
-  ];
 
   @override
   void initState() {
@@ -178,44 +171,3 @@ class _DirectiveChargePageState extends State<DirectiveChargePage> {
   }
 }
 
-class ChargeAmountCard extends StatelessWidget {
-  const ChargeAmountCard({
-    super.key,
-    required this.amount,
-    required this.color,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  final String amount;
-  final Color color;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected ? color : Colors.grey.withOpacity(0.3),
-            width: isSelected ? 2 : 1,
-          ),
-          color: isSelected ? color.withOpacity(0.1) : Colors.transparent,
-        ),
-        child: Center(
-          child: Text(
-            '$amount تومان',
-            style: TextStyle(
-              color: isSelected ? color : Colors.grey,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              fontSize: 16,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
