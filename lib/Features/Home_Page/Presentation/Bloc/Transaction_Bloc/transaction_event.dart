@@ -11,16 +11,14 @@ class ChargeTransactionEvent extends TransactionEvent {
   final String customerWalletAddress;
   final int amount;
   final String customerDepositNumber;
-  final String idempotentKey;
 
-  const ChargeTransactionEvent({required this.customerWalletAddress, required this.amount, required this.customerDepositNumber, required this.idempotentKey});
+  const ChargeTransactionEvent({required this.customerWalletAddress, required this.amount, required this.customerDepositNumber});
 }
 
 class WithdrawTransactionEvent extends TransactionEvent {
   final String customerWalletAddress;
   final int amount;
   final String customerDepositNumber;
-  final String idempotentKey;
 
-  const WithdrawTransactionEvent({required this.customerWalletAddress, required this.amount, required this.customerDepositNumber, required this.idempotentKey});
+  const WithdrawTransactionEvent({required this.customerWalletAddress, required this.amount, required this.customerDepositNumber});
 }
