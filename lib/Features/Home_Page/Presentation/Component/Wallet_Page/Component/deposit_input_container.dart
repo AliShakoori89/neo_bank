@@ -5,7 +5,7 @@ import 'custom_formatter.dart';
 import 'input_value_text_field.dart';
 
 class DepositInputContainer extends StatefulWidget {
-  const DepositInputContainer({
+  DepositInputContainer({
     super.key,
     required this.showDepositContainer,
     required this.balanceController,
@@ -14,7 +14,7 @@ class DepositInputContainer extends StatefulWidget {
     this.onAmountChanged,
   });
 
-  final bool showDepositContainer;
+  late bool showDepositContainer;
   final CustomNumberFormatter balanceController;
   final GlobalKey<FormState> balanceFormKey;
   final Function(String) onDepositNumberSelected;
@@ -29,46 +29,62 @@ class _DepositInputContainerState extends State<DepositInputContainer> {
   Widget build(BuildContext context) {
     return Visibility(
       visible: widget.showDepositContainer,
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Colors.grey.withAlpha(25),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Text(
-                'شماره حساب مورد نظر خود را انتخاب نمایید:',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Theme.of(context).colorScheme.primaryFixed,
-                ),
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Colors.grey.withAlpha(25),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  AppSpace.heightSpace_24,
+                  Text(
+                    'شماره حساب مورد نظر خود را انتخاب نمایید:',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).colorScheme.primaryFixed,
+                    ),
+                  ),
+                  AppSpace.heightSpace_16,
+                  SelectDepositNumberDropdown(
+                    onSelected: widget.onDepositNumberSelected,  // ✅ ارسال callback
+                  ),
+                  AppSpace.heightSpace_24,
+                  Text(
+                    'مبلغ مورد نظر خود را وارد نمایید:',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).colorScheme.primaryFixed,
+                    ),
+                  ),
+                  AppSpace.heightSpace_16,
+                  InputValueTextField(
+                    balanceController: widget.balanceController,
+                    balanceFormKey: widget.balanceFormKey,
+                    onAmountChanged: widget.onAmountChanged,
+                  ),
+                ],
               ),
-              AppSpace.heightSpace_16,
-              SelectDepositNumberDropdown(
-                onSelected: widget.onDepositNumberSelected,  // ✅ ارسال callback
-              ),
-              AppSpace.heightSpace_24,
-              Text(
-                'مبلغ مورد نظر خود را وارد نمایید:',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Theme.of(context).colorScheme.primaryFixed,
-                ),
-              ),
-              AppSpace.heightSpace_16,
-              InputValueTextField(
-                balanceController: widget.balanceController,
-                balanceFormKey: widget.balanceFormKey,
-                onAmountChanged: widget.onAmountChanged,
-              ),
-            ],
+            ),
           ),
-        ),
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: Icon(Icons.close),
+              onPressed: (){
+                setState(() {
+                  widget.showDepositContainer = !widget.showDepositContainer;
+                });
+              },
+            ),
+          )
+        ],
       ),
     );
   }
