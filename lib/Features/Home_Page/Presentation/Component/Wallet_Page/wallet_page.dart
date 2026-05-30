@@ -52,11 +52,11 @@ class _WalletPageState extends State<WalletPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: theme.colorScheme.onPrimaryFixed,
-        body: BlocConsumer<TransactionBloc, TransactionState>(
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      backgroundColor: theme.colorScheme.onPrimaryFixed,
+      body: SafeArea(
+        child: BlocConsumer<TransactionBloc, TransactionState>(
           listener: (context, state) {
             if (state.status == TransactionStatus.success) {
               // نمایش پیام موفقیت

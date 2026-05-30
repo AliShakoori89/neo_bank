@@ -71,10 +71,10 @@ class _InternetPackagesPageState extends State<InternetPackagesPage> {
 
     final theme = Theme.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: theme.colorScheme.onPrimaryFixed,
-        body: Column(
+    return Scaffold(
+      backgroundColor: theme.colorScheme.onPrimaryFixed,
+      body: SafeArea(
+        child: Column(
           children: [
             CustomHeader(title: 'انتخاب بسته اینترنت'),
             AppSpace.heightSpace_12,

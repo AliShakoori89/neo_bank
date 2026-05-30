@@ -52,11 +52,11 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
 
     final theme = Theme.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-          resizeToAvoidBottomInset: true,
-          backgroundColor: theme.colorScheme.onPrimaryFixed,
-          body: Column(
+    return Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: theme.colorScheme.onPrimaryFixed,
+        body: SafeArea(
+          child: Column(
             children: [
               CustomHeader(title: 'شارژ و اینترنت'),
               SizedBox(
@@ -86,23 +86,23 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
                   children: [
                     OtherBankCardPayment(amount: widget.amount, title: widget.title, package: widget.package),
                     BlocBuilder<ProfileBloc, ProfileState>(
-                      builder: (context, state) {
+                        builder: (context, state) {
 
-                        final String sourcePhoneNumber = state.mobileNumber!;
+                          final String sourcePhoneNumber = state.mobileNumber!;
 
-                        return BlocBuilder<WalletBloc, WalletState>(
-                            builder: (context, state)  {
-                              print(state.walletDetails.first.address);
-                              return WalletPayment(
-                                  amount: widget.amount,
-                                  title: widget.title,
-                                  package: widget.package,
-                                  sourcePhoneNumber: sourcePhoneNumber,
-                                  destinationPhoneNumber: widget.phoneNumber,
-                                  selectedWalletAddress: state.walletDetails.first.address ?? '');
-                            }
-                        );
-                      }
+                          return BlocBuilder<WalletBloc, WalletState>(
+                              builder: (context, state)  {
+                                print(state.walletDetails.first.address);
+                                return WalletPayment(
+                                    amount: widget.amount,
+                                    title: widget.title,
+                                    package: widget.package,
+                                    sourcePhoneNumber: sourcePhoneNumber,
+                                    destinationPhoneNumber: widget.phoneNumber,
+                                    selectedWalletAddress: state.walletDetails.first.address ?? '');
+                              }
+                          );
+                        }
                     ),
                     ThisBankCardPayment(),
                   ],
@@ -110,8 +110,8 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
               ),
               AppSpace.heightSpace_16,
             ],
-          )
-      ),
+          ),
+        )
     );
   }
 }

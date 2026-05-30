@@ -51,183 +51,183 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
 
     final theme = Theme.of(context);
 
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: theme.colorScheme.onPrimaryFixed,
-        body: Column(
-          children: [
-            CustomHeader(title: 'شارژ و اینترنت'),
-            SizedBox(
-              height: 56,
-              width: double.infinity,
-              child: TabBar(
-                controller: _tabController,
-                tabs: const [
-                  Tab(text: 'شارژ مستقیم'),
-                  Tab(text: 'بسته اینترنت'),
-                ],
-                indicatorSize: TabBarIndicatorSize.tab,
-                dividerHeight: 0,
-                labelColor: AppColors.splashGradiantColor2,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: AppColors.splashGradiantColor2,
-                indicatorWeight: 1.0,
-                splashFactory: NoSplash.splashFactory,
-              ),
-            ),
-            Container(
-          margin: EdgeInsets.only(
-              left: 20,
-              right: 20
-          ),
+        body: SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppSpace.heightSpace_32,
-              Text(
-                'شماره تلفن همراه را وارد نمایید',
-                style: TextStyle(color: Theme.of(context).colorScheme.primaryFixed),
+              CustomHeader(title: 'شارژ و اینترنت'),
+              SizedBox(
+                height: 56,
+                width: double.infinity,
+                child: TabBar(
+                  controller: _tabController,
+                  tabs: const [
+                    Tab(text: 'شارژ مستقیم'),
+                    Tab(text: 'بسته اینترنت'),
+                  ],
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  dividerHeight: 0,
+                  labelColor: AppColors.splashGradiantColor2,
+                  unselectedLabelColor: Colors.grey,
+                  indicatorColor: AppColors.splashGradiantColor2,
+                  indicatorWeight: 1.0,
+                  splashFactory: NoSplash.splashFactory,
+                ),
               ),
-              AppSpace.heightSpace_8,
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: IconButton(
-                      onPressed: () async{
-                        Contact? contact = await _contactPicker.selectContact();
-                        setState(() {
-                          _contacts = contact == null ? null : [contact];
-                          phoneNumberController.text = convertPhoneNumber(_contacts!.first.phoneNumbers![0].toString());
-                        });
+              Container(
+                margin: EdgeInsets.only(
+                    left: 20,
+                    right: 20
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppSpace.heightSpace_32,
+                    Text(
+                      'شماره تلفن همراه را وارد نمایید',
+                      style: TextStyle(color: Theme.of(context).colorScheme.primaryFixed),
+                    ),
+                    AppSpace.heightSpace_8,
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: IconButton(
+                            onPressed: () async{
+                              Contact? contact = await _contactPicker.selectContact();
+                              setState(() {
+                                _contacts = contact == null ? null : [contact];
+                                phoneNumberController.text = convertPhoneNumber(_contacts!.first.phoneNumbers![0].toString());
+                              });
+                            },
+                            icon: Icon(Icons.contacts_rounded, color: AppColors.splashGradiantColor2,),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 9,
+                          child: Form(
+                            key: phoneNumberFormKey,
+                            child: TextFormField(
+                              textDirection: TextDirection.ltr,
+                              controller: phoneNumberController,
+                              textAlignVertical: TextAlignVertical.center,
+                              keyboardType: TextInputType.number,
+                              obscureText: false,
+                              style: TextStyle(
+                                color: Theme.of(context).appBarTheme.titleTextStyle!.color,
+                              ),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(11),
+                              ],
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'لطفا شماره همراه خود را وارد نمایید.';
+                                }
+                                if (value.length != 11) {
+                                  return 'شماره همراه وارد شده صحیح نمی باشد.';
+                                }
+                                if (value.startsWith('09') == false) {
+                                  return 'شماره همراه وارد شده صحیح نمی باشد.';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                hintText: '09XXXXXXXXX',
+                                hintStyle: TextStyle(
+                                  color: Theme.of(context).colorScheme.surface,
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 0,
+                                ),
+                                hintTextDirection: TextDirection.ltr,
+                                contentPadding: EdgeInsets.symmetric(vertical: 12.0),
+                                // تنظیم پدینگ عمودی
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.surfaceDim,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: Theme.of(context).colorScheme.surfaceDim,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                    color: AppColors.splashGradiantColor2,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 4), // پدینگ کم
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(child: Icon(Icons.sim_card, color: Colors.amber)),
+                                  const SizedBox(width: 2), // فاصله بسیار کم
+                                  Expanded(child: Icon(Icons.keyboard_arrow_down)),
+                                ],
+                              ),
+                            ),
+                            onTap: () {
+                              selectOperatorType(context, selectedOperator);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    AppSpace.heightSpace_32,
+                    CustomButton(
+                      buttonTitle: 'تایید',
+                      buttonOnPressed: (){
+          
+                        if (phoneNumberFormKey.currentState!.validate()) {
+                          if (selectedOperator == null) {
+                            AppSnackBar.errorTop(context, 'لطفاً اپراتور خود را انتخاب کنید');
+                            return;
+                          }
+          
+                          if (selectedSimType == null) {
+                            AppSnackBar.errorTop(context, 'لطفاً نوع سیم کارت خود را انتخاب کنید');
+                            return;
+                          }
+          
+                          if(_tabController.index == 0){
+                            context.push('/directive_charge_page');
+                          }else{
+                            context.push('/internet_package_page', extra: {
+                              'selectedOperator': selectedOperator == 'همراه اول' ? 2 : selectedOperator == 'ایرانسل' ? 1 : 15,
+                              'selectedSimType': selectedSimType == 'دائمی' ? 1
+                                  : selectedSimType == 'اعتباری' ? 2
+                                  : selectedSimType == 'دائمی- اعتباری' ? 3
+                                  : selectedSimType == 'دیتا – دائمی' ? 4
+                                  : 5,
+                              'phoneNumber': phoneNumberController.text,
+          
+                            });
+                          }
+                        }
+          
                       },
-                      icon: Icon(Icons.contacts_rounded, color: AppColors.splashGradiantColor2,),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 9,
-                    child: Form(
-                      key: phoneNumberFormKey,
-                      child: TextFormField(
-                        textDirection: TextDirection.ltr,
-                        controller: phoneNumberController,
-                        textAlignVertical: TextAlignVertical.center,
-                        keyboardType: TextInputType.number,
-                        obscureText: false,
-                        style: TextStyle(
-                          color: Theme.of(context).appBarTheme.titleTextStyle!.color,
-                        ),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(11),
-                        ],
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'لطفا شماره همراه خود را وارد نمایید.';
-                          }
-                          if (value.length != 11) {
-                            return 'شماره همراه وارد شده صحیح نمی باشد.';
-                          }
-                          if (value.startsWith('09') == false) {
-                            return 'شماره همراه وارد شده صحیح نمی باشد.';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          hintText: '09XXXXXXXXX',
-                          hintStyle: TextStyle(
-                            color: Theme.of(context).colorScheme.surface,
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: 0,
-                          ),
-                          hintTextDirection: TextDirection.ltr,
-                          contentPadding: EdgeInsets.symmetric(vertical: 12.0),
-                          // تنظیم پدینگ عمودی
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.surfaceDim,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).colorScheme.surfaceDim,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(
-                              color: AppColors.splashGradiantColor2,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 4), // پدینگ کم
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(child: Icon(Icons.sim_card, color: Colors.amber)),
-                            const SizedBox(width: 2), // فاصله بسیار کم
-                            Expanded(child: Icon(Icons.keyboard_arrow_down)),
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        selectOperatorType(context, selectedOperator);
-                      },
-                    ),
-                  ),
-                ],
+                    )
+                  ],
+                ),
               ),
-              AppSpace.heightSpace_32,
-              CustomButton(
-                buttonTitle: 'تایید',
-                buttonOnPressed: (){
-
-                  if (phoneNumberFormKey.currentState!.validate()) {
-                    if (selectedOperator == null) {
-                      AppSnackBar.errorTop(context, 'لطفاً اپراتور خود را انتخاب کنید');
-                      return;
-                    }
-
-                    if (selectedSimType == null) {
-                      AppSnackBar.errorTop(context, 'لطفاً نوع سیم کارت خود را انتخاب کنید');
-                      return;
-                    }
-
-                    if(_tabController.index == 0){
-                      context.push('/directive_charge_page');
-                    }else{
-                      context.push('/internet_package_page', extra: {
-                        'selectedOperator': selectedOperator == 'همراه اول' ? 2 : selectedOperator == 'ایرانسل' ? 1 : 15,
-                        'selectedSimType': selectedSimType == 'دائمی' ? 1
-                            : selectedSimType == 'اعتباری' ? 2
-                            : selectedSimType == 'دائمی- اعتباری' ? 3
-                            : selectedSimType == 'دیتا – دائمی' ? 4
-                            : 5,
-                        'phoneNumber': phoneNumberController.text,
-
-                      });
-                    }
-                  }
-
-                },
-              )
             ],
           ),
-        ),
-          ],
         )
-      ),
     );
   }
 

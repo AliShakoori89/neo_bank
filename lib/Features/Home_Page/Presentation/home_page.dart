@@ -56,10 +56,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
-        body: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
             children: [
               customHeader(
@@ -80,11 +80,11 @@ class _HomePageState extends State<HomePage> {
                   onPageChanged: (index) => setState(() => currentBankCard = index)),
               allServicesList(),
               buildSecondSlider(
-                context,
-                facilitiesCardController,
-                facilitiesCardCurrent,
-                facilitiesCard,
-                onPageChanged: (index) => setState(() => facilitiesCardCurrent = index)
+                  context,
+                  facilitiesCardController,
+                  facilitiesCardCurrent,
+                  facilitiesCard,
+                  onPageChanged: (index) => setState(() => facilitiesCardCurrent = index)
               ),
               //لست تراکنش ها
               BlocBuilder<AllCardsBloc, AllCardsState>(

@@ -38,11 +38,11 @@ class _DirectiveChargePageState extends State<DirectiveChargePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: theme.colorScheme.onPrimaryFixed,
-        body: Column(
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      backgroundColor: theme.colorScheme.onPrimaryFixed,
+      body: SafeArea(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
@@ -62,7 +62,7 @@ class _DirectiveChargePageState extends State<DirectiveChargePage> {
                       ),
                     ),
                     AppSpace.heightSpace_32,
-
+        
                     // لیست مبالغ
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -93,16 +93,16 @@ class _DirectiveChargePageState extends State<DirectiveChargePage> {
                     ),
                   ],
                 )
-
+        
               ],
             ),
             Spacer(),
             // دکمه ادامه
             Padding(
               padding: EdgeInsets.only(
-                left: 20,
-                right: 20,
-                bottom: 20
+                  left: 20,
+                  right: 20,
+                  bottom: 20
               ),
               child: CustomButton(
                 buttonTitle: 'ادامه',

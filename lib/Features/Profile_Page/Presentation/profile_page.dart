@@ -72,10 +72,10 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: theme.colorScheme.onPrimaryFixed,
-        body: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: theme.colorScheme.onPrimaryFixed,
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
             children: [
 
@@ -137,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                               child: ProfilePageCustomCard(
                                 iconPath:
-                                    'assets/svg/bank_services_page/passcode.svg',
+                                'assets/svg/bank_services_page/passcode.svg',
                                 title: 'رمز همراه بانک',
                                 widget: const Icon(
                                   Icons.arrow_forward_ios_outlined,
@@ -150,53 +150,53 @@ class _ProfilePageState extends State<ProfilePage> {
 
                             /// ورود بیومتریک
                             ProfilePageCustomCard(
-                              iconPath: 'assets/svg/fingerprint-03.svg',
-                              title: 'ورود بیومتریک',
-                              widget: SizedBox(
-                                height: 24,
-                                width: 40,
-                                child: Transform.scale(
-                                  scale: 0.7,
-                                  child: Switch(
-                                    activeTrackColor: AppColors.splashGradiantColor1,
-                                    value: isSwitchOn,
-                                    onChanged: isSupported
-                                        ? (val) async {
-                                      if (val == true) {
-                                        // تلاش برای احراز هویت
-                                        final success = await _biometricService.authenticate(false);
+                                iconPath: 'assets/svg/fingerprint-03.svg',
+                                title: 'ورود بیومتریک',
+                                widget: SizedBox(
+                                  height: 24,
+                                  width: 40,
+                                  child: Transform.scale(
+                                    scale: 0.7,
+                                    child: Switch(
+                                      activeTrackColor: AppColors.splashGradiantColor1,
+                                      value: isSwitchOn,
+                                      onChanged: isSupported
+                                          ? (val) async {
+                                        if (val == true) {
+                                          // تلاش برای احراز هویت
+                                          final success = await _biometricService.authenticate(false);
 
-                                        if (!mounted) return;
+                                          if (!mounted) return;
 
-                                        if (success) {
-                                          setState(() {
-                                            isSwitchOn = true;
-                                          });
-                                          await _saveSwitchState(true);
+                                          if (success) {
+                                            setState(() {
+                                              isSwitchOn = true;
+                                            });
+                                            await _saveSwitchState(true);
+                                          } else {
+                                            // اگر احراز هویت ناموفق بود
+                                            setState(() {
+                                              isSwitchOn = false;
+                                            });
+
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(
+                                                content: Text('احراز هویت بیومتریک ناموفق بود'),
+                                              ),
+                                            );
+                                          }
                                         } else {
-                                          // اگر احراز هویت ناموفق بود
+                                          // خاموش کردن بدون احراز هویت
                                           setState(() {
                                             isSwitchOn = false;
                                           });
-
-                                          ScaffoldMessenger.of(context).showSnackBar(
-                                            const SnackBar(
-                                              content: Text('احراز هویت بیومتریک ناموفق بود'),
-                                            ),
-                                          );
+                                          await _saveSwitchState(false);
                                         }
-                                      } else {
-                                        // خاموش کردن بدون احراز هویت
-                                        setState(() {
-                                          isSwitchOn = false;
-                                        });
-                                        await _saveSwitchState(false);
                                       }
-                                    }
-                                        : null,
+                                          : null,
+                                    ),
                                   ),
-                                ),
-                              )
+                                )
                             ),
                           ],
                         ),

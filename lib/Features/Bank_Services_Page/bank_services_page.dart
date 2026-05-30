@@ -3,9 +3,7 @@ import 'package:neo_bank_mehr_iran/Features/Bank_Services_Page/Presentation/Comp
 import 'package:neo_bank_mehr_iran/Features/Bank_Services_Page/Presentation/Component/widget_container.dart';
 import '../../Core/Const/app_space.dart';
 import '../../Core/Services/check_connection_service.dart';
-import '../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../Core/Utils/custom_header.dart';
-import '../Main_Page/Presentation/main_page.dart';
 import 'Presentation/Component/widget_title.dart';
 
 class BankServicesPage extends StatefulWidget {
@@ -25,10 +23,10 @@ class _BankServicesPageState extends State<BankServicesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
-        body: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onPrimaryFixed,
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -44,7 +42,7 @@ class _BankServicesPageState extends State<BankServicesPage> {
                   ),
                 ),
               ),
-
+        
               // --- Body ---
               Container(
                 width: double.infinity,
@@ -57,7 +55,7 @@ class _BankServicesPageState extends State<BankServicesPage> {
                     widgetContainer(context, [
                       CustomIconWidget(
                         iconPath:
-                            'assets/svg/bank_services_page/switch-vertical.svg',
+                        'assets/svg/bank_services_page/switch-vertical.svg',
                         iconName: 'انتقال وجه',
                       ),
                       CustomIconWidget(
@@ -81,19 +79,19 @@ class _BankServicesPageState extends State<BankServicesPage> {
                         iconName: 'انتقال شناسه دار',
                       ),
                     ]),
-
+        
                     AppSpace.heightSpace_4,
-
+        
                     widgetTitle(context, 'امور حسابتان را آنلاین انجام دهید'),
                     widgetContainer(context, [
                       CustomIconWidget(
                         iconPath:
-                            'assets/svg/bank_services_page/switch-vertical.svg',
+                        'assets/svg/bank_services_page/switch-vertical.svg',
                         iconName: 'افتتاح حساب جدید',
                       ),
                       CustomIconWidget(
                         iconPath:
-                            'assets/svg/bank_services_page/credit-card.svg',
+                        'assets/svg/bank_services_page/credit-card.svg',
                         iconName: 'حساب و کارت',
                       ),
                       CustomIconWidget(
@@ -102,12 +100,12 @@ class _BankServicesPageState extends State<BankServicesPage> {
                       ),
                       CustomIconWidget(
                         iconPath:
-                            'assets/svg/bank_services_page/credit-card-plus.svg',
+                        'assets/svg/bank_services_page/credit-card-plus.svg',
                         iconName: 'صدور کارت',
                       ),
                       CustomIconWidget(
                         iconPath:
-                            'assets/svg/bank_services_page/credit-card-x.svg',
+                        'assets/svg/bank_services_page/credit-card-x.svg',
                         iconName: 'مسدودی کارت',
                       ),
                       CustomIconWidget(
@@ -115,14 +113,14 @@ class _BankServicesPageState extends State<BankServicesPage> {
                         iconName: 'تبدیل کارت به شبا',
                       ),
                     ]),
-
+        
                     AppSpace.heightSpace_4,
-
+        
                     widgetTitle(context, 'چک و وام خود را مدیریت کنید'),
                     widgetContainer(context, [
                       CustomIconWidget(
                         iconPath:
-                            'assets/svg/bank_services_page/coins-hand.svg',
+                        'assets/svg/bank_services_page/coins-hand.svg',
                         iconName: 'درخواست وام',
                       ),
                       CustomIconWidget(
@@ -131,7 +129,7 @@ class _BankServicesPageState extends State<BankServicesPage> {
                       ),
                       CustomIconWidget(
                         iconPath:
-                            'assets/svg/bank_services_page/calculator.svg',
+                        'assets/svg/bank_services_page/calculator.svg',
                         iconName: 'معدل حساب',
                       ),
                       CustomIconWidget(
@@ -155,19 +153,19 @@ class _BankServicesPageState extends State<BankServicesPage> {
                         iconName: 'اعتبار سنجی',
                       ),
                     ]),
-
+        
                     AppSpace.heightSpace_4,
-
+        
                     widgetTitle(context, 'با ما همراه باشید'),
                     widgetContainer(context, [
                       CustomIconWidget(
                         iconPath:
-                            'assets/svg/bank_services_page/file-heart.svg',
+                        'assets/svg/bank_services_page/file-heart.svg',
                         iconName: 'همیارانر مهر',
                       ),
                       CustomIconWidget(
                         iconPath:
-                            'assets/svg/bank_services_page/marker-pin.svg',
+                        'assets/svg/bank_services_page/marker-pin.svg',
                         iconName: 'شعب بانک',
                       ),
                       CustomIconWidget(
@@ -180,14 +178,14 @@ class _BankServicesPageState extends State<BankServicesPage> {
                       ),
                       CustomIconWidget(
                         iconPath:
-                            'assets/svg/bank_services_page/dots-horizontal.svg',
+                        'assets/svg/bank_services_page/dots-horizontal.svg',
                         iconName: 'سایر خدمات',
                       ),
                     ]),
                   ],
                 ),
               ),
-
+        
               AppSpace.heightSpace_90,
             ],
           ),

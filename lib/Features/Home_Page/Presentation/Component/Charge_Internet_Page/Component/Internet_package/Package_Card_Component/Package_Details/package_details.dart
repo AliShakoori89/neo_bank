@@ -45,63 +45,63 @@ class _InternetPackageDetailsPageState
     final theme = Theme.of(context);
     final package = widget.package;
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: theme.colorScheme.onPrimaryFixed,
-        body: Column(
+    return Scaffold(
+      backgroundColor: theme.colorScheme.onPrimaryFixed,
+      body: SafeArea(
+        child: Column(
           children: [
             CustomHeader(title: 'جزئیات بسته اینترنت'),
             AppSpace.heightSpace_12,
             Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            buildMainPackageCard(context, widget.package),
-                            AppSpace.heightSpace_16,
-                            buildDetailsSection(context, widget.package,
-                                widget.phoneNumber),
-                            AppSpace.heightSpace_16,
-                            if (widget.package.description.isNotEmpty)
-                              buildDescriptionSection(context, widget.package),
-                            AppSpace.heightSpace_16,
-                            buildTermsSection(context),
-                            // if (_selectedWalletTitle != null) ...[
-                            //   AppSpace.heightSpace_16,
-                            //   buildSelectedWalletInfo(_selectedWalletTitle!, _selectWallet),
-                            // ],
-                          ],
-                        ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildMainPackageCard(context, widget.package),
+                          AppSpace.heightSpace_16,
+                          buildDetailsSection(context, widget.package,
+                              widget.phoneNumber),
+                          AppSpace.heightSpace_16,
+                          if (widget.package.description.isNotEmpty)
+                            buildDescriptionSection(context, widget.package),
+                          AppSpace.heightSpace_16,
+                          buildTermsSection(context),
+                          // if (_selectedWalletTitle != null) ...[
+                          //   AppSpace.heightSpace_16,
+                          //   buildSelectedWalletInfo(_selectedWalletTitle!, _selectWallet),
+                          // ],
+                        ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        bottom: 16,
-                      ),
-                      child: CustomButton(
-                        buttonTitle: 'تایید و پرداخت',
-                        buttonOnPressed: () {
-                          // ارسال اطلاعات به صفحه پرداخت
-                          context.push(
-                            '/payment_page',
-                            extra: {
-                              'phoneNumber': widget.phoneNumber,
-                              'amount': package.priceWithTax.toString(),
-                              'title': 'خرید بسته اینترنت ${package.packageTime}',
-                              'package': package,
-                            },
-                          );
-                        },
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      bottom: 16,
+                    ),
+                    child: CustomButton(
+                      buttonTitle: 'تایید و پرداخت',
+                      buttonOnPressed: () {
+                        // ارسال اطلاعات به صفحه پرداخت
+                        context.push(
+                          '/payment_page',
+                          extra: {
+                            'phoneNumber': widget.phoneNumber,
+                            'amount': package.priceWithTax.toString(),
+                            'title': 'خرید بسته اینترنت ${package.packageTime}',
+                            'package': package,
+                          },
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),
