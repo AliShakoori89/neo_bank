@@ -34,7 +34,6 @@ class _WalletPageState extends State<WalletPage> {
   bool deposit = false;
   bool withdraw = false;
   String? _selectedDepositNumber;
-  int _currentAmount = 0;
 
   @override
   void initState() {
@@ -72,7 +71,6 @@ class _WalletPageState extends State<WalletPage> {
                 deposit = false;
                 withdraw = false;
                 _selectedDepositNumber = null;
-                _currentAmount = 0;
               });
 
             } else if (state.status == TransactionStatus.error) {
@@ -153,7 +151,6 @@ class _WalletPageState extends State<WalletPage> {
                                 onAmountChanged: (amount) {
                                   if (!isLoading) {
                                     setState(() {
-                                      _currentAmount = amount;
                                     });
                                   }
                                 },
@@ -170,7 +167,6 @@ class _WalletPageState extends State<WalletPage> {
                                 onAmountChanged: (amount) {
                                   if (!isLoading) {
                                     setState(() {
-                                      _currentAmount = amount;
                                     });
                                   }
                                 },

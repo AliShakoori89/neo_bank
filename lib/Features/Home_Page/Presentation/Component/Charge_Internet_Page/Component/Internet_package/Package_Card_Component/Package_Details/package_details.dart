@@ -32,10 +32,7 @@ class InternetPackageDetailsPage extends StatefulWidget {
 
 class _InternetPackageDetailsPageState
     extends State<InternetPackageDetailsPage> {
-  bool _isLoading = false;
-  final int _selectedCardIndex = -1;
   WalletModel? walletModel;
-  String? _selectedWalletTitle;
 
   @override
   void initState() {
@@ -69,8 +66,7 @@ class _InternetPackageDetailsPageState
                             buildDetailsSection(context, widget.package,
                                 widget.phoneNumber),
                             AppSpace.heightSpace_16,
-                            if (widget.package.description != null &&
-                                widget.package.description!.isNotEmpty)
+                            if (widget.package.description.isNotEmpty)
                               buildDescriptionSection(context, widget.package),
                             AppSpace.heightSpace_16,
                             buildTermsSection(context),
