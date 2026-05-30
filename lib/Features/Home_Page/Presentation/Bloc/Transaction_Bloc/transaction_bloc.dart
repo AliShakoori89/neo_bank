@@ -1,58 +1,182 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/transaction_model.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/transaction_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_state.dart';
+import '../../../Domain/Repository/transaction_repository.dart';
 
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   final TransactionRepository transactionRepository;
 
-  TransactionBloc( this.transactionRepository) : super(TransactionState.initial()) {
+  TransactionBloc(this.transactionRepository) : super(TransactionState.initial()) {
     on<ChargeTransactionEvent>(_onChargeTransactionEvent);
     on<WithdrawTransactionEvent>(_onWithdrawTransactionEvent);
+    // حذف ResetTransactionEvent - نیازی به آن نیست
   }
 
-  void _onChargeTransactionEvent(
+  Future<void> _onChargeTransactionEvent(
       ChargeTransactionEvent event,
       Emitter<TransactionState> emit,
       ) async {
     try {
-      emit(state.copyWith(status: TransactionStatus.loading));
+      // emit loading state
+      emit(state.copyWith(
+        status: TransactionStatus.loading,
+        message: null,
+      ));
 
-      TransactionModel depositResponse = await transactionRepository.chargeWallet(event.customerDepositNumber, event.amount, event.customerWalletAddress);
-
-      emit(
-        state.copyWith(status: TransactionStatus.success, transactionModel: depositResponse),
+      final response = await transactionRepository.chargeWallet(
+        customerWalletAddress: event.customerWalletAddress,
+        amount: event.amount,
+        customerDepositNumber: event.customerDepositNumber,
       );
+
+      if (response.success) {
+        // بررسی تراکنش تکراری
+        final isDuplicate = response.data.transactionNumber == 'تراکنش تکراری است' ||
+            response.data.transactionNumber.contains('تکراری');
+
+        if (isDuplicate) {
+          emit(state.copyWith(
+            status: TransactionStatus.error,
+            message: 'این تراکنش قبلاً انجام شده است',
+          ));
+        } else {
+          emit(state.copyWith(
+            status: TransactionStatus.success,
+            transactionNumber: response.data.transactionNumber,
+            traceId: response.traceId,
+            message: 'تراکنش با موفقیت انجام شد',
+          ));
+        }
+      } else {
+        emit(state.copyWith(
+          status: TransactionStatus.error,
+          message: response.error?.toString() ?? 'خطا در شارژ کیف پول',
+        ));
+      }
     } on DioException catch (e) {
+      print('DioException: ${e.message}');
+      String errorMessage = 'خطا در ارتباط با سرور';
 
-      emit(state.copyWith(status: TransactionStatus.error));
+      if (e.type == DioExceptionType.connectionTimeout) {
+        errorMessage = 'زمان ارتباط با سرور به پایان رسید';
+      } else if (e.type == DioExceptionType.receiveTimeout) {
+        errorMessage = 'سرور پاسخ نمی‌دهد';
+      } else if (e.type == DioExceptionType.connectionError) {
+        errorMessage = 'لطفاً اتصال اینترنت خود را بررسی کنید';
+      } else if (e.response != null) {
+        try {
+          final errorData = e.response?.data;
+          if (errorData != null) {
+            if (errorData is Map) {
+              if (errorData.containsKey('message')) {
+                errorMessage = errorData['message'].toString();
+              } else if (errorData.containsKey('error')) {
+                errorMessage = errorData['error'].toString();
+              }
+            } else if (errorData is String) {
+              errorMessage = errorData;
+            }
+          }
+        } catch (_) {}
+      }
 
+      emit(state.copyWith(
+        status: TransactionStatus.error,
+        message: errorMessage,
+      ));
     } catch (error) {
-      emit(state.copyWith(status: TransactionStatus.error));
+      print('❌ خطا: $error');
+      print(error);
+      emit(state.copyWith(
+        status: TransactionStatus.error,
+        message: error.toString(),
+      ));
     }
   }
 
-  void _onWithdrawTransactionEvent(
+  Future<void> _onWithdrawTransactionEvent(
       WithdrawTransactionEvent event,
       Emitter<TransactionState> emit,
       ) async {
     try {
-      emit(state.copyWith(status: TransactionStatus.loading));
+      // emit loading state
+      emit(state.copyWith(
+        status: TransactionStatus.loading,
+        message: null,
+      ));
 
-      TransactionModel withdrawResponse = await transactionRepository.withdrawWallet(event.customerDepositNumber, event.amount, event.customerWalletAddress);
-
-      emit(
-        state.copyWith(status: TransactionStatus.success, transactionModel: withdrawResponse),
+      final response = await transactionRepository.withdrawWallet(
+        customerWalletAddress: event.customerWalletAddress,
+        amount: event.amount,
+        customerDepositNumber: event.customerDepositNumber,
       );
+
+      print('Response success: ${response.success}');
+      print('Response data: ${response.data.transactionNumber}');
+
+      if (response.success) {
+        // بررسی تراکنش تکراری
+        final isDuplicate = response.data.transactionNumber == 'تراکنش تکراری است' ||
+            response.data.transactionNumber.contains('تکراری');
+
+        if (isDuplicate) {
+          emit(state.copyWith(
+            status: TransactionStatus.error,
+            message: 'این تراکنش قبلاً انجام شده است',
+          ));
+        } else {
+          emit(state.copyWith(
+            status: TransactionStatus.success,
+            transactionNumber: response.data.transactionNumber,
+            traceId: response.traceId,
+            message: 'تراکنش با موفقیت انجام شد',
+          ));
+        }
+      } else {
+        emit(state.copyWith(
+          status: TransactionStatus.error,
+          message: response.error?.toString() ?? 'خطا در برداشت از کیف پول',
+        ));
+      }
     } on DioException catch (e) {
+      print('DioException: ${e.message}');
+      String errorMessage = 'خطا در ارتباط با سرور';
 
-      emit(state.copyWith(status: TransactionStatus.error));
+      if (e.type == DioExceptionType.connectionTimeout) {
+        errorMessage = 'زمان ارتباط با سرور به پایان رسید';
+      } else if (e.type == DioExceptionType.receiveTimeout) {
+        errorMessage = 'سرور پاسخ نمی‌دهد';
+      } else if (e.type == DioExceptionType.connectionError) {
+        errorMessage = 'لطفاً اتصال اینترنت خود را بررسی کنید';
+      } else if (e.response != null) {
+        try {
+          final errorData = e.response?.data;
+          if (errorData != null) {
+            if (errorData is Map) {
+              if (errorData.containsKey('message')) {
+                errorMessage = errorData['message'].toString();
+              } else if (errorData.containsKey('error')) {
+                errorMessage = errorData['error'].toString();
+              }
+            } else if (errorData is String) {
+              errorMessage = errorData;
+            }
+          }
+        } catch (_) {}
+      }
 
+      emit(state.copyWith(
+        status: TransactionStatus.error,
+        message: errorMessage,
+      ));
     } catch (error) {
-      emit(state.copyWith(status: TransactionStatus.error));
+      print('❌ خطا: $error');
+      print(error);
+      emit(state.copyWith(
+        status: TransactionStatus.error,
+        message: error.toString().replaceFirst(RegExp(r'^Exception:\s*'), ''),
+      ));
     }
   }
 }
-
