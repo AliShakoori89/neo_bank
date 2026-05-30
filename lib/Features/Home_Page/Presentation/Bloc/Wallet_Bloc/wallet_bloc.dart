@@ -1,60 +1,100 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/wallet_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_state.dart';
-
 import '../../../Domain/Repository/wallet_repository.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final WalletRepository walletRepository;
 
-  WalletBloc( this.walletRepository) : super(WalletState.initial()) {
+  WalletBloc(this.walletRepository) : super(WalletState.initial()) {
     on<WalletDetailsPackagesEvent>(_onWalletDetailsPackagesEvent);
     on<BuyPackagesEvent>(_onBuyPackagesEvent);
   }
 
-  void _onWalletDetailsPackagesEvent(
+  Future<void> _onWalletDetailsPackagesEvent(
       WalletDetailsPackagesEvent event,
       Emitter<WalletState> emit,
       ) async {
     try {
       emit(state.copyWith(status: WalletStateStatus.loading));
 
-      final walletDetails = await walletRepository.getWalletDetails();
-      print(walletDetails);
+      final walletResponse = await walletRepository.getWalletDetails();
 
-      emit(
-        state.copyWith(status: WalletStateStatus.success, walletDetails: walletDetails),
-      );
+      if (walletResponse.success) {
+        emit(
+          state.copyWith(
+            status: WalletStateStatus.success,
+            walletDetails: walletResponse.data,
+            traceId: walletResponse.traceId,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            status: WalletStateStatus.error,
+            errorMessage: walletResponse.error?.toString() ?? 'خطا در دریافت اطلاعات کیف پول',
+          ),
+        );
+      }
     } on DioException catch (e) {
-
-      emit(state.copyWith(status: WalletStateStatus.error));
-
+      print('❌ DioError: ${e.message}');
+      emit(
+        state.copyWith(
+          status: WalletStateStatus.error,
+          errorMessage: e.response?.data?.toString() ?? e.message,
+        ),
+      );
     } catch (error) {
-      emit(state.copyWith(status: WalletStateStatus.error));
+      print('❌ Error: $error');
+      emit(
+        state.copyWith(
+          status: WalletStateStatus.error,
+          errorMessage: error.toString(),
+        ),
+      );
     }
   }
 
-  void _onBuyPackagesEvent(
+  Future<void> _onBuyPackagesEvent(
       BuyPackagesEvent event,
       Emitter<WalletState> emit,
       ) async {
     try {
       emit(state.copyWith(status: WalletStateStatus.loading));
 
-      final walletDetails = await walletRepository.buyInternetPackage();
-      print(walletDetails);
+      final purchaseResult = await walletRepository.buyInternetPackage(
+        sourceMobileNumber: event.sourceMobileNumber,
+        walletAddress: event.walletAddress,
+        productCode: event.productCode,
+        destMobileNumber: event.destMobileNumber,
+      );
+
+      print('✅ خرید بسته اینترنت: $purchaseResult');
 
       emit(
-        state.copyWith(status: WalletStateStatus.success, walletDetails: walletDetails),
+        state.copyWith(
+          status: WalletStateStatus.purchaseSuccess,
+          purchaseData: purchaseResult,
+        ),
       );
     } on DioException catch (e) {
-
-      emit(state.copyWith(status: WalletStateStatus.error));
-
+      print('❌ DioError در خرید: ${e.message}');
+      emit(
+        state.copyWith(
+          status: WalletStateStatus.error,
+          errorMessage: e.response?.data?.toString() ?? e.message,
+        ),
+      );
     } catch (error) {
-      emit(state.copyWith(status: WalletStateStatus.error));
+      print('❌ Error در خرید: $error');
+      emit(
+        state.copyWith(
+          status: WalletStateStatus.error,
+          errorMessage: error.toString(),
+        ),
+      );
     }
   }
-
 }
