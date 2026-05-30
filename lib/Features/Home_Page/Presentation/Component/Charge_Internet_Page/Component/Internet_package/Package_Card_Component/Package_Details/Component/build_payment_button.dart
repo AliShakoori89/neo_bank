@@ -7,7 +7,6 @@ Widget buildPaymentButton(BuildContext context, bool isLoading, Future<void> Fun
   final theme = Theme.of(context);
 
   return Container(
-    padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
       color: theme.colorScheme.onPrimaryFixed,
       boxShadow: [
@@ -32,12 +31,18 @@ Widget buildPaymentButton(BuildContext context, bool isLoading, Future<void> Fun
           elevation: 0,
         ),
         child: isLoading
-            ? const SizedBox(
-          width: 24,
-          height: 24,
-          child: CircularProgressIndicator(
-            strokeWidth: 2,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ? SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: Center(
+            child: SizedBox(
+              width: 30,
+              height: 30,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            ),
           ),
         )
             : Row(
