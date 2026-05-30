@@ -1,43 +1,79 @@
-class TransactionModel {
-  final bool? success;
-  final String? traceId;
-  final TransactionErrorDetail? error;
+import 'package:equatable/equatable.dart';
 
-  TransactionModel({
-    this.success,
-    this.traceId,
-    this.error,
+// مدل داده داخلی
+class TransactionData extends Equatable {
+  final String transactionNumber;
+
+  const TransactionData({
+    required this.transactionNumber,
   });
 
-  factory TransactionModel.fromJson(Map<String, dynamic> json) {
-    return TransactionModel(
-      success: json['success'] ?? false,
-      traceId: json['traceId'] ?? '',
-      error: TransactionErrorDetail.fromJson(json['error'] ?? {}),
+  factory TransactionData.fromJson(Map<String, dynamic> json) {
+    return TransactionData(
+      transactionNumber: json['transactionNumber'] as String? ?? '',
     );
   }
 
-  bool get isSuccess => success!;
-  int get errorCode => error!.errorCode;
-  String get errorMessage => error!.errorMessage;
+  Map<String, dynamic> toJson() {
+    return {
+      'transactionNumber': transactionNumber,
+    };
+  }
+
+  @override
+  List<Object?> get props => [transactionNumber];
 }
 
-class TransactionErrorDetail {
-  final int errorCode;
-  final String errorMessage;
-  final dynamic owner;
+// مدل پاسخ اصلی API
+class TransactionResponseModel extends Equatable {
+  final TransactionData data;
+  final bool success;
+  final String traceId;
+  final dynamic error;
 
-  TransactionErrorDetail({
-    required this.errorCode,
-    required this.errorMessage,
-    this.owner,
+  const TransactionResponseModel({
+    required this.data,
+    required this.success,
+    required this.traceId,
+    this.error,
   });
 
-  factory TransactionErrorDetail.fromJson(Map<String, dynamic> json) {
-    return TransactionErrorDetail(
-      errorCode: json['errorCode'] ?? 0,
-      errorMessage: json['errorMessage'] ?? 'خطای ناشناخته',
-      owner: json['owner'],
+  factory TransactionResponseModel.fromJson(Map<String, dynamic> json) {
+    return TransactionResponseModel(
+      data: TransactionData.fromJson(json['data'] as Map<String, dynamic>? ?? {}),
+      success: json['success'] as bool? ?? false,
+      traceId: json['traceId'] as String? ?? '',
+      error: json['error'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'data': data.toJson(),
+      'success': success,
+      'traceId': traceId,
+      'error': error,
+    };
+  }
+
+  @override
+  List<Object?> get props => [data, success, traceId, error];
+}
+
+// ✅ Extension برای بررسی وضعیت تراکنش (این قسمت را اضافه کنید)
+extension TransactionResponseExtension on TransactionResponseModel {
+  bool get isSuccess => success;
+
+  bool get isDuplicateTransaction =>
+      data.transactionNumber == 'تراکنش تکراری است';
+
+  bool get hasValidTransactionNumber =>
+      isSuccess && data.transactionNumber.isNotEmpty &&
+          data.transactionNumber != 'تراکنش تکراری است';
+
+  String get displayMessage {
+    if (!success) return 'خطا در انجام تراکنش';
+    if (isDuplicateTransaction) return 'این تراکنش قبلاً انجام شده است';
+    return 'تراکنش با موفقیت انجام شد';
   }
 }
