@@ -3,37 +3,67 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/wallet_model.da
 
 enum WalletStateStatus {
   initial,
+  loading,
   success,
   error,
-  loading,
+  purchaseSuccess
 }
 
 extension WalletStateStatusX on WalletStateStatus {
   bool get isInitial => this == WalletStateStatus.initial;
+  bool get isLoading => this == WalletStateStatus.loading;
   bool get isSuccess => this == WalletStateStatus.success;
   bool get isError => this == WalletStateStatus.error;
-  bool get isLoading => this == WalletStateStatus.loading;
+  bool get isPurchaseSuccess => this == WalletStateStatus.purchaseSuccess;
 }
 
 class WalletState extends Equatable {
-  const WalletState({required this.status, required this.walletDetails});
-
-  static WalletState initial() =>
-      WalletState(status: WalletStateStatus.initial, walletDetails: []);
-
   final WalletStateStatus status;
-  final List<WalletModel>? walletDetails;
+  final List<WalletModel> walletDetails;
+  final String? traceId;
+  final String? errorMessage;
+  final Map<String, dynamic>? purchaseData;
 
-  @override
-  List<Object?> get props => [status, walletDetails];
+  const WalletState({
+    required this.status,
+    required this.walletDetails,
+    this.traceId,
+    this.errorMessage,
+    this.purchaseData,
+  });
+
+  static WalletState initial() {
+    return const WalletState(
+      status: WalletStateStatus.initial,
+      walletDetails: [],
+      traceId: null,
+      errorMessage: null,
+      purchaseData: null,
+    );
+  }
 
   WalletState copyWith({
     WalletStateStatus? status,
     List<WalletModel>? walletDetails,
+    String? traceId,
+    String? errorMessage,
+    Map<String, dynamic>? purchaseData,
   }) {
     return WalletState(
       status: status ?? this.status,
       walletDetails: walletDetails ?? this.walletDetails,
+      traceId: traceId ?? this.traceId,
+      errorMessage: errorMessage ?? this.errorMessage,
+      purchaseData: purchaseData ?? this.purchaseData,
     );
   }
+
+  @override
+  List<Object?> get props => [
+    status,
+    walletDetails,
+    traceId,
+    errorMessage,
+    purchaseData,
+  ];
 }
