@@ -1,3 +1,5 @@
+// internet_package_bloc.dart
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/internet_packages_repository.dart';
@@ -7,64 +9,85 @@ import 'get_internet_packages_state.dart';
 class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageState> {
   final InternetPackagesRepository internetPackagesRepository;
 
-  InternetPackageBloc( this.internetPackagesRepository) : super(InternetPackageState.initial()) {
+  InternetPackageBloc(this.internetPackagesRepository) : super(InternetPackageState.initial()) {
     on<FetchAllInternetPackages>(_onFetchAllInternetPackages);
     on<FetchInternetPackages>(_onFetchInternetPackages);
-    on<BuyInternetPackage>(_onBuyInternetPackage);  // اضافه کردن هندلر خرید
-    on<ResetBuyStatus>(_onResetBuyStatus);          // اضافه کردن هندلر ریست
+    on<BuyInternetPackage>(_onBuyInternetPackage);
+    on<ResetBuyStatus>(_onResetBuyStatus);
   }
 
-  void _onFetchAllInternetPackages(
+  Future<void> _onFetchAllInternetPackages(
       FetchAllInternetPackages event,
       Emitter<InternetPackageState> emit,
       ) async {
     try {
       emit(state.copyWith(status: InternetPackageStatus.loading));
 
-      final internetPackage = await internetPackagesRepository.getAllInternetPackages(event.operatorCode);
-      print(internetPackage);
+      final internetPackages = await internetPackagesRepository.getAllInternetPackages(event.operatorCode);
 
-      emit(
-        state.copyWith(status: InternetPackageStatus.success, internetPackages: internetPackage),
-      );
+      print('📦 تعداد بسته‌های دریافت شده: ${internetPackages.length}');
+
+      emit(state.copyWith(
+        status: InternetPackageStatus.success,
+        internetPackages: internetPackages,
+        errorMessage: null,
+      ));
     } on DioException catch (e) {
-
-      emit(state.copyWith(status: InternetPackageStatus.error));
-
+      print('❌ Dio Error: ${e.message}');
+      emit(state.copyWith(
+        status: InternetPackageStatus.error,
+        errorMessage: _getErrorMessage(e),
+      ));
     } catch (error) {
-      emit(state.copyWith(status: InternetPackageStatus.error));
+      print('❌ Error: $error');
+      emit(state.copyWith(
+        status: InternetPackageStatus.error,
+        errorMessage: error.toString(),
+      ));
     }
   }
 
-  void _onFetchInternetPackages(
+  Future<void> _onFetchInternetPackages(
       FetchInternetPackages event,
       Emitter<InternetPackageState> emit,
       ) async {
     try {
       emit(state.copyWith(status: InternetPackageStatus.loading));
 
-      final internetPackage = await internetPackagesRepository.getInternetPackages(event.operatorCode, event.packageTimeCode, event.simType, event.traffic);
-      print(internetPackage);
-
-      emit(
-        state.copyWith(status: InternetPackageStatus.success, internetPackages: internetPackage),
+      final internetPackages = await internetPackagesRepository.getInternetPackages(
+        operatorCode: event.operatorCode,
+        packageTimeCode: event.packageTimeCode,
+        simType: event.simType,
+        traffic: event.traffic,
       );
+
+      print('📦 تعداد بسته‌های فیلتر شده: ${internetPackages.length}');
+
+      emit(state.copyWith(
+        status: InternetPackageStatus.success,
+        internetPackages: internetPackages,
+        errorMessage: null,
+      ));
     } on DioException catch (e) {
-
-      emit(state.copyWith(status: InternetPackageStatus.error));
-
+      print('❌ Dio Error: ${e.message}');
+      emit(state.copyWith(
+        status: InternetPackageStatus.error,
+        errorMessage: _getErrorMessage(e),
+      ));
     } catch (error) {
-      emit(state.copyWith(status: InternetPackageStatus.error));
+      print('❌ Error: $error');
+      emit(state.copyWith(
+        status: InternetPackageStatus.error,
+        errorMessage: error.toString(),
+      ));
     }
   }
 
-  // هندلر خرید بسته اینترنت
   Future<void> _onBuyInternetPackage(
       BuyInternetPackage event,
       Emitter<InternetPackageState> emit,
       ) async {
     try {
-      // تغییر وضعیت به در حال خرید
       emit(state.copyWith(
         buyStatus: BuyStatus.loading,
         errorMessage: null,
@@ -73,41 +96,29 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
       ));
 
       final result = await internetPackagesRepository.buyInternetPackage(
-        event.sourceMobileNumber,
-        event.walletAddress,
-        event.productCode,
-        event.destMobileNumber,
+        sourceMobileNumber: event.sourceMobileNumber,
+        walletAddress: event.walletAddress,
+        productCode: event.productCode,
+        destMobileNumber: event.destMobileNumber,
       );
 
       if (result.isSuccess) {
-        // خرید موفق
         emit(state.copyWith(
           buyStatus: BuyStatus.success,
-          buyResult: result.data ?? 'خرید با موفقیت انجام شد',
+          buyResult: result.dataString ?? result.message ?? 'خرید با موفقیت انجام شد',
           errorMessage: null,
           errorCode: null,
         ));
-      }
-      else if (result.isFailure) {
-        // خطای تجاری (مثل 5001)
-        emit(state.copyWith(
-          buyStatus: BuyStatus.failure,
-          errorMessage: result.errorModel?.errorMessage,
-          errorCode: result.errorModel?.errorCode,
-          buyResult: null,
-        ));
-      }
-      else if (result.isError) {
-        // خطای فنی
+      } else {
         emit(state.copyWith(
           buyStatus: BuyStatus.error,
-          errorMessage: result.errorMessage,
-          errorCode: null,
+          errorMessage: result.displayMessage,
+          errorCode: result.error?.errorCode,
           buyResult: null,
         ));
       }
     } catch (e) {
-      // خطای پیش‌بینی نشده
+      print('❌ خطا در خرید: $e');
       emit(state.copyWith(
         buyStatus: BuyStatus.error,
         errorMessage: 'خطای ناشناخته رخ داده است',
@@ -117,7 +128,6 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
     }
   }
 
-  // ریست کردن وضعیت خرید
   void _onResetBuyStatus(
       ResetBuyStatus event,
       Emitter<InternetPackageState> emit,
@@ -128,5 +138,25 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
       errorCode: null,
       buyResult: null,
     ));
+  }
+
+  String _getErrorMessage(DioException e) {
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+        return 'زمان ارتباط با سرور به پایان رسید';
+      case DioExceptionType.receiveTimeout:
+        return 'سرور پاسخ نمی‌دهد';
+      case DioExceptionType.sendTimeout:
+        return 'خطا در ارسال درخواست';
+      case DioExceptionType.connectionError:
+        return 'لطفاً اتصال اینترنت خود را بررسی کنید';
+      case DioExceptionType.cancel:
+        return 'درخواست لغو شد';
+      default:
+        if (e.response?.statusCode != null) {
+          return 'خطای سرور: کد خطا ${e.response!.statusCode}';
+        }
+        return 'خطا در ارتباط با سرور';
+    }
   }
 }

@@ -22,7 +22,7 @@ class OtherBankCardPayment extends StatefulWidget {
   final String title;
   final String? description;
   final VoidCallback? onSuccess;
-  final InternetPackageModel package;
+  final InternetPackage package;
   String? selectedWalletTitle;
 
   @override

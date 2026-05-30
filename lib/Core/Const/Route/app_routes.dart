@@ -88,8 +88,8 @@ final GoRouter router = GoRouter(
         return PaymentPage(
           amount: extra?['amount'] ?? '0',
           title: extra?['title'] ?? 'پرداخت',
-          package: extra?['package'] ?? InternetPackageModel(),
-          phoneNumber: extra?['phoneNumber'] ?? '',
+          package: extra?['package'] as InternetPackage,
+          phoneNumber: extra?['phoneNumber'] as String,
 
         );
       },
@@ -136,7 +136,7 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>;
         return InternetPackageDetailsPage(
-          package: extra['package'] as InternetPackageModel,
+          package: extra['package'] as InternetPackage,
           phoneNumber: extra['phoneNumber'] as String,
           operatorCode: extra['operatorCode'] as int,
         );

@@ -21,7 +21,7 @@ class InternetPackageDetailsPage extends StatefulWidget {
     required this.operatorCode,
   });
 
-  final InternetPackageModel package;
+  final InternetPackage package;
   final String phoneNumber;
   final int operatorCode;
 

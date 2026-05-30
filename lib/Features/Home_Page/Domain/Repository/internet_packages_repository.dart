@@ -6,19 +6,33 @@ import '../../Data/Model/buy_internet_model.dart';
 import '../../Data/Model/internet_package_model.dart';
 
 class InternetPackagesRepository {
+  final Dio _dio;
 
-  final dio = Dio();
+  InternetPackagesRepository({
+    Dio? dio,
+  }) : _dio = dio ?? Dio(
+    BaseOptions(
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      sendTimeout: const Duration(seconds: 30),
+    ),
+  );
 
-  Future<List<InternetPackageModel>> getAllInternetPackages(int operatorCode) async {
+  /// دریافت همه بسته‌های اینترنت بر اساس کد اپراتور
+  /// پاسخ سرور: { "data": [...], "success": true, "traceId": "..." }
+  Future<List<InternetPackage>> getAllInternetPackages(int operatorCode) async {
     final token = await LocalStorage.read('access_token');
-    if (token == null) throw Exception('Token not found');
+
+    if (token == null || token.isEmpty) {
+      throw Exception('توکن یافت نشد. لطفاً دوباره وارد شوید.');
+    }
 
     final body = {
       "operatorCode": operatorCode,
     };
 
     try {
-      final response = await dio.post(
+      final response = await _dio.post(
         "${APIKey.baseUrl}/api/internetpackages/get-all",
         data: jsonEncode(body),
         options: Options(
@@ -30,39 +44,89 @@ class InternetPackagesRepository {
         ),
       );
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
-        List<InternetPackageModel> packages = data
-            .map((json) => InternetPackageModel.fromJson(json))
-            .toList();
-        return packages;
+      print('📦 وضعیت پاسخ: ${response.statusCode}');
+      print('📦 نوع داده: ${response.data.runtimeType}');
+
+      if (response.statusCode == 200 && response.data != null) {
+        // پاسخ به صورت Map است (با کلید data)
+        if (response.data is Map<String, dynamic>) {
+          final Map<String, dynamic> responseData = response.data as Map<String, dynamic>;
+
+          // بررسی موفقیت
+          if (responseData.containsKey('success') && responseData['success'] == false) {
+            final errorMessage = responseData['error']?['errorMessage'] as String? ??
+                responseData['message'] as String? ??
+                'خطا در دریافت بسته‌ها';
+            throw Exception(errorMessage);
+          }
+
+          // استخراج داده از کلید 'data'
+          if (responseData.containsKey('data') && responseData['data'] is List) {
+            final List<dynamic> data = responseData['data'] as List<dynamic>;
+            print('📦 تعداد بسته‌های دریافت شده: ${data.length}');
+
+            if (data.isEmpty) {
+              print('⚠️ هیچ بسته‌ای یافت نشد');
+              return [];
+            }
+
+            final List<InternetPackage> packages = data
+                .map((json) => InternetPackage.fromJson(json as Map<String, dynamic>))
+                .toList();
+
+            print('✅ تعداد بسته‌های تبدیل شده: ${packages.length}');
+            return packages;
+          } else {
+            print('⚠️ کلید data در پاسخ وجود ندارد');
+            return [];
+          }
+        }
+        // اگر پاسخ مستقیماً List بود (برای برخی APIها)
+        else if (response.data is List) {
+          final List<dynamic> data = response.data as List<dynamic>;
+          print('📦 تعداد بسته‌های دریافت شده: ${data.length}');
+
+          final List<InternetPackage> packages = data
+              .map((json) => InternetPackage.fromJson(json as Map<String, dynamic>))
+              .toList();
+
+          return packages;
+        }
+
+        return [];
       } else {
-        throw Exception('خطا در دریافت بسته‌های اینترنت: ${response.statusCode}');
+        throw Exception('خطا در دریافت بسته‌های اینترنت: کد خطا ${response.statusCode}');
       }
+    } on DioException catch (e) {
+      print('❌ Dio Error در دریافت بسته‌ها: ${e.message}');
+      throw Exception(_handleDioError(e));
     } catch (e) {
-      print('خطا در دریافت بسته‌های اینترنت: $e');
+      print('❌ خطا در دریافت بسته‌های اینترنت: $e');
       rethrow;
     }
   }
 
-  Future<List<InternetPackageModel>> getInternetPackages(
-      int operatorCode,
-      int packageTimeCode,
-      int simType,
-      String traffic
-      ) async {
+  /// دریافت بسته‌های اینترنت با فیلترهای مختلف
+  Future<List<InternetPackage>> getInternetPackages({
+    required int operatorCode,
+    required int packageTimeCode,
+    required int simType,
+    required String traffic,
+  }) async {
     final token = await LocalStorage.read('access_token');
-    if (token == null) throw Exception('Token not found');
+    if (token == null || token.isEmpty) {
+      throw Exception('توکن یافت نشد. لطفاً دوباره وارد شوید.');
+    }
 
     final body = {
       "operatorCode": operatorCode,
       "packageTimeCode": packageTimeCode,
       "simType": simType,
-      "traffic": traffic
+      "traffic": traffic,
     };
 
     try {
-      final response = await dio.post(
+      final response = await _dio.post(
         "${APIKey.baseUrl}/api/internetpackages/get-all",
         data: jsonEncode(body),
         options: Options(
@@ -74,40 +138,166 @@ class InternetPackagesRepository {
         ),
       );
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
-        List<InternetPackageModel> packages = data
-            .map((json) => InternetPackageModel.fromJson(json))
-            .toList();
-        return packages;
+      print('📦 وضعیت پاسخ (فیلتر شده): ${response.statusCode}');
+      print('📦 نوع داده: ${response.data.runtimeType}');
+
+      if (response.statusCode == 200 && response.data != null) {
+        // پاسخ به صورت Map است (با کلید data)
+        if (response.data is Map<String, dynamic>) {
+          final Map<String, dynamic> responseData = response.data as Map<String, dynamic>;
+
+          if (responseData.containsKey('data') && responseData['data'] is List) {
+            final List<dynamic> data = responseData['data'] as List<dynamic>;
+            print('📦 تعداد بسته‌های فیلتر شده: ${data.length}');
+
+            final List<InternetPackage> packages = data
+                .map((json) => InternetPackage.fromJson(json as Map<String, dynamic>))
+                .toList();
+            return packages;
+          }
+        }
+        // اگر پاسخ مستقیماً List بود
+        else if (response.data is List) {
+          final List<dynamic> data = response.data as List<dynamic>;
+          print('📦 تعداد بسته‌های فیلتر شده: ${data.length}');
+
+          final List<InternetPackage> packages = data
+              .map((json) => InternetPackage.fromJson(json as Map<String, dynamic>))
+              .toList();
+          return packages;
+        }
+
+        return [];
       } else {
-        throw Exception('خطا در دریافت بسته‌های اینترنت: ${response.statusCode}');
+        throw Exception('خطا در دریافت بسته‌های اینترنت: کد خطا ${response.statusCode}');
       }
+    } on DioException catch (e) {
+      print('❌ Dio Error: ${e.message}');
+      throw Exception(_handleDioError(e));
     } catch (e) {
-      print('خطا در دریافت بسته‌های اینترنت: $e');
+      print('❌ خطا در دریافت بسته‌های اینترنت: $e');
       rethrow;
     }
   }
 
-  // متد خرید با پردازش صحیح خطاها
-  Future<BuyInternetPackageResult> buyInternetPackage(
-      String sourceMobileNumber,
-      String walletAddress,
-      int productCode,
-      String destMobileNumber
-      ) async {
+  /// دریافت بسته‌های اینترنت با پاسخ کامل (برای زمانی که نیاز به success و traceId دارید)
+  Future<InternetPackageModel> getAllInternetPackagesWithResponse(int operatorCode) async {
     final token = await LocalStorage.read('access_token');
-    if (token == null) return BuyInternetPackageResult.error('Token not found');
+
+    if (token == null || token.isEmpty) {
+      return InternetPackageModel.error('توکن یافت نشد. لطفاً دوباره وارد شوید.');
+    }
+
+    final body = {
+      "operatorCode": operatorCode,
+    };
+
+    try {
+      final response = await _dio.post(
+        "${APIKey.baseUrl}/api/internetpackages/get-all",
+        data: jsonEncode(body),
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            'Authorization': token,
+          },
+        ),
+      );
+
+      if (response.statusCode == 200 && response.data != null) {
+        // پاسخ به صورت Map است
+        if (response.data is Map<String, dynamic>) {
+          final Map<String, dynamic> responseData = response.data as Map<String, dynamic>;
+
+          // استخراج داده از کلید 'data'
+          List<InternetPackage> packages = [];
+          if (responseData.containsKey('data') && responseData['data'] is List) {
+            final List<dynamic> data = responseData['data'] as List<dynamic>;
+            packages = data
+                .map((json) => InternetPackage.fromJson(json as Map<String, dynamic>))
+                .toList();
+          }
+
+          final bool success = responseData['success'] as bool? ?? true;
+          final String traceId = responseData['traceId'] as String? ?? '';
+
+          if (success) {
+            return InternetPackageModel(
+              data: packages,
+              success: true,
+              traceId: traceId,
+              error: null,
+            );
+          } else {
+            return InternetPackageModel(
+              data: [],
+              success: false,
+              traceId: traceId,
+              error: responseData['error'] != null
+                  ? ErrorModel.fromJson(responseData['error'] as Map<String, dynamic>)
+                  : null,
+            );
+          }
+        }
+        // اگر پاسخ مستقیماً List بود
+        else if (response.data is List) {
+          final List<dynamic> data = response.data as List<dynamic>;
+          final List<InternetPackage> packages = data
+              .map((json) => InternetPackage.fromJson(json as Map<String, dynamic>))
+              .toList();
+
+          return InternetPackageModel(
+            data: packages,
+            success: true,
+            traceId: '',
+            error: null,
+          );
+        }
+      }
+
+      return InternetPackageModel.error('خطا در دریافت اطلاعات');
+    } on DioException catch (e) {
+      print('❌ Dio Error: ${e.message}');
+      return InternetPackageModel.error(_handleDioError(e));
+    } catch (e) {
+      print('❌ خطا: $e');
+      return InternetPackageModel.error(e.toString());
+    }
+  }
+
+  /// خرید بسته اینترنت
+  Future<InternetPackageModel> buyInternetPackage({
+    required String sourceMobileNumber,
+    required String walletAddress,
+    required int productCode,
+    required String destMobileNumber,
+  }) async {
+    final token = await LocalStorage.read('access_token');
+    if (token == null || token.isEmpty) {
+      return InternetPackageModel.error('توکن یافت نشد. لطفاً دوباره وارد شوید.');
+    }
+
+    if (sourceMobileNumber.isEmpty || walletAddress.isEmpty || destMobileNumber.isEmpty) {
+      return InternetPackageModel.error('اطلاعات وارد شده معتبر نیست');
+    }
+
+    if (productCode <= 0) {
+      return InternetPackageModel.error('کد محصول معتبر نیست');
+    }
 
     final body = {
       "sourceMobileNumber": sourceMobileNumber,
       "walletAddress": walletAddress,
       "productCode": productCode,
-      "destMobileNumber": destMobileNumber
+      "destMobileNumber": destMobileNumber,
     };
 
     try {
-      final response = await dio.post(
+      print('🚀 شروع خرید بسته اینترنت...');
+      print('📦 Body: $body');
+
+      final response = await _dio.post(
         "${APIKey.baseUrl}/api/internetpackages/buy",
         data: jsonEncode(body),
         options: Options(
@@ -119,111 +309,131 @@ class InternetPackagesRepository {
         ),
       );
 
-      if (response.statusCode == 200) {
-        // بررسی می‌کنیم که پاسخ JSON است یا String
-        if (response.data is Map<String, dynamic>) {
-          final jsonResponse = response.data as Map<String, dynamic>;
+      print('✅ پاسخ دریافت شد با وضعیت: ${response.statusCode}');
 
-          // اگر خطا باشد
-          if (jsonResponse.containsKey('success') && jsonResponse['success'] == false) {
-            final errorModel = BuyInternetModel.fromJson(jsonResponse);
-            return BuyInternetPackageResult.failure(errorModel);
-          }
-
-          // اگر موفقیت آمیز باشد (می‌توانید ساختار پاسخ موفق را اینجا هندل کنید)
-          return BuyInternetPackageResult.success();
-        }
-        // اگر پاسخ String ساده است (مثل '1234')
-        else if (response.data is String) {
-          return BuyInternetPackageResult.successWithData(response.data);
-        }
-        else {
-          return BuyInternetPackageResult.success();
-        }
+      if (response.statusCode == 200 && response.data != null) {
+        return _parseBuyResponse(response.data);
       } else {
-        return BuyInternetPackageResult.error('خطا در ارتباط با سرور: ${response.statusCode}');
+        return InternetPackageModel.error('خطا در ارتباط با سرور: کد خطا ${response.statusCode}');
       }
     } on DioException catch (e) {
-      print('Dio Error: ${e.message}');
-      if (e.response?.data != null) {
+      print('❌ Dio Error در خرید: ${e.message}');
+      return _handleBuyDioError(e);
+    } catch (e) {
+      print('❌ خطا در خرید بسته اینترنت: $e');
+      return InternetPackageModel.error('خطای ناشناخته رخ داده است');
+    }
+  }
+
+  // تبدیل ترافیک به فرمت خوانا
+  String formatTraffic(String traffic) {
+    if (traffic.isEmpty) return '0 مگابایت';
+
+    final int trafficValue = int.tryParse(traffic) ?? 0;
+
+    if (trafficValue >= 1024) {
+      final double gb = trafficValue / 1024;
+      return '${gb.toStringAsFixed(gb.truncateToDouble() == gb ? 0 : 1)} گیگابایت';
+    }
+    return '$trafficValue مگابایت';
+  }
+
+  // فرمت قیمت
+  String formatPrice(int price) {
+    return price.toString().replaceAllMapped(
+      RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+          (Match m) => '${m[1]},',
+    );
+  }
+
+  InternetPackageModel _parseBuyResponse(dynamic data) {
+    if (data is String) {
+      return InternetPackageModel.successWithData(data);
+    }
+
+    if (data is Map<String, dynamic>) {
+      if (data['success'] == true) {
+        if (data['data'] is String) {
+          return InternetPackageModel.successWithData(data['data'] as String);
+        }
+        if (data['data'] is Map<String, dynamic>) {
+          return InternetPackageModel.successWithData(jsonEncode(data['data']));
+        }
+        return InternetPackageModel.success();
+      }
+
+      if (data.containsKey('error') && data['error'] is Map<String, dynamic>) {
         try {
-          final errorModel = BuyInternetModel.fromJson(e.response!.data);
-          return BuyInternetPackageResult.failure(errorModel);
+          final errorModel = BuyInternetModel.fromJson(data);
+          return InternetPackageModel.failure(errorModel);
         } catch (_) {
-          return BuyInternetPackageResult.error('خطا در ارتباط با سرور');
+          final errorMessage = data['error']?['errorMessage'] as String? ?? 'خطا در انجام تراکنش';
+          return InternetPackageModel.error(errorMessage);
         }
       }
-      return BuyInternetPackageResult.error('خطا در اتصال به اینترنت');
-    } catch (e) {
-      print('خطا در خرید بسته اینترنت: $e');
-      return BuyInternetPackageResult.error('خطای ناشناخته رخ داده است');
+
+      final errorMessage = data['message'] as String? ??
+          data['errorMessage'] as String? ??
+          'خطا در انجام تراکنش';
+      return InternetPackageModel.error(errorMessage);
+    }
+
+    return InternetPackageModel.error('پاسخ نامعتبر از سرور');
+  }
+
+  InternetPackageModel _handleBuyDioError(DioException e) {
+    if (e.response?.data != null) {
+      try {
+        final responseData = e.response!.data;
+        if (responseData is Map<String, dynamic>) {
+          try {
+            final errorModel = BuyInternetModel.fromJson(responseData);
+            if (errorModel.errorMessage.isNotEmpty) {
+              return InternetPackageModel.failure(errorModel);
+            }
+          } catch (_) {
+            final errorMessage = responseData['error']?['errorMessage'] as String? ??
+                responseData['message'] as String? ??
+                _getDioErrorMessage(e);
+            return InternetPackageModel.error(errorMessage);
+          }
+        }
+      } catch (_) {}
+    }
+
+    return InternetPackageModel.error(_getDioErrorMessage(e));
+  }
+
+  String _handleDioError(DioException e) {
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+        return 'زمان ارتباط با سرور به پایان رسید';
+      case DioExceptionType.receiveTimeout:
+        return 'سرور پاسخ نمی‌دهد';
+      case DioExceptionType.sendTimeout:
+        return 'خطا در ارسال درخواست';
+      case DioExceptionType.connectionError:
+        return 'لطفاً اتصال اینترنت خود را بررسی کنید';
+      case DioExceptionType.cancel:
+        return 'درخواست لغو شد';
+      default:
+        if (e.response?.statusCode != null) {
+          return 'خطای سرور: کد خطا ${e.response!.statusCode}';
+        }
+        return 'خطا در ارتباط با سرور';
     }
   }
-}
 
-// کلاس نتیجه خرید برای مدیریت بهتر وضعیت‌ها
-class BuyInternetPackageResult {
-  final bool isSuccess;
-  final bool isFailure;
-  final bool isError;
-  final BuyInternetModel? errorModel;
-  final String? errorMessage;
-  final String? data;
-
-  BuyInternetPackageResult._({
-    required this.isSuccess,
-    required this.isFailure,
-    required this.isError,
-    this.errorModel,
-    this.errorMessage,
-    this.data,
-  });
-
-  // خرید موفق بدون دیتا
-  factory BuyInternetPackageResult.success() {
-    return BuyInternetPackageResult._(
-      isSuccess: true,
-      isFailure: false,
-      isError: false,
-    );
-  }
-
-  // خرید موفق با دیتا (مثل '1234')
-  factory BuyInternetPackageResult.successWithData(String data) {
-    return BuyInternetPackageResult._(
-      isSuccess: true,
-      isFailure: false,
-      isError: false,
-      data: data,
-    );
-  }
-
-  // خطای تجاری (مثل errorCode 5001)
-  factory BuyInternetPackageResult.failure(BuyInternetModel error) {
-    return BuyInternetPackageResult._(
-      isSuccess: false,
-      isFailure: true,
-      isError: false,
-      errorModel: error,
-      errorMessage: error.errorMessage,
-    );
-  }
-
-  // خطای فنی (اتصال، سرور و...)
-  factory BuyInternetPackageResult.error(String message) {
-    return BuyInternetPackageResult._(
-      isSuccess: false,
-      isFailure: false,
-      isError: true,
-      errorMessage: message,
-    );
-  }
-
-  String getDisplayMessage() {
-    if (isSuccess) return 'خرید با موفقیت انجام شد';
-    if (isFailure && errorModel != null) {
-      return '${errorModel!.errorMessage} (کد خطا: ${errorModel!.errorCode})';
+  String _getDioErrorMessage(DioException e) {
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+        return 'زمان ارتباط با سرور به پایان رسید';
+      case DioExceptionType.receiveTimeout:
+        return 'سرور پاسخ نمی‌دهد';
+      case DioExceptionType.connectionError:
+        return 'لطفاً اتصال اینترنت خود را بررسی کنید';
+      default:
+        return 'خطا در ارتباط با سرور';
     }
-    return errorMessage ?? 'خطای ناشناخته';
   }
 }

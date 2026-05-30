@@ -52,7 +52,7 @@ class InternetPackageState extends Equatable {
   );
 
   final InternetPackageStatus status;
-  final List<InternetPackageModel>? internetPackages;
+  final List<InternetPackage>? internetPackages;
   final BuyStatus buyStatus;
   final String? buyResult;  // برای ذخیره نتیجه موفق (مثل شماره پیگیری)
   final String? errorMessage; // پیام خطا
@@ -70,7 +70,7 @@ class InternetPackageState extends Equatable {
 
   InternetPackageState copyWith({
     InternetPackageStatus? status,
-    List<InternetPackageModel>? internetPackages,
+    List<InternetPackage>? internetPackages,
     BuyStatus? buyStatus,
     String? buyResult,
     String? errorMessage,

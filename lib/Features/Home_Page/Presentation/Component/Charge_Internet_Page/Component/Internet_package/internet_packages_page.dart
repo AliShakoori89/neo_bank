@@ -146,7 +146,7 @@ class _InternetPackagesPageState extends State<InternetPackagesPage> {
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         final package = state.internetPackages![index];
-                        return buildPackageCard(context, package, index, widget.phoneNumber, widget.selectedOperator);
+                        return buildPackageCard(context, package, widget.phoneNumber, widget.selectedOperator);
                       },
                     ),
                   );

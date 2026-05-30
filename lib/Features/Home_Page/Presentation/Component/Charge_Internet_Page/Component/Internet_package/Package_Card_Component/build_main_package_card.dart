@@ -7,7 +7,7 @@ import '../../../../../../Data/Model/internet_package_model.dart';
 import 'format_price.dart';
 import 'get_package_color.dart';
 
-Widget buildMainPackageCard(BuildContext context, InternetPackageModel package) {
+Widget buildMainPackageCard(BuildContext context, InternetPackage package) {
 
   final theme = Theme.of(context);
   final packageTime = package.packageTime ?? '';

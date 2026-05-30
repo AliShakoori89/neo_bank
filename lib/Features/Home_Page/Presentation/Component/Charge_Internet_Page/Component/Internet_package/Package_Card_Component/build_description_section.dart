@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../Data/Model/internet_package_model.dart';
 
-Widget buildDescriptionSection(BuildContext context, InternetPackageModel package) {
+Widget buildDescriptionSection(BuildContext context, InternetPackage package) {
   final theme = Theme.of(context);
 
   return Container(

@@ -3,13 +3,13 @@ import '../../../../../../Data/Model/internet_package_model.dart';
 import 'build_detail_row.dart';
 import 'format_traffic.dart';
 
-Widget buildDetailsSection(BuildContext context, InternetPackageModel package, String phoneNumber) {
+Widget buildDetailsSection(BuildContext context, InternetPackage package, String phoneNumber) {
   final theme = Theme.of(context);
 
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: theme.cardColor.withOpacity(0.05),
+      color: theme.cardColor.withAlpha(5),
       borderRadius: BorderRadius.circular(20),
     ),
     child: Column(

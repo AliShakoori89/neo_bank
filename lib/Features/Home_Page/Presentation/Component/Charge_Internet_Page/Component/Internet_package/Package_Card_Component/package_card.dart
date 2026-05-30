@@ -9,7 +9,7 @@ import 'format_traffic.dart';
 import 'get_package_color.dart';
 import 'info_chip.dart';
 
-Widget buildPackageCard(BuildContext context, InternetPackageModel package, int index, String destinationPhoneNumber, int selectedOperator) {
+Widget buildPackageCard(BuildContext context, InternetPackage package, String destinationPhoneNumber, int selectedOperator) {
   final theme = Theme.of(context);
 
   // استخراج اطلاعات از package

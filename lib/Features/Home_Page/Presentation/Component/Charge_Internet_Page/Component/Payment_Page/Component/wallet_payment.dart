@@ -16,7 +16,7 @@ import '../../Internet_package/Package_Card_Component/Package_Details/Component/
 class WalletPayment extends StatefulWidget {
   const WalletPayment({super.key, required this.package, required this.sourcePhoneNumber, required this.destinationPhoneNumber, required this.amount, required this.title, required this.selectedWalletAddress});
 
-  final InternetPackageModel package;
+  final InternetPackage package;
   final String sourcePhoneNumber;
   final String amount;
   final String title;

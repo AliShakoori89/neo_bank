@@ -3,14 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/This_Bank_Card_Payment/this_bank_card_payment.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_state.dart';
-import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../../../../Core/Const/app_colors.dart';
 import '../../../../../../../../../Core/Const/app_space.dart';
 import '../../../../../../../Data/Model/internet_package_model.dart';
 import '../../../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../../../../../Bloc/Wallet_Bloc/wallet_event.dart';
 import '../../../../../../Bloc/Wallet_Bloc/wallet_state.dart';
-import '../../../Internet_package/Package_Card_Component/get_package_color.dart';
 import '../../../custom_header.dart';
 import '../Other_Bank_Card_Payment/other_bank_card_payment.dart';
 import '../wallet_payment.dart';
@@ -21,7 +19,7 @@ class PaymentPage extends StatefulWidget {
 
   final String amount;
   final String title;
-  final InternetPackageModel package;
+  final InternetPackage package;
   final String phoneNumber;
 
   @override
