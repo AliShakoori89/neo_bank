@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../Core/Const/app_colors.dart';
 import 'custom_formatter.dart';
 
@@ -21,7 +20,7 @@ class AddBalanceTextField extends StatelessWidget {
     return Form(
       key: balanceFormKey,
       child: SizedBox(
-        height: 55,
+        height: 50,
         child: TextFormField(
           controller: balanceController,
           keyboardType: TextInputType.number,
@@ -32,7 +31,7 @@ class AddBalanceTextField extends StatelessWidget {
           textDirection: TextDirection.ltr,
           autofocus: false,
           style: const TextStyle(
-            fontSize: 22,
+            fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
           validator: (value) {
@@ -41,21 +40,22 @@ class AddBalanceTextField extends StatelessWidget {
             }
             final rawValue = balanceController.rawValue;
             if (rawValue < 10000) {
-              return 'حداقل مبلغ ۱۰,۰۰۰ ریال می‌باشد';
+              return 'حداقل مبلغ ۱۰,۰۰۰ تومان می‌باشد';
             }
             if (rawValue > 1000000000) {
-              return 'حداکثر مبلغ ۱,۰۰۰,۰۰۰,۰۰۰ ریال می‌باشد';
+              return 'حداکثر مبلغ ۱,۰۰۰,۰۰۰,۰۰۰ تومان می‌باشد';
             }
             return null;
           },
           decoration: InputDecoration(
             hintText: 'XXX',
             hintStyle: TextStyle(
-              color: Colors.grey.shade700
+              color: Colors.grey.shade700,
+              fontSize: 14
             ),
-            suffixText: 'ریال',
+            suffixText: 'تومان',
             suffixStyle: TextStyle(
-              fontSize: 26,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
               color: Theme.of(context)
                   .appBarTheme
