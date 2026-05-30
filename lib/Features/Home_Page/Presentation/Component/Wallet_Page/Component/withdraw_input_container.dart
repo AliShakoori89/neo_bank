@@ -5,12 +5,13 @@ import 'custom_formatter.dart';
 import 'input_value_text_field.dart';
 
 class WithdrawInputContainer extends StatefulWidget {
-  WithdrawInputContainer({super.key, required this.showWithdrawContainer, required this.walletList, required this.balanceController, required this.balanceFormKey});
+  WithdrawInputContainer({super.key, required this.showWithdrawContainer, required this.onDepositNumberSelected, required this.balanceController, required this.balanceFormKey, this.onAmountChanged});
 
   final bool showWithdrawContainer;
-  late List<String> walletList;
   final CustomNumberFormatter balanceController;
   final GlobalKey<FormState> balanceFormKey;
+  final Function(String) onDepositNumberSelected;
+  final Function(int)? onAmountChanged;
 
   @override
   State<WithdrawInputContainer> createState() => _WithdrawInputContainerState();
@@ -42,7 +43,9 @@ class _WithdrawInputContainerState extends State<WithdrawInputContainer> {
                 ),
               ),
               AppSpace.heightSpace_16,
-              SelectDepositNumberDropdown(cardDepositNumber: cardDepositNumber,),
+              SelectDepositNumberDropdown(
+                onSelected: widget.onDepositNumberSelected,  // ✅ ارسال callback
+              ),
               AppSpace.heightSpace_24,
               Text('مبلغ مورد نظر خود را وارد نمایید:',
                 style: TextStyle(
@@ -52,7 +55,11 @@ class _WithdrawInputContainerState extends State<WithdrawInputContainer> {
                 ),
               ),
               AppSpace.heightSpace_16,
-              InputValueTextField(balanceController: widget.balanceController, balanceFormKey: widget.balanceFormKey)
+              InputValueTextField(
+                balanceController: widget.balanceController,
+                balanceFormKey: widget.balanceFormKey,
+                onAmountChanged: widget.onAmountChanged,
+              )
             ],
           ),
         ),
