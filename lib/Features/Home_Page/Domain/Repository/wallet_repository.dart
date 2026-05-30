@@ -9,7 +9,7 @@ class WalletRepository {
 
   final dio = Dio();
 
-  Future<List<WalletModel>> getWalletDetails() async{
+  Future<WalletResponseModel> getWalletDetails() async{
 
     final token = await LocalStorage.read('access_token');
     if (token == null) throw Exception('Token not found');
@@ -26,14 +26,15 @@ class WalletRepository {
         ),
       );
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
+      if (response.statusCode == 200 && response.data != null) {
+        final WalletResponseModel walletResponse =
+        WalletResponseModel.fromJson(response.data);
 
-        List<WalletModel> packages = data
-            .map((json) => WalletModel.fromJson(json))
-            .toList();
-
-        return packages;
+        if (walletResponse.success) {
+          return walletResponse;
+        } else {
+          throw Exception('خطا در دریافت اطلاعات کیف پول: ${walletResponse.error ?? 'خطای ناشناخته'}');
+        }
       } else {
         throw Exception('خطا در دریافت اطلاعات کیف پول: ${response.statusCode}');
       }
@@ -43,15 +44,22 @@ class WalletRepository {
     }
   }
 
-  Future buyInternetPackage() async{
+
+  /// خرید بسته اینترنت (نیاز به اصلاح بر اساس API واقعی)
+  Future<Map<String, dynamic>> buyInternetPackage({
+    required String sourceMobileNumber,
+    required String walletAddress,
+    required int productCode,
+    required String destMobileNumber,
+  }) async {
     final token = await LocalStorage.read('access_token');
     if (token == null) throw Exception('Token not found');
 
     final body = {
-      "sourceMobileNumber": "09122362803",
-      "walletAddress": "string",
-      "productCode": 200093,
-      "destMobileNumber": "string"
+      "sourceMobileNumber": sourceMobileNumber,
+      "walletAddress": walletAddress,
+      "productCode": productCode,
+      "destMobileNumber": destMobileNumber,
     };
 
     try {
@@ -66,19 +74,40 @@ class WalletRepository {
           },
         ),
       );
+
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
-
-        List<WalletModel> packages = data
-            .map((json) => WalletModel.fromJson(json))
-            .toList();
-
-        return packages;
+        return response.data;
       } else {
-        throw Exception('خطا در دریافت اطلاعات کیف پول: ${response.statusCode}');
+        throw Exception('خطا در خرید بسته اینترنت: ${response.statusCode}');
       }
     } catch (e) {
-      print('خطا در دریافت اطلاعات کیف پول: $e');
+      print('خطا در خرید بسته اینترنت: $e');
+      rethrow;
+    }
+  }
+
+  /// دریافت موجودی کیف پول خاص (هلوپر متد)
+  Future<int?> getWalletBalance(String walletAddress) async {
+    try {
+      final response = await getWalletDetails();
+      final wallet = response.data.firstWhere(
+            (wallet) => wallet.address == walletAddress,
+        orElse: () => throw Exception('کیف پول مورد نظر یافت نشد'),
+      );
+      return wallet.balance;
+    } catch (e) {
+      print('خطا در دریافت موجودی کیف پول: $e');
+      rethrow;
+    }
+  }
+
+  /// دریافت کیف پول فعال (isActive = true)
+  Future<List<WalletModel>> getActiveWallets() async {
+    try {
+      final response = await getWalletDetails();
+      return response.data.where((wallet) => wallet.isActive).toList();
+    } catch (e) {
+      print('خطا در دریافت کیف پول‌های فعال: $e');
       rethrow;
     }
   }
