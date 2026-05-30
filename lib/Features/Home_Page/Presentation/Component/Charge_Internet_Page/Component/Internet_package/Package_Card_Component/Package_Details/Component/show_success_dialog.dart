@@ -34,8 +34,7 @@ void showSuccessDialog(BuildContext context, String? resultMessage, InternetPack
         actions: [
           TextButton(
             onPressed: () {
-              context.pop();
-              context.pop();
+              context.go('/main_page');
             },
             child: const Text('باشه'),
           ),
