@@ -14,8 +14,8 @@ class BalanceValue extends StatelessWidget {
         if (state.status.isLoading) {
           return Container();
         } else if (state.status.isSuccess) {
-          if (state.walletDetails != null && state.walletDetails!.isNotEmpty) {
-            return Text(state.walletDetails!.first.balance.toString().toPersianDigit().seRagham(),
+          if (state.walletDetails.isNotEmpty) {
+            return Text(state.walletDetails.first.balance.toString().toPersianDigit().seRagham(),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primaryFixed,
                 fontSize: 20,
