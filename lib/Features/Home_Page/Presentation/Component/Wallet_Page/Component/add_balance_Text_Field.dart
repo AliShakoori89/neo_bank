@@ -9,10 +9,12 @@ class AddBalanceTextField extends StatelessWidget {
     super.key,
     required this.balanceController,
     required this.balanceFormKey,
+    this.onChanged,
   });
 
   final CustomNumberFormatter balanceController;
   final GlobalKey<FormState> balanceFormKey;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +37,19 @@ class AddBalanceTextField extends StatelessWidget {
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'لطفا مبلغ مورد نظر خود را وارد نمایید.';
+              return 'لطفاً مبلغ را وارد کنید';
+            }
+            final rawValue = balanceController.rawValue;
+            if (rawValue < 10000) {
+              return 'حداقل مبلغ ۱۰,۰۰۰ ریال می‌باشد';
+            }
+            if (rawValue > 1000000000) {
+              return 'حداکثر مبلغ ۱,۰۰۰,۰۰۰,۰۰۰ ریال می‌باشد';
             }
             return null;
           },
           decoration: InputDecoration(
-            hintText: '10000'.toPersianDigit().seRagham(),
+            hintText: 'XXX',
             hintStyle: TextStyle(
               color: Colors.grey.shade700
             ),
