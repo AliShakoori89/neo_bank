@@ -65,7 +65,7 @@ Widget buildPackageCard(BuildContext context, InternetPackage package, String de
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Icon(
-                      getPackageIcon(packageTime!),
+                      getPackageIcon(packageTime),
                       color: getPackageColor(packageTime),
                       size: 28,
                     ),
@@ -127,20 +127,20 @@ Widget buildPackageCard(BuildContext context, InternetPackage package, String de
                   buildInfoChip(
                     context: context,
                     icon: Icons.data_usage,
-                    label: formattedTraffic,
+                    label: formattedTraffic.toString().toPersianDigit(),
                     color: Theme.of(context).colorScheme.primaryFixed,
                   ),
                   buildInfoChip(
                     context: context,
                     icon: Icons.access_time,
-                    label: '$duration روزه',
+                    label: '${duration.toString().toPersianDigit()} روزه',
                     color: Theme.of(context).colorScheme.primaryFixed,
                   ),
                   if (formattedNightTraffic != null) ...[
                     buildInfoChip(
                       context: context,
                       icon: Icons.nightlight_round,
-                      label: 'شبانه: $formattedNightTraffic',
+                      label: '${formattedNightTraffic.toString().toPersianDigit()} شبانه: ',
                       color: Theme.of(context).colorScheme.primaryFixed,
                     ),
                   ],

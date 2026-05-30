@@ -64,7 +64,7 @@ Widget buildMainPackageCard(BuildContext context, InternetPackage package) {
           textBaseline: TextBaseline.alphabetic,
           children: [
             Text(
-              formatPrice(package.priceWithTax).toPersianDigit(),
+              formatPrice(package.price).toPersianDigit(),
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ Widget buildMainPackageCard(BuildContext context, InternetPackage package) {
           Padding(
             padding: const EdgeInsets.only(top: 4),
             child: Text(
-              '${formatPrice(package.price).toPersianDigit()} تومان',
+              '${formatPrice(package.priceWithTax).toPersianDigit()} تومان',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[500],

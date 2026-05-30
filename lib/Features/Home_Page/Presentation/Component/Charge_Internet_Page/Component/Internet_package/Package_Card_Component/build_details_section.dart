@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../Data/Model/internet_package_model.dart';
 import 'build_detail_row.dart';
 import 'format_traffic.dart';
@@ -54,14 +55,14 @@ Widget buildDetailsSection(BuildContext context, InternetPackage package, String
           context,
           icon: Icons.access_time,
           title: 'مدت اعتبار',
-          value: '${package.duration ?? '0'} روز',
+          value: '${package.duration.toString().toPersianDigit() ?? '0'} روز',
         ),
 
         buildDetailRow(
           context,
           icon: Icons.phone_android,
           title: 'شماره مقصد',
-          value: phoneNumber,
+          value: phoneNumber.toPersianDigit(),
         ),
       ],
     ),

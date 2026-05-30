@@ -8,7 +8,7 @@ Widget buildDescriptionSection(BuildContext context, InternetPackage package) {
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: theme.cardColor.withOpacity(0.05),
+      color: theme.cardColor.withAlpha(5),
       borderRadius: BorderRadius.circular(20),
     ),
     child: Column(
@@ -34,7 +34,7 @@ Widget buildDescriptionSection(BuildContext context, InternetPackage package) {
         ),
         const Divider(height: 24),
         Text(
-          package.description!,
+          package.description,
           style: TextStyle(
             fontSize: 14,
             height: 1.5,

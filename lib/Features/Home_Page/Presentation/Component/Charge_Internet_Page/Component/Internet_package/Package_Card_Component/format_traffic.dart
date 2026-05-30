@@ -1,3 +1,5 @@
+import 'package:persian_number_utility/persian_number_utility.dart';
+
 String formatTraffic(dynamic traffic) {
   int trafficInt;
 
@@ -13,9 +15,9 @@ String formatTraffic(dynamic traffic) {
     double gb = trafficInt / 1024;
     // اگر عدد صحیح است، بدون اعشار نشان بده
     if (gb == gb.toInt()) {
-      return '${gb.toInt()} گیگابایت';
+      return '${gb.toInt().toString().toPersianDigit()} گیگابایت';
     }
-    return '${gb.toStringAsFixed(1)} گیگابایت';
+    return '${gb.toStringAsFixed(1).toString().toPersianDigit()} گیگابایت';
   }
-  return '$trafficInt مگابایت';
+  return '${trafficInt.toString().toPersianDigit()} مگابایت';
 }

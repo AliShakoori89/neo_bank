@@ -19,7 +19,7 @@ class NumberToWords {
 
   static String convert(int number) {
     if (number == 0) return 'صفر';
-    if (number < 0) return 'منفی ' + convert(-number);
+    if (number < 0) return 'منفی ${convert(-number)}';
 
     String result = '';
     int index = 0;
@@ -29,15 +29,15 @@ class NumberToWords {
       if (remainder != 0) {
         String segment = _convertSegment(remainder);
         if (_thousands[index].isNotEmpty) {
-          segment += ' ' + _thousands[index];
+          segment += ' ${_thousands[index]}';
         }
-        result = segment + (result.isNotEmpty ? ' و ' + result : result);
+        result = segment + (result.isNotEmpty ? ' و $result' : result);
       }
       number ~/= 1000;
       index++;
     }
 
-    return result + ' ریال';
+    return '$result تومان';
   }
 
   static String _convertSegment(int number) {
@@ -47,7 +47,7 @@ class NumberToWords {
 
     int hundred = number ~/ 100;
     if (hundred > 0) {
-      result += _units[hundred] + ' صد';
+      result += '${_units[hundred]} صد';
       number %= 100;
       if (number > 0) result += ' و ';
     }

@@ -112,7 +112,7 @@ class _InputValueTextFieldState extends State<InputValueTextField> {
           ],
         ),
         // نمایش مبلغ به حروف
-        if (_amountInWords.isNotEmpty && _amountInWords != 'صفر ریال') ...[
+        if (_amountInWords.isNotEmpty && _amountInWords != 'صفر تومان') ...[
           AppSpace.heightSpace_8,
           Container(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),

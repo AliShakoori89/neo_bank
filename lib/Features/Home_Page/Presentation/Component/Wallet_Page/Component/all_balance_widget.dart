@@ -50,7 +50,7 @@ class AllBalanceWidget extends StatelessWidget {
               children: [
                 BalanceValue(),
                 AppSpace.widthSpace_5,
-                Text('ریال',
+                Text('تومان',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primaryFixed,
                     fontSize: 18,
