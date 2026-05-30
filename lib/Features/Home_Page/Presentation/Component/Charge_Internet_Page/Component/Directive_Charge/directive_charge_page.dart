@@ -43,14 +43,15 @@ class _DirectiveChargePageState extends State<DirectiveChargePage> {
         resizeToAvoidBottomInset: true,
         backgroundColor: theme.colorScheme.onPrimaryFixed,
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CustomHeader(title: 'شارژ مستقیم'),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Column(
+            Column(
+              children: [
+                CustomHeader(title: 'شارژ مستقیم'),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    AppSpace.heightSpace_24,
                     // انتخاب مبلغ شارژ
                     Text(
                       'مبلغ شارژ را انتخاب کنید:',
@@ -60,43 +61,48 @@ class _DirectiveChargePageState extends State<DirectiveChargePage> {
                         color: theme.colorScheme.primaryFixed,
                       ),
                     ),
-                    AppSpace.heightSpace_12,
+                    AppSpace.heightSpace_32,
 
                     // لیست مبالغ
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 2.5,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                          childAspectRatio: 2.5,
+                        ),
+                        itemCount: chargeAmounts.length,
+                        itemBuilder: (context, index) {
+                          final charge = chargeAmounts[index];
+                          return ChargeAmountCard(
+                            amount: charge['amount'],
+                            color: charge['color'],
+                            isSelected: selectedAmount == charge['amount'],
+                            onTap: () {
+                              setState(() {
+                                selectedAmount = charge['amount'];
+                              });
+                            },
+                          );
+                        },
                       ),
-                      itemCount: chargeAmounts.length,
-                      itemBuilder: (context, index) {
-                        final charge = chargeAmounts[index];
-                        return ChargeAmountCard(
-                          amount: charge['amount'],
-                          color: charge['color'],
-                          isSelected: selectedAmount == charge['amount'],
-                          onTap: () {
-                            setState(() {
-                              selectedAmount = charge['amount'];
-                            });
-                          },
-                        );
-                      },
                     ),
                   ],
-                ),
-              ),
+                )
+
+              ],
             ),
             Spacer(),
             // دکمه ادامه
             Padding(
               padding: EdgeInsets.only(
-                  left: 20,
-                  right: 20
+                left: 20,
+                right: 20,
+                bottom: 20
               ),
               child: CustomButton(
                 buttonTitle: 'ادامه',
@@ -104,7 +110,7 @@ class _DirectiveChargePageState extends State<DirectiveChargePage> {
                     ? () => _handleDirectCharge()
                     : (){},
               ),
-            ),
+            )
           ],
         ),
       ),
