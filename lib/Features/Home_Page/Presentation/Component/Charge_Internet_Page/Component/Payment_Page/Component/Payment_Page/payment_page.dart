@@ -5,6 +5,7 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profi
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_state.dart';
 import '../../../../../../../../../Core/Const/app_colors.dart';
 import '../../../../../../../../../Core/Const/app_space.dart';
+import '../../../../../../../../Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
 import '../../../../../../../Data/Model/internet_package_model.dart';
 import '../../../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../../../../../Bloc/Wallet_Bloc/wallet_event.dart';
@@ -35,6 +36,8 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
     super.initState();
     context.read<WalletBloc>().add(
         WalletDetailsPackagesEvent());
+    context.read<ProfileBloc>().add(
+        GetProfileEventEvent());
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -89,13 +92,14 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
 
                         return BlocBuilder<WalletBloc, WalletState>(
                             builder: (context, state)  {
+                              print(state.walletDetails.first.address);
                               return WalletPayment(
                                   amount: widget.amount,
                                   title: widget.title,
                                   package: widget.package,
                                   sourcePhoneNumber: sourcePhoneNumber,
                                   destinationPhoneNumber: widget.phoneNumber,
-                                  selectedWalletAddress: state.walletDetails!.first.address ?? '');
+                                  selectedWalletAddress: state.walletDetails.first.address ?? '');
                             }
                         );
                       }
