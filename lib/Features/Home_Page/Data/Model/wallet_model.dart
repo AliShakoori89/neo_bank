@@ -1,3 +1,43 @@
+import 'package:equatable/equatable.dart';
+
+class WalletResponseModel extends Equatable {
+  final List<WalletModel> data;
+  final bool success;
+  final String traceId;
+  final dynamic error;
+
+  const WalletResponseModel({
+    required this.data,
+    required this.success,
+    required this.traceId,
+    this.error,
+  });
+
+  factory WalletResponseModel.fromJson(Map<String, dynamic> json) {
+    final dataList = json['data'] as List? ?? [];
+
+    return WalletResponseModel(
+      data: dataList.map((item) => WalletModel.fromJson(item)).toList(),
+      success: json['success'] as bool? ?? false,
+      traceId: json['traceId'] as String? ?? '',
+      error: json['error'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'data': data.map((item) => item.toJson()).toList(),
+      'success': success,
+      'traceId': traceId,
+      'error': error,
+    };
+  }
+
+  @override
+  List<Object?> get props => [data, success, traceId, error];
+}
+
+
 // مدل کیف پول
 class WalletModel {
   final String address;
