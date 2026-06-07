@@ -8,8 +8,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_state.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_state.dart';
-
-import '../../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
+import '../../../../Core/Utils/Internet/button_internet_checker.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import '../../../Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_event.dart';
 

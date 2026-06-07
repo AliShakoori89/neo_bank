@@ -14,7 +14,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/phone_number.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 
-import '../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
+import '../../../Core/Utils/Internet/button_internet_checker.dart';
 
 class OtpCodePage extends StatefulWidget {
   const OtpCodePage({

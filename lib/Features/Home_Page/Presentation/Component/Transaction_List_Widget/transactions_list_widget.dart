@@ -9,7 +9,6 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Tra
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../Core/Const/Route/transaction_detail_args.dart';
 import '../../../../../Core/Const/app_space.dart';
-import '../../../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import '../../../../../Core/Utils/custom_card.dart';
 import '../../../../../Core/Utils/error_refresh_widget.dart';
 

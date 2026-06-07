@@ -5,8 +5,7 @@ import 'package:http/http.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
-
-import '../../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
+import '../../../../Core/Utils/Internet/button_internet_checker.dart';
 import '../Bloc/Local_Pass_Bloc/local_pass_event.dart';
 
 class SetPassButton extends StatelessWidget {

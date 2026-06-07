@@ -16,7 +16,6 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Componen
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/statement_dropdown_button.dart';
 import '../../../Core/Const/Route/transaction_detail_args.dart';
 import '../../../Core/Services/check_connection_service.dart';
-import '../../../Core/Utils/App_Lock/Internet/internet_checker.dart';
 import 'Bloc/Statement_Bloc/statement_state.dart';
 import 'Component/action_icon.dart';
 import 'Component/jalali_to_Utc_Iso.dart';

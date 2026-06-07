@@ -8,7 +8,7 @@ import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Loca
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/pass_field.dart';
 import '../../../Core/Services/Biometric_Service/biometric_service.dart';
 import '../../../Core/Theme/app_them.dart';
-import '../../../Core/Utils/App_Lock/Internet/button_internet_checker.dart';
+import '../../../Core/Utils/Internet/button_internet_checker.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
 import '../../Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
