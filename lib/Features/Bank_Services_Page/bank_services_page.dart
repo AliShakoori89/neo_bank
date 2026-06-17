@@ -152,6 +152,10 @@ class _BankServicesPageState extends State<BankServicesPage> {
                         iconPath: 'assets/svg/bank_services_page/passcode.svg',
                         iconName: 'اعتبار سنجی',
                       ),
+                      CustomIconWidget(
+                        iconPath: 'assets/svg/authentication.svg',
+                        iconName: 'احراز هویت',
+                      ),
                     ]),
         
                     AppSpace.heightSpace_4,

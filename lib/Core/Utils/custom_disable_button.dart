@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../Const/app_colors.dart';
 
-class DisableCustomButton extends StatelessWidget {
-  const DisableCustomButton({super.key});
+class CustomDisableButton extends StatelessWidget {
+  const CustomDisableButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class DisableCustomButton extends StatelessWidget {
       style: ButtonStyle(
         enableFeedback: false,
         backgroundColor: WidgetStateProperty.all<Color>(
-          AppColors.loginPageIconColor.withOpacity(0.5), // کمرنگ‌تر
+          AppColors.loginPageIconColor.withAlpha(50), // کمرنگ‌تر
         ),
         overlayColor: WidgetStateProperty.all<Color>(
           Colors.transparent, // بدون افکت هنگام لمس
@@ -35,7 +35,7 @@ class DisableCustomButton extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
-              color: AppColors.darkModeIconIconColor.withOpacity(0.6), // متن کمرنگ‌تر
+              color: AppColors.darkModeIconIconColor.withAlpha(60), // متن کمرنگ‌تر
             ),
           ),
         ),

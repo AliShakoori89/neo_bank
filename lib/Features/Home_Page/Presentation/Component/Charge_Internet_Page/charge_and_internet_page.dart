@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_contact_picker_plus/model/contact_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/disable_custom_button.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/custom_disable_button.dart';
 import '../../../../../Core/Const/app_space.dart';
 import '../../../../../Core/Utils/app_snackbar.dart';
 import '../../../../../Core/Utils/custom_button.dart';
@@ -323,7 +323,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                           selectSimType(context, selectedSimType);
                         },
                       )
-                          : DisableCustomButton(),
+                          : CustomDisableButton(),
                       const SizedBox(height: 20),
                     ],
                   ),
@@ -430,7 +430,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
 
                         },
                       )
-                          : DisableCustomButton(),
+                          : CustomDisableButton(),
                       const SizedBox(height: 20),
                     ],
                   ),

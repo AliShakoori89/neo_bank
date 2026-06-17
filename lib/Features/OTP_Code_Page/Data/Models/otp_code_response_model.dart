@@ -1,8 +1,11 @@
+
+import '../../../../Core/Utils/api_error_model.dart';
+
 class OtpCodeResponseModel {
   final OtpCodeResponseDataModel? data;
   final bool? success;
   final String? traceId;
-  final OtpCodeResponseErrorModel? error;
+  final ApiErrorModel? error;
 
   OtpCodeResponseModel({this.data, this.success, this.traceId, this.error});
 
@@ -13,9 +16,7 @@ class OtpCodeResponseModel {
           : null,
       success: json['success'] as bool?,
       traceId: json['traceId'] as String?,
-      error: json['error'] != null
-          ? OtpCodeResponseErrorModel.fromJson(json['error'])
-          : null,
+      error: json['error'],
     );
   }
 }

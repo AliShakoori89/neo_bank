@@ -9,8 +9,8 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_
 import '../../../../Core/Const/app_colors.dart';
 import '../../../../Core/Utils/Internet/button_internet_checker.dart';
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({
+class CustomLoginButton extends StatelessWidget {
+  const CustomLoginButton({
     super.key,
     required this.nationalCodeController,
     required this.phoneNumberController,

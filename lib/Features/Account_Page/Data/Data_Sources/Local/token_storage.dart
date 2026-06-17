@@ -1,5 +1,4 @@
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
 
@@ -26,7 +25,7 @@ class LocalStorage {
   static Future<String?> read(String key) async {
     try {
       final value = await _prefs.getString(key);
-      if (value == null || value.isEmpty || value == 'null') return null;
+      if (value.isEmpty || value == 'null') return null;
       return value;
     } catch (e) {
       print("Error reading encrypted value: $e");

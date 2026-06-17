@@ -1,8 +1,10 @@
+import '../../../../Core/Utils/api_error_model.dart';
+
 class ProfileModel {
   final ProfileDataModel? data;
   final bool? success;
   final String? traceId;
-  final ApiError? error;
+  final ApiErrorModel? error;
 
   ProfileModel({this.data, this.success, this.traceId, this.error});
 
@@ -12,7 +14,7 @@ class ProfileModel {
 
       success: json['success'] as bool?,
       traceId: json['traceId'] as String?,
-      error: json['error'] != null ? ApiError.fromJson(json['error']) : null,
+      error: json['error'],
     );
   }
 }
@@ -118,18 +120,3 @@ class ProfileAddressModel {
   }
 }
 
-class ApiError {
-  final int? errorCode;
-  final String? errorMessage;
-  final String? owner;
-
-  ApiError({this.errorCode, this.errorMessage, this.owner});
-
-  factory ApiError.fromJson(Map<String, dynamic> json) {
-    return ApiError(
-      errorCode: json['errorCode'] as int?,
-      errorMessage: json['errorMessage'] as String?,
-      owner: json['owner'] as String?,
-    );
-  }
-}

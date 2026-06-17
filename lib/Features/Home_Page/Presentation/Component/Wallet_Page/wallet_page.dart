@@ -42,13 +42,6 @@ class _WalletPageState extends State<WalletPage> {
   }
 
   @override
-  void dispose() {
-    // ❌ حذف کنید - نیازی به ریست نیست
-    // context.read<TransactionBloc>().add(ResetTransactionEvent());
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 

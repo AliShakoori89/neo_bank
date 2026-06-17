@@ -234,9 +234,7 @@ class InternetPackagesRepository {
               data: [],
               success: false,
               traceId: traceId,
-              error: responseData['error'] != null
-                  ? ErrorModel.fromJson(responseData['error'] as Map<String, dynamic>)
-                  : null,
+              error: responseData['error'],
             );
           }
         }

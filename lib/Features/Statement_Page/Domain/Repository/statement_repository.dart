@@ -6,6 +6,8 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../../../Core/Utils/api_error_model.dart';
+
 class StatementRepository {
   final Dio _dio = Dio(
     BaseOptions(

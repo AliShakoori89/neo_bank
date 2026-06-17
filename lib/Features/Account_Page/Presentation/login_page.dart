@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/custom_button.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/custom_login_button.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/custom_text_form_field.dart';
 import '../../../Core/Theme/app_them.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                             AppSpace.heightSpace_32,
 
                             // ورود
-                            CustomButton(
+                            CustomLoginButton(
                               nationalCodeController: nationalCodeController,
                               phoneNumberController: phoneNumberController,
                               nationalCodeFormKey: nationalCodeFormKey,

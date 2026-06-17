@@ -130,6 +130,23 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             divider(),
 
+                            /// وضعیت احراز هویت
+                            InkWell(
+                              onTap: (){
+                                _showMyDialog(theme);
+                              },
+                              child: ProfilePageCustomCard(
+                                iconPath: 'assets/svg/authentication.svg',
+                                title: 'وضعیت احراز هویت',
+                                widget: const Icon(
+                                  Icons.arrow_forward_ios_outlined,
+                                  size: 20,
+                                  color: AppColors.loginPageIconColor,
+                                ),
+                              ),
+                            ),
+                            divider(),
+
                             /// رمز همراه بانک
                             InkWell(
                               onTap: (){
@@ -314,5 +331,44 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  /// --- Helper Widgets ---
+  Future<void> _showMyDialog(ThemeData theme) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: theme.colorScheme.onPrimaryFixed,
+          title: Text('وضعیت احراز هویت',
+            style: TextStyle(
+              color: theme.colorScheme.primaryFixed,
+              fontSize: 18,
+              fontWeight: FontWeight.w600
+            ),
+          ),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('احراز هویت شما هنوز انجام نشده است.'),
+                // Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('تایید'),
+              onPressed: () {
+                context.pop();
+              },
+            ),
+            TextButton(
+              child: const Text('احراز هویت'),
+              onPressed: () {
+
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

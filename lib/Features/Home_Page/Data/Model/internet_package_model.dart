@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/api_error_model.dart';
 import 'buy_internet_model.dart';
 
 class InternetPackageModel extends Equatable {
   final List<InternetPackage> data;
   final bool success;
   final String traceId;
-  final ErrorModel? error;
+  final ApiErrorModel? error;
   final String? message; // برای پیام خطا
   final String? dataString; // برای پاسخ String ساده
 
@@ -48,10 +49,7 @@ class InternetPackageModel extends Equatable {
       data: [],
       success: false,
       traceId: '',
-      error: ErrorModel(
-        errorCode: 0,
-        errorMessage: errorMessage,
-      ),
+      error: ApiErrorModel(errorMessage: errorMessage),
       message: errorMessage,
       dataString: null,
     );
@@ -63,10 +61,7 @@ class InternetPackageModel extends Equatable {
       data: [],
       success: false,
       traceId: '',
-      error: ErrorModel(
-        errorCode: error.errorCode,
-        errorMessage: error.errorMessage,
-      ),
+      error: ApiErrorModel(errorMessage: error.errorMessage),
       message: error.errorMessage,
       dataString: null,
     );
@@ -81,9 +76,7 @@ class InternetPackageModel extends Equatable {
           : [],
       success: json['success'] as bool? ?? false,
       traceId: json['traceId'] as String? ?? '',
-      error: json['error'] != null && json['error'] is Map<String, dynamic>
-          ? ErrorModel.fromJson(json['error'] as Map<String, dynamic>)
-          : null,
+      error: json['error'],
       message: json['message'] as String?,
       dataString: json['data'] as String?,
     );
@@ -94,7 +87,7 @@ class InternetPackageModel extends Equatable {
       'data': data.map((e) => e.toJson()).toList(),
       'success': success,
       'traceId': traceId,
-      'error': error?.toJson(),
+      'error': error,
       'message': message,
       'dataString': dataString,
     };
@@ -112,7 +105,7 @@ class InternetPackageModel extends Equatable {
       return message ?? 'عملیات با موفقیت انجام شد';
     }
     if (error != null) {
-      return error!.errorMessage;
+      return error!.errorMessage!;
     }
     return message ?? 'خطا در انجام عملیات';
   }

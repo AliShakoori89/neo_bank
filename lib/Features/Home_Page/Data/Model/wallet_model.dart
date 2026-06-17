@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../../Core/Utils/api_error_model.dart';
+
 class WalletResponseModel extends Equatable {
   final List<WalletModel> data;
   final bool success;
   final String traceId;
-  final dynamic error;
+  final ApiErrorModel? error;
 
   const WalletResponseModel({
     required this.data,

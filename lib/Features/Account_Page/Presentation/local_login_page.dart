@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/custom_local_login_button.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_state.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Component/pass_field.dart';
 import '../../../Core/Services/Biometric_Service/biometric_service.dart';
 import '../../../Core/Theme/app_them.dart';
-import '../../../Core/Utils/Internet/button_internet_checker.dart';
 import '../../../Core/Utils/neo_bank_logo.dart';
 import '../../Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -131,73 +129,8 @@ class _LocalLoginPageState extends State<LocalLoginPage> {
                                 ),
                               ),
                             )
-                                : Text(''),
-                            BlocBuilder<LocalPassBloc, LocalPassState>(
-                              builder: (context, state){
-                                return Container(
-                                  margin: EdgeInsets.only(left: 20, right: 20),
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                      WidgetStateProperty.all<Color>(
-                                        AppColors.splashGradiantColor1,
-                                      ),
-                                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            7.0,
-                                          ), // Adjust for desired corner radius
-                                        ),
-                                      ),
-                                    ),
-                                    onPressed: () async {
-
-                                      final localPass = state.localPass;
-
-                                      if(localPassController.text.length < 4){
-
-                                        AppSnackBar.errorTop(
-                                          context,
-                                          'پسورد را کامل وارد نمایید.',
-                                        );
-                                      } else{
-                                        if (localPassController.text ==
-                                            localPass.toString()) {
-
-                                          ButtonInternetChecker.checkInternet(
-                                            context: context,
-                                            onSuccess: () {
-                                              context.go('/main_page', extra: 0);
-                                            },
-                                          );
-
-                                        } else {
-                                          AppSnackBar.errorTop(
-                                            context,
-                                            'پسورد اشتباه است.',
-                                          );
-                                        }
-                                      }
-
-
-                                    },
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: Center(
-                                        child: Text(
-                                          'تایید',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
+                                : Text(''), 
+                            CustomLocalLoginButton(localPassController: localPassController),
                             isSwitchOn ? AppSpace.heightSpace_64 : Container(),
                             isSwitchOn ? IconButton(
                                 onPressed: () async{

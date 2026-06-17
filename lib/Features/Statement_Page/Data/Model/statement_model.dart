@@ -1,3 +1,5 @@
+import '../../../../Core/Utils/api_error_model.dart';
+
 class StatementResponseModel {
   final StatementDataModel? data;
   final bool? success;
@@ -18,9 +20,7 @@ class StatementResponseModel {
           : null,
       success: json['success'],
       traceId: json['traceId'],
-      error: json['error'] != null
-          ? ApiErrorModel.fromJson(json['error'])
-          : null,
+      error: json['error'],
     );
   }
 }
@@ -72,22 +72,4 @@ class StatementModel {
   }
 }
 
-class ApiErrorModel {
-  final int? errorCode;
-  final String? errorMessage;
-  final String? owner;
 
-  ApiErrorModel({
-    this.errorCode,
-    this.errorMessage,
-    this.owner,
-  });
-
-  factory ApiErrorModel.fromJson(Map<String, dynamic> json) {
-    return ApiErrorModel(
-      errorCode: json['errorCode'],
-      errorMessage: json['errorMessage'],
-      owner: json['owner'],
-    );
-  }
-}
