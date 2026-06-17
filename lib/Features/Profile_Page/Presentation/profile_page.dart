@@ -6,6 +6,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_state.dart';
@@ -16,6 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Core/Services/Biometric_Service/biometric_service.dart';
 import '../../../Core/Services/check_connection_service.dart';
 import '../../../Core/Utils/custom_divider.dart';
+import 'Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_event.dart';
+import 'Component/authentication_status_dialog.dart';
 import 'Component/profile_main_container.dart';
 import 'Component/switch_theme.dart';
 
@@ -36,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     BlocProvider.of<ProfileBloc>(context).add(GetProfileEventEvent());
+    BlocProvider.of<CitizenEkycStatusBloc>(context).add(FetchCitizenEkycStatusEvent());
     checkConnection(context);
     _initState();
     super.initState();
@@ -133,7 +137,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             /// وضعیت احراز هویت
                             InkWell(
                               onTap: (){
-                                _showMyDialog(theme);
+                                context.read<CitizenEkycStatusBloc>()
+                                    .add(FetchCitizenEkycStatusEvent());
+                                authenticationStatusDialog(context, theme);
                               },
                               child: ProfilePageCustomCard(
                                 iconPath: 'assets/svg/authentication.svg',
@@ -331,44 +337,4 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Future<void> _showMyDialog(ThemeData theme) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: theme.colorScheme.onPrimaryFixed,
-          title: Text('وضعیت احراز هویت',
-            style: TextStyle(
-              color: theme.colorScheme.primaryFixed,
-              fontSize: 18,
-              fontWeight: FontWeight.w600
-            ),
-          ),
-          content: const SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('احراز هویت شما هنوز انجام نشده است.'),
-                // Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('تایید'),
-              onPressed: () {
-                context.pop();
-              },
-            ),
-            TextButton(
-              child: const Text('احراز هویت'),
-              onPressed: () {
-
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
