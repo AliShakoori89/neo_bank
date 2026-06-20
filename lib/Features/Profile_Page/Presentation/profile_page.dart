@@ -84,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
 
               /// --- Header ---
-              customHeader(
+              NavHeader(
                 context,
                 Text(
                   'پروفایل کاربری',

@@ -70,7 +70,7 @@ Future<void> authenticationStatusDialog(BuildContext context, ThemeData theme) a
                   ElevatedButton(
                     onPressed: () {
                       context.pop();
-                      // navigate ekyc page
+                      context.push('/ekyc_first_step_auth_page');
                     },
                     child: const Text('شروع احراز هویت'),
                   ),

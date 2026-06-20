@@ -6,6 +6,8 @@ import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/local_login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/ekyc_first_step_auth_page.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/send_video_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/charge_and_internet_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/wallet_page.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/request_otp_code_again_repository.dart';
@@ -152,6 +154,20 @@ final GoRouter router = GoRouter(
           selectedSimType: extra?['selectedSimType'],
           phoneNumber: extra?['phoneNumber'],
         );
+      },
+    ),
+
+    GoRoute(
+      path: '/ekyc_first_step_auth_page',
+      builder: (context, state) {
+        return EkycFirstStepAuthPage();
+      },
+    ),
+
+    GoRoute(
+      path: '/send_video_page',
+      builder: (context, state) {
+        return SendVideoPage();
       },
     ),
 
