@@ -6,6 +6,7 @@ import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/local_login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Component/ekyc_gate_page.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/ekyc_first_step_auth_page.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/send_video_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/charge_and_internet_page.dart';
@@ -167,7 +168,17 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/send_video_page',
       builder: (context, state) {
-        return SendVideoPage();
+        final extra = state.extra as Map?;
+        return SendVideoPage(
+          data: extra?['data'],
+        );
+      },
+    ),
+
+    GoRoute(
+      path: '/ekyc_gate_page',
+      builder: (context, state) {
+        return EkycGatePage();
       },
     ),
 

@@ -1,15 +1,33 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_event.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_state.dart';
 import '../../../Core/Const/app_space.dart';
 import '../../../main.dart';
 import '../../Home_Page/Presentation/Component/Charge_Internet_Page/Component/custom_header.dart';
+import '../Data/Model/validate_token_model.dart';
 import 'Component/video_recorder_page.dart';
 
-class SendVideoPage extends StatelessWidget {
-  const SendVideoPage({super.key});
+class SendVideoPage extends StatefulWidget {
+  const SendVideoPage({super.key, this.data});
+
+  final ValidateTokenDataModel? data;
+
+  @override
+  State<SendVideoPage> createState() => _SendVideoPageState();
+}
+
+class _SendVideoPageState extends State<SendVideoPage> {
+
+  @override
+  void initState() {
+    BlocProvider.of<RandomTextBloc>(context).add(GetRandomTextEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +76,7 @@ class SendVideoPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.face_retouching_natural,
+                            Icons.face_6,
                             size: 80,
                             color: theme.appBarTheme.titleTextStyle?.color,
                           ),
@@ -99,14 +117,42 @@ class SendVideoPage extends StatelessWidget {
                           color: theme.appBarTheme.titleTextStyle!.color!,
                         ),
                       ),
-                      child: const Text(
-                        'اینجانب درخواست احراز هویت غیرحضوری خود را با آگاهی کامل ثبت نموده و صحت اطلاعات ارائه‌شده را تأیید می‌کنم.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          height: 1.8,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      child: BlocBuilder<RandomTextBloc, RandomTextState>(
+                        builder: (context, state) {
+                          if(state.status.isLoading){
+                            return const Center(
+                              child: SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          }
+                          if(state.status.isSuccess){
+                            return Text(
+                              state.randomText.data!.result!.first,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                height: 1.8,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            );
+                          }
+                          if(state.status.isError){
+                            return Center(
+                              child: Text(state.errorMessage, style: TextStyle(
+                                color: AppColors.redColor
+                              ),),
+                            );
+                          }
+                          return Center(
+                            child: Text(state.errorMessage, style: TextStyle(
+                                color: AppColors.redColor
+                            ),),
+                          );
+
+                        }
                       ),
                     ),
 

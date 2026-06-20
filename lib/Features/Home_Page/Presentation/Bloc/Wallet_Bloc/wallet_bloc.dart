@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/wallet_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_state.dart';
 import '../../../Domain/Repository/wallet_repository.dart';

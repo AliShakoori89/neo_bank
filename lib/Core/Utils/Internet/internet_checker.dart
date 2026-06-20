@@ -86,7 +86,7 @@ class InternetChecker {
                 height: 65,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: Colors.red.shade600.withOpacity(0.9),
+                  color: Colors.red.shade600.withAlpha(90),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Row(

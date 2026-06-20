@@ -41,6 +41,7 @@ class CustomLoginButton extends StatelessWidget {
         }
 
         if (state.status == UserLoginAuthStatus.error) {
+          print(state.loginMessage);
           AppSnackBar.errorTop(context, state.loginMessage);
         }
       },

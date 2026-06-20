@@ -1,17 +1,23 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
-import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/create_token_model.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/validate_token_model.dart';
+
 import '../../../../Core/Const/api_key.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
-class CreateTokenRepository {
+class ValidateTokenRepository {
   final dio = Dio();
 
-  Future<CreateTokenModel> createTokenResponse(String cardSerialNo, String cardExpDate) async{
+  Future<ValidateTokenModel> validateTokenResponse(String tokenValue, int orderId,
+      String tokenExpirationDateTime, String cardSerialNo, String cardExpDate) async{
     final token = await LocalStorage.read('access_token');
     if (token == null) throw Exception('Token not found');
 
     final body = {
+      "tokenValue": tokenValue,
+      "orderId": orderId,
+      "tokenExpirationDateTime": tokenExpirationDateTime,
       "cardSerialNo": cardSerialNo,
       "cardExpDate": cardExpDate
     };
@@ -19,7 +25,7 @@ class CreateTokenRepository {
     try{
 
       final response = await dio.post(
-        "${APIKey.baseUrl}/api/kycs/create-token",
+        "${APIKey.baseUrl}/api/kycs/validate-token",
         data: jsonEncode(body),
         options: Options(
           headers: {
@@ -31,9 +37,9 @@ class CreateTokenRepository {
       );
 
       if (response.statusCode == 200) {
-        return CreateTokenModel.fromJson(response.data);
+        return ValidateTokenModel.fromJson(response.data);
       } else {
-        throw Exception('خطا در ساخت توکن');
+        throw Exception('خطا در اعتبارسنجی توکن');
       }
 
     }catch (e) {

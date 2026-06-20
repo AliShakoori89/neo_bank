@@ -1,26 +1,19 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/create_token_model.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/get_ekyc_state_inquiry_model.dart';
 import '../../../../Core/Const/api_key.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
-class CreateTokenRepository {
+class GetEkycStateInquiryRepository {
   final dio = Dio();
 
-  Future<CreateTokenModel> createTokenResponse(String cardSerialNo, String cardExpDate) async{
+  Future<GetEkycStateInquiryModel> getEKYCStateInquiryRepository() async{
     final token = await LocalStorage.read('access_token');
     if (token == null) throw Exception('Token not found');
-
-    final body = {
-      "cardSerialNo": cardSerialNo,
-      "cardExpDate": cardExpDate
-    };
 
     try{
 
       final response = await dio.post(
-        "${APIKey.baseUrl}/api/kycs/create-token",
-        data: jsonEncode(body),
+        "${APIKey.baseUrl}/api/kycs/get-kyc-state-inquiry",
         options: Options(
           headers: {
             "Content-Type": "application/json",
@@ -30,10 +23,13 @@ class CreateTokenRepository {
         ),
       );
 
+      print(response.statusCode);
+      print(response.data);
+
       if (response.statusCode == 200) {
-        return CreateTokenModel.fromJson(response.data);
+        return GetEkycStateInquiryModel.fromJson(response.data);
       } else {
-        throw Exception('خطا در ساخت توکن');
+        throw Exception('خطا در ارتباط با سرور');
       }
 
     }catch (e) {

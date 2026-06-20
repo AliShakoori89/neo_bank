@@ -14,7 +14,7 @@ class CustomLocalLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return                             BlocBuilder<LocalPassBloc, LocalPassState>(
+    return BlocBuilder<LocalPassBloc, LocalPassState>(
       builder: (context, state){
         return Container(
           margin: EdgeInsets.only(left: 20, right: 20),
