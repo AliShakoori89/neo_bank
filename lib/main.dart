@@ -7,6 +7,10 @@ import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/App_Lock/app_lock_observer.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repository/user_login_auth_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/create_token_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/validate_token_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Create_Token_Bloc/create_token_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Validate_token_Bloc/validate_token_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repository/Deposits_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repository/all_card_detail_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
@@ -143,6 +147,14 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (BuildContext context) =>
               CitizenEkycStatusBloc(GetCitizenKycStatusRepository()),
+        ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              CreateTokenBloc(CreateTokenRepository()),
+        ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              ValidateTokenBloc(ValidateTokenRepository()),
         ),
       ],
       child: BlocBuilder<ThemeBloc, ThemeData>(
