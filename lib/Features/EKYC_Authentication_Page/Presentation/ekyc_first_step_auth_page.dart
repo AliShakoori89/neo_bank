@@ -96,14 +96,14 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
             children: [
               CustomHeader(title: 'احراز هویت'),
               AppSpace.heightSpace_32,
-      
+
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-      
+
                       /// ----------------- Card Serial -----------------
                       Text(
                         'شماره سریال کارت ملی:',
@@ -114,7 +114,7 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                         ),
                       ),
                       AppSpace.heightSpace_8,
-      
+
                       _customTextField(
                         controller: cardSerialController,
                         hint: '1G23456789',
@@ -126,9 +126,9 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                           return null;
                         },
                       ),
-      
+
                       AppSpace.heightSpace_24,
-      
+
                       /// ----------------- Expiry Date -----------------
                       Text(
                         'تاریخ انقضاء کارت ملی:',
@@ -139,7 +139,7 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                         ),
                       ),
                       AppSpace.heightSpace_8,
-      
+
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
@@ -162,12 +162,12 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                                     if (value == null || value.isEmpty) {
                                       return 'ماه الزامی است';
                                     }
-      
+
                                     final month = int.tryParse(value);
                                     if (month == null || month < 1 || month > 12) {
                                       return 'ماه باید بین 1 تا 12 باشد';
                                     }
-      
+
                                     return null;
                                   },
                                   inputFormatters: [
@@ -181,7 +181,7 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                                 ),
                               ),
                             ),
-      
+
                             Text(
                               '/',
                               style: TextStyle(
@@ -190,7 +190,7 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                                 color: theme.colorScheme.primary,
                               ),
                             ),
-      
+
                             /// Year
                             Expanded(
                               child: Form(
@@ -203,12 +203,12 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                                     if (value == null || value.isEmpty) {
                                       return 'سال الزامی است';
                                     }
-      
+
                                     final year = int.tryParse(value);
                                     if (year == null || year < 1300 || year > 1500) {
                                       return 'سال نامعتبر است';
                                     }
-      
+
                                     return null;
                                   },
                                   inputFormatters: [
