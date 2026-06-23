@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../Core/Const/app_colors.dart';
-import '../../../../Core/Utils/Internet/button_internet_checker.dart';
+import '../../../../Core/Utils/Internet/check_internet_when_press_button.dart';
 import '../../../../Core/Utils/app_snackbar.dart';
 import '../../../Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
 import '../../../Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_state.dart';
@@ -47,7 +47,7 @@ class CustomLocalLoginButton extends StatelessWidget {
                 if (localPassController.text ==
                     localPass.toString()) {
 
-                  ButtonInternetChecker.checkInternet(
+                  CheckInternetWhenPressButton.checkInternet(
                     context: context,
                     onSuccess: () {
                       context.go('/main_page', extra: 0);

@@ -1,7 +1,7 @@
-import '../Utils/Internet/internet_checker.dart';
+import '../Utils/Internet/check_page_internet.dart';
 
 Future<void> checkConnection(context) async {
-  await InternetChecker.checkInternet(
+  await InternetChecker.checkPageInternet(
     context: context,
     onSuccess: (){
       context.pushReplacement('/main_page');

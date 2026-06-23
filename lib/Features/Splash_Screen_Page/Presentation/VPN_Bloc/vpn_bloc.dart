@@ -13,14 +13,16 @@ class VpnBloc extends Bloc<VpnEvent, VpnState> {
   }
 
   Future<void> _onCheckVpn(
-      CheckVpnEvent event, Emitter<VpnState> emit) async {
-    // ابتدا VpnChecking را emit کن تا لودینگ نشان داده شود
+      CheckVpnEvent event,
+      Emitter<VpnState> emit,
+      ) async {
     emit(VpnChecking());
 
     final isActive = await VpnChecker.isVpnActive();
 
+    await Future.delayed(const Duration(milliseconds: 200)); // 👈 مهم
+
     if (isActive) {
-      // بعد از چک، VpnConnected را emit کن
       emit(VpnConnected(force: true));
     } else {
       emit(VpnDisconnected());

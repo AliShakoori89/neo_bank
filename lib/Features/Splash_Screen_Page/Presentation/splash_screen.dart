@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/app_snack_bar_with_button.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_version.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_logo.dart';
-
 import 'VPN_Bloc/vpn_bloc.dart';
 import 'VPN_Bloc/vpn_event.dart';
 import 'VPN_Bloc/vpn_state.dart';
@@ -16,8 +16,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, SingleTickerProviderStateMixin {
+
   late VpnBloc vpnBloc;
+  late Animation<Offset> _animation;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -29,11 +32,27 @@ class _SplashScreenState extends State<SplashScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       vpnBloc.add(CheckVpnEvent());
     });
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+
+    _animation = Tween<Offset>(
+      begin: const Offset(0, -1),
+      end: const Offset(0, 0),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+
+    _controller.forward();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _controller.dispose();
     super.dispose();
   }
 
@@ -52,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen>
         return BlocBuilder<VpnBloc, VpnState>(
           builder: (context, state) {
             // اگر VPN قطع شد، دیالوگ بسته بشه
-            if (state is VpnDisconnected) {
+            if (state is VpnConnected && state.force == true) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (Navigator.canPop(context)) Navigator.pop(context);
               });
@@ -60,61 +79,12 @@ class _SplashScreenState extends State<SplashScreen>
 
             bool isChecking = state is VpnChecking;
 
-            return Dialog(
-              alignment: Alignment.topCenter,
-              backgroundColor: Colors.transparent,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                width: double.infinity,
-                height: 65,
-                decoration: BoxDecoration(
-                  color: Colors.red.shade600.withOpacity(0.9),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Flexible(
-                      child: Text(
-                        "لطفاً VPN را خاموش کنید.",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    if (isChecking)
-                      const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                    else
-                      GestureDetector(
-                        onTap: () {
-                          vpnBloc.add(CheckVpnEvent());
-                        },
-                        child: Container(
-                          color: AppColors.appWhite.withAlpha(20),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          child: const Text(
-                            "تلاش مجدد",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            );
+            return AppSnackBarWithButton(
+                errorText: "لطفاً VPN را خاموش کنید.",
+                isLoading: isChecking,
+                handleRetry: () {context.read<VpnBloc>().add(CheckVpnEvent());},
+                animation: _animation);
+
           },
         );
       },

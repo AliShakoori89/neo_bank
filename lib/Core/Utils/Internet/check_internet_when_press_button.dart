@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/app_snack_bar_with_button.dart';
 
-class ButtonInternetChecker {
+class CheckInternetWhenPressButton {
   static bool _isBannerVisible = false;
   static OverlayEntry? _overlayEntry;
 
@@ -170,80 +171,10 @@ class _TopInternetBannerState extends State<_TopInternetBanner>
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 50,
-      left: 0,
-      right: 0,
-      child: SlideTransition(
-        position: _animation,
-        child: Center(
-          child: Material(
-            color: Colors.transparent,
-            child: Container(
-              width: double.infinity,
-              constraints: const BoxConstraints(
-                maxWidth: 500, // عرض حداکثر
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 16),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 14,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.red.shade600.withAlpha((0.85 * 255).toInt()),
-
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 12,
-                    color: Colors.black26,
-                  )
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min, // 👈 مهم
-                    children: [
-                    const Icon(Icons.wifi_off, color: Colors.white),
-                    const SizedBox(width: 12),
-                    const Flexible(
-                      child: Text(
-                        "اتصال اینترنت برقرار نیست",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],),
-                  _isLoading
-                      ? const SizedBox(
-                    width: 18,
-                    height: 18,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 2,
-                    ),
-                  )
-                      : GestureDetector(
-                    onTap: _handleRetry,
-                    child: const Text(
-                      "تلاش مجدد",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+    return AppSnackBarWithButton(
+        errorText: "اتصال اینترنت برقرار نیست",
+        isLoading: _isLoading,
+        handleRetry: _handleRetry,
+        animation: _animation);
   }
 }

@@ -8,7 +8,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_state.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_state.dart';
-import '../../../../Core/Utils/Internet/button_internet_checker.dart';
+import '../../../../Core/Utils/Internet/check_internet_when_press_button.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import '../../../Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_event.dart';
 
@@ -70,7 +70,7 @@ class _ConfirmationButtonState extends State<ConfirmationButton> {
             onPressed: () {
               final otp = widget.otpController.text;
 
-              ButtonInternetChecker.checkInternet(
+              CheckInternetWhenPressButton.checkInternet(
                   context: context,
                   onSuccess: () {
                     context.read<OtpCodeCheckBloc>().add(
