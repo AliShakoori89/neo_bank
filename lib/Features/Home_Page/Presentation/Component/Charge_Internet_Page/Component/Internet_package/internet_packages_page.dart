@@ -76,7 +76,7 @@ class _InternetPackagesPageState extends State<InternetPackagesPage> {
       body: SafeArea(
         child: Column(
           children: [
-            CustomHeader(title: 'انتخاب بسته اینترنت'),
+            CustomHeader(title: 'انتخاب بسته اینترنت', hasBackArrow: false,),
             AppSpace.heightSpace_12,
             Row(
               children: [

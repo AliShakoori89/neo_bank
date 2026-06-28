@@ -1,23 +1,44 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/send_video_model.dart';
+
 import '../../../../Core/Const/api_key.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
-import '../../Data/Model/random_text_model.dart';
 
-class RandomTextRepository {
+class SendVideoRepository {
   final Dio dio;
 
-  RandomTextRepository({Dio? dio}) : dio = dio ?? Dio();
+  SendVideoRepository({Dio? dio}) : dio = dio ?? Dio();
 
-  Future<RandomTextModel> getRandomText() async {
+  Future<SendVideoModel> sendVideoResponse(String randomText, String fileName, String content) async {
     final token = await LocalStorage.read('access_token');
 
     if (token == null || token.isEmpty) {
       throw Exception('Token not found');
     }
 
+    print('fileName');
+    print(fileName);
+    print('content');
+    print(content);
+
+    final body = {
+      "randomText": randomText,
+      "fileData": {
+        "fileName": fileName,
+        "content": content
+      },
+    };
+
+    final json = jsonEncode(body);
+
+    print(json.length);
+
     try {
       final response = await dio.post(
-        "${APIKey.baseUrl}/api/kycs/get-random-text",
+        "${APIKey.baseUrl}/api/kycs/send-video",
+        data: jsonEncode(body),
         options: Options(
           headers: {
             "Content-Type": "application/json",
@@ -27,13 +48,19 @@ class RandomTextRepository {
         ),
       );
 
-      print('/api/kycs/get-random-text');
+      print('response.statusCode');
+      print(response.statusCode);
       print(response.data);
 
       if (response.statusCode == 200) {
         final data = response.data;
 
-        return RandomTextModel.fromJson(data);
+        if (data['success'] == true) {
+          return SendVideoModel.fromJson(data);
+        }
+        throw Exception(
+          data['error']?['errorMessage'] ?? 'Unknown error',
+        );
       }
 
       throw Exception('خطا در ارتباط با سرور');

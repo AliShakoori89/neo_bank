@@ -47,7 +47,7 @@ class _DirectiveChargePageState extends State<DirectiveChargePage> {
           children: [
             Column(
               children: [
-                CustomHeader(title: 'شارژ مستقیم'),
+                CustomHeader(title: 'شارژ مستقیم', hasBackArrow: false),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

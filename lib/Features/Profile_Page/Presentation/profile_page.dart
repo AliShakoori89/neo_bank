@@ -6,6 +6,8 @@ import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Abort_Token_Bloc/abort_token_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Abort_Token_Bloc/abort_token_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
@@ -144,6 +146,24 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: ProfilePageCustomCard(
                                 iconPath: 'assets/svg/authentication.svg',
                                 title: 'وضعیت احراز هویت',
+                                widget: const Icon(
+                                  Icons.arrow_forward_ios_outlined,
+                                  size: 20,
+                                  color: AppColors.loginPageIconColor,
+                                ),
+                              ),
+                            ),
+                            divider(),
+
+                            /// وضعیت احراز هویت
+                            InkWell(
+                              onTap: (){
+                                context.read<AbortTokenBloc>()
+                                    .add(GetAbortTokenEvent());
+                              },
+                              child: ProfilePageCustomCard(
+                                iconPath: 'assets/svg/authentication.svg',
+                                title: 'امحاء توکن',
                                 widget: const Icon(
                                   Icons.arrow_forward_ios_outlined,
                                   size: 20,

@@ -21,7 +21,7 @@ class CheckInternetWhenPressButton {
 
 
       final request = await HttpClient()
-          .getUrl(Uri.parse("https://www.tala.ir/favicon.ico"))
+          .getUrl(Uri.parse("http://10.170.1.27:9000/swagger/index.html"))
           .timeout(const Duration(seconds: 5));
       print("REQUEST SENT");
 

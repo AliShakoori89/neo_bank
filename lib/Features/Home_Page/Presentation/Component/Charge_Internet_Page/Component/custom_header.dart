@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomHeader extends StatelessWidget {
-  const CustomHeader({super.key, required this.title, this.hasBackArrow});
+  const CustomHeader({super.key, required this.title, required this.hasBackArrow});
 
   final String title;
-  final bool? hasBackArrow;
+  final bool hasBackArrow;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class CustomHeader extends StatelessWidget {
           ),
         ),
       ),
-      child: hasBackArrow == null
+      child: hasBackArrow
           ? Align(
           alignment: Alignment.centerRight,
           child: Stack(
@@ -37,7 +37,7 @@ class CustomHeader extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: (){
-                    context.pop();
+                    context.go('/main_page', extra: 0);
                   },
                 ),
               ),

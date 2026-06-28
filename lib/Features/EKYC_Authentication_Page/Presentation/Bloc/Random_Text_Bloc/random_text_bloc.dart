@@ -19,7 +19,7 @@ class RandomTextBloc extends Bloc<RandomTextEvent, RandomTextState> {
       emit(state.copyWith(status: RandomTextStateStatus.loading));
 
       final getRandomText = await randomTextRepository
-          .getRandomTextRepository();
+          .getRandomText();
 
       print(getRandomText);
 

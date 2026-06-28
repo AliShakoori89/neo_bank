@@ -51,7 +51,9 @@ class RandomTextDataModel {
 
   factory RandomTextDataModel.fromJson(Map<String, dynamic> json) {
     return RandomTextDataModel(
-      result: json['result'],
+      result: (json['result'] as List<dynamic>?)
+          ?.map((e) => e.toString())
+          .toList(),
       failureResult: json['failureResult'],
       message: json['message'],
       state: json['state'],

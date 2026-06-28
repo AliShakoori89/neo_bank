@@ -50,7 +50,7 @@ class _InternetPackageDetailsPageState
       body: SafeArea(
         child: Column(
           children: [
-            CustomHeader(title: 'جزئیات بسته اینترنت'),
+            CustomHeader(title: 'جزئیات بسته اینترنت', hasBackArrow: false),
             AppSpace.heightSpace_12,
             Expanded(
               child: Column(

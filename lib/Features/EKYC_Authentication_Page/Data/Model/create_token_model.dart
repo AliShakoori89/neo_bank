@@ -1,7 +1,7 @@
 import 'package:neo_bank_mehr_iran/Core/Utils/api_error_model.dart';
 
 class CreateTokenModel {
-  final Data? data;
+  final CreateTokenDataModel? data;
   final bool? success;
   final String? traceId;
   final ApiErrorModel? error;
@@ -15,7 +15,7 @@ class CreateTokenModel {
 
   factory CreateTokenModel.fromJson(Map<String, dynamic> json) {
     return CreateTokenModel(
-      data: json['data'] != null ? Data.fromJson(json['data']) : null,
+      data: json['data'] != null ? CreateTokenDataModel.fromJson(json['data']) : null,
       success: json['success'] ?? false,
       traceId: json['traceId'],
       error: json['error'] != null ? ApiErrorModel.fromJson(json['error']) : null,
@@ -32,7 +32,7 @@ class CreateTokenModel {
   }
 }
 
-class Data {
+class CreateTokenDataModel {
   final String? tokenValue;
   final String? setTokenMessage;
   final int? orderId;
@@ -42,7 +42,7 @@ class Data {
   final int? remainedVideoTry;
   final int? state;
 
-  Data({
+  CreateTokenDataModel({
     this.tokenValue,
     this.setTokenMessage,
     this.orderId,
@@ -53,8 +53,8 @@ class Data {
     this.state,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) {
-    return Data(
+  factory CreateTokenDataModel.fromJson(Map<String, dynamic> json) {
+    return CreateTokenDataModel(
       tokenValue: json['tokenValue'],
       setTokenMessage: json['setTokenMessage'],
       orderId: json['orderId'],

@@ -32,7 +32,7 @@ class GetCitizenKycStatusRepository {
           return false;
         }
 
-        return result.data!.kycStatus != 0;
+        return result.data!.hasApprovedKYC!;
       }
 
       return false;

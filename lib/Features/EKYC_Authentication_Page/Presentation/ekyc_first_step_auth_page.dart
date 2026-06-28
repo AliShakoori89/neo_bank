@@ -66,7 +66,7 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
             if (state.status.isError) {
               AppSnackBar.errorTop(
                 context,
-                state.errorMessage ?? 'خطا در ایجاد توکن',
+                state.errorMessage,
               );
             }
           },
@@ -83,7 +83,7 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
             if (state.status.isError) {
               AppSnackBar.errorTop(
                 context,
-                state.errorMessage ?? 'خطا در اعتبارسنجی توکن',
+                state.errorMessage,
               );
             }
           },
@@ -94,7 +94,7 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
         body: SafeArea(
           child: Column(
             children: [
-              CustomHeader(title: 'احراز هویت'),
+              CustomHeader(title: 'احراز هویت', hasBackArrow: true,),
               AppSpace.heightSpace_32,
 
               Expanded(
@@ -247,9 +247,7 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                           child: ElevatedButton(
                             style: ButtonStyle(
                                 shape:
-                                WidgetStateProperty.all<
-                                    RoundedRectangleBorder
-                                >(
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
                                       7.0,
@@ -263,10 +261,6 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                               if (cardSerialFormKey.currentState!.validate() &&
                                   yearFormKey.currentState!.validate() &&
                                   monthFormKey.currentState!.validate()) {
-
-                                print(cardSerialController.text);
-                                print(yearController.text);
-                                print(monthController.text);
 
                                 context.read<CreateTokenBloc>().add(
                                   CreateTokenResponseEvent(

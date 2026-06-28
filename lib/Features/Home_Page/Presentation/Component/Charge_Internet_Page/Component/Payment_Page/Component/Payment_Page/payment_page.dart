@@ -58,7 +58,7 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
         body: SafeArea(
           child: Column(
             children: [
-              CustomHeader(title: 'شارژ و اینترنت'),
+              CustomHeader(title: 'شارژ و اینترنت', hasBackArrow: false,),
               SizedBox(
                 height: 56,
                 width: double.infinity,
@@ -99,7 +99,7 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
                                     package: widget.package,
                                     sourcePhoneNumber: sourcePhoneNumber,
                                     destinationPhoneNumber: widget.phoneNumber,
-                                    selectedWalletAddress: state.walletDetails.first.address ?? '');
+                                    selectedWalletAddress: state.walletDetails.first.address);
                               }
                           );
                         }

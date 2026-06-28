@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
+  file_saver
   flutter_localization
   local_auth_windows
   permission_handler_windows

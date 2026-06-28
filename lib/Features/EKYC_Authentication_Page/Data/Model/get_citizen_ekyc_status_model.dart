@@ -1,22 +1,22 @@
-import '../../../../Core/Utils/api_error_model.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/api_error_model.dart';
 
-class CitizenEkycStatusModel {
-  final KycData? data;
+class GetCitizenEkycStatusModel {
+  final GetCitizenEkycDataStatusModel? data;
   final bool? success;
   final String? traceId;
   final ApiErrorModel? error;
 
-  CitizenEkycStatusModel({
+  GetCitizenEkycStatusModel({
     this.data,
     this.success,
     this.traceId,
     this.error,
   });
 
-  factory CitizenEkycStatusModel.fromJson(Map<String, dynamic> json) {
-    return CitizenEkycStatusModel(
+  factory GetCitizenEkycStatusModel.fromJson(Map<String, dynamic> json) {
+    return GetCitizenEkycStatusModel(
       data: json['data'] != null
-          ? KycData.fromJson(json['data'])
+          ? GetCitizenEkycDataStatusModel.fromJson(json['data'])
           : null,
       success: json['success'],
       traceId: json['traceId'],
@@ -36,17 +36,16 @@ class CitizenEkycStatusModel {
   }
 }
 
-class KycData {
+class GetCitizenEkycDataStatusModel {
   final bool? hasApprovedKYC;
   final int? state;
 
-  KycData({
-    this.hasApprovedKYC,
-    this.state,
+  GetCitizenEkycDataStatusModel({
+    this.state, this.hasApprovedKYC,
   });
 
-  factory KycData.fromJson(Map<String, dynamic> json) {
-    return KycData(
+  factory GetCitizenEkycDataStatusModel.fromJson(Map<String, dynamic> json) {
+    return GetCitizenEkycDataStatusModel(
       hasApprovedKYC: json['hasApprovedKYC'],
       state: json['state'],
     );
@@ -59,3 +58,4 @@ class KycData {
     };
   }
 }
+

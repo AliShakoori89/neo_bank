@@ -30,9 +30,10 @@ class _EkycGatePageState extends State<EkycGatePage> {
         GetEkycStateInquiryBloc,
         GetEkycStateInquiryState>(
       listener: (context, state) {
+
         if (state.status.isSuccess) {
 
-          if (state.ekycStateResponse.data?.state == 2) {
+          if (state.state == 2) {
             context.go('/send_video_page');
           } else {
             context.go('/ekyc_first_step_auth_page');
@@ -54,5 +55,6 @@ class _EkycGatePageState extends State<EkycGatePage> {
         );
       },
     );
+
   }
 }

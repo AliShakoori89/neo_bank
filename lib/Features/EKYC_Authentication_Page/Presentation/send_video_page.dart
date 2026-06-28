@@ -1,16 +1,22 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/custom_button.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_event.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_state.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Send_Video_Bloc/send_video_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../../Core/Const/app_space.dart';
 import '../../../main.dart';
 import '../../Home_Page/Presentation/Component/Charge_Internet_Page/Component/custom_header.dart';
 import '../Data/Model/validate_token_model.dart';
-import 'Component/video_recorder_page.dart';
+import 'Bloc/Send_Video_Bloc/send_video_event.dart';
 
 class SendVideoPage extends StatefulWidget {
   const SendVideoPage({super.key, this.data});
@@ -23,11 +29,88 @@ class SendVideoPage extends StatefulWidget {
 
 class _SendVideoPageState extends State<SendVideoPage> {
 
+  bool _isCameraStarted = false;
+  CameraController? _controller;
+  bool _isInitialized = false;
+  bool _isRecording = false;
+  XFile? _recordedFile;
+  final int _recordDuration = 5;
+  int _currentSecond = 0;
+  Timer? _timer;
+  String? randomText;
+
   @override
   void initState() {
-    BlocProvider.of<RandomTextBloc>(context).add(GetRandomTextEvent());
     super.initState();
+
+    BlocProvider.of<RandomTextBloc>(context).add(GetRandomTextEvent());
+
+    _initCamera();
   }
+
+  Future<void> _initCamera() async {
+    final frontCamera = cameras.firstWhere(
+          (c) => c.lensDirection == CameraLensDirection.front,
+    );
+
+    _controller = CameraController(
+      frontCamera,
+      ResolutionPreset.low,
+      enableAudio: true,
+    );
+
+    await _controller!.initialize();
+
+    if (!mounted) return;
+
+    setState(() {
+      _isInitialized = true;
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  Future<void> _startRecording() async {
+    if (_controller == null || !_controller!.value.isInitialized) return;
+
+    await _controller!.startVideoRecording();
+
+    setState(() {
+      _isRecording = true;
+      _currentSecond = 0;
+    });
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
+      setState(() {
+        _currentSecond++;
+      });
+
+      if (_currentSecond >= _recordDuration) {
+        await _stopRecording();
+        timer.cancel();
+      }
+    });
+  }
+
+  Future<void> _stopRecording() async {
+    if (_controller == null || !_controller!.value.isRecordingVideo) return;
+
+    _timer?.cancel();
+
+    final file = await _controller!.stopVideoRecording();
+
+    setState(() {
+      _isRecording = false;
+      _recordedFile = file;
+    });
+
+    debugPrint("Video saved at: ${file.path}");
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,33 +146,92 @@ class _SendVideoPageState extends State<SendVideoPage> {
 
                     AppSpace.heightSpace_24,
 
-                    Container(
-                      height: 250,
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.onPrimaryFixed,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: Colors.grey.shade300,
+                    Padding(
+                      padding: EdgeInsets.only(left: 80, right: 80),
+                      child: Container(
+                        height: 340,
+                        decoration: BoxDecoration(
+                          color: theme.colorScheme.onPrimaryFixed,
+                          borderRadius: BorderRadius.circular(40),
+                          border: Border.all(color: Colors.grey.shade300),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: !_isCameraStarted
+                              ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.face_6,
+                                size: 80,
+                                color: theme.appBarTheme.titleTextStyle?.color,
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                'صورت خود را در این محدوده قرار دهید',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: theme.appBarTheme.titleTextStyle?.color,
+                                ),
+                              ),
+                            ],
+                          )
+                              : (_isInitialized && _controller != null)
+                              ? ClipRRect(
+                            borderRadius: BorderRadius.circular(40),
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                final previewSize = _controller?.value.previewSize;
+
+                                if (previewSize == null) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+
+                                return FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: SizedBox(
+                                    width: previewSize.height,
+                                    height: previewSize.width,
+                                    child: CameraPreview(_controller!),
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                              : const Center(
+                            child: CircularProgressIndicator(),
+                          ),
                         ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.face_6,
-                            size: 80,
-                            color: theme.appBarTheme.titleTextStyle?.color,
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            'صورت خود را در این محدوده قرار دهید',
-                            style: TextStyle(
-                              color: theme.appBarTheme.titleTextStyle?.color,
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
+
+                    if (_isRecording) ...[
+                      const SizedBox(height: 12),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          children: [
+                            LinearProgressIndicator(
+                              value: _currentSecond / _recordDuration,
+                              minHeight: 8,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+
+                            const SizedBox(height: 8),
+
+                            Text(
+                              '$_currentSecond / $_recordDuration ثانیه',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
 
                     AppSpace.heightSpace_24,
 
@@ -129,6 +271,9 @@ class _SendVideoPageState extends State<SendVideoPage> {
                             );
                           }
                           if(state.status.isSuccess){
+
+                            randomText = state.randomText.data!.result!.first;
+
                             return Text(
                               state.randomText.data!.result!.first,
                               textAlign: TextAlign.center,
@@ -184,39 +329,100 @@ class _SendVideoPageState extends State<SendVideoPage> {
               ),
             ),
 
-            Padding(
+            !_isCameraStarted
+                ? Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
               child: SizedBox(
                 width: double.infinity,
                 height: 52,
                 child: ElevatedButton.icon(
-                  onPressed: () async {
-                    final frontCamera = cameras.firstWhere(
-                          (camera) =>
-                      camera.lensDirection == CameraLensDirection.front,
-                    );
+                    onPressed: () async {
+                      setState(() {
+                        _isCameraStarted = true;
+                      });
 
-                    final File? recordedVideo =
-                    await Navigator.push<File>(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => VideoRecorderPage(
-                          camera: frontCamera,
-                        ),
-                      ),
-                    );
-
-                    if (recordedVideo != null) {
-                      debugPrint(recordedVideo.path);
-
-                      // آپلود ویدیو به سرور
-                    }
-                  },
+                      await _initCamera();
+                    },
                   icon: const Icon(Icons.videocam),
                   label: const Text('شروع ضبط ویدیو'),
                 ),
               ),
+            )
+                : SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: ElevatedButton.icon(
+                onPressed: _isRecording ? _stopRecording : _startRecording,
+                icon: Icon(
+                  _isRecording ? Icons.stop : Icons.fiber_manual_record,
+                  color: Colors.red,
+                ),
+                label: Text(
+                  _isRecording ? 'توقف ضبط' : 'شروع ضبط',
+                ),
+              ),
             ),
+
+            CustomButton(
+                buttonTitle: 'تایید و ادامه',
+                buttonOnPressed: () async {
+
+                  print('11111111111111111');
+                  print(_recordedFile!.path);
+                  print(_recordedFile!.name);
+                  print(randomText);
+
+                  if (_recordedFile == null || randomText == null) {
+                    return;
+                  }
+                  final bytes = await _recordedFile!.readAsBytes();
+                  final base64Video = base64Encode(bytes);
+
+                  print('333333333333333333333333333');
+
+                  print("video bytes: ${bytes.length}");
+                  print("base64 length: ${base64Video.length}");
+
+                  try {
+                    final decoded = base64Decode(base64Video);
+                    print("decoded bytes: ${decoded.length}");
+                  } catch (e) {
+                    print("Base64 Error: $e");
+                  }
+
+                  print(base64Video.length);
+                  print(base64Video.substring(0, 50));
+                  print(base64Video.substring(base64Video.length - 50));
+
+                  print(base64Video.contains('\n'));
+                  print(base64Video.contains('\r'));
+
+                  final decoded = base64Decode(base64Video);
+                  print(decoded.length == bytes.length);
+
+                  //**********************************
+
+                  final dir = await getApplicationDocumentsDirectory();
+
+                  final file = File('${dir.path}/base64.txt');
+
+                  await file.writeAsString(base64Video);
+
+                  print(file.path);
+                  print(await file.exists());
+                  print(await file.length());
+
+                  //**********************************
+
+                  context.read<SendVideoBloc>().add(
+                    SendVideoWithTextEvent(
+                      content: base64Video,
+                      fileName: 'ekyc-video.mp4',
+                      randomText: randomText!,
+                    ),
+                  );
+
+            })
           ],
         ),
       ),

@@ -36,6 +36,9 @@ class ValidateTokenRepository {
         ),
       );
 
+      print('/api/kycs/validate-token');
+      print(response.statusCode);
+
       if (response.statusCode == 200) {
         return ValidateTokenModel.fromJson(response.data);
       } else {

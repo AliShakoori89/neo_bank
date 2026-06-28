@@ -35,7 +35,7 @@ class CustomButton extends StatelessWidget {
         width: double.infinity,
         child: Center(
           child: Text(
-            'تایید',
+            buttonTitle,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,

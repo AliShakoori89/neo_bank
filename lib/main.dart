@@ -7,13 +7,21 @@ import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/App_Lock/app_lock_observer.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repository/user_login_auth_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/abort_token_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/create_token_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/get_citizen_ekyc_status_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/get_ekyc_state_inquiry_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/has_approved_ekyc_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/random_text_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/send_video_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/validate_token_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Abort_Token_Bloc/abort_token_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Create_Token_Bloc/create_token_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Get_Citizen_EKYC_Status_Bloc/Get_Citizen_EKYC_Status_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Get_EKYC_State_Inquiry_Bloc/get_ekyc_state_inquiry_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Has_Approved_EKYC_Bloc/has_approved_ekyc_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Send_Video_Bloc/send_video_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Validate_token_Bloc/validate_token_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repository/Deposits_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repository/all_card_detail_repository.dart';
@@ -167,6 +175,22 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (BuildContext context) =>
               RandomTextBloc(RandomTextRepository()),
+        ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              SendVideoBloc(SendVideoRepository()),
+        ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              AbortTokenBloc(AbortTokenRepository()),
+        ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              HasApprovedEkycBloc(HasApprovedEkycRepository()),
+        ),
+        BlocProvider(
+          create: (BuildContext context) =>
+              GetCitizenEkycStatusBloc(GetCitizenEkycStatusRepository()),
         ),
       ],
       child: BlocBuilder<ThemeBloc, ThemeData>(

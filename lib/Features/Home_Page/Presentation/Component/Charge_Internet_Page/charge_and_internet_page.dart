@@ -57,7 +57,7 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
         body: SafeArea(
           child: Column(
             children: [
-              CustomHeader(title: 'شارژ و اینترنت'),
+              CustomHeader(title: 'شارژ و اینترنت', hasBackArrow: false,),
               SizedBox(
                 height: 56,
                 width: double.infinity,

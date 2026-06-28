@@ -23,9 +23,6 @@ class GetEkycStateInquiryRepository {
         ),
       );
 
-      print(response.statusCode);
-      print(response.data);
-
       if (response.statusCode == 200) {
         return GetEkycStateInquiryModel.fromJson(response.data);
       } else {

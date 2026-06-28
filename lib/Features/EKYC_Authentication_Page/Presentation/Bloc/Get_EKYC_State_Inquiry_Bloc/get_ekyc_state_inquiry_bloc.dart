@@ -21,13 +21,11 @@ class GetEkycStateInquiryBloc extends Bloc<GetEkycStateInquiryEvent, GetEkycStat
       final getCitizenKycStatus = await getCitizenKycStatusRepository
           .getEKYCStateInquiryRepository();
 
-      print(getCitizenKycStatus);
-
       if (getCitizenKycStatus.success!) {
         emit(
           state.copyWith(
             status: GetEkycStateInquiryStateStatus.success,
-            ekycStateResponse: getCitizenKycStatus,
+            state: getCitizenKycStatus.data!.state
           ),
         );
       } else {

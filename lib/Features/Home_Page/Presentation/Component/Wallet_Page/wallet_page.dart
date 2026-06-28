@@ -76,7 +76,7 @@ class _WalletPageState extends State<WalletPage> {
 
             return Column(
               children: [
-                CustomHeader(title: 'کیف پول'),
+                CustomHeader(title: 'کیف پول', hasBackArrow: false,),
                 Expanded(
                   child: SingleChildScrollView(
                     padding: EdgeInsets.zero,
