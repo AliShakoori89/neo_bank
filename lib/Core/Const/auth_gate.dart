@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Features/Splash_Screen_Page/Presentation/splash_screen.dart';
-import '../Services/Biometric_Service/biometric_service.dart';
 
 class AuthGate extends StatefulWidget {
   const AuthGate({super.key});

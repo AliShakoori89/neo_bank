@@ -92,7 +92,6 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
 
                           return BlocBuilder<WalletBloc, WalletState>(
                               builder: (context, state)  {
-                                print(state.walletDetails.first.address);
                                 return WalletPayment(
                                     amount: widget.amount,
                                     title: widget.title,

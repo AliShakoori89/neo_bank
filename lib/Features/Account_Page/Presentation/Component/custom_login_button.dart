@@ -116,6 +116,10 @@ class CustomLoginButton extends StatelessWidget {
                       child: Stack(
                         alignment: Alignment.center,
                         children: const [
+                          Positioned(
+                            right: 2,
+                            child: Icon(Icons.arrow_back, size: 24),
+                          ),
                           Text(
                             'تایید و ادامه',
                             style: TextStyle(
@@ -123,10 +127,7 @@ class CustomLoginButton extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          Positioned(
-                            left: 5,
-                            child: Icon(Icons.arrow_forward, size: 24),
-                          ),
+
                         ],
                       ),
                     ),

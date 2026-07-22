@@ -22,6 +22,9 @@ class ValidateTokenRepository {
       "cardExpDate": cardExpDate
     };
 
+    print("tokenValue");
+    print(tokenValue);
+
     try{
 
       final response = await dio.post(

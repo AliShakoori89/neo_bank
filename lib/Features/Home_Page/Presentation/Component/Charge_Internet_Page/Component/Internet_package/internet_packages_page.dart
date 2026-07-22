@@ -138,7 +138,6 @@ class _InternetPackagesPageState extends State<InternetPackagesPage> {
                 if(state.status.isLoading){
                   return Expanded(child: InternetPackageListShimmer(itemCount: 10));
                 }else if(state.status.isSuccess){
-                  // print(state.internetPackages!.first.);
                   return Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.all(16),

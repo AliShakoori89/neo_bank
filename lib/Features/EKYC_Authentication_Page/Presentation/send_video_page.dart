@@ -44,6 +44,7 @@ class _SendVideoPageState extends State<SendVideoPage> {
     super.initState();
 
     BlocProvider.of<RandomTextBloc>(context).add(GetRandomTextEvent());
+    print(randomText);
 
     _initCamera();
   }
@@ -331,98 +332,118 @@ class _SendVideoPageState extends State<SendVideoPage> {
 
             !_isCameraStarted
                 ? Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+              padding: EdgeInsets.only(
+                  left: 16,
+                  right: 16
+              ),
               child: SizedBox(
                 width: double.infinity,
-                height: 52,
                 child: ElevatedButton.icon(
-                    onPressed: () async {
-                      setState(() {
-                        _isCameraStarted = true;
-                      });
+                  style: ButtonStyle(
+                      shape:
+                      WidgetStateProperty.all<
+                          RoundedRectangleBorder
+                      >(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            7.0,
+                          ), // Adjust for desired corner radius
+                        ),
+                      ),
+          ),
+                  onPressed: () async {
+                    setState(() {
+                      _isCameraStarted = true;
+                    });
 
-                      await _initCamera();
-                    },
+                    await _initCamera();
+                  },
                   icon: const Icon(Icons.videocam),
                   label: const Text('شروع ضبط ویدیو'),
                 ),
               ),
             )
-                : SizedBox(
-              width: double.infinity,
-              height: 52,
-              child: ElevatedButton.icon(
-                onPressed: _isRecording ? _stopRecording : _startRecording,
-                icon: Icon(
-                  _isRecording ? Icons.stop : Icons.fiber_manual_record,
-                  color: Colors.red,
-                ),
-                label: Text(
-                  _isRecording ? 'توقف ضبط' : 'شروع ضبط',
-                ),
+                : Padding(
+              padding: EdgeInsets.only(
+                  left: 16,
+                  right: 16
               ),
-            ),
-
-            CustomButton(
-                buttonTitle: 'تایید و ادامه',
-                buttonOnPressed: () async {
-
-                  print('11111111111111111');
-                  print(_recordedFile!.path);
-                  print(_recordedFile!.name);
-                  print(randomText);
-
-                  if (_recordedFile == null || randomText == null) {
-                    return;
-                  }
-                  final bytes = await _recordedFile!.readAsBytes();
-                  final base64Video = base64Encode(bytes);
-
-                  print('333333333333333333333333333');
-
-                  print("video bytes: ${bytes.length}");
-                  print("base64 length: ${base64Video.length}");
-
-                  try {
-                    final decoded = base64Decode(base64Video);
-                    print("decoded bytes: ${decoded.length}");
-                  } catch (e) {
-                    print("Base64 Error: $e");
-                  }
-
-                  print(base64Video.length);
-                  print(base64Video.substring(0, 50));
-                  print(base64Video.substring(base64Video.length - 50));
-
-                  print(base64Video.contains('\n'));
-                  print(base64Video.contains('\r'));
-
-                  final decoded = base64Decode(base64Video);
-                  print(decoded.length == bytes.length);
-
-                  //**********************************
-
-                  final dir = await getApplicationDocumentsDirectory();
-
-                  final file = File('${dir.path}/base64.txt');
-
-                  await file.writeAsString(base64Video);
-
-                  print(file.path);
-                  print(await file.exists());
-                  print(await file.length());
-
-                  //**********************************
-
-                  context.read<SendVideoBloc>().add(
-                    SendVideoWithTextEvent(
-                      content: base64Video,
-                      fileName: 'ekyc-video.mp4',
-                      randomText: randomText!,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      style: ButtonStyle(
+                        shape:
+                        WidgetStateProperty.all<
+                            RoundedRectangleBorder
+                        >(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              7.0,
+                            ), // Adjust for desired corner radius
+                          ),
+                        ),
+                      ),
+                      onPressed: _isRecording
+                          ? _stopRecording
+                          : _startRecording,
+                      icon: Icon(
+                        _isRecording ? Icons.stop : Icons.fiber_manual_record,
+                        color: Colors.red,
+                      ),
+                      label: Text(
+                        _isRecording ? 'توقف ضبط' : 'شروع ضبط',
+                      ),
                     ),
-                  );
+                  ),
+                ),
 
-            })
+            Padding(
+              padding: EdgeInsets.only(
+                left: 16,
+                right: 16
+              ),
+              child: CustomButton(
+                  buttonTitle: 'تایید و ادامه',
+                  buttonOnPressed: () async {
+
+                    if (_recordedFile == null || randomText == null) {
+                      return;
+                    }
+                    final bytes = await _recordedFile!.readAsBytes();
+                    final base64Video = base64Encode(bytes);
+
+                    try {
+                      final decoded = base64Decode(base64Video);
+                      print("decoded bytes: ${decoded.length}");
+                    } catch (e) {
+                      print("Base64 Error: $e");
+                    }
+
+                    final decoded = base64Decode(base64Video);
+
+                    //**********************************
+
+                    final dir = await getApplicationDocumentsDirectory();
+
+                    final file = File('${dir.path}/base64.txt');
+
+                    await file.writeAsString(base64Video);
+
+                    print(file.path);
+                    print(file.path);
+
+                    //**********************************
+
+                    context.read<SendVideoBloc>().add(
+                      SendVideoWithTextEvent(
+                        content: base64Video,
+                        fileName: 'ekyc-video.mp4',
+                        randomText: randomText!,
+                      ),
+                    );
+
+              }),
+            )
           ],
         ),
       ),

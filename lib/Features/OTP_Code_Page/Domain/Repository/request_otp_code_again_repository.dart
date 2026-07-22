@@ -17,6 +17,8 @@ class RequestOtpCodeAgainRepository {
     try {
       final deviceInfo = await DeviceInfoService.getDeviceInfo();
 
+
+
       final body = {
         "mobileNumber": mobileNumber,
         "nationalNumber": nationalNumber,
@@ -26,6 +28,8 @@ class RequestOtpCodeAgainRepository {
         "osVersion": deviceInfo['osVersion'],
         "appVersion": deviceInfo['appVersion'],
       };
+
+      print(body);
 
       final response = await dio.post(
         "${APIKey.baseUrl}/api/auth/request-login",

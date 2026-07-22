@@ -25,18 +25,18 @@ class WalletTypesList extends StatelessWidget {
           return const Center(child: Text('خطایی رخ داده است'));
         }
 
-        if (state.walletDetails?.isEmpty ?? true) {
+        if (state.walletDetails.isEmpty) {
           return const Center(child: Text('کیف پولی در دسترس نیست!'));
         }
 
-        final List<WalletModel> displayWallets = List.from(state.walletDetails!);
+        final List<WalletModel> displayWallets = List.from(state.walletDetails);
 
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: displayWallets.length,
           itemBuilder: (context, index) {
-            return state.walletDetails![index].title == 'عادی'
+            return state.walletDetails[index].title == 'عادی'
                 ? Container()
                 : Padding(
               padding: const EdgeInsets.all(8.0),
@@ -56,7 +56,7 @@ class WalletTypesList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        state.walletDetails![index].title,
+                        state.walletDetails[index].title,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -68,7 +68,7 @@ class WalletTypesList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            state.walletDetails![index].balance.toString().seRagham().toPersianDigit(),
+                            state.walletDetails[index].balance.toString().seRagham().toPersianDigit(),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,

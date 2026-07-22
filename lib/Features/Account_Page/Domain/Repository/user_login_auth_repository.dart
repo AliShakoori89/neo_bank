@@ -29,6 +29,8 @@ class UserLoginAuthRepository {
         "appVersion": deviceInfo['appVersion'],
       };
 
+      print(body);
+
       final response = await dio.post(
         "${APIKey.baseUrl}/api/auth/request-login",
         data: jsonEncode(body),
