@@ -1,61 +1,45 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/wallet_model.dart';
-import '../../../../Core/Const/api_key.dart';
 import '../../../../Core/Const/app_exception.dart';
-import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class WalletRepository {
+  final Dio dio;
 
-  final dio = Dio();
+  WalletRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
 
-  Future<WalletResponseModel> getWalletDetails() async{
-
-    final token = await LocalStorage.read('access_token');
-    if (token == null) throw Exception('Token not found');
-
+  Future<WalletResponseModel> getWalletDetails() async {
     try {
-      final response = await dio.post(
-        "${APIKey.baseUrl}/api/wallets/get-all",
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            'Authorization': token,
-          },
-        ),
-      );
+      final response = await dio.post("/api/wallets/get-all");
 
       if (response.statusCode == 200 && response.data != null) {
-        final WalletResponseModel walletResponse =
-        WalletResponseModel.fromJson(response.data);
+        final WalletResponseModel walletResponse = WalletResponseModel.fromJson(response.data);
 
         if (walletResponse.success) {
           return walletResponse;
         } else {
-          throw AppException('خطا در دریافت اطلاعات کیف پول: ${walletResponse.error ?? 'خطای ناشناخته'}');
+          throw AppException(walletResponse.error?.toString() ?? 'خطا در دریافت اطلاعات کیف پول');
         }
       } else {
-        throw AppException('خطا در دریافت اطلاعات کیف پول: ${response.statusCode}');
+        throw AppException('خطا در دریافت اطلاعات کیف پول');
       }
+    } on DioException catch (e) {
+      if (e.error is AppException) throw e.error!;
+      throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
-      print('خطا در دریافت اطلاعات کیف پول: $e');
-      rethrow;
+      if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
     }
   }
 
-
-  /// خرید بسته اینترنت (نیاز به اصلاح بر اساس API واقعی)
+  /// خرید بسته اینترنت
   Future<Map<String, dynamic>> buyInternetPackage({
     required String sourceMobileNumber,
     required String walletAddress,
     required int productCode,
     required String destMobileNumber,
   }) async {
-    final token = await LocalStorage.read('access_token');
-    if (token == null) throw AppException('Token not found');
-
     final body = {
       "sourceMobileNumber": sourceMobileNumber,
       "walletAddress": walletAddress,
@@ -65,52 +49,37 @@ class WalletRepository {
 
     try {
       final response = await dio.post(
-        "${APIKey.baseUrl}/api/internetpackages/buy",
+        "/api/internetpackages/buy",
         data: jsonEncode(body),
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            'Authorization': token,
-          },
-        ),
       );
 
       if (response.statusCode == 200) {
         return response.data;
       } else {
-        throw AppException('خطا در خرید بسته اینترنت: ${response.statusCode}');
+        throw AppException('خطا در خرید بسته اینترنت');
       }
+    } on DioException catch (e) {
+      if (e.error is AppException) throw e.error!;
+      throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
-      print('خطا در خرید بسته اینترنت: $e');
-      rethrow;
+      if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
     }
   }
 
-  /// دریافت موجودی کیف پول خاص (هلوپر متد)
+  /// دریافت موجودی کیف پول خاص
   Future<int?> getWalletBalance(String walletAddress) async {
-    try {
-      final response = await getWalletDetails();
-      final wallet = response.data.firstWhere(
-            (wallet) => wallet.address == walletAddress,
-        orElse: () => throw AppException('کیف پول مورد نظر یافت نشد'),
-      );
-      return wallet.balance;
-    } catch (e) {
-      print('خطا در دریافت موجودی کیف پول: $e');
-      rethrow;
-    }
+    final response = await getWalletDetails();
+    final wallet = response.data.firstWhere(
+      (wallet) => wallet.address == walletAddress,
+      orElse: () => throw AppException('کیف پول مورد نظر یافت نشد'),
+    );
+    return wallet.balance;
   }
 
-  /// دریافت کیف پول فعال (isActive = true)
+  /// دریافت کیف پول فعال
   Future<List<WalletModel>> getActiveWallets() async {
-    try {
-      final response = await getWalletDetails();
-      return response.data.where((wallet) => wallet.isActive).toList();
-    } catch (e) {
-      print('خطا در دریافت کیف پول‌های فعال: $e');
-      rethrow;
-    }
+    final response = await getWalletDetails();
+    return response.data.where((wallet) => wallet.isActive).toList();
   }
-
 }

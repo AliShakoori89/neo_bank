@@ -2,15 +2,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/login_result_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/user_login_auth_success_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/calcute_expire_time.dart';
+import '../../../../Core/Const/app_exception.dart';
 
 class UserLoginAuthRepository {
-  final dio = Dio();
+  final Dio dio;
+
+  UserLoginAuthRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
 
   FutureOr<LoginResultModel> userLogin(
     String nationalNumber,
@@ -29,29 +32,14 @@ class UserLoginAuthRepository {
         "appVersion": deviceInfo['appVersion'],
       };
 
-      print(body);
-
       final response = await dio.post(
-        "${APIKey.baseUrl}/api/auth/request-login",
+        "/api/auth/request-login",
         data: jsonEncode(body),
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-        ),
       );
 
       final data = UserLoginAuthModel.fromJson(response.data);
 
       if (response.statusCode == 200 && data.success == true) {
-        print('*');
-        print('otpcode     ${data.data!.code}');
-        print('deviceId     ${data.data!.deviceId}');
-        print('secretKey     ${data.data!.secretKey}');
-        print(calculateExpireTime(data.data!.expireTime.toString()));
-        print('**');
-
         LocalStorage.save('secret_key', data.data!.secretKey!);
         LocalStorage.save(
           'expire_secret_key_time',
@@ -67,31 +55,19 @@ class UserLoginAuthRepository {
         );
       }
 
-      return LoginResultModel(
-        success: false,
-        message: data.error?.errorMessage ?? 'خطای نامشخص',
-        secretKey: '',
-        deviceId: '',
-        expireTime: '',
-      );
+      throw AppException(data.error?.errorMessage ?? 'خطای نامشخص');
+    } on DioException catch (e) {
+      if (e.error is AppException) throw e.error!;
+      throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
-      return LoginResultModel(
-        success: false,
-        message: 'خطا در ارتباط با سرور',
-        secretKey: '',
-        deviceId: '',
-        expireTime: '',
-      );
+      if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
     }
   }
 
   Future<bool> userIsLogin() async {
     final encryptedPrefs = EncryptedSharedPreferences();
-
-    // خواندن توکن
     final token = await encryptedPrefs.getString('token');
-
-    // اگر توکن موجود بود true، در غیر این صورت false
-    return token != null && token.isNotEmpty;
+    return token.isNotEmpty;
   }
 }

@@ -1,37 +1,29 @@
 import 'package:dio/dio.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/card_list_model.dart';
-
 import '../../../../Core/Const/app_exception.dart';
 
 class AllCardRepository {
-  final dio = Dio();
+  final Dio dio;
+
+  AllCardRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
 
   Future<CardListModel> getAllCards() async {
-    final token = await LocalStorage.read('access_token');
-    if (token == null) throw AppException('Token not found');
-
     try {
-      final response = await dio.post(
-        "${APIKey.baseUrl}/api/cards/get-all",
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            'Authorization': token,
-          },
-        ),
-      );
+      final response = await dio.post("/api/cards/get-all");
 
       if (response.statusCode == 200) {
-        final data = response.data;
-        return CardListModel.fromJson(data);
+        return CardListModel.fromJson(response.data);
       }
+      throw AppException('Failed to fetch cards');
+    } on DioException catch (e) {
+      if (e.error is AppException) {
+        throw e.error!;
+      }
+      throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
-      print('خطا در دریافت کارت‌ها: $e');
-      rethrow;
+      if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
     }
-    return CardListModel();
   }
 }

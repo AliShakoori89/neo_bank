@@ -1,23 +1,25 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
-
 class LocalPassRepository {
-  final dio = Dio();
+  final Dio dio;
 
-  setPass(passField) async{
+  LocalPassRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
+
+  setPass(passField) async {
     await LocalStorage.save('local_password', passField);
   }
 
-  Future<String> readPass() async{
+  Future<String> readPass() async {
     final localPass = await LocalStorage.read(
       'local_password',
     );
     return localPass!;
   }
 
-  Future<bool> isFirstLogin() async{
+  Future<bool> isFirstLogin() async {
     final localPass = await LocalStorage.read(
       'local_password',
     );

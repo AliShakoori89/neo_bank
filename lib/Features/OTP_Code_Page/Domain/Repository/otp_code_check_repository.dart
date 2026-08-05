@@ -1,42 +1,32 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Models/otp_code_response_model.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Models/otp_request_result_model.dart';
+import '../../../../Core/Const/app_exception.dart';
 
 class OtpCodeCheckRepository {
-  final dio = Dio();
+  final Dio dio;
+
+  OtpCodeCheckRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
 
   FutureOr<OtpRequestResultModel?> otpLogin(
     String otpCode,
     String secretKey,
     String deviceID,
   ) async {
+    final body = {
+      "code": otpCode,
+      "secretKey": secretKey,
+      "deviceId": deviceID,
+    };
+
     try {
-      // final secretKey = LocalStorage.read('secret_key');
-
-      print('###########################');
-      print('otpCode   ' + otpCode);
-      print('secretKey    ' + secretKey);
-      print('deviceID    ' + deviceID);
-
-      final body = {
-        "code": otpCode,
-        "secretKey": secretKey,
-        "deviceId": deviceID,
-      };
-
       final response = await dio.post(
-        "${APIKey.baseUrl}/api/auth/login",
+        "/api/auth/login",
         data: jsonEncode(body),
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-        ),
       );
 
       final data = OtpCodeResponseModel.fromJson(response.data);
@@ -51,19 +41,17 @@ class OtpCodeCheckRepository {
         LocalStorage.save('mobile_number', data.data!.mobileNumber!);
 
         return OtpRequestResultModel(
-          message: data.success == true ? '' : data.error!.errorMessage!,
-          success: data.success!,
+          message: '',
+          success: true,
         );
       }
-      return OtpRequestResultModel(
-        message: data.error!.errorMessage ?? 'خطای نامشخص',
-        success: false,
-      );
+      throw AppException(data.error?.errorMessage ?? 'خطای نامشخص');
+    } on DioException catch (e) {
+      if (e.error is AppException) throw e.error!;
+      throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
-      return OtpRequestResultModel(
-        message: 'خطا در ارتباط با سرور',
-        success: false,
-      );
+      if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
     }
   }
 }

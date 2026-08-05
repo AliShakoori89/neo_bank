@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/user_login_auth_success_model.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Models/otp_request_again_result_model.dart';
+import '../../../../Core/Const/app_exception.dart';
 
 class RequestOtpCodeAgainRepository {
-  final dio = Dio();
+  final Dio dio;
+
+  RequestOtpCodeAgainRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
 
   Future<OtpRequestAgainResultModel> requestOTPAgain(
     String nationalNumber,
@@ -16,8 +19,6 @@ class RequestOtpCodeAgainRepository {
   ) async {
     try {
       final deviceInfo = await DeviceInfoService.getDeviceInfo();
-
-
 
       final body = {
         "mobileNumber": mobileNumber,
@@ -29,28 +30,14 @@ class RequestOtpCodeAgainRepository {
         "appVersion": deviceInfo['appVersion'],
       };
 
-      print(body);
-
       final response = await dio.post(
-        "${APIKey.baseUrl}/api/auth/request-login",
+        "/api/auth/request-login",
         data: jsonEncode(body),
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-        ),
       );
 
       final data = UserLoginAuthModel.fromJson(response.data);
 
       if (response.statusCode == 200 && data.success == true) {
-        print('*************************************************');
-        print('otpcode     ${data.data!.code}');
-        print('deviceId     ${data.data!.deviceId}');
-        print('secretKey     ${data.data!.secretKey}');
-        print('*************************************************');
-
         LocalStorage.save('secret_key', data.data!.secretKey!);
         LocalStorage.save(
           'expire_secret_key_time',
@@ -65,19 +52,13 @@ class RequestOtpCodeAgainRepository {
         );
       }
 
-      return OtpRequestAgainResultModel(
-        success: false,
-        message: data.error?.errorMessage ?? 'خطای نامشخص',
-        secretKey: '',
-        deviceId: '',
-      );
+      throw AppException(data.error?.errorMessage ?? 'خطای نامشخص');
+    } on DioException catch (e) {
+      if (e.error is AppException) throw e.error!;
+      throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
-      return OtpRequestAgainResultModel(
-        success: false,
-        message: 'خطا در ارتباط با سرور',
-        secretKey: '',
-        deviceId: '',
-      );
+      if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
     }
   }
 }

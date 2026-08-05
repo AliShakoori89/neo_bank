@@ -1,38 +1,30 @@
 import 'package:dio/dio.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/get_ekyc_state_inquiry_model.dart';
-import '../../../../Core/Const/api_key.dart';
 import '../../../../Core/Const/app_exception.dart';
-import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class GetEkycStateInquiryRepository {
-  final dio = Dio();
+  final Dio dio;
 
-  Future<GetEkycStateInquiryModel> getEKYCStateInquiryRepository() async{
-    final token = await LocalStorage.read('access_token');
-    if (token == null) throw AppException('Token not found');
+  GetEkycStateInquiryRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
 
-    try{
-
-      final response = await dio.post(
-        "${APIKey.baseUrl}/api/kycs/get-kyc-state-inquiry",
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            'Authorization': token,
-          },
-        ),
-      );
+  Future<GetEkycStateInquiryModel> getEKYCStateInquiryRepository() async {
+    try {
+      final response = await dio.post("/api/kycs/get-kyc-state-inquiry");
 
       if (response.statusCode == 200) {
         return GetEkycStateInquiryModel.fromJson(response.data);
       } else {
         throw AppException('خطا در ارتباط با سرور');
       }
-
-    }catch (e) {
-      rethrow;
+    } on DioException catch (e) {
+      if (e.error is AppException) {
+        throw e.error!;
+      }
+      throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
+    } catch (e) {
+      if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
     }
   }
-
 }

@@ -1,28 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/Models/all_cards_pans_model.dart';
-
 import '../../../../Core/Const/app_exception.dart';
 
 class AllCardDetailRepository {
-  final dio = Dio();
+  final Dio dio;
+
+  AllCardDetailRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
 
   Future<List<String>> getAllCardsPan() async {
     try {
-      final token = await LocalStorage.read('access_token');
-      if (token == null) throw AppException('Token not found');
-
-      final response = await dio.post(
-        "${APIKey.baseUrl}/api/cards/get-all",
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            'Authorization': token,
-          },
-        ),
-      );
+      final response = await dio.post("/api/cards/get-all");
 
       if (response.statusCode == 200) {
         final cards = AllCardsPansModel.fromJson(response.data);
@@ -37,33 +25,23 @@ class AllCardDetailRepository {
       } else {
         throw AppException('Failed to fetch cards');
       }
+    } on DioException catch (e) {
+      if (e.error is AppException) {
+        throw e.error!;
+      }
+      throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
-      print('❌ Dio Error: $e');
-      rethrow; // Bloc handle
+      if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
     }
   }
 
   Future<List<String>> getAllCardsDeposit() async {
     try {
-      final token = await LocalStorage.read('access_token');
-      if (token == null) throw AppException('Token not found');
-
-      final response = await dio.post(
-        "${APIKey.baseUrl}/api/cards/get-all",
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            'Authorization': token,
-          },
-        ),
-      );
-
-      print('getAllCardsDeposit');
+      final response = await dio.post("/api/cards/get-all");
 
       if (response.statusCode == 200) {
         final cards = AllCardsPansModel.fromJson(response.data);
-
         final List<String> cardsDeposit = [];
 
         if (cards.data != null) {
@@ -77,8 +55,14 @@ class AllCardDetailRepository {
       } else {
         throw AppException('Failed to fetch cards');
       }
+    } on DioException catch (e) {
+      if (e.error is AppException) {
+        throw e.error!;
+      }
+      throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
-      rethrow; // Bloc handle
+      if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
     }
   }
 }
