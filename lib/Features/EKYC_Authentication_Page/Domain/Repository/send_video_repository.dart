@@ -2,22 +2,15 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_exception.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/send_video_model.dart';
-
-import '../../../../Core/Const/api_key.dart';
-import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class SendVideoRepository {
   final Dio dio;
 
-  SendVideoRepository({Dio? dio}) : dio = dio ?? Dio();
+  SendVideoRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
 
   Future<SendVideoModel> sendVideoResponse(String randomText, String fileName, String content) async {
-    final token = await LocalStorage.read('access_token');
-
-    if (token == null || token.isEmpty) {
-      throw AppException('Token not found');
-    }
 
     print('fileName');
     print(fileName);
@@ -32,55 +25,33 @@ class SendVideoRepository {
       },
     };
 
-    final json = jsonEncode(body);
-
-    print(json.length);
-
     try {
       final response = await dio.post(
-        "${APIKey.baseUrl}/api/kycs/send-video",
+        "/api/kycs/send-video",
         data: jsonEncode(body),
-        options: Options(
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Authorization": token,
-          },
-        ),
       );
+
+      final data = response.data;
+
+      if (data['success'] == true) {
+        return SendVideoModel.fromJson(data);
+      }
 
       print('response.statusCode');
       print(response.statusCode);
       print(response.data);
-
-      if (response.statusCode == 200) {
-        final data = response.data;
-
-        if (data['success'] == true) {
-          return SendVideoModel.fromJson(data);
-        }
-        throw AppException(
-          data['error']?['errorMessage'] ?? 'Unknown error',
-        );
-      }
-
-      throw AppException('خطا در ارتباط با سرور');
+      
+      throw AppException(
+        data['error']?['errorMessage'] ?? 'عملیات با خطا مواجه شد.',
+      );
     } on DioException catch (e) {
-      if (e.response?.statusCode == 422) {
-        throw AppException(
-          e.response?.data?['error']?['errorMessage'] ??
-              'اطلاعات ارسالی معتبر نیست.',
-        );
+      if (e.error is AppException) {
+        throw e.error!;
       }
-
-      final message = e.response?.data?['message'] ??
-          e.response?.data?['error']?['errorMessage'] ??
-          e.message ??
-          'خطایی رخ داده است.';
-
-      throw AppException(message);
+      throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
-      throw AppException('Unexpected error: $e');
+      if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
     }
   }
 }
