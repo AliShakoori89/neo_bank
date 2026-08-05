@@ -11,6 +11,7 @@ import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentatio
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Validate_token_Bloc/validate_token_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Validate_token_Bloc/validate_token_event.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Component/convert_shamsi_to_miladi_method.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Component/custom_loading_button.dart';
 import '../../Home_Page/Presentation/Component/Charge_Internet_Page/Component/custom_header.dart';
 import 'Bloc/Validate_token_Bloc/validate_token_state.dart';
 
@@ -64,6 +65,7 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
             }
 
             if (state.status.isError) {
+              print(state.errorMessage);
               AppSnackBar.errorTop(
                 context,
                 state.errorMessage,
@@ -96,7 +98,6 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
             children: [
               CustomHeader(title: 'احراز هویت', hasBackArrow: true,),
               AppSpace.heightSpace_32,
-
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
@@ -176,6 +177,9 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                                   ],
                                   decoration: const InputDecoration(
                                     hintText: 'MM',
+                                    hintStyle: TextStyle(
+                                      color: AppColors.customHeaderTextColor
+                                    ),
                                     border: InputBorder.none,
                                   ),
                                 ),
@@ -217,6 +221,9 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                                   ],
                                   decoration: const InputDecoration(
                                     hintText: 'YYYY',
+                                    hintStyle: TextStyle(
+                                        color: AppColors.customHeaderTextColor
+                                    ),
                                     border: InputBorder.none,
                                   ),
                                 ),
@@ -229,65 +236,21 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
                   ),
                 ),
               ),
-              BlocBuilder<CreateTokenBloc, CreateTokenState>(
-                builder: (context, createState) {
+              CustomLoadingButton(
+                  onPressed: () {
+                    if (cardSerialFormKey.currentState!.validate() &&
+                        yearFormKey.currentState!.validate() &&
+                        monthFormKey.currentState!.validate()) {
 
-                  return BlocBuilder<ValidateTokenBloc, ValidateTokenState>(
-                    builder: (context, validateState) {
-
-                      final isLoading =
-                          createState.status.isLoading ||
-                              validateState.status.isLoading;
-
-                      return SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 20, right: 20),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                                shape:
-                                WidgetStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      7.0,
-                                    ), // Adjust for desired corner radius
-                                  ),
-                                ),
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                  AppColors.splashGradiantColor1,
-                                )),
-                            onPressed: isLoading ? null : () {
-                              if (cardSerialFormKey.currentState!.validate() &&
-                                  yearFormKey.currentState!.validate() &&
-                                  monthFormKey.currentState!.validate()) {
-
-                                context.read<CreateTokenBloc>().add(
-                                  CreateTokenResponseEvent(
-                                    cardSerialNo: cardSerialController.text,
-                                    cardExpDate: convertShamsiToMiladiMethod(yearController.text, monthController.text),
-                                  ),
-                                );
-
-                              }
-                            },
-                            child: isLoading
-                                ? const SizedBox(
-                              width: 22,
-                              height: 22,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
-                              ),
-                            )
-                                : const Text("تأیید و ادامه"),
-                          ),
+                      context.read<CreateTokenBloc>().add(
+                        CreateTokenResponseEvent(
+                          cardSerialNo: cardSerialController.text,
+                          cardExpDate: convertShamsiToMiladiMethod(yearController.text, monthController.text),
                         ),
                       );
-                    },
-                  );
-                },
-              )
+
+                    }
+                  })
             ],
           ),
         ),
@@ -310,6 +273,9 @@ class _EkycFirstStepAuthPageState extends State<EkycFirstStepAuthPage> {
         validator: validator,
         decoration: InputDecoration(
           hintText: hint,
+          hintStyle: TextStyle(
+            color: AppColors.customHeaderTextColor
+          ),
           border: OutlineInputBorder(),
         ),
       ),

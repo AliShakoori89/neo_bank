@@ -3,13 +3,15 @@ import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/Models/all_cards_pans_model.dart';
 
+import '../../../../Core/Const/app_exception.dart';
+
 class AllCardDetailRepository {
   final dio = Dio();
 
   Future<List<String>> getAllCardsPan() async {
     try {
       final token = await LocalStorage.read('access_token');
-      if (token == null) throw Exception('Token not found');
+      if (token == null) throw AppException('Token not found');
 
       final response = await dio.post(
         "${APIKey.baseUrl}/api/cards/get-all",
@@ -33,7 +35,7 @@ class AllCardDetailRepository {
         }
         return cardsPan;
       } else {
-        throw Exception('Failed to fetch cards');
+        throw AppException('Failed to fetch cards');
       }
     } catch (e) {
       print('❌ Dio Error: $e');
@@ -44,7 +46,7 @@ class AllCardDetailRepository {
   Future<List<String>> getAllCardsDeposit() async {
     try {
       final token = await LocalStorage.read('access_token');
-      if (token == null) throw Exception('Token not found');
+      if (token == null) throw AppException('Token not found');
 
       final response = await dio.post(
         "${APIKey.baseUrl}/api/cards/get-all",
@@ -73,7 +75,7 @@ class AllCardDetailRepository {
         }
         return cardsDeposit;
       } else {
-        throw Exception('Failed to fetch cards');
+        throw AppException('Failed to fetch cards');
       }
     } catch (e) {
       rethrow; // Bloc handle

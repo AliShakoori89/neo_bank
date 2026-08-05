@@ -49,7 +49,7 @@ class SendVideoBloc extends Bloc<SendVideoEvent, SendVideoState> {
       emit(
         state.copyWith(
           status: SendVideoStateStatus.error,
-          errorMessage: error.toString(),
+          errorMessage: error.toString().replaceFirst('Exception: ', ''),
         ),
       );
     }

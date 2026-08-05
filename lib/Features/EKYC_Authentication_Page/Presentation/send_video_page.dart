@@ -13,10 +13,12 @@ import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentatio
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Send_Video_Bloc/send_video_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../../Core/Const/app_space.dart';
+import '../../../Core/Utils/app_snackbar.dart';
 import '../../../main.dart';
 import '../../Home_Page/Presentation/Component/Charge_Internet_Page/Component/custom_header.dart';
 import '../Data/Model/validate_token_model.dart';
 import 'Bloc/Send_Video_Bloc/send_video_event.dart';
+import 'Bloc/Send_Video_Bloc/send_video_state.dart';
 
 class SendVideoPage extends StatefulWidget {
   const SendVideoPage({super.key, this.data});
@@ -118,8 +120,24 @@ class _SendVideoPageState extends State<SendVideoPage> {
 
     final theme = Theme.of(context);
 
-    return Scaffold(
-      backgroundColor: theme.colorScheme.onPrimaryFixed,
+    return BlocListener<SendVideoBloc, SendVideoState>(
+        listener: (context, state) {
+          if (state.status == SendVideoStateStatus.error) {
+            AppSnackBar.errorTop(
+              context,
+              state.errorMessage,
+            );
+          }
+
+          if (state.status == SendVideoStateStatus.success) {
+            AppSnackBar.successTop(
+              context,
+              "ویدیو با موفقیت ارسال شد",
+            );
+          }
+        },
+        child: Scaffold(
+    backgroundColor: theme.colorScheme.onPrimaryFixed,
       body: SafeArea(
         child: Column(
           children: [
@@ -261,44 +279,44 @@ class _SendVideoPageState extends State<SendVideoPage> {
                         ),
                       ),
                       child: BlocBuilder<RandomTextBloc, RandomTextState>(
-                        builder: (context, state) {
-                          if(state.status.isLoading){
-                            return const Center(
-                              child: SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(),
-                              ),
-                            );
-                          }
-                          if(state.status.isSuccess){
+                          builder: (context, state) {
+                            if(state.status.isLoading){
+                              return const Center(
+                                child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
+                            if(state.status.isSuccess){
 
-                            randomText = state.randomText.data!.result!.first;
+                              randomText = state.randomText.data!.result!.first;
 
-                            return Text(
-                              state.randomText.data!.result!.first,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                height: 1.8,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            );
-                          }
-                          if(state.status.isError){
+                              return Text(
+                                state.randomText.data!.result!.first,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  height: 1.8,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              );
+                            }
+                            if(state.status.isError){
+                              return Center(
+                                child: Text(state.errorMessage, style: TextStyle(
+                                    color: AppColors.redColor
+                                ),),
+                              );
+                            }
                             return Center(
                               child: Text(state.errorMessage, style: TextStyle(
-                                color: AppColors.redColor
+                                  color: AppColors.redColor
                               ),),
                             );
-                          }
-                          return Center(
-                            child: Text(state.errorMessage, style: TextStyle(
-                                color: AppColors.redColor
-                            ),),
-                          );
 
-                        }
+                          }
                       ),
                     ),
 
@@ -340,17 +358,17 @@ class _SendVideoPageState extends State<SendVideoPage> {
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   style: ButtonStyle(
-                      shape:
-                      WidgetStateProperty.all<
-                          RoundedRectangleBorder
-                      >(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            7.0,
-                          ), // Adjust for desired corner radius
-                        ),
+                    shape:
+                    WidgetStateProperty.all<
+                        RoundedRectangleBorder
+                    >(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          7.0,
+                        ), // Adjust for desired corner radius
                       ),
-          ),
+                    ),
+                  ),
                   onPressed: () async {
                     setState(() {
                       _isCameraStarted = true;
@@ -368,39 +386,39 @@ class _SendVideoPageState extends State<SendVideoPage> {
                   left: 16,
                   right: 16
               ),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      style: ButtonStyle(
-                        shape:
-                        WidgetStateProperty.all<
-                            RoundedRectangleBorder
-                        >(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                              7.0,
-                            ), // Adjust for desired corner radius
-                          ),
-                        ),
-                      ),
-                      onPressed: _isRecording
-                          ? _stopRecording
-                          : _startRecording,
-                      icon: Icon(
-                        _isRecording ? Icons.stop : Icons.fiber_manual_record,
-                        color: Colors.red,
-                      ),
-                      label: Text(
-                        _isRecording ? 'توقف ضبط' : 'شروع ضبط',
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  style: ButtonStyle(
+                    shape:
+                    WidgetStateProperty.all<
+                        RoundedRectangleBorder
+                    >(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          7.0,
+                        ), // Adjust for desired corner radius
                       ),
                     ),
                   ),
+                  onPressed: _isRecording
+                      ? _stopRecording
+                      : _startRecording,
+                  icon: Icon(
+                    _isRecording ? Icons.stop : Icons.fiber_manual_record,
+                    color: Colors.red,
+                  ),
+                  label: Text(
+                    _isRecording ? 'توقف ضبط' : 'شروع ضبط',
+                  ),
                 ),
+              ),
+            ),
 
             Padding(
               padding: EdgeInsets.only(
-                left: 16,
-                right: 16
+                  left: 16,
+                  right: 16
               ),
               child: CustomButton(
                   buttonTitle: 'تایید و ادامه',
@@ -442,11 +460,12 @@ class _SendVideoPageState extends State<SendVideoPage> {
                       ),
                     );
 
-              }),
+                  }),
             )
           ],
         ),
       ),
+    )
     );
   }
 }

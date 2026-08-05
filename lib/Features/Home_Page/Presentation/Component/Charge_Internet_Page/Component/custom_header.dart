@@ -33,9 +33,9 @@ class CustomHeader extends StatelessWidget {
           child: Stack(
             children: [
               Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.centerLeft,
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back),
+                  icon: Icon(Icons.arrow_forward_ios, size: 20,),
                   onPressed: (){
                     context.go('/main_page', extra: 0);
                   },

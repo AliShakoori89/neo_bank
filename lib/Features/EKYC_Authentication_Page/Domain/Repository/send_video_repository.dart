@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/app_exception.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/send_video_model.dart';
 
 import '../../../../Core/Const/api_key.dart';
@@ -15,7 +16,7 @@ class SendVideoRepository {
     final token = await LocalStorage.read('access_token');
 
     if (token == null || token.isEmpty) {
-      throw Exception('Token not found');
+      throw AppException('Token not found');
     }
 
     print('fileName');
@@ -58,17 +59,28 @@ class SendVideoRepository {
         if (data['success'] == true) {
           return SendVideoModel.fromJson(data);
         }
-        throw Exception(
+        throw AppException(
           data['error']?['errorMessage'] ?? 'Unknown error',
         );
       }
 
-      throw Exception('خطا در ارتباط با سرور');
+      throw AppException('خطا در ارتباط با سرور');
     } on DioException catch (e) {
-      final message = e.response?.data?['message'] ?? e.message;
-      throw Exception(message);
+      if (e.response?.statusCode == 422) {
+        throw AppException(
+          e.response?.data?['error']?['errorMessage'] ??
+              'اطلاعات ارسالی معتبر نیست.',
+        );
+      }
+
+      final message = e.response?.data?['message'] ??
+          e.response?.data?['error']?['errorMessage'] ??
+          e.message ??
+          'خطایی رخ داده است.';
+
+      throw AppException(message);
     } catch (e) {
-      throw Exception('Unexpected error: $e');
+      throw AppException('Unexpected error: $e');
     }
   }
 }

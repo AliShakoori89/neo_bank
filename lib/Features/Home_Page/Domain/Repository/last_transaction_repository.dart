@@ -6,6 +6,7 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
 import 'package:flutter/foundation.dart';
 
+import '../../../../Core/Const/app_exception.dart';
 import '../../../../Core/Utils/api_error_model.dart';
 
 class LastTransactionRepository {
@@ -21,7 +22,7 @@ class LastTransactionRepository {
       /// 🔐 read token
       final token = await LocalStorage.read('access_token');
       if (token == null || token.isEmpty) {
-        throw Exception('Access token not found');
+        throw AppException('Access token not found');
       }
 
       final body = {

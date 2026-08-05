@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import '../../../../Core/Const/api_key.dart';
+import '../../../../Core/Const/app_exception.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import '../../Data/Model/buy_internet_model.dart';
 import '../../Data/Model/internet_package_model.dart';
@@ -24,7 +25,7 @@ class InternetPackagesRepository {
     final token = await LocalStorage.read('access_token');
 
     if (token == null || token.isEmpty) {
-      throw Exception('توکن یافت نشد. لطفاً دوباره وارد شوید.');
+      throw AppException('توکن یافت نشد. لطفاً دوباره وارد شوید.');
     }
 
     final body = {
@@ -57,7 +58,7 @@ class InternetPackagesRepository {
             final errorMessage = responseData['error']?['errorMessage'] as String? ??
                 responseData['message'] as String? ??
                 'خطا در دریافت بسته‌ها';
-            throw Exception(errorMessage);
+            throw AppException(errorMessage);
           }
 
           // استخراج داده از کلید 'data'
@@ -95,11 +96,11 @@ class InternetPackagesRepository {
 
         return [];
       } else {
-        throw Exception('خطا در دریافت بسته‌های اینترنت: کد خطا ${response.statusCode}');
+        throw AppException('خطا در دریافت بسته‌های اینترنت: کد خطا ${response.statusCode}');
       }
     } on DioException catch (e) {
       print('❌ Dio Error در دریافت بسته‌ها: ${e.message}');
-      throw Exception(_handleDioError(e));
+      throw AppException(_handleDioError(e));
     } catch (e) {
       print('❌ خطا در دریافت بسته‌های اینترنت: $e');
       rethrow;
@@ -115,7 +116,7 @@ class InternetPackagesRepository {
   }) async {
     final token = await LocalStorage.read('access_token');
     if (token == null || token.isEmpty) {
-      throw Exception('توکن یافت نشد. لطفاً دوباره وارد شوید.');
+      throw AppException('توکن یافت نشد. لطفاً دوباره وارد شوید.');
     }
 
     final body = {
@@ -169,11 +170,11 @@ class InternetPackagesRepository {
 
         return [];
       } else {
-        throw Exception('خطا در دریافت بسته‌های اینترنت: کد خطا ${response.statusCode}');
+        throw AppException('خطا در دریافت بسته‌های اینترنت: کد خطا ${response.statusCode}');
       }
     } on DioException catch (e) {
       print('❌ Dio Error: ${e.message}');
-      throw Exception(_handleDioError(e));
+      throw AppException(_handleDioError(e));
     } catch (e) {
       print('❌ خطا در دریافت بسته‌های اینترنت: $e');
       rethrow;

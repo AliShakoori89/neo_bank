@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../../../Core/Const/api_key.dart';
+import '../../../../Core/Const/app_exception.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import '../../Data/Model/random_text_model.dart';
 
@@ -12,7 +13,7 @@ class RandomTextRepository {
     final token = await LocalStorage.read('access_token');
 
     if (token == null || token.isEmpty) {
-      throw Exception('Token not found');
+      throw AppException('Token not found');
     }
 
     try {
@@ -36,12 +37,12 @@ class RandomTextRepository {
         return RandomTextModel.fromJson(data);
       }
 
-      throw Exception('خطا در ارتباط با سرور');
+      throw AppException('خطا در ارتباط با سرور');
     } on DioException catch (e) {
       final message = e.response?.data?['message'] ?? e.message;
-      throw Exception(message);
+      throw AppException(message);
     } catch (e) {
-      throw Exception('Unexpected error: $e');
+      throw AppException('Unexpected error: $e');
     }
   }
 }

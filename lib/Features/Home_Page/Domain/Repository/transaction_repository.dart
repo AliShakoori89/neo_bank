@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/transaction_model.dart';
 import '../../../../Core/Const/api_key.dart';
+import '../../../../Core/Const/app_exception.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class TransactionRepository {
@@ -18,7 +19,7 @@ class TransactionRepository {
     required String customerDepositNumber,
   }) async {
     final token = await LocalStorage.read('access_token');
-    if (token == null) throw Exception('Token not found');
+    if (token == null) throw AppException('Token not found');
 
     // ایجاد idempotentKey یکتا بر اساس زمان
     final idempotentKey = DateTime.now().millisecondsSinceEpoch;
@@ -55,23 +56,23 @@ class TransactionRepository {
           print('✅ شارژ کیف پول موفق: ${transactionResponse.data.transactionNumber}');
           return transactionResponse;
         } else {
-          throw Exception('خطا در شارژ کیف پول: ${transactionResponse.error ?? 'خطای ناشناخته'}');
+          throw AppException('خطا در شارژ کیف پول: ${transactionResponse.error ?? 'خطای ناشناخته'}');
         }
       } else {
-        throw Exception('خطا در شارژ کیف پول: ${response.statusCode}');
+        throw AppException('خطا در شارژ کیف پول: ${response.statusCode}');
       }
     } on DioException catch (e) {
       print('❌ DioException در شارژ کیف پول: ${e.message}');
       print('❌ نوع خطا: ${e.type}');
 
       if (e.type == DioExceptionType.connectionTimeout) {
-        throw Exception('زمان ارتباط با سرور به پایان رسید');
+        throw AppException('زمان ارتباط با سرور به پایان رسید');
       } else if (e.type == DioExceptionType.receiveTimeout) {
-        throw Exception('سرور پاسخ نمی‌دهد');
+        throw AppException('سرور پاسخ نمی‌دهد');
       } else if (e.type == DioExceptionType.connectionError) {
-        throw Exception('لطفاً اتصال اینترنت خود را بررسی کنید');
+        throw AppException('لطفاً اتصال اینترنت خود را بررسی کنید');
       } else {
-        throw Exception('خطا در ارتباط با سرور: ${e.message}');
+        throw AppException('خطا در ارتباط با سرور: ${e.message}');
       }
     } catch (e) {
       print('❌ خطا در شارژ کیف پول: $e');
@@ -123,27 +124,27 @@ class TransactionRepository {
           print('✅ برداشت از کیف پول موفق: ${transactionResponse.data.transactionNumber}');
           return transactionResponse;
         } else {
-          throw Exception('خطا در برداشت از کیف پول: ${transactionResponse.error ?? 'خطای ناشناخته'}');
+          throw AppException('خطا در برداشت از کیف پول: ${transactionResponse.error ?? 'خطای ناشناخته'}');
         }
       } else {
-        throw Exception('خطا در برداشت از کیف پول: ${response.statusCode}');
+        throw AppException('خطا در برداشت از کیف پول: ${response.statusCode}');
       }
     } on DioException catch (e) {
       print('❌ DioException در برداشت از کیف پول: ${e.message}');
       print('❌ نوع خطا: ${e.type}');
 
       if (e.type == DioExceptionType.connectionTimeout) {
-        throw Exception('زمان ارتباط با سرور به پایان رسید');
+        throw AppException('زمان ارتباط با سرور به پایان رسید');
       } else if (e.type == DioExceptionType.receiveTimeout) {
-        throw Exception('سرور پاسخ نمی‌دهد');
+        throw AppException('سرور پاسخ نمی‌دهد');
       } else if (e.type == DioExceptionType.connectionError) {
-        throw Exception('لطفاً اتصال اینترنت خود را بررسی کنید');
+        throw AppException('لطفاً اتصال اینترنت خود را بررسی کنید');
       } else {
-        throw Exception('خطا در ارتباط با سرور: ${e.message}');
+        throw AppException('خطا در ارتباط با سرور: ${e.message}');
       }
     } catch (e) {
       print('❌ خطا در برداشت از کیف پول: $e');
-        throw Exception('خطا در برداشت از کیف پول');;
+        throw AppException('خطا در برداشت از کیف پول');
     }
   }
 

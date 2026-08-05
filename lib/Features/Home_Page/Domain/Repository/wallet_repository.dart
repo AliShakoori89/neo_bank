@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/wallet_model.dart';
 import '../../../../Core/Const/api_key.dart';
+import '../../../../Core/Const/app_exception.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class WalletRepository {
@@ -33,10 +34,10 @@ class WalletRepository {
         if (walletResponse.success) {
           return walletResponse;
         } else {
-          throw Exception('خطا در دریافت اطلاعات کیف پول: ${walletResponse.error ?? 'خطای ناشناخته'}');
+          throw AppException('خطا در دریافت اطلاعات کیف پول: ${walletResponse.error ?? 'خطای ناشناخته'}');
         }
       } else {
-        throw Exception('خطا در دریافت اطلاعات کیف پول: ${response.statusCode}');
+        throw AppException('خطا در دریافت اطلاعات کیف پول: ${response.statusCode}');
       }
     } catch (e) {
       print('خطا در دریافت اطلاعات کیف پول: $e');
@@ -53,7 +54,7 @@ class WalletRepository {
     required String destMobileNumber,
   }) async {
     final token = await LocalStorage.read('access_token');
-    if (token == null) throw Exception('Token not found');
+    if (token == null) throw AppException('Token not found');
 
     final body = {
       "sourceMobileNumber": sourceMobileNumber,
@@ -78,7 +79,7 @@ class WalletRepository {
       if (response.statusCode == 200) {
         return response.data;
       } else {
-        throw Exception('خطا در خرید بسته اینترنت: ${response.statusCode}');
+        throw AppException('خطا در خرید بسته اینترنت: ${response.statusCode}');
       }
     } catch (e) {
       print('خطا در خرید بسته اینترنت: $e');
@@ -92,7 +93,7 @@ class WalletRepository {
       final response = await getWalletDetails();
       final wallet = response.data.firstWhere(
             (wallet) => wallet.address == walletAddress,
-        orElse: () => throw Exception('کیف پول مورد نظر یافت نشد'),
+        orElse: () => throw AppException('کیف پول مورد نظر یافت نشد'),
       );
       return wallet.balance;
     } catch (e) {

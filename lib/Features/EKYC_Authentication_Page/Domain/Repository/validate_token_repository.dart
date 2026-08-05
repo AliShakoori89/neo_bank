@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/validate_token_model.dart';
 
 import '../../../../Core/Const/api_key.dart';
+import '../../../../Core/Const/app_exception.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class ValidateTokenRepository {
@@ -12,7 +13,7 @@ class ValidateTokenRepository {
   Future<ValidateTokenModel> validateTokenResponse(String tokenValue, int orderId,
       String tokenExpirationDateTime, String cardSerialNo, String cardExpDate) async{
     final token = await LocalStorage.read('access_token');
-    if (token == null) throw Exception('Token not found');
+    if (token == null) throw AppException('Token not found');
 
     final body = {
       "tokenValue": tokenValue,
@@ -45,7 +46,7 @@ class ValidateTokenRepository {
       if (response.statusCode == 200) {
         return ValidateTokenModel.fromJson(response.data);
       } else {
-        throw Exception('خطا در اعتبارسنجی توکن');
+        throw AppException('خطا در اعتبارسنجی توکن');
       }
 
     }catch (e) {

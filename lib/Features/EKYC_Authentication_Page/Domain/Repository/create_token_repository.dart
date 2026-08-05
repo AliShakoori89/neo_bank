@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/create_token_model.dart';
 import '../../../../Core/Const/api_key.dart';
+import '../../../../Core/Const/app_exception.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class CreateTokenRepository {
@@ -9,13 +10,14 @@ class CreateTokenRepository {
 
   Future<CreateTokenModel> createTokenResponse(String cardSerialNo, String cardExpDate) async{
     final token = await LocalStorage.read('access_token');
-    if (token == null) throw Exception('Token not found');
+    if (token == null) throw AppException('Token not found');
 
     final body = {
       "cardSerialNo": cardSerialNo,
       "cardExpDate": cardExpDate
     };
 
+    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
     try{
 
       final response = await dio.post(
@@ -29,19 +31,24 @@ class CreateTokenRepository {
           },
         ),
       );
+      print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
 
       print('/api/kycs/create-token');
       print(response.statusCode);
+      return CreateTokenModel.fromJson(response.data);
 
-      if (response.statusCode == 200) {
-        print(response.data);
-        return CreateTokenModel.fromJson(response.data);
-      } else {
-        throw Exception('خطا در ساخت توکن');
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print(e.response!.statusCode);
+        print(e.response!.data);
+        print(e.response!.data?['error']?['errorMessage'].replaceFirst('Exception: ', ''));
+
+        final message = e.response!.data?['error']?['errorMessage'];
+
+        throw AppException(message ?? 'خطای ناشناخته');
       }
 
-    }catch (e) {
-      rethrow;
+      throw AppException('خطا در برقراری ارتباط با سرور');
     }
   }
 

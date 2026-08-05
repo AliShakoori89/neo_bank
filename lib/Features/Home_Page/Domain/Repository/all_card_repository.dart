@@ -3,12 +3,14 @@ import 'package:neo_bank_mehr_iran/Core/Const/api_key.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/card_list_model.dart';
 
+import '../../../../Core/Const/app_exception.dart';
+
 class AllCardRepository {
   final dio = Dio();
 
   Future<CardListModel> getAllCards() async {
     final token = await LocalStorage.read('access_token');
-    if (token == null) throw Exception('Token not found');
+    if (token == null) throw AppException('Token not found');
 
     try {
       final response = await dio.post(

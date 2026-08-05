@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../../../Core/Const/api_key.dart';
+import '../../../../Core/Const/app_exception.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 import '../../Data/Model/citizen_kyc_status_model.dart';
 
@@ -10,7 +11,7 @@ class GetCitizenKycStatusRepository {
     final token = await LocalStorage.read('access_token');
 
     if (token == null) {
-      throw Exception('Token not found');
+      throw AppException('Token not found');
     }
 
     try {

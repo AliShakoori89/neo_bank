@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/get_citizen_ekyc_status_model.dart';
 import '../../../../Core/Const/api_key.dart';
+import '../../../../Core/Const/app_exception.dart';
 import '../../../Account_Page/Data/Data_Sources/Local/token_storage.dart';
 
 class GetCitizenEkycStatusRepository {
@@ -8,7 +9,7 @@ class GetCitizenEkycStatusRepository {
 
   Future<GetCitizenEkycStatusModel> getCitizenEkycStatus() async{
     final token = await LocalStorage.read('access_token');
-    if (token == null) throw Exception('Token not found');
+    if (token == null) throw AppException('Token not found');
 
     try{
 
@@ -26,7 +27,7 @@ class GetCitizenEkycStatusRepository {
       if (response.statusCode == 200) {
         return GetCitizenEkycStatusModel.fromJson(response.data);
       } else {
-        throw Exception('خطا در ارتباط با سرور');
+        throw AppException('خطا در ارتباط با سرور');
       }
 
     }catch (e) {
