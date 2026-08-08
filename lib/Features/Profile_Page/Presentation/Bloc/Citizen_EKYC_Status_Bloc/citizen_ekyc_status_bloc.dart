@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/api_error_model.dart';
+import 'package:neo_bank_mehr_iran/Core/Const/app_exception.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/citizen_kyc_status_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_state.dart';
@@ -16,6 +16,7 @@ class CitizenEkycStatusBloc extends Bloc<CitizenEkycStatusEvent, CitizenEkycStat
       Emitter<CitizenEkycStatusState> emit,
       ) async {
     try {
+      emit(state.copyWith(status: CitizenEkycStatusStateStatus.loading));
 
       final citizenEkycStatus = await citizenKycStatusRepository.fetchEKYCStatus();
 
@@ -23,11 +24,19 @@ class CitizenEkycStatusBloc extends Bloc<CitizenEkycStatusEvent, CitizenEkycStat
         state.copyWith(
           status: CitizenEkycStatusStateStatus.success,
           citizenEkycStatus: citizenEkycStatus,
-          errorMessage: ApiErrorModel().errorMessage
+          errorMessage: ''
         ),
       );
-    } catch (_) {
-      emit(state.copyWith(status: CitizenEkycStatusStateStatus.error));
+    } on AppException catch (e) {
+      emit(state.copyWith(
+          status: CitizenEkycStatusStateStatus.error,
+          errorMessage: e.message
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          status: CitizenEkycStatusStateStatus.error,
+          errorMessage: 'خطای غیرمنتظره رخ داده است.'
+      ));
     }
   }
 

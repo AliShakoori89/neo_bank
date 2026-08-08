@@ -95,8 +95,10 @@ Future<void> authenticationStatusDialog(BuildContext context, ThemeData theme) a
                   Text('خطا'),
                 ],
               ),
-              content: const Text(
-                'ارتباط با سرور برقرار نشد. لطفاً چند دقیقه دیگر دوباره تلاش کنید.',
+              content: Text(
+                state.errorMessage.isNotEmpty
+                    ? state.errorMessage
+                    : 'ارتباط با سرور برقرار نشد. لطفاً چند دقیقه دیگر دوباره تلاش کنید.',
               ),
               actions: [
                 TextButton(

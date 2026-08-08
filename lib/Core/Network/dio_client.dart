@@ -27,8 +27,12 @@ class DioClient {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           final token = await LocalStorage.read('access_token');
+          
           if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = token;
+            print('--- Network Request ---');
+            print('Path: ${options.path}');
+            print('Token: ${token.substring(0, 10)}...'); // فقط اولش رو پرینت میکنیم برای امنیت
           }
           return handler.next(options);
         },

@@ -39,7 +39,7 @@ class ErrorInterceptor extends Interceptor {
           errorMessage = 'زمان پاسخگویی سرور به پایان رسید.';
           break;
         default:
-          errorMessage = data?['message'] ?? data?['error']?['errorMessage'] ?? 'خطایی در ارتباط با سرور رخ داده است.';
+          errorMessage = data?['message'] ?? data?['error']?['errorMessage'] ?? 'خطایی با کد $statusCode رخ داده است.';
       }
     } else {
       switch (err.type) {

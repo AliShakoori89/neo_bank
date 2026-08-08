@@ -36,6 +36,8 @@ class RequestOtpCodeAgainRepository {
       );
 
       final data = UserLoginAuthModel.fromJson(response.data);
+      print('code                ');
+      print(data.data!.code);
 
       if (response.statusCode == 200 && data.success == true) {
         LocalStorage.save('secret_key', data.data!.secretKey!);

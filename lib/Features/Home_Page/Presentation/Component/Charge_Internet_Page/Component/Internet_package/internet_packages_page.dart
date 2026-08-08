@@ -43,6 +43,11 @@ class _InternetPackagesPageState extends State<InternetPackagesPage> {
   void _fetchPackages(String packageType) {
     int packageTimeCode = _getPackageTimeCode(packageType);
 
+    print(widget.selectedOperator);
+    print(packageTimeCode);
+    print(widget.selectedSimType);
+    print('500');
+
     BlocProvider.of<InternetPackageBloc>(context).add(FetchInternetPackages(
         operatorCode: widget.selectedOperator,
         packageTimeCode: packageTimeCode,

@@ -40,6 +40,13 @@ class UserLoginAuthRepository {
       final data = UserLoginAuthModel.fromJson(response.data);
 
       if (response.statusCode == 200 && data.success == true) {
+        // Debug prints for developer
+        print('-----------------------------------------');
+        print('OTP Code: ${data.data?.code}');
+        print('Device ID: ${data.data?.deviceId}');
+        print('Secret Key: ${data.data?.secretKey}');
+        print('-----------------------------------------');
+
         LocalStorage.save('secret_key', data.data!.secretKey!);
         LocalStorage.save(
           'expire_secret_key_time',

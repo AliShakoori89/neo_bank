@@ -96,6 +96,10 @@ class _ConfirmationButtonState extends State<ConfirmationButton> {
               child: Stack(
                 alignment: Alignment.center,
                 children: const [
+                  Positioned(
+                    right: 15,
+                    child: Icon(Icons.arrow_back, size: 24),
+                  ),
                   Text(
                     'تایید و ادامه',
                     style: TextStyle(
@@ -103,10 +107,7 @@ class _ConfirmationButtonState extends State<ConfirmationButton> {
                       fontSize: 16,
                     ),
                   ),
-                  Positioned(
-                    left: 5,
-                    child: Icon(Icons.arrow_forward, size: 24),
-                  ),
+
                 ],
               ),
             ),
@@ -124,16 +125,17 @@ class _ConfirmationButtonState extends State<ConfirmationButton> {
             child: Stack(
               alignment: Alignment.center,
               children: const [
+
+                Positioned(
+                  right: 15,
+                  child: Icon(Icons.arrow_back, size: 24),
+                ),
                 Text(
                   'تایید و ادامه',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
-                ),
-                Positioned(
-                  left: 5,
-                  child: Icon(Icons.arrow_forward, size: 24),
                 ),
               ],
             ),

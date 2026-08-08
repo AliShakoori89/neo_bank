@@ -12,6 +12,8 @@ class GetCitizenKycStatusRepository {
     try {
       final response = await dio.post('/api/kycs/get-citizen-kyc-status');
 
+      print(response.statusCode);
+
       if (response.statusCode == 200) {
         final result = CitizenEkycStatusModel.fromJson(response.data);
         if (result.success != true || result.data == null) {
@@ -22,8 +24,10 @@ class GetCitizenKycStatusRepository {
       return false;
     } on DioException catch (e) {
       if (e.error is AppException) throw e.error!;
+      print(AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.'));
       throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
+      print(AppException('خطای غیرمنتظره: $e'));
       if (e is AppException) rethrow;
       throw AppException('خطای غیرمنتظره: $e');
     }
