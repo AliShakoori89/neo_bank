@@ -187,7 +187,8 @@ class _WalletPageState extends State<WalletPage> {
                 ),
                 BlocBuilder<WalletBloc, WalletState>(
                   builder: (context, walletState) {
-                    return ConfirmButton(
+                    return balanceController.text != 0.toString()
+                        ? ConfirmButton(
                       amount: balanceController.text,
                       deposit: deposit,
                       withdraw: withdraw,
@@ -214,7 +215,8 @@ class _WalletPageState extends State<WalletPage> {
                           );
                         }
                       },
-                    );
+                    )
+                        : Container();
                   },
                 ),
               ],
