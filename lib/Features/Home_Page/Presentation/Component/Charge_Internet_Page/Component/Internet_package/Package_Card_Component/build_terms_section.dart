@@ -6,10 +6,10 @@ Widget buildTermsSection(BuildContext context) {
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: Colors.amber.withOpacity(0.05),
+      color: Colors.amber.withValues(alpha: 0.05),
       borderRadius: BorderRadius.circular(20),
       border: Border.all(
-        color: Colors.amber.withOpacity(0.3),
+        color: Colors.amber.withValues(alpha: 0.3),
       ),
     ),
     child: Row(

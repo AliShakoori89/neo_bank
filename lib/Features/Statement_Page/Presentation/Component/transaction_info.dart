@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../Core/Const/app_space.dart';
-import '../../../../Core/Const/persian_date_format_H.dart';
-import '../../../../Core/Const/persian_date_format_Y_M_D.dart';
+import '../../../../Core/Const/persian_date_format_h.dart';
+import '../../../../Core/Const/persian_date_format_y_m_d.dart';
 
 class TransactionInfo extends StatelessWidget {
   final dynamic item;

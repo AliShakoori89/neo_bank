@@ -32,6 +32,8 @@ class InternetChecker {
 
     final connected = await hasConnection();
 
+    if (!context.mounted) return connected;
+
     if (!connected) {
       _showNoInternetDialog(
         context: context,

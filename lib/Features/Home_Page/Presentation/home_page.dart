@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              NavHeader(
+              navHeader(
                 context,
                 NeoBankLogo(
                   logoColor: AppColors.splashGradiantColor1,

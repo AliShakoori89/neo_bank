@@ -9,15 +9,17 @@ import '../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../../Bloc/Wallet_Bloc/wallet_state.dart';
 
 class SelectWalletDropdown extends StatefulWidget {
-  SelectWalletDropdown({super.key, required this.walletList});
+  const SelectWalletDropdown({super.key, required this.walletList});
 
-  late List<String> walletList;
+  final List<String> walletList;
 
   @override
   State<SelectWalletDropdown> createState() => _SelectWalletDropdownState();
 }
 
 class _SelectWalletDropdownState extends State<SelectWalletDropdown> {
+  String? dropdownValue;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +32,7 @@ class _SelectWalletDropdownState extends State<SelectWalletDropdown> {
           color: Theme.of(context).colorScheme.surfaceDim,
           width: 1,
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Color.fromRGBO(10, 13, 18, 0.05),
             offset: Offset(0, -2),
@@ -60,26 +62,21 @@ class _SelectWalletDropdownState extends State<SelectWalletDropdown> {
                 return const Center(child: Text('خطایی رخ داده است'));
               }
 
-              if (state.walletDetails?.isEmpty ?? true) {
+              if (state.walletDetails == null || state.walletDetails!.isEmpty) {
                 return const Center(child: Text('کیف پولی در دسترس نیست!'));
               }
 
-              String dropdownValue = state.walletDetails!.first.title;
+              final wallets = state.walletDetails!;
+              dropdownValue ??= wallets.first.title;
 
-              for(int i = 0 ; i < state.walletDetails!.length; i++){
-                widget.walletList.add(state.walletDetails![i].title);
-              }
-
-              late final List<MenuEntry> menuEntries = UnmodifiableListView<MenuEntry>(
-                widget.walletList.map<MenuEntry>(
-                      (String walletTitle) => MenuEntry(value: walletTitle, label: walletTitle),
-                ),
-              );
+              final List<MenuEntry> menuEntries = wallets.map<MenuEntry>(
+                    (wallet) => MenuEntry(value: wallet.title, label: wallet.title),
+              ).toList();
 
               return DropdownMenu<String>(
                   width: MediaQuery.of(context).size.width - 83,
                   textAlign: TextAlign.center,
-                  trailingIcon: Icon(
+                  trailingIcon: const Icon(
                     Icons.keyboard_arrow_down_sharp,
                     color: AppColors.loginPageIconColor,
                     size: 20,
@@ -94,18 +91,11 @@ class _SelectWalletDropdownState extends State<SelectWalletDropdown> {
                     isCollapsed: true,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                     constraints: BoxConstraints.tight(const Size.fromHeight(40)),
-                    // enabledBorder: OutlineInputBorder(
-                    //   borderRadius: BorderRadius.circular(8),
-                    //   borderSide: BorderSide(
-                    //     color: Theme.of(context).colorScheme.surfaceDim,
-                    //   ),
-                    // ),
                   ),
                   initialSelection: dropdownValue,
                   onSelected: (String? value) {
                     setState(() {
-                      dropdownValue = value!;
-                      widget.walletList = [];
+                      dropdownValue = value;
                     });
                   },
                   dropdownMenuEntries: menuEntries

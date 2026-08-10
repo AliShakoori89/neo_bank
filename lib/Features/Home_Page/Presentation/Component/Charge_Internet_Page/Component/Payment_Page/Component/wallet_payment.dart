@@ -48,7 +48,7 @@ class _WalletPaymentState extends State<WalletPayment> with WidgetsBindingObserv
       selectedWalletAddress: widget.selectedWalletAddress,
       sourcePhoneNumber: widget.sourcePhoneNumber,
       destinationPhoneNumber: widget.destinationPhoneNumber,
-      productCode: widget.package.productCode!,
+      productCode: widget.package.productCode,
       setLoading: (isLoading) {
         setState(() {
           _isLoading = isLoading;
@@ -87,10 +87,6 @@ class _WalletPaymentState extends State<WalletPayment> with WidgetsBindingObserv
 
   @override
   Widget build(BuildContext context) {
-
-    // محاسبه ارتفاع قابل استفاده
-    final mediaQuery = MediaQuery.of(context);
-    final bottomPadding = mediaQuery.viewInsets.bottom; // ارتفاع کیبورد
 
     return Container(
       margin: EdgeInsets.only(

@@ -8,7 +8,7 @@ import 'Component/card_form_widget.dart';
 import 'Component/loading_overlay.dart';
 
 class OtherBankCardPayment extends StatefulWidget {
-  OtherBankCardPayment({
+  const OtherBankCardPayment({
     super.key,
     required this.amount,
     required this.title,
@@ -23,7 +23,7 @@ class OtherBankCardPayment extends StatefulWidget {
   final String? description;
   final VoidCallback? onSuccess;
   final InternetPackage package;
-  String? selectedWalletTitle;
+  final String? selectedWalletTitle;
 
   @override
   State<OtherBankCardPayment> createState() => _OtherBankCardPaymentState();

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/get_citizen_ekyc_status_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Get_Citizen_EKYC_Status_Bloc/Get_Citizen_EKYC_Status_event.dart';
-import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Get_Citizen_EKYC_Status_Bloc/Get_Citizen_EKYC_Status_state.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Get_Citizen_EKYC_Status_Bloc/get_citizen_ekyc_status_event.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Get_Citizen_EKYC_Status_Bloc/get_citizen_ekyc_status_state.dart';
 
 class GetCitizenEkycStatusBloc extends Bloc<GetCitizenEkycStatusEvent, GetCitizenEkycStatusState> {
   final GetCitizenEkycStatusRepository getCitizenEkycStatusRepository;
@@ -37,7 +37,6 @@ class GetCitizenEkycStatusBloc extends Bloc<GetCitizenEkycStatusEvent, GetCitize
         );
       }
     } on DioException catch (e) {
-      print('❌ DioError: ${e.message}');
       emit(
         state.copyWith(
           status: GetCitizenEkycStatusStateStatus.error,
@@ -45,7 +44,6 @@ class GetCitizenEkycStatusBloc extends Bloc<GetCitizenEkycStatusEvent, GetCitize
         ),
       );
     } catch (error) {
-      print('❌ Error: $error');
       emit(
         state.copyWith(
           status: GetCitizenEkycStatusStateStatus.error,

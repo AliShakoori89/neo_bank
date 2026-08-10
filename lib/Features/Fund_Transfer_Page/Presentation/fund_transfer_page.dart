@@ -59,7 +59,7 @@ class _FundTransferPageState extends State<FundTransferPage>
       body: Column(
         children: [
           /// --- Header ---
-          NavHeader(
+          navHeader(
             context,
             Text(
               'انتقال وجه',

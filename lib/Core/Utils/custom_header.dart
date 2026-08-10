@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-Widget NavHeader(BuildContext context, Widget widget) {
+Widget navHeader(BuildContext context, Widget widget) {
   return Container(
     height: 92,
     width: double.infinity,

@@ -13,17 +13,17 @@ Widget buildPackageCard(BuildContext context, InternetPackage package, String de
   final theme = Theme.of(context);
 
   // استخراج اطلاعات از package
-  String? packageTime = package.packageTime;
-  String rawTraffic = package.traffic ?? '0';  // مقدار خام
-  String? rawNightTraffic = package.nightTraffic?.toString();
-  String duration = package.duration ?? '';
+  String packageTime = package.packageTime;
+  String rawTraffic = package.traffic;  // مقدار خام
+  String rawNightTraffic = package.nightTraffic;
+  String duration = package.duration;
   String price = formatPrice(package.price);
   String priceWithTax = formatPrice(package.priceWithTax);
-  String description = package.description ?? '';
+  String description = package.description;
 
   // فرمت کردن برای نمایش
   String formattedTraffic = formatTraffic(rawTraffic);
-  String? formattedNightTraffic = rawNightTraffic != null ? formatTraffic(rawNightTraffic) : null;
+  String? formattedNightTraffic = rawNightTraffic.isNotEmpty ? formatTraffic(rawNightTraffic) : null;
 
   return Container(
     margin: const EdgeInsets.only(bottom: 16),
@@ -88,7 +88,7 @@ Widget buildPackageCard(BuildContext context, InternetPackage package, String de
                           description,
                           style: TextStyle(
                             fontSize: 12,
-                            color: theme.colorScheme.onSurface.withOpacity(0.7),
+                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,

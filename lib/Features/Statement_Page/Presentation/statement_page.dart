@@ -18,7 +18,7 @@ import '../../../Core/Const/Route/transaction_detail_args.dart';
 import '../../../Core/Services/check_connection_service.dart';
 import 'Bloc/Statement_Bloc/statement_state.dart';
 import 'Component/action_icon.dart';
-import 'Component/jalali_to_Utc_Iso.dart';
+import 'Component/jalali_to_utc_iso.dart';
 import 'Component/statement_list_shimmer.dart';
 import 'Component/transaction_info.dart';
 

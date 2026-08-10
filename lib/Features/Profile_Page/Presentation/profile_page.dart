@@ -86,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
 
               /// --- Header ---
-              NavHeader(
+              navHeader(
                 context,
                 Text(
                   'پروفایل کاربری',
@@ -221,6 +221,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                             setState(() {
                                               isSwitchOn = false;
                                             });
+
+                                            if (!context.mounted) return;
 
                                             ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(

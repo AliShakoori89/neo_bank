@@ -234,7 +234,7 @@ Widget buildBalanceAndTransactionBody(BuildContext context) {
                             borderData: FlBorderData(
                               show: true,
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.1),
+                                color: Colors.white.withValues(alpha: 0.1),
                               ),
                             ),
                             minX: 1,

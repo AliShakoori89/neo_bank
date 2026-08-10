@@ -25,8 +25,6 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(

@@ -69,8 +69,9 @@ class AppTheme {
 
     switchTheme: SwitchThemeData(
       trackColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected))
+        if (states.contains(WidgetState.selected)) {
           return const Color(0xFF00A5CF);
+        }
         return Colors.grey.shade300;
       }),
       thumbColor: WidgetStateProperty.all(Colors.white),
@@ -150,8 +151,9 @@ class AppTheme {
 
     switchTheme: SwitchThemeData(
       trackColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected))
+        if (states.contains(WidgetState.selected)) {
           return const Color(0xFF00A5CF);
+        }
         return Colors.grey.shade700;
       }),
       thumbColor: WidgetStateProperty.all(Colors.white),

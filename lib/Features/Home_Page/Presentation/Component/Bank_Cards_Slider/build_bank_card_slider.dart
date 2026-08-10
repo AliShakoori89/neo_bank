@@ -12,7 +12,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Ban
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/bank_card.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Card_Box_Background_UI/card_box_background.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/bank_card_shimmer.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/custom_Indicator.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/custom_indicator.dart';
 import '../../../../../Core/Utils/Internet/check_internet_when_press_button.dart';
 import '../../../../../Core/Utils/error_refresh_widget.dart';
 import '../../Bloc/All_cards_Bloc/all_cards_state.dart';

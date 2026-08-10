@@ -6,7 +6,7 @@ import '../../../../Internet_package/Package_Card_Component/get_package_color.da
 
 Widget buildPaymentInfoCard(BuildContext context, ThemeData theme, InternetPackage package, String title, String amount) {
 
-  final packageTime = package.packageTime ?? '';
+  final packageTime = package.packageTime;
 
   return Container(
     padding: const EdgeInsets.all(16),
@@ -44,10 +44,10 @@ Widget buildPaymentInfoCard(BuildContext context, ThemeData theme, InternetPacka
             ),
           ],
         ),
-        if (package.description != null) ...[
+        if (package.description.isNotEmpty) ...[
           AppSpace.heightSpace_12,
           Text(
-            package.description!,
+            package.description,
             style: const TextStyle(color: Colors.white70, fontSize: 14),
           ),
         ],

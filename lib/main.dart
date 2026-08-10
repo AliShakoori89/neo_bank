@@ -17,7 +17,7 @@ import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repo
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/validate_token_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Abort_Token_Bloc/abort_token_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Create_Token_Bloc/create_token_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Get_Citizen_EKYC_Status_Bloc/Get_Citizen_EKYC_Status_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Get_Citizen_EKYC_Status_Bloc/get_citizen_ekyc_status_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Get_EKYC_State_Inquiry_Bloc/get_ekyc_state_inquiry_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Has_Approved_EKYC_Bloc/has_approved_ekyc_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_bloc.dart';

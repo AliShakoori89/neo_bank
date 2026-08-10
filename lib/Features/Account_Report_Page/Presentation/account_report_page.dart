@@ -43,7 +43,7 @@ class _AccountReportPageState extends State<AccountReportPage>
       body: Column(
         children: [
           // --- Header ---
-          NavHeader(
+          navHeader(
             context,
             Text(
               'گزارش حساب',

@@ -5,18 +5,21 @@ import 'custom_formatter.dart';
 import 'input_value_text_field.dart';
 
 class WithdrawInputContainer extends StatefulWidget {
-  WithdrawInputContainer({
+  const WithdrawInputContainer({
     super.key,
     required this.showWithdrawContainer,
     required this.onDepositNumberSelected,
     required this.balanceController,
     required this.balanceFormKey,
-    this.onAmountChanged});
+    required this.onClose,
+    this.onAmountChanged,
+  });
 
-  late bool showWithdrawContainer;
+  final bool showWithdrawContainer;
   final CustomNumberFormatter balanceController;
   final GlobalKey<FormState> balanceFormKey;
   final Function(String) onDepositNumberSelected;
+  final Function() onClose;
   final Function(int)? onAmountChanged;
 
   @override
@@ -76,11 +79,7 @@ class _WithdrawInputContainerState extends State<WithdrawInputContainer> {
             alignment: Alignment.topRight,
             child: IconButton(
               icon: Icon(Icons.close),
-              onPressed: (){
-                setState(() {
-                  widget.showWithdrawContainer = !widget.showWithdrawContainer;
-                });
-              },
+              onPressed: widget.onClose,
             ),
           )
         ],

@@ -38,7 +38,7 @@ Widget buildDescriptionSection(BuildContext context, InternetPackage package) {
           style: TextStyle(
             fontSize: 14,
             height: 1.5,
-            color: theme.colorScheme.onSurface.withOpacity(0.8),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
           ),
           textAlign: TextAlign.justify,
         ),

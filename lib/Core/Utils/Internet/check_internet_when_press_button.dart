@@ -16,27 +16,18 @@ class CheckInternetWhenPressButton {
     bool hasInternet = false;
 
     try {
-
-      print("START REQUEST");
-
-
       final request = await HttpClient()
           .getUrl(Uri.parse("http://10.170.1.27:9000/swagger/index.html"))
           .timeout(const Duration(seconds: 5));
-      print("REQUEST SENT");
 
       final response = await request.close()
           .timeout(const Duration(seconds: 5));
 
-      print("STATUS: ${response.statusCode}");
-
       if (response.statusCode == 200) {
         hasInternet = true;
       }
-
-    } catch (e, s) {
-      print("ERROR: $e");
-      print("STACK: $s");
+    } catch (e) {
+      debugPrint("ERROR: $e");
       hasInternet = false;
     }
 
@@ -49,6 +40,8 @@ class CheckInternetWhenPressButton {
       onSuccess();
       return;
     }
+
+    if (!context.mounted) return;
 
     if (!_isBannerVisible) {
       _showTopBanner(

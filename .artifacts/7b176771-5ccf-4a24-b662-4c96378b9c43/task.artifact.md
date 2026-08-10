@@ -1,0 +1,10 @@
+- `[x]` Refine `SendVideoPage`
+    - `[x]` Remove redundant UI elements (titles and guides)
+    - `[x]` Update "Confirm and Continue" button logic (notification if not recorded, loading state)
+- `[x]` Fix project warnings
+    - `[x]` Replace `withOpacity` with `withValues`
+    - `[x]` Fix `@immutable` widget warnings (make fields final in `DepositInputContainer`, `WithdrawInputContainer`, `SelectWalletDropdown`, `OtherBankCardPayment`, `SelectTransactionTypes`)
+    - `[x]` Fix dead null-aware operators and unnecessary null comparisons
+    - `[x]` Guard `BuildContext` across async gaps
+    - `[x]` Rename files to follow `lower_case_with_underscores` and update imports
+- `[x]` Final verification with `flutter analyze`

@@ -5,19 +5,21 @@ import 'custom_formatter.dart';
 import 'input_value_text_field.dart';
 
 class DepositInputContainer extends StatefulWidget {
-  DepositInputContainer({
+  const DepositInputContainer({
     super.key,
     required this.showDepositContainer,
     required this.balanceController,
     required this.balanceFormKey,
     required this.onDepositNumberSelected,
+    required this.onClose,
     this.onAmountChanged,
   });
 
-  late bool showDepositContainer;
+  final bool showDepositContainer;
   final CustomNumberFormatter balanceController;
   final GlobalKey<FormState> balanceFormKey;
   final Function(String) onDepositNumberSelected;
+  final Function() onClose;
   final Function(int)? onAmountChanged;
 
   @override
@@ -77,11 +79,7 @@ class _DepositInputContainerState extends State<DepositInputContainer> {
             alignment: Alignment.topRight,
             child: IconButton(
               icon: Icon(Icons.close),
-              onPressed: (){
-                setState(() {
-                  widget.showDepositContainer = !widget.showDepositContainer;
-                });
-              },
+              onPressed: widget.onClose,
             ),
           )
         ],

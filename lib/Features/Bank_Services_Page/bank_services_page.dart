@@ -31,7 +31,7 @@ class _BankServicesPageState extends State<BankServicesPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // --- Header ---
-              NavHeader(
+              navHeader(
                 context,
                 Text(
                   'خدمات بانکی',

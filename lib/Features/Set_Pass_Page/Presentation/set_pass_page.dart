@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Core/Services/Biometric_Service/biometric_service.dart';
 
 class SetPassPage extends StatefulWidget {
-  SetPassPage({super.key, this.inputFromProfile});
+  const SetPassPage({super.key, this.inputFromProfile});
 
   final bool? inputFromProfile;
 

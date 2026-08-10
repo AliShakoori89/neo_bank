@@ -40,22 +40,22 @@ Widget buildDetailsSection(BuildContext context, InternetPackage package, String
           context,
           icon: Icons.data_usage,
           title: 'حجم ترافیک',
-          value: formatTraffic(package.traffic ?? '0'),
+          value: formatTraffic(package.traffic),
         ),
 
-        if (package.nightTraffic != null)
+        if (package.nightTraffic.isNotEmpty)
           buildDetailRow(
             context,
             icon: Icons.nightlight_round,
             title: 'ترافیک شبانه',
-            value: formatTraffic(package.nightTraffic.toString()),
+            value: formatTraffic(package.nightTraffic),
           ),
 
         buildDetailRow(
           context,
           icon: Icons.access_time,
           title: 'مدت اعتبار',
-          value: '${package.duration.toString().toPersianDigit() ?? '0'} روز',
+          value: '${package.duration.toPersianDigit()} روز',
         ),
 
         buildDetailRow(

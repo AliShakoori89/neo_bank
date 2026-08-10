@@ -141,6 +141,11 @@ class _WalletPageState extends State<WalletPage> {
                                     });
                                   }
                                 },
+                                onClose: () {
+                                  setState(() {
+                                    deposit = false;
+                                  });
+                                },
                                 onAmountChanged: (amount) {
                                   if (!isLoading) {
                                     setState(() {
@@ -156,6 +161,11 @@ class _WalletPageState extends State<WalletPage> {
                                       _selectedDepositNumber = value;
                                     });
                                   }
+                                },
+                                onClose: () {
+                                  setState(() {
+                                    withdraw = false;
+                                  });
                                 },
                                 onAmountChanged: (amount) {
                                   if (!isLoading) {

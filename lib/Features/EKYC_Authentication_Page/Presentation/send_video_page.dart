@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_bloc.dart';
@@ -170,21 +169,8 @@ class _SendVideoPageState extends State<SendVideoPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    AppSpace.heightSpace_16,
-
-                    const Text(
-                      'ضبط ویدیو احراز هویت',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    AppSpace.heightSpace_24,
-
                     Padding(
-                      padding: EdgeInsets.only(left: 80, right: 80),
+                      padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: Container(
                         height: 340,
                         decoration: BoxDecoration(
@@ -195,28 +181,12 @@ class _SendVideoPageState extends State<SendVideoPage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(40),
                           child: (_isInitialized && _controller != null)
-                              ? ClipRRect(
-                            borderRadius: BorderRadius.circular(40),
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                final previewSize = _controller!.value
-                                    .previewSize;
-
-                                if (previewSize == null) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-
-                                return FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: SizedBox(
-                                    width: previewSize.height,
-                                    height: previewSize.width,
-                                    child: CameraPreview(_controller!),
-                                  ),
-                                );
-                              },
+                              ? FittedBox(
+                            fit: BoxFit.contain,
+                            child: SizedBox(
+                              width: _controller!.value.previewSize!.height,
+                              height: _controller!.value.previewSize!.width,
+                              child: CameraPreview(_controller!),
                             ),
                           )
                               : const Center(
@@ -228,7 +198,6 @@ class _SendVideoPageState extends State<SendVideoPage> {
 
                     if (_isRecording) ...[
                       const SizedBox(height: 12),
-
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
@@ -238,9 +207,7 @@ class _SendVideoPageState extends State<SendVideoPage> {
                               minHeight: 8,
                               borderRadius: BorderRadius.circular(8),
                             ),
-
                             const SizedBox(height: 8),
-
                             Text(
                               '$_currentSecond / $_recordDuration ثانیه',
                               style: const TextStyle(
@@ -271,7 +238,7 @@ class _SendVideoPageState extends State<SendVideoPage> {
                     AppSpace.heightSpace_12,
 
                     Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
@@ -296,53 +263,23 @@ class _SendVideoPageState extends State<SendVideoPage> {
                               return Text(
                                 state.randomText.data!.result!.first,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   height: 1.8,
                                   fontWeight: FontWeight.w500,
                                 ),
                               );
                             }
-                            if(state.status.isError){
-                              return Center(
-                                child: Text(state.errorMessage, style: TextStyle(
-                                    color: AppColors.redColor
-                                ),),
-                              );
-                            }
                             return Center(
-                              child: Text(state.errorMessage, style: TextStyle(
+                              child: Text(state.errorMessage, style: const TextStyle(
                                   color: AppColors.redColor
                               ),),
                             );
-
                           }
                       ),
                     ),
 
                     AppSpace.heightSpace_24,
-
-                    const Text(
-                      'نکات مهم:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    AppSpace.heightSpace_12,
-
-                    const _GuideItem(
-                      text: 'در محیطی با نور مناسب قرار بگیرید.',
-                    ),
-                    const _GuideItem(
-                      text: 'از عینک آفتابی، ماسک و کلاه استفاده نکنید.',
-                    ),
-                    const _GuideItem(
-                      text: 'صورت شما باید کاملاً مشخص باشد.',
-                    ),
-                    const _GuideItem(
-                      text: 'ویدیو بدون قطع شدن ضبط شود.',
-                    ),
                   ],
                 ),
               ),
@@ -408,10 +345,12 @@ class _SendVideoPageState extends State<SendVideoPage> {
                     // ویدیو ضبط نشده
                     // --------------------------------
                     if (_recordedFile == null) {
-                      AppSnackBar.errorTop(
-                        context,
-                        'لطفاً ابتدا ویدیو را ضبط کنید.',
-                      );
+                      if (context.mounted) {
+                        AppSnackBar.errorTop(
+                          context,
+                          'لطفاً ابتدا ضبط ویدیو را انجام دهید.',
+                        );
+                      }
                       return;
                     }
 
@@ -424,7 +363,6 @@ class _SendVideoPageState extends State<SendVideoPage> {
 
                     try {
                       final bytes = await _recordedFile!.readAsBytes();
-
                       final base64Video = base64Encode(bytes);
 
                       if (randomText == null || randomText!.isEmpty) {
@@ -434,47 +372,40 @@ class _SendVideoPageState extends State<SendVideoPage> {
                           });
                         }
 
-                        AppSnackBar.errorTop(
-                          context,
-                          'متن احراز هویت دریافت نشده است.',
-                        );
+                        if (context.mounted) {
+                          AppSnackBar.errorTop(
+                            context,
+                            'متن احراز هویت دریافت نشده است.',
+                          );
+                        }
 
                         final bytes = await _recordedFile!.readAsBytes();
                         final base64Video = base64Encode(bytes);
 
                         try {
-                          final decoded = base64Decode(base64Video);
-                          print("decoded bytes: ${decoded.length}");
+                          base64Decode(base64Video);
                         } catch (e) {
-                          print("Base64 Error: $e");
+                          debugPrint("Base64 Error: $e");
                         }
-
-                        final decoded = base64Decode(base64Video);
 
                         //**********************************
 
                         final dir = await getApplicationDocumentsDirectory();
-
                         final file = File('${dir.path}/base64.txt');
-
                         await file.writeAsString(base64Video);
-
-                        print(file.path);
-                        print(file.path);
 
                         return;
                       }
 
-                      print('randomText');
-                      print(randomText!);
-
-                      context.read<SendVideoBloc>().add(
-                        SendVideoWithTextEvent(
-                          content: base64Video,
-                          fileName: 'ekyc-video.mp4',
-                          randomText: randomText!,
-                        ),
-                      );
+                      if (context.mounted) {
+                        context.read<SendVideoBloc>().add(
+                          SendVideoWithTextEvent(
+                            content: base64Video,
+                            fileName: 'ekyc-video.mp4',
+                            randomText: randomText!,
+                          ),
+                        );
+                      }
                     } catch (e) {
                       if (mounted) {
                         setState(() {
@@ -482,10 +413,12 @@ class _SendVideoPageState extends State<SendVideoPage> {
                         });
                       }
 
-                      AppSnackBar.errorTop(
-                        context,
-                        'خطا در آماده‌سازی ویدیو.',
-                      );
+                      if (context.mounted) {
+                        AppSnackBar.errorTop(
+                          context,
+                          'خطا در آماده‌سازی ویدیو.',
+                        );
+                      }
 
                       debugPrint(
                         'Send Video Error: $e',
@@ -528,35 +461,6 @@ class _SendVideoPageState extends State<SendVideoPage> {
         ),
       ),
     )
-    );
-  }
-}
-
-class _GuideItem extends StatelessWidget {
-  final String text;
-
-  const _GuideItem({
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(
-            Icons.check_circle,
-            size: 18,
-            color: Colors.green,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(text),
-          ),
-        ],
-      ),
     );
   }
 }

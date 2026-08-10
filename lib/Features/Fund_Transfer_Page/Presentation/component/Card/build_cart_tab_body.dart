@@ -157,14 +157,14 @@ Widget buildCartTabBody(BuildContext context) {
 
               // --- لیست مخاطبین ---
               Padding(
-                padding: EdgeInsets.only(right: 12),
-                child: Container(
+                padding: const EdgeInsets.only(right: 12),
+                child: SizedBox(
                   height: 82,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
-                    separatorBuilder: (_, __) => const SizedBox(width: 5),
-                    itemBuilder: (context, index) => Container(
+                    separatorBuilder: (_, _) => const SizedBox(width: 5),
+                    itemBuilder: (context, index) => SizedBox(
                       width: 74,
                       height: 82,
                       child: Column(
