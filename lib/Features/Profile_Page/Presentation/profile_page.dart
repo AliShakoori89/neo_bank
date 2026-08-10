@@ -266,13 +266,18 @@ class _ProfilePageState extends State<ProfilePage> {
                             divider(),
 
                             /// درباره برنامه
-                            ProfilePageCustomCard(
-                              iconPath: 'assets/svg/arrow-up.svg',
-                              title: 'درباره برنامه',
-                              widget: const Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                size: 20,
-                                color: AppColors.loginPageIconColor,
+                            InkWell(
+                              onTap: (){
+                                context.push('/about_application_page');
+                              },
+                              child: ProfilePageCustomCard(
+                                iconPath: 'assets/svg/arrow-up.svg',
+                                title: 'درباره برنامه',
+                                widget: const Icon(
+                                  Icons.arrow_forward_ios_outlined,
+                                  size: 20,
+                                  color: AppColors.loginPageIconColor,
+                                ),
                               ),
                             ),
                             divider(),

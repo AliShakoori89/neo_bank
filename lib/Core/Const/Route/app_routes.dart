@@ -14,6 +14,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wal
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/request_otp_code_again_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/about_application_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
@@ -179,6 +180,13 @@ final GoRouter router = GoRouter(
       path: '/ekyc_gate_page',
       builder: (context, state) {
         return EkycGatePage();
+      },
+    ),
+
+    GoRoute(
+      path: '/about_application_page',
+      builder: (context, state) {
+        return AboutApplicationPage();
       },
     ),
   ],
