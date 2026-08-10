@@ -197,7 +197,7 @@ class _WalletPageState extends State<WalletPage> {
                 ),
                 BlocBuilder<WalletBloc, WalletState>(
                   builder: (context, walletState) {
-                    return balanceController.text != 0.toString()
+                    return balanceController.text != 0.toString() && balanceController.text.isNotEmpty
                         ? ConfirmButton(
                       amount: balanceController.text,
                       deposit: deposit,
