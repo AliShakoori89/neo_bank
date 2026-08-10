@@ -1,11 +1,14 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class AppSnackBarWithButton extends StatelessWidget {
-  const AppSnackBarWithButton(
-      {super.key,
+  const AppSnackBarWithButton({
+    super.key,
     required this.errorText,
     required this.isLoading,
-    required this.handleRetry, this.animation});
+    required this.handleRetry,
+    this.animation,
+  });
 
   final String errorText;
   final bool isLoading;
@@ -14,150 +17,135 @@ class AppSnackBarWithButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          top: 50,
-          left: 0,
-          right: 0,
-          child: animation != null
-              ? SlideTransition(
-            position: animation!,
-            child: Center(
-              child: Material(
-                color: Colors.transparent,
-                child: Container(
-                  width: double.infinity,
-                  constraints: const BoxConstraints(
-                    maxWidth: 500, // عرض حداکثر
-                  ),
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 14,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.red.shade600.withAlpha((0.85 * 255).toInt()),
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    const baseColor = Color(0xFFD92D20); // Error red
 
-                    borderRadius: BorderRadius.circular(14),
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 12,
-                        color: Colors.black26,
-                      )
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min, // 👈 مهم
-                        children: [
-                          const Icon(Icons.wifi_off, color: Colors.white),
-                          const SizedBox(width: 12),
-                          Flexible(
-                            child: Text(
-                              errorText,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ],),
-                      isLoading
-                          ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        ),
-                      )
-                          : GestureDetector(
-                        onTap: handleRetry,
-                        child: const Text(
-                          "تلاش مجدد",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          )
-              : Center(
-            child: Material(
-              color: Colors.transparent,
+    Widget content = Center(
+      child: Material(
+        color: Colors.transparent,
+        child: Container(
+          width: double.infinity,
+          constraints: const BoxConstraints(
+            maxWidth: 500,
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Container(
-                width: double.infinity,
-                constraints: const BoxConstraints(
-                  maxWidth: 500, // عرض حداکثر
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 16),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 14,
+                  horizontal: 20,
+                  vertical: 16,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.red.shade600.withAlpha((0.85 * 255).toInt()),
-
-                  borderRadius: BorderRadius.circular(14),
-                  boxShadow: const [
+                  color: baseColor.withOpacity(isDark ? 0.2 : 0.85),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: baseColor.withOpacity(0.3),
+                    width: 1.5,
+                  ),
+                  boxShadow: [
                     BoxShadow(
-                      blurRadius: 12,
-                      color: Colors.black26,
+                      color: baseColor.withOpacity(0.2),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
                     )
                   ],
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                   children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min, // 👈 مهم
-                      children: [
-                        const Icon(Icons.wifi_off, color: Colors.white),
-                        const SizedBox(width: 12),
-                        Flexible(
-                          child: Text(
-                            errorText,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],),
-                    isLoading
-                        ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                        strokeWidth: 2,
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        shape: BoxShape.circle,
                       ),
-                    )
-                        : GestureDetector(
-                      onTap: handleRetry,
-                      child: const Text(
-                        "تلاش مجدد",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: const Icon(
+                        Icons.wifi_off_rounded,
+                        color: Colors.white,
+                        size: 24,
                       ),
                     ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            'خطای اتصال',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            errorText,
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 13,
+                              height: 1.4,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    isLoading
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2.5,
+                            ),
+                          )
+                        : TextButton(
+                            onPressed: handleRetry,
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.white.withOpacity(0.2),
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
+                            ),
+                            child: const Text(
+                              "تلاش مجدد",
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ),
             ),
-          )
+          ),
+        ),
+      ),
+    );
+
+    return Stack(
+      children: [
+        Positioned(
+          top: MediaQuery.of(context).padding.top + 12,
+          left: 0,
+          right: 0,
+          child: animation != null
+              ? SlideTransition(
+                  position: animation!,
+                  child: content,
+                )
+              : content,
         ),
       ],
     );
