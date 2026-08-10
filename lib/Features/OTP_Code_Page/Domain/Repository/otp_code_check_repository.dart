@@ -32,13 +32,10 @@ class OtpCodeCheckRepository {
       final data = OtpCodeResponseModel.fromJson(response.data);
 
       if (response.statusCode == 200 && data.success == true) {
-        LocalStorage.save('access_token', data.data!.token!);
-        LocalStorage.save(
-          'access_token_expire_time',
-          data.data!.expireAt!.toIso8601String(),
-        );
-        LocalStorage.save('user_name', data.data!.displayName!);
-        LocalStorage.save('mobile_number', data.data!.mobileNumber!);
+        await LocalStorage.save('access_token', data.data!.token!);
+        await LocalStorage.save('access_token_expire_time', data.data!.expireAt!.toIso8601String());
+        await LocalStorage.save('user_name', data.data!.displayName!);
+        await LocalStorage.save('mobile_number', data.data!.mobileNumber!);
 
         return OtpRequestResultModel(
           message: '',
