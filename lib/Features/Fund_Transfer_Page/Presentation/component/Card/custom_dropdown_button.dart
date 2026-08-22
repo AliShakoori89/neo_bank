@@ -97,7 +97,7 @@ class _CustomDropdownMenuState extends State<CustomDropdownButton> {
               setState(() {
                 dropdownValue = value;
               });
-              widget.onChanged!.call(value);  // ✅ فراخوانی callback
+              widget.onChanged?.call(value);  // ✅ فراخوانی callback
             }
           },
           dropdownMenuEntries: menuEntries,
