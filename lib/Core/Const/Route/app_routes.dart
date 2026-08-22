@@ -10,6 +10,7 @@ import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentatio
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/ekyc_first_step_auth_page.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/send_video_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/charge_and_internet_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Loan_page/loan_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/wallet_page.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/request_otp_code_again_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
@@ -83,6 +84,11 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/fund_transfer_page',
       builder: (context, state) => const FundTransferPage(),
+    ),
+
+    GoRoute(
+      path: '/loan_page',
+      builder: (context, state) => const LoanPage(),
     ),
 
     GoRoute(
