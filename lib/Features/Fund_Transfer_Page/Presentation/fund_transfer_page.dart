@@ -56,67 +56,69 @@ class _FundTransferPageState extends State<FundTransferPage>
 
     return Scaffold(
       backgroundColor: theme.colorScheme.onPrimaryFixed,
-      body: Column(
-        children: [
-          /// --- Header ---
-          navHeader(
-            context,
-            Text(
-              'انتقال وجه',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: theme.appBarTheme.titleTextStyle?.color,
+      body: SafeArea(
+        child: Column(
+          children: [
+            /// --- Header ---
+            navHeader(
+              context,
+              Text(
+                'انتقال وجه',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: theme.appBarTheme.titleTextStyle?.color,
+                ),
               ),
             ),
-          ),
-
-          /// --- Tab Bar ---
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceContainer,
-              border: Border(
-                top: BorderSide(color: theme.colorScheme.surfaceDim),
+        
+            /// --- Tab Bar ---
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surfaceContainer,
+                border: Border(
+                  top: BorderSide(color: theme.colorScheme.surfaceDim),
+                ),
+              ),
+              child: TabBar(
+                controller: _tabController,
+                indicator: BoxDecoration(
+                  color: theme.tabBarTheme.indicatorColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorPadding: const EdgeInsets.only(bottom: 24),
+                labelColor: Colors.white,
+                unselectedLabelColor: AppColors.loginPageIconColor,
+                dividerColor: Colors.transparent,
+                tabs: List.generate(_tabs.length, (index) {
+                  final isSelected = _tabController.index == index;
+                  return buildTabItem(
+                    context,
+                    iconPath: _tabs[index]['icon']!,
+                    title: _tabs[index]['title']!,
+                    isSelected: isSelected,
+                  );
+                }),
               ),
             ),
-            child: TabBar(
-              controller: _tabController,
-              indicator: BoxDecoration(
-                color: theme.tabBarTheme.indicatorColor,
-                borderRadius: BorderRadius.circular(8),
+        
+            /// --- Tab Body ---
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  buildCartTabBody(context),
+                  buildAccountTabBody(context),
+                  const Center(child: Text("محتوای تب شبا")),
+                  const Center(child: Text("محتوای تب هدیه")),
+                ],
               ),
-              indicatorSize: TabBarIndicatorSize.label,
-              indicatorPadding: const EdgeInsets.only(bottom: 24),
-              labelColor: Colors.white,
-              unselectedLabelColor: AppColors.loginPageIconColor,
-              dividerColor: Colors.transparent,
-              tabs: List.generate(_tabs.length, (index) {
-                final isSelected = _tabController.index == index;
-                return buildTabItem(
-                  context,
-                  iconPath: _tabs[index]['icon']!,
-                  title: _tabs[index]['title']!,
-                  isSelected: isSelected,
-                );
-              }),
             ),
-          ),
-
-          /// --- Tab Body ---
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                buildCartTabBody(context),
-                buildAccountTabBody(context),
-                const Center(child: Text("محتوای تب شبا")),
-                const Center(child: Text("محتوای تب هدیه")),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
