@@ -25,6 +25,7 @@ import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Directive_Charge/directive_charge_page.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/internet_packages_page.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/Payment_Page/payment_page.dart';
+import '../../../Features/Home_Page/Presentation/Component/Invoices_Page/invoices_page.dart';
 import '../../../Features/Main_Page/Presentation/main_page.dart';
 
 final GoRouter router = GoRouter(
@@ -89,6 +90,11 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/loan_page',
       builder: (context, state) => const LoanPage(),
+    ),
+
+    GoRoute(
+      path: '/invoices_page',
+      builder: (context, state) => const InvoicesPage(),
     ),
 
     GoRoute(
