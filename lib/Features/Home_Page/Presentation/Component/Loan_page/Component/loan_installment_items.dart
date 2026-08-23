@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/loan_model.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../Core/Const/persian_date_format_y_m_d.dart';
 
 class InstallmentItem extends StatelessWidget {
   final dynamic installment;
+  final LoanModel loanModel;
 
   const InstallmentItem({
     super.key,
     required this.installment,
+    required this.loanModel
   });
 
   @override
@@ -110,6 +114,46 @@ class InstallmentItem extends StatelessWidget {
               ),
             ],
           ),
+
+          const SizedBox(width: 12),
+
+          /// دکمه پرداخت (فقط برای اقساط پرداخت نشده)
+          if (installment.status != 2) // فرض بر این که ۲ یعنی پرداخت شده
+            SizedBox(
+              height: 34,
+              child: ElevatedButton(
+                onPressed: () {
+
+                  print('INSTALLMENT: $installment');
+                  print('LOAN NUMBER: ${loanModel.loanNumber}');
+                  print('LOAN NUMBER TYPE: ${loanModel.loanNumber.runtimeType}');
+
+                  context.push(
+                    '/installment_item_details',
+                    extra: {
+                      'installment': installment,
+                      'loanNumber': loanModel.loanNumber,
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colors.primary,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  'پرداخت',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

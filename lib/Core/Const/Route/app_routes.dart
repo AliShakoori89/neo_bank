@@ -21,11 +21,13 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Componen
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
 import '../../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../../../Features/Home_Page/Data/Model/internet_package_model.dart';
+import '../../../Features/Home_Page/Data/Model/loan_model.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/Package_Details/package_details.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Directive_Charge/directive_charge_page.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/internet_packages_page.dart';
 import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/Payment_Page/payment_page.dart';
 import '../../../Features/Home_Page/Presentation/Component/Invoices_Page/invoices_page.dart';
+import '../../../Features/Home_Page/Presentation/Component/Loan_page/Component/installment_item_details.dart';
 import '../../../Features/Main_Page/Presentation/main_page.dart';
 
 final GoRouter router = GoRouter(
@@ -98,6 +100,23 @@ final GoRouter router = GoRouter(
     ),
 
     GoRoute(
+      path: '/installment_item_details',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>;
+
+        print('========== ROUTER ==========');
+        print('EXTRA: $extra');
+        print('LOAN NUMBER: ${extra['loanNumber']}');
+        print('LOAN NUMBER TYPE: ${extra['loanNumber'].runtimeType}');
+
+        return InstallmentItemDetails(
+          loanNumber: extra['loanNumber'] as String,
+          installment: extra['installment'] as InstallmentModel,
+        );
+      },
+    ),
+
+    GoRoute(
       path: '/payment_page',
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>?;
@@ -106,7 +125,6 @@ final GoRouter router = GoRouter(
           title: extra?['title'] ?? 'پرداخت',
           package: extra?['package'] as InternetPackage,
           phoneNumber: extra?['phoneNumber'] as String,
-
         );
       },
     ),

@@ -15,6 +15,8 @@ class LoanCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
 
+
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -130,37 +132,62 @@ class LoanCard extends StatelessWidget {
 
             const SizedBox(height: 18),
 
-            /// عنوان اقساط
-            Row(
-              children: [
-                Icon(
-                  Icons.receipt_long_outlined,
-                  size: 20,
-                  color: colors.primary,
+            /// بخش اقساط (کشویی)
+            Theme(
+              data: theme.copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                tilePadding: EdgeInsets.zero,
+                childrenPadding: EdgeInsets.zero,
+                iconColor: colors.primary,
+                collapsedIconColor: colors.onSurface,
+                shape: const RoundedRectangleBorder(),
+                collapsedShape: const RoundedRectangleBorder(),
+                title: Row(
+                  children: [
+                    Icon(
+                      Icons.receipt_long_outlined,
+                      size: 20,
+                      color: colors.primary,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      'مشاهده اقساط',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: colors.primaryFixed,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: colors.primary.withAlpha(15),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        '${loan.installments.length}'.toPersianDigit(),
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: colors.primary,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-
-                const SizedBox(width: 6),
-
-                Text(
-                  'اقساط',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: colors.primaryFixed,
+                children: [
+                  const SizedBox(height: 10),
+                  ...loan.installments.map<Widget>(
+                        (installment) {
+                      return InstallmentItem(
+                        installment: installment,
+                        loanModel: loan,
+                      );
+                    },
                   ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 10),
-
-            /// لیست اقساط
-            ...loan.installments.map<Widget>(
-                  (installment) {
-                return InstallmentItem(
-                  installment: installment,
-                );
-              },
+                ],
+              ),
             ),
           ],
         ),
