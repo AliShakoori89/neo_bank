@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../../../../../../../Core/Const/app_space.dart';
-import '../../../../../../../Data/Model/internet_package_model.dart';
 import 'Component/bank_details.dart';
 import 'Component/bank_detector.dart';
 import 'Component/bank_info.dart';
@@ -14,7 +13,6 @@ class OtherBankCardPayment extends StatefulWidget {
     required this.title,
     this.description,
     this.onSuccess,
-    required this.package,
     this.selectedWalletTitle,
   });
 
@@ -22,7 +20,6 @@ class OtherBankCardPayment extends StatefulWidget {
   final String title;
   final String? description;
   final VoidCallback? onSuccess;
-  final InternetPackage package;
   final String? selectedWalletTitle;
 
   @override

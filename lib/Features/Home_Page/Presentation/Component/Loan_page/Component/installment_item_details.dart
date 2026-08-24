@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../Core/Const/app_space.dart';
 import '../../../../../../Core/Const/persian_date_format_y_m_d.dart';
@@ -127,7 +128,13 @@ class InstallmentItemDetails extends StatelessWidget {
               child: CustomButton(
                 buttonTitle: 'تایید و پرداخت',
                 buttonOnPressed: () {
-                  // TODO: Implement actual payment logic
+                  context.push(
+                    '/payment_page',
+                    extra: {
+                      'amount': installment.amount.toString().toPersianDigit().seRagham(),
+                      'title': 'پرداخت قسط',
+                    },
+                  );
                 },
               ),
             ),

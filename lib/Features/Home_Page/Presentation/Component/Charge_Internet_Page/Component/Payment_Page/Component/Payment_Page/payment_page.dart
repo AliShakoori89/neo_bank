@@ -2,26 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/This_Bank_Card_Payment/this_bank_card_payment.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_state.dart';
 import '../../../../../../../../../Core/Const/app_colors.dart';
 import '../../../../../../../../../Core/Const/app_space.dart';
 import '../../../../../../../../Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
 import '../../../../../../../Data/Model/internet_package_model.dart';
 import '../../../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../../../../../Bloc/Wallet_Bloc/wallet_event.dart';
-import '../../../../../../Bloc/Wallet_Bloc/wallet_state.dart';
 import '../../../custom_header.dart';
 import '../Other_Bank_Card_Payment/other_bank_card_payment.dart';
 import '../wallet_payment.dart';
-import 'Component/build_payment_info_card.dart';
+import 'Component/build_charge_package_payment_info_card.dart';
+import 'Component/build_loan_installment_payment_info_card.dart';
 
 class PaymentPage extends StatefulWidget {
-  const PaymentPage({super.key, required this.amount, required this.title, required this.package, required this.phoneNumber});
+  const PaymentPage({super.key, required this.amount, required this.title, this.package, this.phoneNumber});
 
   final String amount;
   final String title;
-  final InternetPackage package;
-  final String phoneNumber;
+  final InternetPackage? package;
+  final String? phoneNumber;
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
@@ -58,7 +57,7 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
         body: SafeArea(
           child: Column(
             children: [
-              CustomHeader(title: 'شارژ و اینترنت', hasBackArrow: false,),
+              CustomHeader(title: 'پرداخت', hasBackArrow: false,),
               SizedBox(
                 height: 56,
                 width: double.infinity,
@@ -79,30 +78,19 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
                 ),
               ),
               AppSpace.heightSpace_24,
-              buildPaymentInfoCard(context, theme, widget.package, widget.title, widget.amount),
+              widget.package != null
+                  ? buildChargePackagePaymentInfoCard(context, theme, widget.package!, widget.title, widget.amount)
+                  : buildLoanInstallmentPaymentInfoCard(context, theme, widget.title, widget.amount),
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    OtherBankCardPayment(amount: widget.amount, title: widget.title, package: widget.package),
-                    BlocBuilder<ProfileBloc, ProfileState>(
-                        builder: (context, state) {
-
-                          final String sourcePhoneNumber = state.mobileNumber!;
-
-                          return BlocBuilder<WalletBloc, WalletState>(
-                              builder: (context, state)  {
-                                return WalletPayment(
-                                    amount: widget.amount,
-                                    title: widget.title,
-                                    package: widget.package,
-                                    sourcePhoneNumber: sourcePhoneNumber,
-                                    destinationPhoneNumber: widget.phoneNumber,
-                                    selectedWalletAddress: state.walletDetails.first.address);
-                              }
-                          );
-                        }
-                    ),
+                    OtherBankCardPayment(amount: widget.amount, title: widget.title),
+                    WalletPayment(
+                        amount: widget.amount,
+                        title: widget.title,
+                        package: widget.package,
+                        destinationPhoneNumber: widget.phoneNumber ?? ''),
                     ThisBankCardPayment(),
                   ],
                 ),

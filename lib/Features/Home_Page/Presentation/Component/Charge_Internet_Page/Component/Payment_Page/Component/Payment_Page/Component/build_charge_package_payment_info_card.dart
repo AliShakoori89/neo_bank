@@ -4,7 +4,7 @@ import '../../../../../../../../../../Core/Const/app_space.dart';
 import '../../../../../../../../Data/Model/internet_package_model.dart';
 import '../../../../Internet_package/Package_Card_Component/get_package_color.dart';
 
-Widget buildPaymentInfoCard(BuildContext context, ThemeData theme, InternetPackage package, String title, String amount) {
+Widget buildChargePackagePaymentInfoCard(BuildContext context, ThemeData theme, InternetPackage package, String title, String amount) {
 
   final packageTime = package.packageTime;
 

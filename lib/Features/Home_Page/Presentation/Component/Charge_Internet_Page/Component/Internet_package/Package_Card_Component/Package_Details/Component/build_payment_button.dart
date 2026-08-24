@@ -3,7 +3,7 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../../../../../Core/Const/app_colors.dart';
 import '../../format_price.dart';
 
-Widget buildPaymentButton(BuildContext context, bool isLoading, Future<void> Function() handlePayment, int? priceWithTax) {
+Widget buildPaymentButton(BuildContext context, bool isLoading, Future<void> Function() handlePayment, dynamic price) {
   final theme = Theme.of(context);
 
   return Container(
@@ -50,8 +50,9 @@ Widget buildPaymentButton(BuildContext context, bool isLoading, Future<void> Fun
           children: [
             const Icon(Icons.payment, size: 20),
             const SizedBox(width: 8),
-            Text(
-              'پرداخت ${formatPrice(priceWithTax).toPersianDigit()} تومان',
+            Text( price is String
+                ? 'پرداخت $price تومان'
+                : 'پرداخت ${formatPrice(price).toPersianDigit()} تومان',
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

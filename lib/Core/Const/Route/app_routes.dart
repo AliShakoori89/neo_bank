@@ -123,8 +123,8 @@ final GoRouter router = GoRouter(
         return PaymentPage(
           amount: extra?['amount'] ?? '0',
           title: extra?['title'] ?? 'پرداخت',
-          package: extra?['package'] as InternetPackage,
-          phoneNumber: extra?['phoneNumber'] as String,
+          package: extra?['package'] as InternetPackage?,
+          phoneNumber: extra?['phoneNumber'] as String?,
         );
       },
     ),
