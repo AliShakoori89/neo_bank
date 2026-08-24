@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_logo.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../Home_Page/Presentation/Component/Charge_Internet_Page/Component/custom_header.dart';
 
 class AboutApplicationPage extends StatelessWidget {
@@ -27,7 +28,7 @@ class AboutApplicationPage extends StatelessWidget {
                 space: 10,
                 logoColor: theme.colorScheme.primaryFixed),
             Spacer(),
-            Text('نسخه 5.2.1245',style: TextStyle(
+            Text('نسخه ${'5.2.1245'.toPersianDigit()}',style: TextStyle(
               fontSize: 16,
               color: Theme.of(context).colorScheme.surface,
             ),),
