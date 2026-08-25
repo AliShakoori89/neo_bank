@@ -23,6 +23,7 @@ class ChargeAndInternetPage extends StatefulWidget {
 class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with SingleTickerProviderStateMixin{
 
   late TabController _tabController;
+  bool _showOperatorHint = false;
 
   final TextEditingController phoneNumberController = TextEditingController();
   final GlobalKey<FormState> phoneNumberFormKey = GlobalKey<FormState>();
@@ -170,20 +171,64 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                           flex: 2,
                           child: InkWell(
                             splashColor: Colors.transparent,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 4), // پدینگ کم
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(child: Icon(Icons.sim_card, color: Colors.amber)),
-                                  const SizedBox(width: 2), // فاصله بسیار کم
-                                  Expanded(child: Icon(Icons.keyboard_arrow_down)),
-                                ],
-                              ),
-                            ),
                             onTap: () {
+                              setState(() {
+                                _showOperatorHint = false;
+                              });
+
                               selectOperatorType(context, selectedOperator);
                             },
+                            child: TweenAnimationBuilder<double>(
+                              tween: Tween(
+                                begin: 0,
+                                end: _showOperatorHint ? 1 : 0,
+                              ),
+                              duration: const Duration(milliseconds: 600),
+                              curve: Curves.elasticOut,
+                              builder: (context, value, child) {
+                                return Transform.translate(
+                                  offset: Offset(
+                                    0,
+                                    _showOperatorHint ? -8 * (1 - value) : 0,
+                                  ),
+                                  child: Container(
+                                    margin: _showOperatorHint ? EdgeInsets.all(5) : null,
+                                    padding: const EdgeInsets.symmetric(horizontal: 4 , vertical: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: _showOperatorHint
+                                          ? Border.all(
+                                        color: Colors.amber,
+                                        width: 1.5,
+                                      )
+                                          : null,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Icon(
+                                            Icons.sim_card,
+                                            color: _showOperatorHint
+                                                ? Colors.amber
+                                                : null,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 2),
+                                        Expanded(
+                                          child: Icon(
+                                            Icons.keyboard_arrow_down,
+                                            color: _showOperatorHint
+                                                ? Colors.amber
+                                                : null,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
@@ -195,7 +240,15 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
           
                         if (phoneNumberFormKey.currentState!.validate()) {
                           if (selectedOperator == null) {
-                            AppSnackBar.errorTop(context, 'لطفاً اپراتور خود را انتخاب کنید');
+                            setState(() {
+                              _showOperatorHint = true;
+                            });
+
+                            AppSnackBar.errorTop(
+                              context,
+                              'لطفاً اپراتور خود را انتخاب کنید',
+                            );
+
                             return;
                           }
           
@@ -207,7 +260,9 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                           if(_tabController.index == 0){
                             context.push('/directive_charge_page');
                           }else{
-                            context.push('/internet_package_page', extra: {
+                            context.push(
+                                '/internet_package_page',
+                                extra: {
                               'selectedOperator': selectedOperator == 'همراه اول' ? 2 : selectedOperator == 'ایرانسل' ? 1 : 15,
                               'selectedSimType': selectedSimType == 'دائمی' ? 1
                                   : selectedSimType == 'اعتباری' ? 2
