@@ -118,6 +118,8 @@ class _WalletPaymentState extends State<WalletPayment> with WidgetsBindingObserv
                       listenWhen: (previous, current) =>
                       previous.buyStatus != current.buyStatus,
                       listener: (context, state) {
+
+
                         if (state.buyStatus.isSuccess) {
                           setState(() {
                             _isLoading = false;
@@ -125,21 +127,18 @@ class _WalletPaymentState extends State<WalletPayment> with WidgetsBindingObserv
                           if (widget.package != null) {
                             showSuccessDialog(context, state.buyResult, widget.package!, selectedWalletAddress, sourcePhoneNumber);
                           }
-                          Future.delayed(const Duration(seconds: 1), () {
-                            if (mounted) {
-                              context
-                                  .read<InternetPackageBloc>()
-                                  .add(ResetBuyStatus());
-                            }
-                          });
-                          Future.delayed(const Duration(seconds: 2), (){
-                            if(mounted){
-                              context
-                                  .read<WalletBloc>()
-                                  .add(WalletDetailsPackagesEvent());
-                            }
-                          });
+                          context.read<InternetPackageBloc>().add(
+                            ResetBuyStatus(),
+                          );
+
+                          context.read<WalletBloc>().add(
+                            WalletDetailsPackagesEvent(),
+                          );
+
+
                         } else if (state.buyStatus.isFailure) {
+
+
                           setState(() {
                             _isLoading = false;
                           });
@@ -149,7 +148,11 @@ class _WalletPaymentState extends State<WalletPayment> with WidgetsBindingObserv
                             errorCode: state.errorCode,
                           );
                           context.read<InternetPackageBloc>().add(ResetBuyStatus());
+
+
                         } else if (state.buyStatus.isError) {
+
+
                           setState(() {
                             _isLoading = false;
                           });
@@ -158,6 +161,8 @@ class _WalletPaymentState extends State<WalletPayment> with WidgetsBindingObserv
                             state.errorMessage ?? 'خطا در ارتباط با سرور',
                           );
                           context.read<InternetPackageBloc>().add(ResetBuyStatus());
+
+
                         }
                       },
                       child: LayoutBuilder(
@@ -210,12 +215,13 @@ class _WalletPaymentState extends State<WalletPayment> with WidgetsBindingObserv
                                           ],
                                         ),
                                       ),
-                                      buildPaymentButton(context,
+                                      buildPaymentButton(
+                                          context,
                                           _isLoading,
-                                              () => _handlePayment(
-                                                selectedWalletAddress,
-                                                sourcePhoneNumber,
-                                              ),
+                                          () => _handlePayment(
+                                            selectedWalletAddress,
+                                            sourcePhoneNumber,
+                                          ),
                                           widget.package?.priceWithTax ?? widget.amount)
                                     ],
                                   ),
