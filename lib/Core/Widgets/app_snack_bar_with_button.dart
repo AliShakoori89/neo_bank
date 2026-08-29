@@ -40,15 +40,15 @@ class AppSnackBarWithButton extends StatelessWidget {
                   vertical: 16,
                 ),
                 decoration: BoxDecoration(
-                  color: baseColor.withOpacity(isDark ? 0.2 : 0.85),
+                  color: baseColor.withAlpha(isDark ? 20 : 85),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: baseColor.withOpacity(0.3),
+                    color: baseColor.withAlpha(30),
                     width: 1.5,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: baseColor.withOpacity(0.2),
+                      color: baseColor.withAlpha(20),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     )
@@ -59,7 +59,7 @@ class AppSnackBarWithButton extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withAlpha(20),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
@@ -86,7 +86,7 @@ class AppSnackBarWithButton extends StatelessWidget {
                           Text(
                             errorText,
                             style: TextStyle(
-                              color: Colors.white.withOpacity(0.9),
+                              color: Colors.white.withAlpha(90),
                               fontSize: 13,
                               height: 1.4,
                             ),
@@ -107,7 +107,7 @@ class AppSnackBarWithButton extends StatelessWidget {
                         : TextButton(
                             onPressed: handleRetry,
                             style: TextButton.styleFrom(
-                              backgroundColor: Colors.white.withOpacity(0.2),
+                              backgroundColor: Colors.white.withAlpha(20),
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
