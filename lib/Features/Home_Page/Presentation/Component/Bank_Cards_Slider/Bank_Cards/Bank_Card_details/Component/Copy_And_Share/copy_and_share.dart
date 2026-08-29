@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_details/Component/Copy_And_Share/Component/custom_row.dart';
 
 copyAndShare(context, String cardNumber, String cardDeposit){

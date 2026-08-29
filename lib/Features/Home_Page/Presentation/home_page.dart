@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
+import 'package:neo_bank_mehr_iran/Core/Widgets/custom_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_state.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/build_bank_card_slider.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/build_second_slider.dart';
-import '../../../Core/Const/app_colors.dart';
+import '../../../Core/Theme/app_colors.dart';
 import '../../../Core/Services/check_connection_service.dart';
-import '../../../Core/Utils/neo_bank_logo.dart';
+import '../../../Core/Widgets/neo_bank_logo.dart';
 import 'Component/Icon_Row_Widget/icon_row_widget.dart';
 import 'Component/Transaction_List_Widget/transactions_list_widget.dart';
 

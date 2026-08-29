@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
+import 'package:neo_bank_mehr_iran/Core/Widgets/app_snackbar.dart';
 
 import '../Bloc/Get_EKYC_State_Inquiry_Bloc/get_ekyc_state_inquiry_bloc.dart';
 import '../Bloc/Get_EKYC_State_Inquiry_Bloc/get_ekyc_state_inquiry_event.dart';

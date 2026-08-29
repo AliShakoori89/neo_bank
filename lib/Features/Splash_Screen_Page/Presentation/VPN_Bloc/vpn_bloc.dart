@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../Core/Utils/vpn_checker.dart';
+import '../../../../Core/Services/vpn_checker_service.dart';
 import 'vpn_event.dart';
 import 'vpn_state.dart';
 
@@ -18,7 +18,7 @@ class VpnBloc extends Bloc<VpnEvent, VpnState> {
       ) async {
     emit(VpnChecking());
 
-    final isActive = await VpnChecker.isVpnActive();
+    final isActive = await VpnCheckerService.isVpnActive();
 
     await Future.delayed(const Duration(milliseconds: 200)); // 👈 مهم
 

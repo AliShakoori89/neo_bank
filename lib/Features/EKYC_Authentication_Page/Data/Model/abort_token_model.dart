@@ -1,4 +1,4 @@
-import 'package:neo_bank_mehr_iran/Core/Utils/api_error_model.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/Models/api_error_model.dart';
 
 class AbortTokenModel {
   final AbortTokenDataModel? data;

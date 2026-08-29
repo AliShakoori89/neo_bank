@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/create_token_model.dart';
-import '../../../../Core/Const/app_exception.dart';
+import '../../../../Core/Network/app_exception.dart';
 
 class CreateTokenRepository {
   final Dio dio;

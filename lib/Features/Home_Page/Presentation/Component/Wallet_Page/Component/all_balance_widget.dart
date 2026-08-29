@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../../Core/Const/app_space.dart';
-import '../../../../../../Core/Utils/custom_refresh_button.dart';
+import '../../../../../../Core/Spacing/app_space.dart';
+import '../../../../../../Core/Widgets/custom_refresh_button.dart';
 import '../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../../Bloc/Wallet_Bloc/wallet_event.dart';
 import 'balance_value.dart';

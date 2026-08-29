@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/custom_linear_gradient.dart';
-import '../../../../../../../Core/Const/app_space.dart';
+import '../../../../../../../Core/Spacing/app_space.dart';
 import 'Component/Copy_And_Share/copy_and_share.dart';
 
 bankCardDetails(context, String cardPan, String cardDeposit){

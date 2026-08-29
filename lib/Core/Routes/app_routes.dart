@@ -1,9 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/Route/otp_args.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/Route/transaction_detail_args.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/auth_gate.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
+import 'package:neo_bank_mehr_iran/Core/Routes/otp_args.dart';
+import 'package:neo_bank_mehr_iran/Core/Routes/transaction_detail_args.dart';
+import 'package:neo_bank_mehr_iran/Core/Routes/auth_gate.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/local_login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Component/ekyc_gate_page.dart';
@@ -19,21 +18,23 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
-import '../../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
-import '../../../Features/Home_Page/Data/Model/internet_package_model.dart';
-import '../../../Features/Home_Page/Data/Model/loan_model.dart';
-import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/Package_Details/package_details.dart';
-import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Directive_Charge/directive_charge_page.dart';
-import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/internet_packages_page.dart';
-import '../../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/Payment_Page/payment_page.dart';
-import '../../../Features/Home_Page/Presentation/Component/Invoices_Page/invoices_page.dart';
-import '../../../Features/Home_Page/Presentation/Component/Loan_page/Component/installment_item_details.dart';
-import '../../../Features/Main_Page/Presentation/main_page.dart';
+import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
+import '../../Features/Home_Page/Data/Model/internet_package_model.dart';
+import '../../Features/Home_Page/Data/Model/loan_model.dart';
+import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/Package_Details/package_details.dart';
+import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Directive_Charge/directive_charge_page.dart';
+import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/internet_packages_page.dart';
+import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/Payment_Page/payment_page.dart';
+import '../../Features/Home_Page/Presentation/Component/Loan_page/Component/installment_item_details.dart';
+import '../../Features/Invoices_Page/invoices_page.dart';
+import '../../Features/Main_Page/Presentation/main_page.dart';
+import '../Services/App_Lock/navigator_key.dart';
 
 final GoRouter router = GoRouter(
   navigatorKey: rootNavigatorKey,
   initialLocation: '/',
   routes: [
+
     GoRoute(path: '/', builder: (context, state) => const AuthGate()),
 
     GoRoute(
@@ -103,11 +104,6 @@ final GoRouter router = GoRouter(
       path: '/installment_item_details',
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>;
-
-        print('========== ROUTER ==========');
-        print('EXTRA: $extra');
-        print('LOAN NUMBER: ${extra['loanNumber']}');
-        print('LOAN NUMBER TYPE: ${extra['loanNumber'].runtimeType}');
 
         return InstallmentItemDetails(
           loanNumber: extra['loanNumber'] as String,

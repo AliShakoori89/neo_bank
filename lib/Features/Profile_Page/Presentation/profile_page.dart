@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/custom_header.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
+import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Widgets/custom_header.dart';
+import 'package:neo_bank_mehr_iran/Core/Services/token_storage_service.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Abort_Token_Bloc/abort_token_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Abort_Token_Bloc/abort_token_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_bloc.dart';
@@ -18,7 +18,7 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Core/Services/Biometric_Service/biometric_service.dart';
 import '../../../Core/Services/check_connection_service.dart';
-import '../../../Core/Utils/custom_divider.dart';
+import '../../../Core/Widgets/custom_divider.dart';
 import 'Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_event.dart';
 import 'Component/authentication_status_dialog.dart';
 import 'Component/profile_main_container.dart';
@@ -317,7 +317,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     // TODO: Handle logout action
-                    LocalStorage.clear();
+                    LocalStorageService.clear();
                     context.go('/');
                   },
                   style: ElevatedButton.styleFrom(

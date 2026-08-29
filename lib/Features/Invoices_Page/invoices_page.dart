@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../Core/Const/app_colors.dart';
-import '../../../../../Core/Const/app_space.dart';
-import '../../../Domain/Repository/invoice_scanner_repository_Impl.dart';
-import '../../Bloc/Invoice_Scanner_Bloc/invoice_scanner_bloc.dart';
-import '../../Bloc/Invoice_Scanner_Bloc/invoice_scanner_event.dart';
-import '../../Bloc/Invoice_Scanner_Bloc/invoice_scanner_state.dart';
-import '../Charge_Internet_Page/Component/custom_header.dart';
-
+import '../../Core/Theme/app_colors.dart';
+import '../../Core/Spacing/app_space.dart';
+import '../Home_Page/Presentation/Component/Charge_Internet_Page/Component/custom_header.dart';
+import 'Domain/Repository/invoice_scanner_repository_Impl.dart';
+import 'Presentation/Bloc/Invoice_Scanner_Bloc/invoice_scanner_bloc.dart';
+import 'Presentation/Bloc/Invoice_Scanner_Bloc/invoice_scanner_event.dart';
+import 'Presentation/Bloc/Invoice_Scanner_Bloc/invoice_scanner_state.dart';
 
 class InvoicesPage extends StatelessWidget {
   const InvoicesPage({super.key});

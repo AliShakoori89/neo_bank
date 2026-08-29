@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import '../../Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
-import '../Const/api_key.dart';
+import '../Services/token_storage_service.dart';
+import '../Constants/api_key.dart';
 import 'error_interceptor.dart';
 
 class DioClient {
@@ -26,7 +26,7 @@ class DioClient {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final token = await LocalStorage.read('access_token');
+          final token = await LocalStorageService.read('access_token');
           
           if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = token;

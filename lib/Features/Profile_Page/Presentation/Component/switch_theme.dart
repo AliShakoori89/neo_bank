@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../Core/Const/app_colors.dart';
+import '../../../../Core/Theme/app_colors.dart';
 import '../Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 
 Widget buildThemeSwitch(BuildContext context) => Row(

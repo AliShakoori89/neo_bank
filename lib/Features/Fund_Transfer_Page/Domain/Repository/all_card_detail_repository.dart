@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/Models/all_cards_pans_model.dart';
-import '../../../../Core/Const/app_exception.dart';
+import '../../../../Core/Network/app_exception.dart';
 
 class AllCardDetailRepository {
   final Dio dio;

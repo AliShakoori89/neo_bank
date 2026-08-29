@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_logo.dart';
+import 'package:neo_bank_mehr_iran/Core/Widgets/neo_bank_logo.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_event.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_state.dart';
@@ -14,7 +14,8 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/phone_number.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 
-import '../../../Core/Utils/Internet/check_internet_when_press_button.dart';
+import '../../../Core/Network/Internet/check_internet_when_press_button.dart';
+
 
 class OtpCodePage extends StatefulWidget {
   const OtpCodePage({

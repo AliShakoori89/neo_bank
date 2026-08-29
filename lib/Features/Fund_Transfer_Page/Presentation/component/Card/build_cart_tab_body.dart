@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/bank_card_selector.dart';
-import '../../../../../Core/Const/app_colors.dart';
-import '../../../../../Core/Const/app_space.dart';
+import '../../../../../Core/Theme/app_colors.dart';
+import '../../../../../Core/Spacing/app_space.dart';
 
 Widget buildCartTabBody(BuildContext context) {
   return SizedBox(

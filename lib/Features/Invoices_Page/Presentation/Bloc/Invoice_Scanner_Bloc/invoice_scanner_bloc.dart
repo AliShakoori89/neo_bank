@@ -1,7 +1,6 @@
 import 'package:barcode_scan2/gen/protos/protos.pbenum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../Domain/Repository/invoice_scanner_repository.dart';
 import 'invoice_scanner_event.dart';
 import 'invoice_scanner_state.dart';

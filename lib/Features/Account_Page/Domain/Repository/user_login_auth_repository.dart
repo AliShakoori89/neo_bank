@@ -4,18 +4,18 @@ import 'package:dio/dio.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/login_result_model.dart';
+import 'package:neo_bank_mehr_iran/Core/Services/token_storage_service.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Entities/login_result.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Models/user_login_auth_success_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Component/calcute_expire_time.dart';
-import '../../../../Core/Const/app_exception.dart';
+import '../../../../Core/Network/app_exception.dart';
 
 class UserLoginAuthRepository {
   final Dio dio;
 
   UserLoginAuthRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
 
-  FutureOr<LoginResultModel> userLogin(
+  FutureOr<LoginResult> userLogin(
     String nationalNumber,
     String mobileNumber,
   ) async {
@@ -47,13 +47,13 @@ class UserLoginAuthRepository {
         print('Secret Key: ${data.data?.secretKey}');
         print('-----------------------------------------');
 
-        LocalStorage.save('secret_key', data.data!.secretKey!);
-        LocalStorage.save(
+        LocalStorageService.save('secret_key', data.data!.secretKey!);
+        LocalStorageService.save(
           'expire_secret_key_time',
           data.data!.expireTime!.toIso8601String(),
         );
 
-        return LoginResultModel(
+        return LoginResult(
           success: true,
           message: '',
           secretKey: data.data!.secretKey!,

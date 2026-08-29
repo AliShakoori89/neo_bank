@@ -1,10 +1,11 @@
 import 'package:camera/camera.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/App_Lock/app_lock_observer.dart';
+import 'package:neo_bank_mehr_iran/Core/Services/App_Lock/app_lock_observer_service.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repository/user_login_auth_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/abort_token_repository.dart';
@@ -51,7 +52,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/Repository/sta
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Core/Const/Route/app_routes.dart';
+import 'Core/Routes/app_routes.dart';
 import 'Features/Home_Page/Domain/Repository/loan_page_repository.dart';
 import 'Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
@@ -78,7 +79,7 @@ void main() async {
     // DevicePreview(
     // builder:
     //     (context) =>
-    AppLockObserver(child: MyApp(isDark: isDark)),
+    AppLockObserverService(child: MyApp(isDark: isDark)),
     // )
   );
 }

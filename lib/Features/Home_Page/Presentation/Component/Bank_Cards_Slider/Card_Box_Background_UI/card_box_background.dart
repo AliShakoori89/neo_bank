@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../Core/Const/app_colors.dart';
+import '../../../../../../Core/Theme/app_colors.dart';
 import 'Component/circle_1.dart';
 import 'Component/circle_2.dart';
 import 'Component/circle_3.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../Core/Const/app_colors.dart';
-import '../../../../Core/Const/app_space.dart';
+import '../../../../Core/Theme/app_colors.dart';
+import '../../../../Core/Spacing/app_space.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({super.key});

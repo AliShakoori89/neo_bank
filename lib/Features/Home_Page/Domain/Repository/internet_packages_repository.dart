@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
-import '../../../../Core/Const/app_exception.dart';
+import '../../../../Core/Network/app_exception.dart';
 import '../../Data/Model/internet_package_model.dart';
 
 class InternetPackagesRepository {

@@ -1,9 +1,6 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../../Core/Const/app_colors.dart';
+import '../../../../../../Core/Theme/app_colors.dart';
 import '../../../../../Account_Report_Page/Presentation/Component/dropdown_button.dart';
 import '../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../../Bloc/Wallet_Bloc/wallet_state.dart';
@@ -62,11 +59,11 @@ class _SelectWalletDropdownState extends State<SelectWalletDropdown> {
                 return const Center(child: Text('خطایی رخ داده است'));
               }
 
-              if (state.walletDetails == null || state.walletDetails!.isEmpty) {
+              if (state.walletDetails.isEmpty) {
                 return const Center(child: Text('کیف پولی در دسترس نیست!'));
               }
 
-              final wallets = state.walletDetails!;
+              final wallets = state.walletDetails;
               dropdownValue ??= wallets.first.title;
 
               final List<MenuEntry> menuEntries = wallets.map<MenuEntry>(

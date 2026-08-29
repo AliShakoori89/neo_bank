@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Const/app_colors.dart';
+import '../Theme/app_colors.dart';
 
 Widget divider() => const Padding(
   padding: EdgeInsets.symmetric(vertical: 8),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../Core/Const/app_colors.dart';
+import '../../../../Core/Theme/app_colors.dart';
 
 class CustomTabBar extends StatefulWidget {
   const CustomTabBar({

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../../Core/Const/app_colors.dart';
+import '../../../../../../../../Core/Theme/app_colors.dart';
 
 final List<Map<String, dynamic>> chargeAmounts = [
   {'amount': '10,000', 'value': 10000, 'color': AppColors.splashGradiantColor1},

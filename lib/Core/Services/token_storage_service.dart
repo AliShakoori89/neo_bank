@@ -1,6 +1,6 @@
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 
-class LocalStorage {
+class LocalStorageService {
 
   static final EncryptedSharedPreferences _prefs =
   EncryptedSharedPreferences();

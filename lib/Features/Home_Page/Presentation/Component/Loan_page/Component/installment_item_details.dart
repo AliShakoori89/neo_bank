@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-import '../../../../../../Core/Const/app_space.dart';
-import '../../../../../../Core/Const/persian_date_format_y_m_d.dart';
-import '../../../../../../Core/Utils/custom_button.dart';
+import '../../../../../../Core/Spacing/app_space.dart';
+import '../../../../../../Core/Utils/Formatters/persian_date_format_y_m_d.dart';
+import '../../../../../../Core/Widgets/custom_button.dart';
 import '../../../../Data/Model/loan_model.dart';
 import '../../Charge_Internet_Page/Component/custom_header.dart';
 
@@ -164,20 +164,32 @@ class InstallmentItemDetails extends StatelessWidget {
           child: Icon(icon, size: 20, color: theme.colorScheme.primary),
         ),
         const SizedBox(width: 12),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14,
-            color: theme.colorScheme.onSurface.withAlpha(180),
+        Expanded(
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 14,
+              color: theme.colorScheme.onSurface.withAlpha(180),
+            ),
           ),
         ),
         const Spacer(),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: isBold ? FontWeight.bold : FontWeight.w600,
-            color: valueColor ?? theme.colorScheme.primaryFixed,
+        Flexible(
+          child: Text(
+            value,
+            maxLines: 4,
+            textAlign: TextAlign.end,
+            softWrap: true,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: isBold
+                  ? FontWeight.bold
+                  : FontWeight.w600,
+              color: valueColor ??
+                  theme.colorScheme.primaryFixed,
+            ),
           ),
         ),
       ],

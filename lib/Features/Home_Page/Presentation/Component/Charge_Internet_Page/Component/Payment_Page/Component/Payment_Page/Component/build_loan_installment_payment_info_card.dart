@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-import '../../../../../../../../../../Core/Const/app_space.dart';
+import '../../../../../../../../../../Core/Spacing/app_space.dart';
 
 Widget buildLoanInstallmentPaymentInfoCard(
     BuildContext context,

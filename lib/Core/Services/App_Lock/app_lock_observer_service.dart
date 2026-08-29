@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/App_Lock/app_lock_service.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/navigator_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Services/Biometric_Service/biometric_service.dart';
+import 'app_lock_service.dart';
+import 'navigator_key.dart';
 
-class AppLockObserver extends StatefulWidget {
+class AppLockObserverService extends StatefulWidget {
   final Widget child;
-  const AppLockObserver({super.key, required this.child});
+  const AppLockObserverService({super.key, required this.child});
 
   @override
-  State<AppLockObserver> createState() => _AppLockObserverState();
+  State<AppLockObserverService> createState() => _AppLockObserverServiceState();
 }
 
-class _AppLockObserverState extends State<AppLockObserver>
+class _AppLockObserverServiceState extends State<AppLockObserverService>
     with WidgetsBindingObserver {
   @override
   void initState() {

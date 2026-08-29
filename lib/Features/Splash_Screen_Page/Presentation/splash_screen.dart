@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/app_snack_bar_with_button.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_version.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/neo_bank_logo.dart';
+import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Widgets/app_snack_bar_with_button.dart';
+import 'package:neo_bank_mehr_iran/Core/Widgets/neo_bank_version.dart';
+import 'package:neo_bank_mehr_iran/Core/Widgets/neo_bank_logo.dart';
 import 'VPN_Bloc/vpn_bloc.dart';
 import 'VPN_Bloc/vpn_event.dart';
 import 'VPN_Bloc/vpn_state.dart';

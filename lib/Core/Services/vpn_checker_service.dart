@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-class VpnChecker {
+class VpnCheckerService {
   static const MethodChannel _channel = MethodChannel('vpn_checker');
 
   static Future<bool> isVpnActive() async {

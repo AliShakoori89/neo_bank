@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/error_refresh_widget.dart';
+import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
+import 'package:neo_bank_mehr_iran/Core/Widgets/error_refresh_widget.dart';
 import '../../../../Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import '../../../../Bloc/Internet_Packages_Bloc/get_internet_packages_event.dart';
 import '../../../../Bloc/Internet_Packages_Bloc/get_internet_packages_state.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../../../Core/Const/app_space.dart';
+import '../../../../../../../../../Core/Spacing/app_space.dart';
 import 'Component/bank_details.dart';
 import 'Component/bank_detector.dart';
 import 'Component/bank_info.dart';

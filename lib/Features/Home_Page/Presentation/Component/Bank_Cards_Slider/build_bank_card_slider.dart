@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
-import 'package:neo_bank_mehr_iran/Core/Utils/app_snackbar.dart';
+import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Widgets/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
@@ -13,8 +13,8 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Ban
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Card_Box_Background_UI/card_box_background.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/bank_card_shimmer.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/custom_indicator.dart';
-import '../../../../../Core/Utils/Internet/check_internet_when_press_button.dart';
-import '../../../../../Core/Utils/error_refresh_widget.dart';
+import '../../../../../Core/Network/Internet/check_internet_when_press_button.dart';
+import '../../../../../Core/Widgets/error_refresh_widget.dart';
 import '../../Bloc/All_cards_Bloc/all_cards_state.dart';
 import 'Bank_Cards/Bank_Card_details/bank_card_details.dart';
 

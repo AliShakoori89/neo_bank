@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../Core/Const/app_colors.dart';
+import '../../../../Core/Theme/app_colors.dart';
 import '../Bloc/Random_Text_Bloc/random_text_bloc.dart';
 import '../Bloc/Random_Text_Bloc/random_text_state.dart';
 

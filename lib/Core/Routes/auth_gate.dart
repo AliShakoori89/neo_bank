@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/Local/token_storage.dart';
+import 'package:neo_bank_mehr_iran/Core/Services/token_storage_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Features/Splash_Screen_Page/Presentation/splash_screen.dart';
 
@@ -19,8 +19,8 @@ class _AuthGateState extends State<AuthGate> {
   }
 
   Future<void> _checkAuth() async {
-    final localPass = await LocalStorage.read('local_password');
-    final accessToken = await LocalStorage.read('access_token');
+    final localPass = await LocalStorageService.read('local_password');
+    final accessToken = await LocalStorageService.read('access_token');
 
     await Future.delayed(
         const Duration(milliseconds: 100)); // جلوگیری از flicker

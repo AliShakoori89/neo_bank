@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Data/Model/abort_token_model.dart';
-import '../../../../Core/Const/app_exception.dart';
+import '../../../../Core/Network/app_exception.dart';
 
 class AbortTokenRepository {
   final Dio dio;

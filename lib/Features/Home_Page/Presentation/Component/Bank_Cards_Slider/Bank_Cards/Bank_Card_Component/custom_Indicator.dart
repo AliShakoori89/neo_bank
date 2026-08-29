@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../Core/Const/app_colors.dart';
+import '../../../../../../../Core/Theme/app_colors.dart';
 
 Widget buildIndicator(int length, int currentIndex) {
   return Padding(

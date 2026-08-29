@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Const/app_colors.dart';
+import '../Theme/app_colors.dart';
 
 class CustomDisableButton extends StatelessWidget {
   const CustomDisableButton({super.key});

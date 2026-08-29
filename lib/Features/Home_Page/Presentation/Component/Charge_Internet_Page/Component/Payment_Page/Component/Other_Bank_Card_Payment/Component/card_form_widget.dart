@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../../../../../../../Core/Const/app_space.dart';
+import '../../../../../../../../../../Core/Spacing/app_space.dart';
 import 'bank_info.dart';
 import 'expire_date_formatter.dart';
 import 'format_card_number.dart';

@@ -1,4 +1,4 @@
-import '../../../../Core/Utils/api_error_model.dart';
+import '../../../../Core/Network/Models/api_error_model.dart';
 
 class UserLoginAuthModel {
   final UserLoginAuthDataModel? data;
@@ -37,7 +37,7 @@ class UserLoginAuthDataModel {
 
   factory UserLoginAuthDataModel.fromJson(Map<String, dynamic> json) {
     return UserLoginAuthDataModel(
-      code: json['code'] as String,
+      code: json['code'] as String?,
       secretKey: json['secretKey'] as String,
       deviceId: json['deviceId'] as String,
       expireTime: json['expireTime'] != null

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
 
-import '../../../../../Core/Const/app_colors.dart';
+import '../../../../../Core/Theme/app_colors.dart';
 import '../custom_linear_gradient.dart';
 
 class CustomIcon extends StatelessWidget {

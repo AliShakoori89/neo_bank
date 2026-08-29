@@ -1,10 +1,6 @@
-// confirm_button.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../Core/Theme/app_colors.dart';
 
-import '../../../../../../Core/Const/app_colors.dart';
-import '../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
-import '../../../Bloc/Wallet_Bloc/wallet_event.dart';
 
 class ConfirmButton extends StatelessWidget {
   const ConfirmButton({

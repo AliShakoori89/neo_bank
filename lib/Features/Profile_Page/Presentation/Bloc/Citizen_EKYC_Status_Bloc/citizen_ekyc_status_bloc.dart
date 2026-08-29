@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_exception.dart';
+import 'package:neo_bank_mehr_iran/Core/Network/app_exception.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/citizen_kyc_status_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_state.dart';

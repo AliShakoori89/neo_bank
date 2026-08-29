@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_space.dart';
+import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 class NameAndPhone extends StatelessWidget {

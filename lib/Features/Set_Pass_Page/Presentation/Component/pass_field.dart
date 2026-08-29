@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
 import 'package:pinput/pinput.dart';
 
 // ignore: must_be_immutable

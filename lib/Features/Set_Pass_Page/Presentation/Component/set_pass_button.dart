@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Core/Const/app_colors.dart';
+import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
-import '../../../../Core/Utils/Internet/check_internet_when_press_button.dart';
+import '../../../../Core/Network/Internet/check_internet_when_press_button.dart';
 import '../Bloc/Local_Pass_Bloc/local_pass_event.dart';
 
 class SetPassButton extends StatelessWidget {

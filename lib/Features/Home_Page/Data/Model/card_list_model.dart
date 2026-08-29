@@ -1,5 +1,5 @@
 
-import '../../../../Core/Utils/api_error_model.dart';
+import '../../../../Core/Network/Models/api_error_model.dart';
 
 class CardListModel {
   final List<CardDataModel>? data;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'app_space.dart';
+import '../Spacing/app_space.dart';
 
 class NoDataReceive extends StatelessWidget {
   const NoDataReceive({super.key, required this.description});

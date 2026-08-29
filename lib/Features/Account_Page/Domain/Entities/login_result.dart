@@ -1,11 +1,11 @@
-class LoginResultModel {
+class LoginResult {
   final bool success;
   final String message;
   final String secretKey;
   final String deviceId;
   final String expireTime;
 
-  LoginResultModel({
+  LoginResult({
     required this.success,
     required this.message,
     required this.secretKey,
