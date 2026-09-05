@@ -21,6 +21,9 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
     Emitter<StatementState> emit,
   ) async {
     try {
+      // ⛔️ اگر قبلاً در حالت loadingMore بوده، ریست بشه
+      emit(state.copyWith(isLoadingMore: false));
+
       // ⛔️ loading فقط وقتی دیتا نداری
       if (state.allStatement.isEmpty) {
         emit(state.copyWith(status: StatementStateStatus.loading));
@@ -38,30 +41,32 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
         state.copyWith(
           status: StatementStateStatus.success,
           allStatement: allList,
-          hasMore: allList.length == 10,
+          hasMore: result.data?.hasMoreItem ?? false,
+          isLoadingMore: false,
         ),
       );
     } catch (_) {
-      emit(state.copyWith(status: StatementStateStatus.error));
+      emit(state.copyWith(status: StatementStateStatus.error, isLoadingMore: false));
     }
   }
 
   Future<void> _onFetchFilterStatement(
-      FetchFilterStatementEvent event,
-      Emitter<StatementState> emit,
-      ) async {
+    FetchFilterStatementEvent event,
+    Emitter<StatementState> emit,
+  ) async {
     try {
-      // ⛔️ loading فقط وقتی دیتا نداری
-      if (state.allStatement.isEmpty) {
-        emit(state.copyWith(status: StatementStateStatus.loading));
-      }
+      emit(state.copyWith(
+        status: StatementStateStatus.loading,
+        filteredStatement: [],
+        isLoadingMore: false,
+      ));
 
       final result = await fetchStatementFilteredUseCase.getFilteredStatement(
         depositNumber: event.depositNumber,
         offset: 0,
         endDate: event.endDate,
         startDate: event.startDate,
-        statementActionType: event.statementActionType
+        statementActionType: event.statementActionType,
       );
 
       final allList = List<StatementModel>.from(result.data!.statements ?? [])
@@ -71,11 +76,12 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
         state.copyWith(
           status: StatementStateStatus.success,
           filteredStatement: allList,
-          hasMore: allList.length == 10,
+          hasMore: result.data?.hasMoreItem ?? false,
+          isLoadingMore: false,
         ),
       );
     } catch (_) {
-      emit(state.copyWith(status: StatementStateStatus.error));
+      emit(state.copyWith(status: StatementStateStatus.error, isLoadingMore: false));
     }
   }
 
@@ -87,20 +93,24 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
 
     emit(state.copyWith(isLoadingMore: true));
 
-    final res = await fetchStatementUseCase.getLastestStatement(
-      depositNumber: event.depositNumber,
-      offset: state.allStatement.length,
-    );
+    try {
+      final res = await fetchStatementUseCase.getLastestStatement(
+        depositNumber: event.depositNumber,
+        offset: state.allStatement.length,
+      );
 
-    final newList = res.data?.statements ?? [];
+      final newList = res.data?.statements ?? [];
 
-    emit(
-      state.copyWith(
-        allStatement: [...state.allStatement, ...newList],
-        hasMore: newList.length == 10,
-        isLoadingMore: false,
-      ),
-    );
+      emit(
+        state.copyWith(
+          allStatement: [...state.allStatement, ...newList],
+          hasMore: res.data?.hasMoreItem ?? false,
+          isLoadingMore: false,
+        ),
+      );
+    } catch (_) {
+      emit(state.copyWith(isLoadingMore: false));
+    }
   }
 
   Future<void> _onLoadFilteredStatementMore(
@@ -111,22 +121,26 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
 
     emit(state.copyWith(isLoadingMore: true));
 
-    final res = await fetchStatementFilteredUseCase.getFilteredStatement(
-      depositNumber: event.depositNumber,
-      offset: state.filteredStatement.length,
-      endDate: event.endDate,
-      startDate: event.startDate,
-      statementActionType: event.statementActionType
-    );
+    try {
+      final res = await fetchStatementFilteredUseCase.getFilteredStatement(
+          depositNumber: event.depositNumber,
+          offset: state.filteredStatement.length,
+          endDate: event.endDate,
+          startDate: event.startDate,
+          statementActionType: event.statementActionType
+      );
 
-    final newList = res.data?.statements ?? [];
+      final newList = res.data?.statements ?? [];
 
-    emit(
-      state.copyWith(
-        filteredStatement: [...state.filteredStatement, ...newList],
-        hasMore: newList.length == 10,
-        isLoadingMore: false,
-      ),
-    );
+      emit(
+        state.copyWith(
+          filteredStatement: [...state.filteredStatement, ...newList],
+          hasMore: res.data?.hasMoreItem ?? false,
+          isLoadingMore: false,
+        ),
+      );
+    } catch (_) {
+      emit(state.copyWith(isLoadingMore: false));
+    }
   }
 }

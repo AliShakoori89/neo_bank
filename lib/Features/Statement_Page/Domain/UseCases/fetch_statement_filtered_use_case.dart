@@ -12,7 +12,13 @@ class FetchStatementFilteredUseCase {
     int? statementActionType,
     required String startDate,
     required String endDate,
-  }){
-    return repository.getLastestStatement(depositNumber: depositNumber, offset: offset);
+  }) {
+    return repository.getFilterStatement(
+      depositNumber: depositNumber,
+      offset: offset,
+      statementActionType: statementActionType,
+      startDate: startDate,
+      endDate: endDate,
+    );
   }
 }
