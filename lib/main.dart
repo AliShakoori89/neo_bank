@@ -1,12 +1,10 @@
 import 'package:camera/camera.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/App_Lock/app_lock_observer_service.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repository/user_login_auth_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/abort_token_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/create_token_repository.dart';

@@ -4,7 +4,7 @@ import '../../../../Core/Network/app_exception.dart';
 import '../../../../Core/Services/token_storage_service.dart';
 import '../../../../Core/Utils/DateTime/calculate_expire_time.dart';
 import '../../Domain/Entities/login_result.dart';
-import '../../Domain/Repository/user_login_auth_repository.dart';
+import '../../Domain/Repositories/user_login_auth_repository.dart';
 import '../DataSources/auth_remote_data_source.dart';
 
 class UserLoginAuthRepositoryImpl
@@ -62,9 +62,8 @@ class UserLoginAuthRepositoryImpl
   }
 
   @override
-  Future<bool> userIsLogin() async {
-    final encryptedPrefs = EncryptedSharedPreferences();
-    final token = await encryptedPrefs.getString('token');
-    return token.isNotEmpty;
+  @override
+  Future<bool> userIsLogin() {
+    return LocalStorageService.isLoggedIn();
   }
 }

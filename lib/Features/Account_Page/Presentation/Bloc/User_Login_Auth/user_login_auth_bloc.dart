@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repository/user_login_auth_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repositories/user_login_auth_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
 
@@ -63,7 +63,7 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
       final isLogin = await userAuthRepository.userIsLogin();
 
       emit(
-        state.copyWith(status: UserLoginAuthStatus.success, isLogin: isLogin!),
+        state.copyWith(status: UserLoginAuthStatus.success, isLogin: isLogin),
       );
     } catch (error) {
       emit(state.copyWith(status: UserLoginAuthStatus.error));
