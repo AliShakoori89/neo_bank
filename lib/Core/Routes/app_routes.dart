@@ -11,8 +11,7 @@ import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentatio
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/charge_and_internet_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Loan_page/loan_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Wallet_Page/wallet_page.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/request_otp_code_again_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/otp_code_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/about_application_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
@@ -28,6 +27,10 @@ import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Com
 import '../../Features/Home_Page/Presentation/Component/Loan_page/Component/installment_item_details.dart';
 import '../../Features/Invoices_Page/invoices_page.dart';
 import '../../Features/Main_Page/Presentation/main_page.dart';
+import '../../Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
+import '../../Features/OTP_Code_Page/Data/Repositories/request_otp_code_again_repository_impl.dart';
+import '../../Features/OTP_Code_Page/Domain/UseCases/request_otp_code_again_use_case.dart';
+import '../Network/dio_client.dart';
 import '../Services/App_Lock/navigator_key.dart';
 
 final GoRouter router = GoRouter(
@@ -51,9 +54,17 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final args = state.extra as OtpArgs;
 
+        final dio = DioClient().dio;
+
+        final remoteDataSource = RequestOtpCodeAgainRemoteDataSource( dio: dio, );
+
+        final repository = RequestOtpCodeAgainRepositoryImpl( requestOtpCodeAgainRemoteDataSource: remoteDataSource, );
+
+        final useCase = RequestOtpCodeAgainUseCase( repository: repository, );
+
         return BlocProvider(
           create: (_) =>
-              RequerstOtpAgainBloc(RequestOtpCodeAgainRepository()),
+              RequestOtpAgainBloc(requestOtpCodeAgainUseCase: useCase,),
           child: OtpCodePage(
             phoneNumber: args.phoneNumber,
             nationalCode: args.nationalCode,

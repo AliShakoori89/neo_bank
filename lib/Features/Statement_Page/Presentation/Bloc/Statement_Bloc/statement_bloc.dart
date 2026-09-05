@@ -1,13 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
-import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/Repository/statement_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/UseCases/fetch_statement_filtered_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
+import '../../../Domain/UseCases/fetch_statement_use_case.dart';
 
 class StatementBloc extends Bloc<StatementEvent, StatementState> {
-  final StatementRepository statementRepository;
+  final FetchStatementFilteredUseCase fetchStatementFilteredUseCase;
+  final FetchStatementUseCase fetchStatementUseCase;
 
-  StatementBloc(this.statementRepository) : super(StatementState.initial()) {
+  StatementBloc(this.fetchStatementFilteredUseCase, this.fetchStatementUseCase) : super(StatementState.initial()) {
     on<FetchStatementEvent>(_onFetchStatement);
     on<LoadMoreStatementEvent>(_onLoadAllStatementMore);
     on<FetchFilterStatementEvent>(_onFetchFilterStatement);
@@ -24,7 +26,7 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
         emit(state.copyWith(status: StatementStateStatus.loading));
       }
 
-      final result = await statementRepository.getLastestStatement(
+      final result = await fetchStatementUseCase.getLastestStatement(
         depositNumber: event.depositNumber,
         offset: 0,
       );
@@ -54,7 +56,7 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
         emit(state.copyWith(status: StatementStateStatus.loading));
       }
 
-      final result = await statementRepository.getFilterStatement(
+      final result = await fetchStatementFilteredUseCase.getFilteredStatement(
         depositNumber: event.depositNumber,
         offset: 0,
         endDate: event.endDate,
@@ -85,7 +87,7 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
 
     emit(state.copyWith(isLoadingMore: true));
 
-    final res = await statementRepository.getLastestStatement(
+    final res = await fetchStatementUseCase.getLastestStatement(
       depositNumber: event.depositNumber,
       offset: state.allStatement.length,
     );
@@ -109,7 +111,7 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
 
     emit(state.copyWith(isLoadingMore: true));
 
-    final res = await statementRepository.getFilterStatement(
+    final res = await fetchStatementFilteredUseCase.getFilteredStatement(
       depositNumber: event.depositNumber,
       offset: state.filteredStatement.length,
       endDate: event.endDate,

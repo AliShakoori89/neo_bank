@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-enum RequerstOtpAgainStatus { initial, success, error, loading }
+enum RequestOtpAgainStatus { initial, success, error, loading }
 
-extension RequerstOtpAgainStatusX on RequerstOtpAgainStatus {
-  bool get isInitial => this == RequerstOtpAgainStatus.initial;
-  bool get isSuccess => this == RequerstOtpAgainStatus.success;
-  bool get isError => this == RequerstOtpAgainStatus.error;
-  bool get isLoading => this == RequerstOtpAgainStatus.loading;
+extension RequerstOtpAgainStatusX on RequestOtpAgainStatus {
+  bool get isInitial => this == RequestOtpAgainStatus.initial;
+  bool get isSuccess => this == RequestOtpAgainStatus.success;
+  bool get isError => this == RequestOtpAgainStatus.error;
+  bool get isLoading => this == RequestOtpAgainStatus.loading;
 }
 
-class RequerstOtpAgainState extends Equatable {
-  const RequerstOtpAgainState({
+class RequestOtpAgainState extends Equatable {
+  const RequestOtpAgainState({
     required this.status,
     required this.loginStatus,
     required this.loginMessage,
@@ -19,8 +19,8 @@ class RequerstOtpAgainState extends Equatable {
     required this.deviceId,
   });
 
-  static RequerstOtpAgainState initial() => RequerstOtpAgainState(
-    status: RequerstOtpAgainStatus.initial,
+  static RequestOtpAgainState initial() => RequestOtpAgainState(
+    status: RequestOtpAgainStatus.initial,
     loginStatus: false,
     loginMessage: '',
     isLogin: false,
@@ -28,7 +28,7 @@ class RequerstOtpAgainState extends Equatable {
     deviceId: '',
   );
 
-  final RequerstOtpAgainStatus status;
+  final RequestOtpAgainStatus status;
   final bool loginStatus;
   final String loginMessage;
   final bool isLogin;
@@ -45,15 +45,15 @@ class RequerstOtpAgainState extends Equatable {
     deviceId,
   ];
 
-  RequerstOtpAgainState copyWith({
-    RequerstOtpAgainStatus? status,
+  RequestOtpAgainState copyWith({
+    RequestOtpAgainStatus? status,
     bool? loginStatus,
     String? loginMessage,
     bool? isLogin,
     String? secretKey,
     String? deviceId,
   }) {
-    return RequerstOtpAgainState(
+    return RequestOtpAgainState(
       status: status ?? this.status,
       loginStatus: loginStatus ?? this.loginStatus,
       loginMessage: loginMessage ?? this.loginMessage,

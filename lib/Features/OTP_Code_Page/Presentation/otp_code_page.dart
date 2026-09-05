@@ -5,9 +5,8 @@ import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
 import 'package:neo_bank_mehr_iran/Core/Widgets/neo_bank_logo.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_event.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/requerst_otp_again_state.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_event.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_state.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/confirmation_button.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/edit_phone_number_bottun.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component/otp_code_box.dart';
@@ -15,6 +14,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Component
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 
 import '../../../Core/Network/Internet/check_internet_when_press_button.dart';
+import 'Bloc/Request_OTP_Again/request_otp_again_bloc.dart';
 
 
 class OtpCodePage extends StatefulWidget {
@@ -101,7 +101,7 @@ class _OtpCodePageState extends State<OtpCodePage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<RequerstOtpAgainBloc, RequerstOtpAgainState>(
+    return BlocListener<RequestOtpAgainBloc, RequestOtpAgainState>(
       listenWhen: (previous, current) {
         return previous.status != current.status && current.status.isSuccess;
       },
@@ -245,7 +245,7 @@ class _OtpCodePageState extends State<OtpCodePage> {
                                                   _otpController.clear();
                                                   _onOtpChanged(false);
                           
-                                                  context.read<RequerstOtpAgainBloc>().add(
+                                                  context.read<RequestOtpAgainBloc>().add(
                                                     RequestOTPCodeAgainEvent(
                                                       nationalCode: widget.nationalCode,
                                                       phoneNumber: widget.phoneNumber,

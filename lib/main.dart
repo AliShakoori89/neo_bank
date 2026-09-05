@@ -42,21 +42,28 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/internet
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/otp_code_check_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/otp_code_check_remote_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Repositories/otp_code_check_repository_impl.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Repositories/request_otp_code_again_repository_impl.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/otp_code_check_use_case.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/request_otp_code_again_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/citizen_kyc_status_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repository/profile_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Data_Sources/citizen_ekyc_status_remote_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Repositories/citizen_ekyc_status_repository_impl.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repositories/profile_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/UseCases/citizen_ekyc_status_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Domain/Repository/local_pass_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/Repository/statement_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/Network/dio_client.dart';
 import 'Core/Routes/app_routes.dart';
-import 'Features/Account_Page/Data/DataSources/auth_remote_data_source.dart';
+import 'Features/Account_Page/Data/Data_Sources/auth_remote_data_source.dart';
 import 'Features/Account_Page/Data/Repositories/user_login_auth_repository_impl.dart';
 import 'Features/Account_Page/Domain/UseCases/check_login_status_use_case.dart';
 import 'Features/Account_Page/Domain/UseCases/login_use_case.dart';
@@ -66,6 +73,10 @@ import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigatio
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_bloc.dart';
 import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_event.dart';
+import 'Features/Statement_Page/Data/Data_Sources/statement_data_sources.dart';
+import 'Features/Statement_Page/Data/Repositories/statement_repository_impl.dart';
+import 'Features/Statement_Page/Domain/UseCases/fetch_statement_filtered_use_case.dart';
+import 'Features/Statement_Page/Domain/UseCases/fetch_statement_use_case.dart';
 
 late List<CameraDescription> cameras;
 
@@ -169,15 +180,75 @@ class _MyAppState extends State<MyApp> {
           },
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              OtpCodeCheckBloc(OtpCodeCheckRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final otpCodeCheckRemoteDataSource = OtpCodeCheckRemoteDataSource(
+              dio: dio,
+            );
+
+            final repository = OtpCodeCheckRepositoryImpl(
+              otpCodeCheckRemoteDataSource: otpCodeCheckRemoteDataSource,
+            );
+
+            final otpCodeCheckUseCase = OtpCodeCheckUseCase(
+              repository: repository,
+            );
+
+            return OtpCodeCheckBloc(
+              otpCodeCheckUseCase: otpCodeCheckUseCase,
+            );
+          },
+        ),
+        BlocProvider(
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final requestOtpCodeAgainRemoteDataSource = RequestOtpCodeAgainRemoteDataSource(
+              dio: dio,
+            );
+
+            final repository = RequestOtpCodeAgainRepositoryImpl(
+              requestOtpCodeAgainRemoteDataSource: requestOtpCodeAgainRemoteDataSource,
+            );
+
+            final requestOtpCodeAgainUseCase = RequestOtpCodeAgainUseCase(
+              repository: repository,
+            );
+
+            return RequestOtpAgainBloc(
+              requestOtpCodeAgainUseCase: requestOtpCodeAgainUseCase,
+            );
+          },
         ),
         BlocProvider(
           create: (BuildContext context) => ProfileBloc(GetProfileRepository()),
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              StatementBloc(StatementRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final statementDataSources = StatementDataSources(
+              dio: dio,
+            );
+
+            final statementRepository = StatementRepositoryImpl(
+              statementDataSources: statementDataSources,
+            );
+
+            final fetchStatementUseCase = FetchStatementUseCase(
+              repository: statementRepository,
+            );
+
+            final fetchStatementFilteredUseCase = FetchStatementFilteredUseCase(
+              repository: statementRepository,
+            );
+
+            return StatementBloc(
+              fetchStatementFilteredUseCase,
+              fetchStatementUseCase,
+            );
+          },
         ),
         BlocProvider(
           create: (BuildContext context) =>
@@ -223,8 +294,25 @@ class _MyAppState extends State<MyApp> {
               TransactionBloc(TransactionRepository()),
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              CitizenEkycStatusBloc(GetCitizenKycStatusRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final citizenEkycStatusRemoteDataSource = CitizenEkycStatusRemoteDataSource(
+              dio: dio,
+            );
+
+            final repository = CitizenEkycStatusRepositoryImpl(
+              citizenEkycStatusRemoteDataSource: citizenEkycStatusRemoteDataSource,
+            );
+
+            final citizenEkycStatusUseCase = CitizenEkycStatusUseCase(
+              repository: repository,
+            );
+
+            return CitizenEkycStatusBloc(
+              citizenEkycStatusUseCase: citizenEkycStatusUseCase,
+            );
+          },
         ),
         BlocProvider(
           create: (BuildContext context) =>

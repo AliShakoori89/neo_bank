@@ -1,23 +1,21 @@
 import 'package:dio/dio.dart';
-import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Data_Sources/citizen_ekyc_status_remote_data_source.dart';
 import '../../../../Core/Network/app_exception.dart';
-import '../../Data/Model/citizen_kyc_status_model.dart';
+import '../../Domain/Repositories/citizen_kyc_status_repository.dart';
 
-class GetCitizenKycStatusRepository {
-  final Dio dio;
+class CitizenEkycStatusRepositoryImpl implements GetCitizenEKYCStatusRepository{
 
-  GetCitizenKycStatusRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
+  final CitizenEkycStatusRemoteDataSource citizenEkycStatusRemoteDataSource;
 
+  CitizenEkycStatusRepositoryImpl({required this.citizenEkycStatusRemoteDataSource});
+
+  @override
   Future<bool> fetchEKYCStatus() async {
     try {
-      final response = await dio.post('/api/kycs/get-citizen-kyc-status');
+      final data = await citizenEkycStatusRemoteDataSource.fetchEKYCStatus();
 
-      print('STATUS: ${response.statusCode}');
-      print('DATA: ${response.data}');
-      print('HEADERS: ${response.headers}');
-
-      if (response.statusCode == 200) {
-        final result = CitizenEkycStatusModel.fromJson(response.data);
+      if (data.success == true) {
+        final result = data;
         if (result.success != true || result.data == null) {
           return false;
         }
@@ -37,5 +35,6 @@ class GetCitizenKycStatusRepository {
       if (e is AppException) rethrow;
       throw AppException('خطای غیرمنتظره: $e');
     }
+
   }
 }

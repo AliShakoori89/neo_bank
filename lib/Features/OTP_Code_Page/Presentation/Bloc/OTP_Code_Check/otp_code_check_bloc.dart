@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repository/otp_code_check_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/otp_code_check_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_event.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_state.dart';
 
 class OtpCodeCheckBloc extends Bloc<OtpCodeCheckEvent, OtpCodeCheckState> {
-  OtpCodeCheckRepository otpCodeCheckRepository;
+  final OtpCodeCheckUseCase otpCodeCheckUseCase;
 
-  OtpCodeCheckBloc(this.otpCodeCheckRepository)
+  OtpCodeCheckBloc({required this.otpCodeCheckUseCase})
     : super(OtpCodeCheckState.initial()) {
     on<OtpCodeCheckValueEvent>(_mapOtpCodeCheckValueEventToState);
   }
@@ -18,10 +18,8 @@ class OtpCodeCheckBloc extends Bloc<OtpCodeCheckEvent, OtpCodeCheckState> {
     try {
       emit(state.copyWith(status: OtpCodeCheckStatus.loading));
 
-      final otpLoginStatus = await otpCodeCheckRepository.otpLogin(
-        event.otpCode,
-        event.secretKey,
-        event.deviceId,
+      final otpLoginStatus = await otpCodeCheckUseCase.otpLogin(
+        otpCode: event.otpCode, secretKey: event.secretKey, deviceID: event.deviceId,
       );
 
       print(otpLoginStatus);
@@ -29,7 +27,7 @@ class OtpCodeCheckBloc extends Bloc<OtpCodeCheckEvent, OtpCodeCheckState> {
       emit(
         state.copyWith(
           status: OtpCodeCheckStatus.success,
-          otpLoginStatus: otpLoginStatus!.success,
+          otpLoginStatus: otpLoginStatus.success,
           otpLoginMessage: otpLoginStatus.message,
         ),
       );
