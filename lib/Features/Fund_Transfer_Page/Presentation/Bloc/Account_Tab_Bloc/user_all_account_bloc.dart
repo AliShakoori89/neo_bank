@@ -20,7 +20,7 @@ class UserAllAccountBloc
     try {
       emit(state.copyWith(status: UserAllAccountStatus.loading));
 
-      final allAccount = await depositUseCase();
+      final allAccount = await depositUseCase.getUserAllAccount();
 
       emit(
         state.copyWith(

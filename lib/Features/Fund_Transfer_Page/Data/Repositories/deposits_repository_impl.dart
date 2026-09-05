@@ -17,7 +17,7 @@ class DepositsRepositoryImpl implements DepositsRepository{
       final data = await depositRemoteDataSource.getUserAllAccount();
 
       if (data.success == true) {
-        return DepositsModel();
+        return data;
       } else {
         throw AppException('Failed to fetch deposits');
       }

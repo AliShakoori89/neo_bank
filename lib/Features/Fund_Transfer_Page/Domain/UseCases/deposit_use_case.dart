@@ -1,5 +1,4 @@
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repositories/deposits_repository.dart';
-
 import '../../Data/Models/deposits_model.dart';
 
 class DepositUseCase {
@@ -7,7 +6,7 @@ class DepositUseCase {
 
   DepositUseCase({required this.repository});
 
-  Future<DepositsModel> call(){
+  Future<DepositsModel> getUserAllAccount(){
     return repository.getUserAllAccount();
   }
 }

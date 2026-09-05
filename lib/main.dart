@@ -22,9 +22,11 @@ import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentatio
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Send_Video_Bloc/send_video_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Validate_token_Bloc/validate_token_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/DataSources/all_card_detail_remote_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/DataSources/deposit_remote_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/Repositories/all_card_detail_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/Repositories/deposits_repository_impl.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repositories/all_card_detail_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/all_card_detail_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
@@ -146,8 +148,25 @@ class _MyAppState extends State<MyApp> {
               AllCardsBloc(AllCardRepository()),
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              AllCardsDetailBloc(AllCardDetailRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final allCardDetailRemoteDataSource = AllCardDetailRemoteDataSource(
+              dio: dio,
+            );
+
+            final repository = AllCardDetailRepositoryImpl(
+              allCardDetailRemoteDataSource: allCardDetailRemoteDataSource,
+            );
+
+            final allCardDetailUseCase = AllCardDetailUseCase(
+              repository: repository,
+            );
+
+            return AllCardsDetailBloc(
+              allCardDetailUseCase: allCardDetailUseCase
+            );
+          },
         ),
         BlocProvider(
           create: (BuildContext context) =>

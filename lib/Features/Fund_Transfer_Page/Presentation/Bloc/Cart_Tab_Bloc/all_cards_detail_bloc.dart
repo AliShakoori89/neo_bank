@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repositories/all_card_detail_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/all_card_detail_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_state.dart';
 
 class AllCardsDetailBloc
     extends Bloc<AllCardsDetailEvent, AllCardsDetailState> {
-  AllCardDetailRepository allCardDetailRepository;
+  final AllCardDetailUseCase allCardDetailUseCase;
 
-  AllCardsDetailBloc(this.allCardDetailRepository)
+  AllCardsDetailBloc({required this.allCardDetailUseCase})
     : super(AllCardsDetailState.initial()) {
     on<GetAllCardsDetailEvent>(_mapGetAllCardsPanEvent);
   }
@@ -20,9 +20,9 @@ class AllCardsDetailBloc
     try {
       emit(state.copyWith(status: AllCardsDetailStatus.loading));
 
-      final cardsPan = await allCardDetailRepository.getAllCardsPan();
+      final cardsPan = await allCardDetailUseCase.getAllCardsPan();
 
-      final cardsDeposit = await allCardDetailRepository.getAllCardsDeposit();
+      final cardsDeposit = await allCardDetailUseCase.getAllCardsDeposit();
 
       emit(
         state.copyWith(
