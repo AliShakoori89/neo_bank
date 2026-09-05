@@ -52,7 +52,10 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/Repository/sta
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Core/Network/dio_client.dart';
 import 'Core/Routes/app_routes.dart';
+import 'Features/Account_Page/Data/DataSources/auth_remote_data_source.dart';
+import 'Features/Account_Page/Data/Repositories/user_login_auth_repository_impl.dart';
 import 'Features/Home_Page/Domain/Repository/loan_page_repository.dart';
 import 'Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
@@ -111,8 +114,19 @@ class _MyAppState extends State<MyApp> {
           create: (_) => MainNavigationBloc(initialIndex: 0), // ⭐ اضافه شود
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              UserLoginAuthBloc(UserLoginAuthRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final remoteDataSource = AuthRemoteDataSource(
+              dio: dio,
+            );
+
+            final repository = UserLoginAuthRepositoryImpl(
+              remoteDataSource: remoteDataSource,
+            );
+
+            return UserLoginAuthBloc(repository);
+          },
         ),
         BlocProvider(
           create: (BuildContext context) =>
