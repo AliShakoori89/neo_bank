@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../../../Core/Services/token_storage_service.dart';
 import '../../../../Core/Utils/DateTime/calculate_expire_time.dart';

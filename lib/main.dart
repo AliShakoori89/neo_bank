@@ -22,8 +22,10 @@ import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentatio
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Send_Video_Bloc/send_video_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Validate_token_Bloc/validate_token_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repository/Deposits_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repository/all_card_detail_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/DataSources/deposit_remote_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/Repositories/deposits_repository_impl.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repositories/all_card_detail_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/all_card_repository.dart';
@@ -54,6 +56,8 @@ import 'Core/Network/dio_client.dart';
 import 'Core/Routes/app_routes.dart';
 import 'Features/Account_Page/Data/DataSources/auth_remote_data_source.dart';
 import 'Features/Account_Page/Data/Repositories/user_login_auth_repository_impl.dart';
+import 'Features/Account_Page/Domain/UseCases/check_login_status_use_case.dart';
+import 'Features/Account_Page/Domain/UseCases/login_use_case.dart';
 import 'Features/Home_Page/Domain/Repository/loan_page_repository.dart';
 import 'Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
@@ -123,7 +127,18 @@ class _MyAppState extends State<MyApp> {
               remoteDataSource: remoteDataSource,
             );
 
-            return UserLoginAuthBloc(repository);
+            final loginUseCase = LoginUseCase(
+              repository: repository,
+            );
+
+            final checkLoginStatusUseCase = CheckLoginStatusUseCase(
+              repository: repository,
+            );
+
+            return UserLoginAuthBloc(
+              loginUseCase: loginUseCase,
+              checkLoginStatusUseCase: checkLoginStatusUseCase,
+            );
           },
         ),
         BlocProvider(
@@ -150,8 +165,25 @@ class _MyAppState extends State<MyApp> {
               LastTransactionBloc(LastTransactionRepository()),
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              UserAllAccountBloc(DepositsRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final remoteDataSource = DepositRemoteDataSource(
+              dio: dio,
+            );
+
+            final repository = DepositsRepositoryImpl(
+              depositRemoteDataSource: remoteDataSource,
+            );
+
+            final depositUseCase = DepositUseCase(
+              repository: repository,
+            );
+
+            return UserAllAccountBloc(
+              depositUseCase: depositUseCase,
+            );
+          },
         ),
         BlocProvider(
           create: (BuildContext context) =>

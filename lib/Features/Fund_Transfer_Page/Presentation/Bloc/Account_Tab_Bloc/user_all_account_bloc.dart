@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repository/Deposits_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_state.dart';
 
 class UserAllAccountBloc
     extends Bloc<UserAllAccountEvent, UserAllAccountState> {
-  DepositsRepository depositsRepository;
+  final DepositUseCase depositUseCase;
 
-  UserAllAccountBloc(this.depositsRepository)
+  UserAllAccountBloc({required this.depositUseCase})
     : super(UserAllAccountState.initial()) {
     on<GetUserAllAccountEvent>(_mapGetAllCardsPanEvent);
   }
@@ -20,7 +20,7 @@ class UserAllAccountBloc
     try {
       emit(state.copyWith(status: UserAllAccountStatus.loading));
 
-      final allAccount = await depositsRepository.getUserAllAccount();
+      final allAccount = await depositUseCase();
 
       emit(
         state.copyWith(

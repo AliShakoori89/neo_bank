@@ -1,12 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Domain/Repositories/user_login_auth_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
+import '../../../Domain/UseCases/check_login_status_use_case.dart';
+import '../../../Domain/UseCases/login_use_case.dart';
 
 class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
-  UserLoginAuthRepository userAuthRepository;
+  final LoginUseCase loginUseCase;
+  final CheckLoginStatusUseCase checkLoginStatusUseCase;
 
-  UserLoginAuthBloc(this.userAuthRepository)
+  UserLoginAuthBloc({
+    required this.loginUseCase,
+    required this.checkLoginStatusUseCase})
     : super(UserLoginAuthState.initial()) {
     on<UserLoginEvent>(_mapUserLoginEventToState);
     on<UserIsLoginEvent>(_mapUserIsLoginEventToState);
@@ -20,9 +24,9 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
     try {
       emit(state.copyWith(status: UserLoginAuthStatus.loading));
 
-      final result = await userAuthRepository.userLogin(
-        event.nationalCode,
-        event.phoneNumber,
+      final result = await loginUseCase(
+        nationalNumber: event.nationalCode,
+        mobileNumber: event.phoneNumber,
       );
 
       if (result.success) {
@@ -60,7 +64,7 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
     try {
       emit(state.copyWith(status: UserLoginAuthStatus.loading));
 
-      final isLogin = await userAuthRepository.userIsLogin();
+      final isLogin = await checkLoginStatusUseCase();
 
       emit(
         state.copyWith(status: UserLoginAuthStatus.success, isLogin: isLogin),
