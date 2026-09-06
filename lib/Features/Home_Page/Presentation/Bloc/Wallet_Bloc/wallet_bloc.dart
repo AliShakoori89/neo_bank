@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/wallet_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_state.dart';
-import '../../../Domain/Repository/wallet_repository.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
-  final WalletRepository walletRepository;
+  final WalletUseCase walletUseCase;
 
-  WalletBloc(this.walletRepository) : super(WalletState.initial()) {
+  WalletBloc({required this.walletUseCase}) : super(WalletState.initial()) {
     on<WalletDetailsPackagesEvent>(_onWalletDetailsPackagesEvent);
     on<BuyPackagesEvent>(_onBuyPackagesEvent);
   }
@@ -19,7 +19,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     try {
       emit(state.copyWith(status: WalletStateStatus.loading));
 
-      final walletResponse = await walletRepository.getWalletDetails();
+      final walletResponse = await walletUseCase.getWalletDetails();
 
       if (walletResponse.success) {
         emit(
@@ -63,7 +63,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     try {
       emit(state.copyWith(status: WalletStateStatus.loading));
 
-      final purchaseResult = await walletRepository.buyInternetPackage(
+      final purchaseResult = await walletUseCase.buyInternetPackage(
         sourceMobileNumber: event.sourceMobileNumber,
         walletAddress: event.walletAddress,
         productCode: event.productCode,

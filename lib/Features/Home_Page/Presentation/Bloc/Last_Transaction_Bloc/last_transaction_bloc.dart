@@ -1,14 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/last_transaction_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/last_transaction_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_state.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
 
 class LastTransactionBloc
     extends Bloc<LastTransactionEvent, LastTransactionState> {
-  final LastTransactionRepository lastTransactionRepository;
+  final LastTransactionUseCase lastTransactionUseCase;
 
-  LastTransactionBloc(this.lastTransactionRepository)
+  LastTransactionBloc({required this.lastTransactionUseCase})
     : super(LastTransactionState.initial()) {
     on<FetchLastTransactionEvent>(_onFetchLastTransactionEventToState);
   }
@@ -23,7 +23,7 @@ class LastTransactionBloc
         emit(state.copyWith(status: SLastTransactionStatus.loading));
       }
 
-      final result = await lastTransactionRepository.getLastestStatement(
+      final result = await lastTransactionUseCase.getLastestStatement(
         event.depositNumber,
       );
 

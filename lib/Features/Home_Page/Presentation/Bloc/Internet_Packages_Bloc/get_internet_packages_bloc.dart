@@ -1,15 +1,13 @@
-// internet_package_bloc.dart
-
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/internet_packages_repository.dart';
+import '../../../Domain/UseCases/internet_package_use_case.dart';
 import 'get_internet_packages_event.dart';
 import 'get_internet_packages_state.dart';
 
 class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageState> {
-  final InternetPackagesRepository internetPackagesRepository;
+  final InternetPackageUseCase internetPackageUseCase;
 
-  InternetPackageBloc(this.internetPackagesRepository) : super(InternetPackageState.initial()) {
+  InternetPackageBloc({required this.internetPackageUseCase}) : super(InternetPackageState.initial()) {
     on<FetchAllInternetPackages>(_onFetchAllInternetPackages);
     on<FetchInternetPackages>(_onFetchInternetPackages);
     on<BuyInternetPackage>(_onBuyInternetPackage);
@@ -23,7 +21,7 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
     try {
       emit(state.copyWith(status: InternetPackageStatus.loading));
 
-      final internetPackages = await internetPackagesRepository.getAllInternetPackages(event.operatorCode);
+      final internetPackages = await internetPackageUseCase.getAllInternetPackages(event.operatorCode);
 
       print('📦 تعداد بسته‌های دریافت شده: ${internetPackages.length}');
 
@@ -54,7 +52,7 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
     try {
       emit(state.copyWith(status: InternetPackageStatus.loading));
 
-      final internetPackages = await internetPackagesRepository.getInternetPackages(
+      final internetPackages = await internetPackageUseCase.getInternetPackages(
         operatorCode: event.operatorCode,
         packageTimeCode: event.packageTimeCode,
         simType: event.simType,
@@ -95,7 +93,7 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
         buyResult: null,
       ));
 
-      final result = await internetPackagesRepository.buyInternetPackage(
+      final result = await internetPackageUseCase.buyInternetPackage(
         sourceMobileNumber: event.sourceMobileNumber,
         walletAddress: event.walletAddress,
         productCode: event.productCode,

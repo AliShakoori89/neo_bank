@@ -1,11 +1,19 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-import '../../Data/Model/loan_model.dart';
+import '../Model/loan_model.dart';
 
-class LoanPageRepository {
+class LoanPageDataSource {
+  final Dio dio;
+
+  LoanPageDataSource({
+    required this.dio,
+  });
+
   Future<List<LoanModel>> getLoans({
     required String nationalNumber,
   }) async {
+
     final url = Uri.parse(
       'http://10.180.7.11:7055/api/Customers/$nationalNumber/loans',
     );

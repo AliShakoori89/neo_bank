@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/all_card_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/all_cards_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_state.dart';
 
 class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
-  AllCardRepository allCardRepository;
+  final AllCardsUseCase allCardsUseCase;
   static const int maxRefreshCount = 5;
 
-  AllCardsBloc(this.allCardRepository) : super(AllCardsState.initial()) {
+  AllCardsBloc({required this.allCardsUseCase}) : super(AllCardsState.initial()) {
     on<GetUserAllCardsEvent>(_mapGetUserAllCardsEventToState);
   }
 
@@ -19,7 +19,7 @@ class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
     try {
       emit(state.copyWith(status: GetAllCardsStatus.loading));
 
-      final cards = await allCardRepository.getAllCards();
+      final cards = await allCardsUseCase.getAllCards();
 
       await Future.delayed(const Duration(milliseconds: 100));
 

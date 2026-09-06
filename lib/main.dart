@@ -30,15 +30,27 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/a
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/all_card_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/last_transaction_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/transaction_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/wallet_repository.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/all_card_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/internet_packages_data_sources.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/last_transaction_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/loan_page_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/transaction_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/wallet_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/internet_package_repository_impl.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/last_transaction_repository_impl.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/loan_page_repository_impl.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/transaction_repository_impl.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/wallet_repository_impl.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/all_cards_use_case.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/internet_package_use_case.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/last_transaction_use_case.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/loan_page_use_case.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/transaction_use_case.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/wallet_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repository/internet_packages_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_bloc.dart';
@@ -67,7 +79,7 @@ import 'Features/Account_Page/Data/Data_Sources/auth_remote_data_source.dart';
 import 'Features/Account_Page/Data/Repositories/user_login_auth_repository_impl.dart';
 import 'Features/Account_Page/Domain/UseCases/check_login_status_use_case.dart';
 import 'Features/Account_Page/Domain/UseCases/login_use_case.dart';
-import 'Features/Home_Page/Domain/Repository/loan_page_repository.dart';
+import 'Features/Home_Page/Data/Repositories/all_card_repository_impl.dart';
 import 'Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
@@ -155,8 +167,25 @@ class _MyAppState extends State<MyApp> {
           },
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              AllCardsBloc(AllCardRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final allCardDataSources = AllCardDataSource(
+              dio: dio,
+            );
+
+            final allCardRepository = AllCardRepositoryImpl(
+              allCardDataSources: allCardDataSources,
+            );
+
+            final allCardDetailUseCase = AllCardsUseCase(
+              allCardRepository: allCardRepository,
+            );
+
+            return AllCardsBloc(
+                allCardsUseCase: allCardDetailUseCase
+            );
+          },
         ),
         BlocProvider(
           create: (BuildContext context) {
@@ -232,16 +261,16 @@ class _MyAppState extends State<MyApp> {
               dio: dio,
             );
 
-            final statementRepository = StatementRepositoryImpl(
+            final statementRepositoryImpl = StatementRepositoryImpl(
               statementDataSources: statementDataSources,
             );
 
             final fetchStatementUseCase = FetchStatementUseCase(
-              repository: statementRepository,
+              repository: statementRepositoryImpl,
             );
 
             final fetchStatementFilteredUseCase = FetchStatementFilteredUseCase(
-              repository: statementRepository,
+              repository: statementRepositoryImpl,
             );
 
             return StatementBloc(
@@ -251,8 +280,25 @@ class _MyAppState extends State<MyApp> {
           },
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              LastTransactionBloc(LastTransactionRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final lastTransactionDataSource = LastTransactionDataSource(
+              dio: dio,
+            );
+
+            final lastTransactionRepositoryImpl = LastTransactionRepositoryImpl(
+              lastTransactionDataSource: lastTransactionDataSource,
+            );
+
+            final lastTransactionUseCase = LastTransactionUseCase(
+              lastTransactionRepository: lastTransactionRepositoryImpl,
+            );
+
+            return LastTransactionBloc(
+              lastTransactionUseCase: lastTransactionUseCase,
+            );
+          },
         ),
         BlocProvider(
           create: (BuildContext context) {
@@ -282,16 +328,67 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => BalanceVisibilityCubit()),
         BlocProvider(create: (BuildContext context) => RefreshCountBloc()),
         BlocProvider(
-          create: (BuildContext context) =>
-              InternetPackageBloc(InternetPackagesRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final internetPackagesDataSources = InternetPackagesDataSources(
+              dio: dio,
+            );
+
+            final repository = InternetPackageRepositoryImpl(
+              internetPackagesDataSources: internetPackagesDataSources,
+            );
+
+            final internetPackageUseCase = InternetPackageUseCase(
+              repository: repository,
+            );
+
+            return InternetPackageBloc(
+              internetPackageUseCase: internetPackageUseCase,
+            );
+          },
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              WalletBloc(WalletRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final walletDataSource = WalletDataSource(
+              dio: dio,
+            );
+
+            final walletRepositoryImpl = WalletRepositoryImpl(
+              walletDataSource: walletDataSource,
+            );
+
+            final walletUseCase = WalletUseCase(
+              walletRepository: walletRepositoryImpl,
+            );
+
+            return WalletBloc(
+              walletUseCase: walletUseCase,
+            );
+          },
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              TransactionBloc(TransactionRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final transactionDataSource = TransactionDataSource(
+              dio: dio,
+            );
+
+            final transactionRepositoryImpl = TransactionRepositoryImpl(
+              transactionDataSource: transactionDataSource,
+            );
+
+            final transactionUseCase = TransactionUseCase(
+              transactionRepository: transactionRepositoryImpl,
+            );
+
+            return TransactionBloc(
+              transactionUseCase: transactionUseCase,
+            );
+          },
         ),
         BlocProvider(
           create: (BuildContext context) {
@@ -343,8 +440,25 @@ class _MyAppState extends State<MyApp> {
               HasApprovedEkycBloc(HasApprovedEkycRepository()),
         ),
         BlocProvider(
-          create: (BuildContext context) =>
-              LoanPageBloc(LoanPageRepository()),
+          create: (BuildContext context) {
+            final dio = DioClient().dio;
+
+            final loanPageDataSource = LoanPageDataSource(
+              dio: dio,
+            );
+
+            final loanPageRepositoryImpl = LoanPageRepositoryImpl(
+              loanPageDataSource: loanPageDataSource,
+            );
+
+            final loanPageUseCase = LoanPageUseCase(
+              loanPageRepository: loanPageRepositoryImpl,
+            );
+
+            return LoanPageBloc(
+              loanPageUseCase: loanPageUseCase,
+            );
+          },
         ),
         BlocProvider(
           create: (BuildContext context) =>

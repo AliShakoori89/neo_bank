@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/transaction_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_state.dart';
-import '../../../Domain/Repository/transaction_repository.dart';
 
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
-  final TransactionRepository transactionRepository;
+  final TransactionUseCase transactionUseCase;
 
-  TransactionBloc(this.transactionRepository) : super(TransactionState.initial()) {
+  TransactionBloc({required this.transactionUseCase}) : super(TransactionState.initial()) {
     on<ChargeTransactionEvent>(_onChargeTransactionEvent);
     on<WithdrawTransactionEvent>(_onWithdrawTransactionEvent);
     // حذف ResetTransactionEvent - نیازی به آن نیست
@@ -24,7 +24,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
         message: null,
       ));
 
-      final response = await transactionRepository.chargeWallet(
+      final response = await transactionUseCase.chargeWallet(
         customerWalletAddress: event.customerWalletAddress,
         amount: event.amount,
         customerDepositNumber: event.customerDepositNumber,
@@ -106,7 +106,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
         message: null,
       ));
 
-      final response = await transactionRepository.withdrawWallet(
+      final response = await transactionUseCase.withdrawWallet(
         customerWalletAddress: event.customerWalletAddress,
         amount: event.amount,
         customerDepositNumber: event.customerDepositNumber,
