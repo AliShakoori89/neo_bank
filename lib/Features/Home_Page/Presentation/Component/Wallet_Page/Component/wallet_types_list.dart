@@ -56,7 +56,7 @@ class WalletTypesList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        state.walletDetails[index].title,
+                        state.walletDetails[index].title!,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

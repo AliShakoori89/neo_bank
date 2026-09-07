@@ -1,4 +1,4 @@
-import '../../Data/Model/wallet_model.dart';
+import '../Entities/wallet_entity.dart';
 import '../Repositories/wallet_repository.dart';
 
 class WalletUseCase {
@@ -6,7 +6,7 @@ class WalletUseCase {
 
   WalletUseCase({required this.walletRepository});
 
-  Future<WalletResponseModel> getWalletDetails(){
+  Future<List<WalletEntity>> getWalletDetails(){
     return walletRepository.getWalletDetails();
   }
 
@@ -27,7 +27,7 @@ class WalletUseCase {
     return walletRepository.getWalletBalance(walletAddress);
   }
 
-  Future<List<WalletModel>> getActiveWallets(){
+  Future<List<WalletEntity>> getActiveWallets(){
     return walletRepository.getActiveWallets();
   }
 }

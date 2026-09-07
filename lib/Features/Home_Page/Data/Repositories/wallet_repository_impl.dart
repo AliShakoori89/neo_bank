@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../../../Core/Network/app_exception.dart';
-import '../../Data/Model/wallet_model.dart';
+import '../../Domain/Entities/wallet_entity.dart';
 import '../../Domain/Repositories/wallet_repository.dart';
 import '../Data_Sources/wallet_data_source.dart';
 
@@ -13,12 +13,14 @@ class WalletRepositoryImpl implements WalletRepository {
   });
 
   @override
-  Future<WalletResponseModel> getWalletDetails() async {
+  Future<List<WalletEntity>> getWalletDetails() async {
     try {
       final result = await walletDataSource.getWalletDetails();
 
       if (result.success) {
-        return result;
+        return result.data
+            .map((wallet) => wallet.toEntity())
+            .toList();
       }
 
       throw AppException(
@@ -72,9 +74,9 @@ class WalletRepositoryImpl implements WalletRepository {
       String walletAddress,
       ) async {
     try {
-      final response = await getWalletDetails();
+      final wallets  = await getWalletDetails();
 
-      final wallet = response.data.firstWhere(
+      final wallet = wallets.firstWhere(
             (wallet) => wallet.address == walletAddress,
         orElse: () => throw AppException(
           'کیف پول مورد نظر یافت نشد',
@@ -97,12 +99,12 @@ class WalletRepositoryImpl implements WalletRepository {
   }
 
   @override
-  Future<List<WalletModel>> getActiveWallets() async {
+  Future<List<WalletEntity>> getActiveWallets() async {
     try {
-      final response = await getWalletDetails();
+      final wallets  = await getWalletDetails();
 
-      return response.data
-          .where((wallet) => wallet.isActive)
+      return wallets
+          .where((wallet) => wallet.isActive == true)
           .toList();
     } on DioException catch (e) {
       throw AppException(

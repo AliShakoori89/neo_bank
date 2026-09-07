@@ -67,7 +67,7 @@ class _SelectWalletDropdownState extends State<SelectWalletDropdown> {
               dropdownValue ??= wallets.first.title;
 
               final List<MenuEntry> menuEntries = wallets.map<MenuEntry>(
-                    (wallet) => MenuEntry(value: wallet.title, label: wallet.title),
+                    (wallet) => MenuEntry(value: wallet.title!, label: wallet.title!),
               ).toList();
 
               return DropdownMenu<String>(

@@ -210,7 +210,7 @@ class _WalletPageState extends State<WalletPage> {
                         if (deposit && walletState.walletDetails.isNotEmpty) {
                           context.read<TransactionBloc>().add(
                             ChargeTransactionEvent(
-                              customerWalletAddress: walletState.walletDetails.first.address,
+                              customerWalletAddress: walletState.walletDetails.first.address!,
                               amount: balanceController.rawValue,
                               customerDepositNumber: _selectedDepositNumber!,
                             ),
@@ -218,7 +218,7 @@ class _WalletPageState extends State<WalletPage> {
                         } else if (withdraw && walletState.walletDetails.isNotEmpty) {
                           context.read<TransactionBloc>().add(
                             WithdrawTransactionEvent(
-                              customerWalletAddress: walletState.walletDetails.first.address,
+                              customerWalletAddress: walletState.walletDetails.first.address!,
                               amount: balanceController.rawValue,
                               customerDepositNumber: _selectedDepositNumber!,
                             ),

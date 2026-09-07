@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/wallet_entity.dart';
 
 import '../../../../Core/Network/Models/api_error_model.dart';
 
@@ -42,19 +43,19 @@ class WalletResponseModel extends Equatable {
 
 // مدل کیف پول
 class WalletModel {
-  final String address;
-  final String title;
-  final int walletType;
-  final bool isActive;
-  final int balance;
+  final String? address;
+  final String? title;
+  final int? walletType;
+  final bool? isActive;
+  final int? balance;
 
   // سازنده اصلی
   WalletModel({
-    required this.address,
-    required this.title,
-    required this.walletType,
-    required this.isActive,
-    required this.balance,
+    this.address,
+    this.title,
+    this.walletType,
+    this.isActive,
+    this.balance,
   });
 
   // تبدیل از JSON به آبجکت
@@ -77,5 +78,15 @@ class WalletModel {
       'isActive': isActive,
       'balance': balance,
     };
+  }
+
+  WalletEntity toEntity(){
+    return WalletEntity(
+      title: title,
+      address: address,
+      balance: balance,
+      isActive: isActive,
+      walletType: walletType
+    );
   }
 }

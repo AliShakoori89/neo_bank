@@ -1,8 +1,9 @@
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/wallet_model.dart';
+
+import '../Entities/wallet_entity.dart';
 
 abstract class WalletRepository {
 
-  Future<WalletResponseModel> getWalletDetails();
+  Future<List<WalletEntity>> getWalletDetails();
   /// خرید بسته اینترنت
   Future<Map<String, dynamic>> buyInternetPackage({
     required String sourceMobileNumber,
@@ -13,5 +14,5 @@ abstract class WalletRepository {
   /// دریافت موجودی کیف پول خاص
   Future<int?> getWalletBalance(String walletAddress);
   /// دریافت کیف پول فعال
-  Future<List<WalletModel>> getActiveWallets();
+  Future<List<WalletEntity>> getActiveWallets();
 }

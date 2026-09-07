@@ -43,12 +43,12 @@ class _PayTypesListState extends State<PayTypesList> {
           return const Center(child: Text('خطایی رخ داده است'));
         }
 
-        if (state.walletDetails?.isEmpty ?? true) {
+        if (state.walletDetails.isEmpty) {
           return const Center(child: Text('کیف پولی در دسترس نیست!'));
         }
 
         final List<WalletModel> displayWallets =
-        List.from(state.walletDetails!);
+        List.from(state.walletDetails);
 
         return ListView.builder(
           shrinkWrap: true,
@@ -58,7 +58,7 @@ class _PayTypesListState extends State<PayTypesList> {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: PaymentTypesCard(
-                title: displayWallets[index].title,
+                title: displayWallets[index].title!,
                 description:
                 'موجودی: ${displayWallets[index].balance} تومان',
                 isSelected: localSelectedIndex == index,
@@ -68,8 +68,8 @@ class _PayTypesListState extends State<PayTypesList> {
                   });
                   widget.onWalletSelected(
                     index,
-                    displayWallets[index].address,
-                    displayWallets[index].title,
+                    displayWallets[index].address!,
+                    displayWallets[index].title!,
                   );
                 },
               ),

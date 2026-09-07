@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/wallet_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/wallet_entity.dart';
 
 enum WalletStateStatus {
   initial,
@@ -19,7 +19,7 @@ extension WalletStateStatusX on WalletStateStatus {
 
 class WalletState extends Equatable {
   final WalletStateStatus status;
-  final List<WalletModel> walletDetails;
+  final List<WalletEntity> walletDetails;
   final String? traceId;
   final String? errorMessage;
   final Map<String, dynamic>? purchaseData;
@@ -44,7 +44,7 @@ class WalletState extends Equatable {
 
   WalletState copyWith({
     WalletStateStatus? status,
-    List<WalletModel>? walletDetails,
+    List<WalletEntity>? walletDetails,
     String? traceId,
     String? errorMessage,
     Map<String, dynamic>? purchaseData,

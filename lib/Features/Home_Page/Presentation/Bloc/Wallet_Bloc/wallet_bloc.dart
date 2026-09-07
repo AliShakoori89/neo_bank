@@ -19,34 +19,16 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     try {
       emit(state.copyWith(status: WalletStateStatus.loading));
 
-      final walletResponse = await walletUseCase.getWalletDetails();
+      final wallets = await walletUseCase.getWalletDetails();
 
-      if (walletResponse.success) {
         emit(
           state.copyWith(
             status: WalletStateStatus.success,
-            walletDetails: walletResponse.data,
-            traceId: walletResponse.traceId,
+            walletDetails: wallets,
           ),
         );
-      } else {
-        emit(
-          state.copyWith(
-            status: WalletStateStatus.error,
-            errorMessage: walletResponse.error?.toString() ?? 'خطا در دریافت اطلاعات کیف پول',
-          ),
-        );
-      }
-    } on DioException catch (e) {
-      print('❌ DioError: ${e.message}');
-      emit(
-        state.copyWith(
-          status: WalletStateStatus.error,
-          errorMessage: e.response?.data?.toString() ?? e.message,
-        ),
-      );
-    } catch (error) {
-      print('❌ Error: $error');
+      } catch (error) {
+      print('❌ Error دریافت اطلاعات کیف پول: $error');
       emit(
         state.copyWith(
           status: WalletStateStatus.error,
