@@ -42,12 +42,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Sta
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/DI/injection_container.dart';
-import 'Core/Network/dio_client.dart';
 import 'Core/Routes/app_routes.dart';
-import 'Features/Account_Page/Data/Data_Sources/auth_remote_data_source.dart';
-import 'Features/Account_Page/Data/Repositories/user_login_auth_repository_impl.dart';
-import 'Features/Account_Page/Domain/UseCases/check_login_status_use_case.dart';
-import 'Features/Account_Page/Domain/UseCases/login_use_case.dart';
 import 'Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
@@ -107,30 +102,7 @@ class _MyAppState extends State<MyApp> {
           create: (_) => MainNavigationBloc(initialIndex: 0), // ⭐ اضافه شود
         ),
         BlocProvider(
-          create: (BuildContext context) {
-            final dio = DioClient().dio;
-
-            final remoteDataSource = AuthRemoteDataSource(
-              dio: dio,
-            );
-
-            final repository = UserLoginAuthRepositoryImpl(
-              remoteDataSource: remoteDataSource,
-            );
-
-            final loginUseCase = LoginUseCase(
-              repository: repository,
-            );
-
-            final checkLoginStatusUseCase = CheckLoginStatusUseCase(
-              repository: repository,
-            );
-
-            return UserLoginAuthBloc(
-              loginUseCase: loginUseCase,
-              checkLoginStatusUseCase: checkLoginStatusUseCase,
-            );
-          },
+          create: (_) => sl<UserLoginAuthBloc>(),
         ),
         BlocProvider(
           create: (_) => sl<AllCardsBloc>(),

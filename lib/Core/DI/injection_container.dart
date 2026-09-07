@@ -1,4 +1,10 @@
 import 'package:get_it/get_it.dart';
+import '../../Features/Account_Page/Data/Data_Sources/auth_remote_data_source.dart';
+import '../../Features/Account_Page/Data/Repositories/user_login_auth_repository_impl.dart';
+import '../../Features/Account_Page/Domain/Repositories/user_login_auth_repository.dart';
+import '../../Features/Account_Page/Domain/UseCases/check_login_status_use_case.dart';
+import '../../Features/Account_Page/Domain/UseCases/login_use_case.dart';
+import '../../Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import '../../Features/Fund_Transfer_Page/Data/DataSources/all_card_detail_remote_data_source.dart';
 import '../../Features/Fund_Transfer_Page/Data/DataSources/deposit_remote_data_source.dart';
 import '../../Features/Fund_Transfer_Page/Data/Repositories/all_card_detail_repository_impl.dart';
@@ -397,6 +403,9 @@ void setupDependencies() {
     ),
   );
 
+  // ==================== Deposit ====================
+
+
   sl.registerLazySingleton<DepositRemoteDataSource>(
         () => DepositRemoteDataSource(
       dio: sl<DioClient>().dio,
@@ -421,6 +430,45 @@ void setupDependencies() {
         () => UserAllAccountBloc(
       depositUseCase:
       sl<DepositUseCase>(),
+    ),
+  );
+
+  // ==================== User Login Auth ====================
+
+
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+        () => AuthRemoteDataSource(
+      dio: sl<DioClient>().dio,
+    ),
+  );
+
+  sl.registerLazySingleton<UserLoginAuthRepository>(
+        () => UserLoginAuthRepositoryImpl(
+      remoteDataSource:
+      sl<AuthRemoteDataSource>(),
+    ),
+  );
+
+  sl.registerLazySingleton<LoginUseCase>(
+        () => LoginUseCase(
+      repository:
+      sl<UserLoginAuthRepository>(),
+    ),
+  );
+
+  sl.registerLazySingleton<CheckLoginStatusUseCase>(
+        () => CheckLoginStatusUseCase(
+      repository:
+      sl<UserLoginAuthRepository>(),
+    ),
+  );
+
+  sl.registerFactory<UserLoginAuthBloc>(
+        () => UserLoginAuthBloc(
+      loginUseCase:
+      sl<LoginUseCase>(),
+      checkLoginStatusUseCase:
+      sl<CheckLoginStatusUseCase>(),
     ),
   );
 }
