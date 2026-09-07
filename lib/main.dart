@@ -30,9 +30,6 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/a
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/wallet_data_source.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/wallet_repository_impl.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/wallet_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
@@ -211,25 +208,7 @@ class _MyAppState extends State<MyApp> {
           create: (_) => sl<InternetPackageBloc>(),
         ),
         BlocProvider(
-          create: (BuildContext context) {
-            final dio = DioClient().dio;
-
-            final walletDataSource = WalletDataSource(
-              dio: dio,
-            );
-
-            final walletRepositoryImpl = WalletRepositoryImpl(
-              walletDataSource: walletDataSource,
-            );
-
-            final walletUseCase = WalletUseCase(
-              walletRepository: walletRepositoryImpl,
-            );
-
-            return WalletBloc(
-              walletUseCase: walletUseCase,
-            );
-          },
+          create: (_) => sl<WalletBloc>(),
         ),
         BlocProvider(
           create: (_) => sl<TransactionBloc>(),

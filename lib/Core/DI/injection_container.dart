@@ -4,26 +4,31 @@ import '../../Features/Home_Page/Data/Data_Sources/internet_packages_data_source
 import '../../Features/Home_Page/Data/Data_Sources/last_transaction_data_source.dart';
 import '../../Features/Home_Page/Data/Data_Sources/loan_page_data_source.dart';
 import '../../Features/Home_Page/Data/Data_Sources/transaction_data_source.dart';
+import '../../Features/Home_Page/Data/Data_Sources/wallet_data_source.dart';
 import '../../Features/Home_Page/Data/Repositories/all_card_repository_impl.dart';
 import '../../Features/Home_Page/Data/Repositories/internet_package_repository_impl.dart';
 import '../../Features/Home_Page/Data/Repositories/last_transaction_repository_impl.dart';
 import '../../Features/Home_Page/Data/Repositories/loan_page_repository_impl.dart';
 import '../../Features/Home_Page/Data/Repositories/transaction_repository_impl.dart';
+import '../../Features/Home_Page/Data/Repositories/wallet_repository_impl.dart';
 import '../../Features/Home_Page/Domain/Repositories/all_card_repository.dart';
 import '../../Features/Home_Page/Domain/Repositories/internet_packages_repository.dart';
 import '../../Features/Home_Page/Domain/Repositories/last_transaction_repository.dart';
 import '../../Features/Home_Page/Domain/Repositories/loan_page_repository.dart';
 import '../../Features/Home_Page/Domain/Repositories/transaction_repository.dart';
+import '../../Features/Home_Page/Domain/Repositories/wallet_repository.dart';
 import '../../Features/Home_Page/Domain/UseCases/all_cards_use_case.dart';
 import '../../Features/Home_Page/Domain/UseCases/internet_package_use_case.dart';
 import '../../Features/Home_Page/Domain/UseCases/last_transaction_use_case.dart';
 import '../../Features/Home_Page/Domain/UseCases/loan_page_use_case.dart';
 import '../../Features/Home_Page/Domain/UseCases/transaction_use_case.dart';
+import '../../Features/Home_Page/Domain/UseCases/wallet_use_case.dart';
 import '../../Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import '../../Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import '../../Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_bloc.dart';
 import '../../Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_bloc.dart';
 import '../../Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
+import '../../Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
 import '../../Features/OTP_Code_Page/Data/DataSources/otp_code_check_remote_data_source.dart';
 import '../../Features/OTP_Code_Page/Data/Repositories/otp_code_check_repository_impl.dart';
@@ -321,6 +326,35 @@ void setupDependencies() {
         () => TransactionBloc(
       transactionUseCase:
       sl<TransactionUseCase>(),
+    ),
+  );
+
+  // ==================== Wallet ====================
+
+  sl.registerLazySingleton<WalletDataSource>(
+        () => WalletDataSource(
+      dio: sl<DioClient>().dio,
+    ),
+  );
+
+  sl.registerLazySingleton<WalletRepository>(
+        () => WalletRepositoryImpl(
+      walletDataSource:
+      sl<WalletDataSource>(),
+    ),
+  );
+
+  sl.registerLazySingleton<WalletUseCase>(
+        () => WalletUseCase(
+      walletRepository:
+      sl<WalletRepository>(),
+    ),
+  );
+
+  sl.registerFactory<WalletBloc>(
+        () => WalletBloc(
+      walletUseCase:
+      sl<WalletUseCase>(),
     ),
   );
 }
