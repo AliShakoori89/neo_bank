@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/wallet_entity.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-
-import '../../../../Data/Model/wallet_model.dart';
 import '../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../../Bloc/Wallet_Bloc/wallet_state.dart';
 
@@ -29,7 +28,7 @@ class WalletTypesList extends StatelessWidget {
           return const Center(child: Text('کیف پولی در دسترس نیست!'));
         }
 
-        final List<WalletModel> displayWallets = List.from(state.walletDetails);
+        final List<WalletEntity> displayWallets = List.from(state.walletDetails);
 
         return ListView.builder(
           shrinkWrap: true,
