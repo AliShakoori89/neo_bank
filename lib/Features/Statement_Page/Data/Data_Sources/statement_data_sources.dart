@@ -21,9 +21,6 @@ class StatementDataSources {
       "toDate": "2026-02-11T05:39:52.955Z"
     };
 
-    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    print(body);
-
     final response = await dio.post(
       '/api/Statements/get-all',
       data: body,
@@ -50,9 +47,6 @@ class StatementDataSources {
       "fromDate": startDate,
       "toDate": endDate
     };
-
-    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    print(body);
 
     final response = await dio.post(
       '/api/Statements/get-all',
