@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import '../../Features/Profile_Page/Data/Data_Sources/citizen_ekyc_status_remote_data_source.dart';
+import '../../Features/Profile_Page/Data/Repositories/citizen_ekyc_status_repository_impl.dart';
+import '../../Features/Profile_Page/Domain/Repositories/citizen_kyc_status_repository.dart';
+import '../../Features/Profile_Page/Domain/UseCases/citizen_ekyc_status_use_case.dart';
+import '../../Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_bloc.dart';
 import '../../Features/Statement_Page/Data/Data_Sources/statement_data_sources.dart';
 import '../../Features/Statement_Page/Data/Repositories/statement_repository_impl.dart';
 import '../../Features/Statement_Page/Domain/Repositories/statement_repository.dart';
@@ -10,6 +15,10 @@ import '../Network/dio_client.dart';
 final sl = GetIt.instance;
 
 void setupDependencies() {
+
+  // --------------------
+  // Statement
+  // --------------------
 
   sl.registerLazySingleton<DioClient>(
         () => DioClient(),
@@ -46,6 +55,35 @@ void setupDependencies() {
         () => StatementBloc(
       sl<FetchStatementFilteredUseCase>(),
       sl<FetchStatementUseCase>(),
+    ),
+  );
+
+  // --------------------
+  // Profile - Citizen EKYC Status
+  // --------------------
+
+  sl.registerLazySingleton<CitizenEkycStatusRemoteDataSource>(
+        () => CitizenEkycStatusRemoteDataSource(
+      dio: sl<DioClient>().dio,
+    ),
+  );
+
+  sl.registerLazySingleton<GetCitizenEKYCStatusRepository>(
+        () => CitizenEkycStatusRepositoryImpl(
+      citizenEkycStatusRemoteDataSource:
+      sl<CitizenEkycStatusRemoteDataSource>(),
+    ),
+  );
+
+  sl.registerLazySingleton<CitizenEkycStatusUseCase>(
+        () => CitizenEkycStatusUseCase(
+      repository: sl<GetCitizenEKYCStatusRepository>(),
+    ),
+  );
+
+  sl.registerFactory<CitizenEkycStatusBloc>(
+        () => CitizenEkycStatusBloc(
+      citizenEkycStatusUseCase: sl<CitizenEkycStatusUseCase>(),
     ),
   );
 }

@@ -62,10 +62,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/otp_co
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/request_otp_code_again_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Data_Sources/citizen_ekyc_status_remote_data_source.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Repositories/citizen_ekyc_status_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repositories/profile_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/UseCases/citizen_ekyc_status_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Domain/Repository/local_pass_repository.dart';
@@ -367,25 +364,7 @@ class _MyAppState extends State<MyApp> {
           },
         ),
         BlocProvider(
-          create: (BuildContext context) {
-            final dio = DioClient().dio;
-
-            final citizenEkycStatusRemoteDataSource = CitizenEkycStatusRemoteDataSource(
-              dio: dio,
-            );
-
-            final repository = CitizenEkycStatusRepositoryImpl(
-              citizenEkycStatusRemoteDataSource: citizenEkycStatusRemoteDataSource,
-            );
-
-            final citizenEkycStatusUseCase = CitizenEkycStatusUseCase(
-              repository: repository,
-            );
-
-            return CitizenEkycStatusBloc(
-              citizenEkycStatusUseCase: citizenEkycStatusUseCase,
-            );
-          },
+            create: (_) => sl<CitizenEkycStatusBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) =>
