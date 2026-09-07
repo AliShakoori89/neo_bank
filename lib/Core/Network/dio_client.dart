@@ -1,45 +1,45 @@
 import 'package:dio/dio.dart';
-import '../Services/token_storage_service.dart';
+
 import '../Constants/api_key.dart';
+import '../Services/token_storage_service.dart';
 import 'error_interceptor.dart';
 
 class DioClient {
-  static final DioClient _instance = DioClient._internal();
-  late final Dio dio;
+  final Dio dio;
 
-  factory DioClient() => _instance;
-
-  DioClient._internal() {
-    dio = Dio(
-      BaseOptions(
-        baseUrl: APIKey.baseUrl,
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      ),
-    );
-
-    // Interceptor for adding Authorization token to requests
+  DioClient() : dio = Dio(
+    BaseOptions(
+      baseUrl: APIKey.baseUrl,
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    ),
+  ) {
+    // Interceptor for adding Authorization token
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           final token = await LocalStorageService.read('access_token');
-          
+
           if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = token;
+
             print('--- Network Request ---');
             print('Path: ${options.path}');
-            print('Token: ${token.substring(0, 10)}...'); // فقط اولش رو پرینت میکنیم برای امنیت
+            print('Token: ${token.substring(0, 10)}...');
           }
+
           return handler.next(options);
         },
       ),
     );
 
-    // Interceptor for centralized error handling
-    dio.interceptors.add(ErrorInterceptor());
+    // Centralized error handling
+    dio.interceptors.add(
+      ErrorInterceptor(),
+    );
   }
 }

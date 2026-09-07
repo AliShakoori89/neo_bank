@@ -73,6 +73,7 @@ import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Loca
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'Core/DI/injection_container.dart';
 import 'Core/Network/dio_client.dart';
 import 'Core/Routes/app_routes.dart';
 import 'Features/Account_Page/Data/Data_Sources/auth_remote_data_source.dart';
@@ -85,10 +86,6 @@ import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigatio
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_bloc.dart';
 import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_event.dart';
-import 'Features/Statement_Page/Data/Data_Sources/statement_data_sources.dart';
-import 'Features/Statement_Page/Data/Repositories/statement_repository_impl.dart';
-import 'Features/Statement_Page/Domain/UseCases/fetch_statement_filtered_use_case.dart';
-import 'Features/Statement_Page/Domain/UseCases/fetch_statement_use_case.dart';
 
 late List<CameraDescription> cameras;
 
@@ -104,6 +101,8 @@ void main() async {
 
   final prefs = await SharedPreferences.getInstance();
   final isDark = prefs.getBool('isDarkTheme') ?? false;
+
+  setupDependencies();
 
   runApp(
     // DevicePreview(
@@ -254,30 +253,7 @@ class _MyAppState extends State<MyApp> {
           create: (BuildContext context) => ProfileBloc(GetProfileRepository()),
         ),
         BlocProvider(
-          create: (BuildContext context) {
-            final dio = DioClient().dio;
-
-            final statementDataSources = StatementDataSources(
-              dio: dio,
-            );
-
-            final statementRepositoryImpl = StatementRepositoryImpl(
-              statementDataSources: statementDataSources,
-            );
-
-            final fetchStatementUseCase = FetchStatementUseCase(
-              repository: statementRepositoryImpl,
-            );
-
-            final fetchStatementFilteredUseCase = FetchStatementFilteredUseCase(
-              repository: statementRepositoryImpl,
-            );
-
-            return StatementBloc(
-              fetchStatementFilteredUseCase,
-              fetchStatementUseCase,
-            );
-          },
+            create: (_) => sl<StatementBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) {
