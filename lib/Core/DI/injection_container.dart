@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import '../../Features/Home_Page/Data/Data_Sources/all_card_data_source.dart';
+import '../../Features/Home_Page/Data/Repositories/all_card_repository_impl.dart';
+import '../../Features/Home_Page/Domain/Repositories/all_card_repository.dart';
+import '../../Features/Home_Page/Domain/UseCases/all_cards_use_case.dart';
+import '../../Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import '../../Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
 import '../../Features/OTP_Code_Page/Data/DataSources/otp_code_check_remote_data_source.dart';
 import '../../Features/OTP_Code_Page/Data/Repositories/otp_code_check_repository_impl.dart';
@@ -153,6 +158,34 @@ void setupDependencies() {
         () => RequestOtpAgainBloc(
       requestOtpCodeAgainUseCase:
       sl<RequestOtpCodeAgainUseCase>(),
+    ),
+  );
+
+  // --------------------
+// Home - All Cards
+// --------------------
+
+  sl.registerLazySingleton<AllCardDataSource>(
+        () => AllCardDataSource(
+      dio: sl<DioClient>().dio,
+    ),
+  );
+
+  sl.registerLazySingleton<AllCardRepository>(
+        () => AllCardRepositoryImpl(
+      allCardDataSources: sl<AllCardDataSource>(),
+    ),
+  );
+
+  sl.registerLazySingleton<AllCardsUseCase>(
+        () => AllCardsUseCase(
+      allCardRepository: sl<AllCardRepository>(),
+    ),
+  );
+
+  sl.registerFactory<AllCardsBloc>(
+        () => AllCardsBloc(
+      allCardsUseCase: sl<AllCardsUseCase>(),
     ),
   );
 }
