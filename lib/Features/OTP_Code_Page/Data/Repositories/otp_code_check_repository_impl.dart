@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/otp_code_check_remote_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Entities/otp_request_result_entity.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repositories/otp_code_check_repository.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../../../Core/Services/token_storage_service.dart';
-import '../Models/otp_request_result_model.dart';
 
 class OtpCodeCheckRepositoryImpl implements OtpCodeCheckRepository{
 
@@ -12,7 +12,7 @@ class OtpCodeCheckRepositoryImpl implements OtpCodeCheckRepository{
   OtpCodeCheckRepositoryImpl({required this.otpCodeCheckRemoteDataSource});
 
   @override
-  Future<OtpRequestResultModel> otpLogin(
+  Future<OtpRequestResultEntity> otpLogin(
       String otpCode,
       String secretKey,
       String deviceID,
@@ -31,7 +31,7 @@ class OtpCodeCheckRepositoryImpl implements OtpCodeCheckRepository{
         await LocalStorageService.save('user_name', data.data!.displayName!);
         await LocalStorageService.save('mobile_number', data.data!.mobileNumber!);
 
-        return OtpRequestResultModel(
+        return OtpRequestResultEntity(
           message: '',
           success: true,
         );

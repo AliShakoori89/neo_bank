@@ -1,10 +1,10 @@
-class OtpRequestAgainResultModel {
+class OtpRequestAgainResultEntity {
   final bool success;
   final String message;
   final String secretKey;
   final String deviceId;
 
-  OtpRequestAgainResultModel({
+  OtpRequestAgainResultEntity({
     required this.success,
     required this.message,
     required this.secretKey,

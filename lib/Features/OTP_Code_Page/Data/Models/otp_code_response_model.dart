@@ -1,4 +1,6 @@
 
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Entities/otp_code_response_entity.dart';
+
 import '../../../../Core/Network/Models/api_error_model.dart';
 
 class OtpCodeResponseModel {
@@ -42,6 +44,15 @@ class OtpCodeResponseDataModel {
       expireAt: json['expireAt'] != null
           ? DateTime.parse(json['expireAt'])
           : null,
+    );
+  }
+
+  OtpCodeResponseEntity toEntity(){
+    return OtpCodeResponseEntity(
+      token: token,
+      mobileNumber: mobileNumber,
+      expireAt: expireAt,
+      displayName: displayName
     );
   }
 }

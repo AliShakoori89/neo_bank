@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Models/otp_request_again_result_model.dart';
+import '../Entities/otp_request_again_result_entity.dart';
 
 abstract class RequestOtpCodeAgainRepository {
 
 
-  Future<OtpRequestAgainResultModel> requestOTPAgain(
+  Future<OtpRequestAgainResultEntity> requestOTPAgain(
     String nationalNumber,
     String mobileNumber,
   );

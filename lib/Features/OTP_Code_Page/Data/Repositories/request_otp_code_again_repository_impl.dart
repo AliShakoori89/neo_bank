@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Entities/otp_request_again_result_entity.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repositories/request_otp_code_again_repository.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../../../Core/Services/token_storage_service.dart';
-import '../Models/otp_request_again_result_model.dart';
 
 class RequestOtpCodeAgainRepositoryImpl implements RequestOtpCodeAgainRepository{
 
@@ -14,7 +14,7 @@ class RequestOtpCodeAgainRepositoryImpl implements RequestOtpCodeAgainRepository
   });
 
   @override
-  Future<OtpRequestAgainResultModel> requestOTPAgain(String nationalNumber,
+  Future<OtpRequestAgainResultEntity> requestOTPAgain(String nationalNumber,
       String mobileNumber,) async {
     try {
 
@@ -30,7 +30,7 @@ class RequestOtpCodeAgainRepositoryImpl implements RequestOtpCodeAgainRepository
           data.data!.expireTime!.toIso8601String(),
         );
 
-        return OtpRequestAgainResultModel(
+        return OtpRequestAgainResultEntity(
           success: true,
           message: '',
           secretKey: data.data!.secretKey!,
