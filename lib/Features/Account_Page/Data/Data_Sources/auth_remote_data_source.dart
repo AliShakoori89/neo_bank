@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/device_info_service.dart';
-import '../Models/user_login_auth_success_model.dart';
+import '../Models/user_login_response_model.dart';
 
 class AuthRemoteDataSource {
   final Dio dio;
@@ -9,7 +9,7 @@ class AuthRemoteDataSource {
     required this.dio,
   });
 
-  Future<UserLoginAuthModel> userLogin({
+  Future<UserLoginResponseModel> userLogin({
     required String nationalNumber,
     required String mobileNumber,
   }) async {
@@ -31,6 +31,6 @@ class AuthRemoteDataSource {
       data: body,
     );
 
-    return UserLoginAuthModel.fromJson(response.data);
+    return UserLoginResponseModel.fromJson(response.data);
   }
 }

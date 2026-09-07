@@ -1,15 +1,16 @@
 import '../../../../Core/Network/Models/api_error_model.dart';
+import '../../Domain/Entities/ali_card_pan_entity.dart';
 
-class AllCardsPansModel {
+class AllCardPanModel {
   final List<AllCardsPansDataModel>? data;
   final bool? success;
   final String? traceId;
   final ApiErrorModel? error;
 
-  AllCardsPansModel({this.data, this.success, this.traceId, this.error});
+  AllCardPanModel({this.data, this.success, this.traceId, this.error});
 
-  factory AllCardsPansModel.fromJson(Map<String, dynamic> json) {
-    return AllCardsPansModel(
+  factory AllCardPanModel.fromJson(Map<String, dynamic> json) {
+    return AllCardPanModel(
       data: json['data'] != null
           ? List<AllCardsPansDataModel>.from(
               json['data'].map((x) => AllCardsPansDataModel.fromJson(x)),
@@ -43,6 +44,15 @@ class AllCardsPansDataModel {
           : null,
       pan: json['pan'] as String?,
       availableBalance: json['availableBalance'] as int?,
+    );
+  }
+
+  AliCardPanEntity toEntity(){
+    return AliCardPanEntity(
+      pan: pan,
+      expireDate: expireDate,
+      depositNumber: depositNumber,
+      availableBalance: availableBalance
     );
   }
 }

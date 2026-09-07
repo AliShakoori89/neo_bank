@@ -1,3 +1,5 @@
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Entities/deposit_entity.dart';
+
 import '../../../../Core/Network/Models/api_error_model.dart';
 
 class DepositsModel {
@@ -46,6 +48,16 @@ class DepositsDataModel {
       expireDate: json['expireDate'] != null
           ? DateTime.parse(json['expireDate'])
           : null,
+    );
+  }
+
+  DepositEntity toEntity(){
+    return DepositEntity(
+      availableBalance: availableBalance,
+      depositNumber: depositNumber,
+      expireDate: expireDate,
+      depositTitle: depositTitle,
+      ibanNumber: ibanNumber
     );
   }
 }

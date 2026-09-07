@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Entities/deposit_entity.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repositories/deposits_repository.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../DataSources/deposit_remote_data_source.dart';
-import '../Models/deposits_model.dart';
 
 class DepositsRepositoryImpl implements DepositsRepository{
 
@@ -12,12 +12,14 @@ class DepositsRepositoryImpl implements DepositsRepository{
     required this.depositRemoteDataSource});
 
   @override
-  Future<DepositsModel> getUserAllAccount() async{
+  Future<List<DepositEntity>> getUserAllAccount() async{
     try {
       final data = await depositRemoteDataSource.getUserAllAccount();
 
       if (data.success == true) {
-        return data;
+        return data.data!
+            .map((card) => card.toEntity())
+            .toList();
       } else {
         throw AppException('Failed to fetch deposits');
       }

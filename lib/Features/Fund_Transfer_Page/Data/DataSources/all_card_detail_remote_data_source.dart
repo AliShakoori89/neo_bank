@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
-import '../Models/all_cards_pans_model.dart';
+import '../Models/all_card_pan_model.dart';
 
 class AllCardDetailRemoteDataSource {
   final Dio dio;
 
   AllCardDetailRemoteDataSource({required this.dio});
 
-  Future<AllCardsPansModel> getAllCardsPan() async{
+  Future<AllCardPanModel> getAllCardsPan() async{
 
     final response = await dio.post("/api/cards/get-all");
 
-    return AllCardsPansModel.fromJson(response.data);
+    return AllCardPanModel.fromJson(response.data);
   }
 }

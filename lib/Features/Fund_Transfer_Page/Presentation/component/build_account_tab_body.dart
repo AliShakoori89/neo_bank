@@ -33,9 +33,9 @@ Widget buildAccountTabBody(BuildContext context) {
 
       return state.allAccount != null
           ? ListView.builder(
-              itemCount: state.allAccount!.data?.length ?? 0,
+              itemCount: state.allAccount!.length,
               itemBuilder: (context, index) {
-                final item = state.allAccount!.data![index];
+                final item = state.allAccount![index];
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(

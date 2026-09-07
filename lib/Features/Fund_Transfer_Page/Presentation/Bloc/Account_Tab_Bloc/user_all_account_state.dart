@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/Models/deposits_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Entities/deposit_entity.dart';
 
 enum UserAllAccountStatus { initial, success, error, loading, tokenExpired }
 
@@ -15,18 +15,18 @@ class UserAllAccountState extends Equatable {
 
   static UserAllAccountState initial() => UserAllAccountState(
     status: UserAllAccountStatus.initial,
-    allAccount: DepositsModel(),
+    allAccount: <DepositEntity>[],
   );
 
   final UserAllAccountStatus status;
-  final DepositsModel? allAccount;
+  final List<DepositEntity>? allAccount;
 
   @override
   List<Object?> get props => [status, allAccount];
 
   UserAllAccountState copyWith({
     UserAllAccountStatus? status,
-    DepositsModel? allAccount,
+    List<DepositEntity>? allAccount,
   }) {
     return UserAllAccountState(
       status: status ?? this.status,

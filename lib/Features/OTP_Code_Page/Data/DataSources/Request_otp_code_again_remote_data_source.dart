@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import '../../../../Core/Services/device_info_service.dart';
-import '../../../Account_Page/Data/Models/user_login_auth_success_model.dart';
+import '../../../Account_Page/Data/Models/user_login_response_model.dart';
 
 class RequestOtpCodeAgainRemoteDataSource {
   final Dio dio;
 
   RequestOtpCodeAgainRemoteDataSource({required this.dio});
 
-  Future<UserLoginAuthModel> requestOTPAgain({
+  Future<UserLoginResponseModel> requestOTPAgain({
     required String nationalNumber,
     required String mobileNumber,}) async {
 
@@ -28,6 +28,6 @@ class RequestOtpCodeAgainRemoteDataSource {
       data: body,
     );
 
-    return UserLoginAuthModel.fromJson(response.data);
+    return UserLoginResponseModel.fromJson(response.data);
   }
 }

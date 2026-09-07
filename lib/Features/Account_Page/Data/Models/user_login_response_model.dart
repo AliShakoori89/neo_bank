@@ -1,17 +1,17 @@
 import '../../../../Core/Network/Models/api_error_model.dart';
 
-class UserLoginAuthModel {
-  final UserLoginAuthDataModel? data;
+class UserLoginResponseModel {
+  final UserLoginResponseDataModel? data;
   final bool? success;
   final String? traceId;
   final ApiErrorModel? error;
 
-  UserLoginAuthModel({this.data, this.success, this.traceId, this.error});
+  UserLoginResponseModel({this.data, this.success, this.traceId, this.error});
 
-  factory UserLoginAuthModel.fromJson(Map<String, dynamic> json) {
-    return UserLoginAuthModel(
+  factory UserLoginResponseModel.fromJson(Map<String, dynamic> json) {
+    return UserLoginResponseModel(
       data: json['data'] != null
-          ? UserLoginAuthDataModel.fromJson(json['data'])
+          ? UserLoginResponseDataModel.fromJson(json['data'])
           : null,
       success: json['success'] as bool?,
       traceId: json['traceId'] as String?,
@@ -22,21 +22,21 @@ class UserLoginAuthModel {
   }
 }
 
-class UserLoginAuthDataModel {
+class UserLoginResponseDataModel {
   final String? code;
   final String? secretKey;
   final String? deviceId;
   final DateTime? expireTime;
 
-  UserLoginAuthDataModel({
+  UserLoginResponseDataModel({
     this.code,
     this.secretKey,
     this.deviceId,
     this.expireTime,
   });
 
-  factory UserLoginAuthDataModel.fromJson(Map<String, dynamic> json) {
-    return UserLoginAuthDataModel(
+  factory UserLoginResponseDataModel.fromJson(Map<String, dynamic> json) {
+    return UserLoginResponseDataModel(
       code: json['code'] as String?,
       secretKey: json['secretKey'] as String,
       deviceId: json['deviceId'] as String,
