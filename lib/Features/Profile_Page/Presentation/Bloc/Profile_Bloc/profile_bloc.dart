@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Model/profile_result_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repositories/profile_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_state.dart';
+import '../../../Domain/Entities/profile_result_entity.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   GetProfileRepository getProfileRepository;
@@ -19,7 +19,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       emit(state.copyWith(status: ProfileStatus.loading));
 
-      final ProfileResultModel result = await getProfileRepository
+      final ProfileResultEntity result = await getProfileRepository
           .getProfileField();
 
       emit(

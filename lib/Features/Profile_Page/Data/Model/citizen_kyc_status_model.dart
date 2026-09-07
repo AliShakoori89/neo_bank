@@ -1,3 +1,5 @@
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Entities/citizen_ekyc_status_entity.dart';
+
 import '../../../../Core/Network/Models/api_error_model.dart';
 
 class CitizenEkycStatusModel {
@@ -57,5 +59,12 @@ class KycData {
       'hasApprovedKYC': hasApprovedKYC,
       'state': state,
     };
+  }
+
+  CitizenEkycStatusEntity toEntity(){
+    return CitizenEkycStatusEntity(
+      state: state,
+      hasApprovedKYC: hasApprovedKYC
+    );
   }
 }

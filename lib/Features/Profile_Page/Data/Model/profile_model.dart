@@ -1,3 +1,4 @@
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Entities/profile_entity.dart';
 import '../../../../Core/Network/Models/api_error_model.dart';
 
 class ProfileModel {
@@ -95,6 +96,33 @@ class ProfileDataModel {
       title: json['title'] as String?,
     );
   }
+
+  ProfileEntity toEntity(){
+    return ProfileEntity(
+      title: title,
+      ssn: ssn,
+      personalityType: personalityType,
+      name: name,
+      mobile: mobile,
+      latinLastName: latinLastName,
+      latinFirstName: latinFirstName,
+      lastName: lastName,
+      group: group,
+      gender: gender,
+      firstName: firstName,
+      fatherName: fatherName,
+      fatherLatinName: fatherLatinName,
+      code: code,
+      cif: cif,
+      certificateSeries: certificateSeries,
+      certificateSerial: certificateSerial,
+      birthLocationCode: birthLocationCode,
+      birthLocation: birthLocation,
+      birthDate: birthDate,
+      addresses: addresses?.map((statement) => statement.toEntity())
+          .toList(),
+    );
+  }
 }
 
 class ProfileAddressModel {
@@ -116,6 +144,15 @@ class ProfileAddressModel {
       phoneNumber: json['phoneNumber'] as String?,
       postalAddress: json['postalAddress'] as String?,
       postalCode: json['postalCode'] as String?,
+    );
+  }
+
+  ProfileAddressEntity toEntity(){
+    return ProfileAddressEntity(
+      postalCode: postalCode,
+      postalAddress: postalAddress,
+      phoneNumber: phoneNumber,
+      addressType: addressType
     );
   }
 }
