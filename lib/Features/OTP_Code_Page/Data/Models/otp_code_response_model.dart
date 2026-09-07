@@ -45,19 +45,3 @@ class OtpCodeResponseDataModel {
     );
   }
 }
-
-class OtpCodeResponseErrorModel {
-  final int? errorCode;
-  final String? errorMessage;
-  final String? owner;
-
-  OtpCodeResponseErrorModel({this.errorCode, this.errorMessage, this.owner});
-
-  factory OtpCodeResponseErrorModel.fromJson(Map<String, dynamic> json) {
-    return OtpCodeResponseErrorModel(
-      errorCode: json['errorCode'] as int?,
-      errorMessage: json['errorMessage'] as String?,
-      owner: json['owner'] as String?,
-    );
-  }
-}
