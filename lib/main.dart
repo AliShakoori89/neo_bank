@@ -30,13 +30,10 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/a
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/loan_page_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/transaction_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/wallet_data_source.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/loan_page_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/transaction_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/wallet_repository_impl.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/loan_page_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/transaction_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/wallet_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
@@ -290,25 +287,7 @@ class _MyAppState extends State<MyApp> {
               HasApprovedEkycBloc(HasApprovedEkycRepository()),
         ),
         BlocProvider(
-          create: (BuildContext context) {
-            final dio = DioClient().dio;
-
-            final loanPageDataSource = LoanPageDataSource(
-              dio: dio,
-            );
-
-            final loanPageRepositoryImpl = LoanPageRepositoryImpl(
-              loanPageDataSource: loanPageDataSource,
-            );
-
-            final loanPageUseCase = LoanPageUseCase(
-              loanPageRepository: loanPageRepositoryImpl,
-            );
-
-            return LoanPageBloc(
-              loanPageUseCase: loanPageUseCase,
-            );
-          },
+          create: (_) => sl<LoanPageBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) =>
