@@ -1,4 +1,5 @@
 import '../../../../Core/Network/Models/api_error_model.dart';
+import '../../Domain/Entities/statement_entity.dart';
 
 class StatementResponseModel {
   final StatementDataModel? data;
@@ -42,6 +43,15 @@ class StatementDataModel {
           .toList(),
     );
   }
+
+  StatementEntity toEntity() {
+    return StatementEntity(
+      hasMoreItem: hasMoreItem,
+      statements: statements
+          ?.map((statement) => statement.toEntity())
+          .toList(),
+    );
+  }
 }
 
 class StatementModel {
@@ -68,6 +78,16 @@ class StatementModel {
       actionDescription: json['actionDescription'],
       description: json['description'],
       referenceNumber: json['referenceNumber'],
+    );
+  }
+
+  StatementItemEntity toEntity() {
+    return StatementItemEntity(
+      date: date,
+      transferAmount: transferAmount,
+      actionDescription: actionDescription,
+      description: description,
+      referenceNumber: referenceNumber,
     );
   }
 }

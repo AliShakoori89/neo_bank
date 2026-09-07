@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/UseCases/fetch_statement_filtered_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
+import '../../../Domain/Entities/statement_entity.dart';
 import '../../../Domain/UseCases/fetch_statement_use_case.dart';
 
 class StatementBloc extends Bloc<StatementEvent, StatementState> {
@@ -34,14 +34,15 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
         offset: 0,
       );
 
-      final allList = List<StatementModel>.from(result.data!.statements ?? [])
-        ..sort((a, b) => b.date!.compareTo(a.date!));
+      final allList = List<StatementItemEntity>.from(
+        result.statements ?? [],
+      )..sort((a, b) => b.date!.compareTo(a.date!));
 
       emit(
         state.copyWith(
           status: StatementStateStatus.success,
           allStatement: allList,
-          hasMore: result.data?.hasMoreItem ?? false,
+          hasMore: result.hasMoreItem ?? false,
           isLoadingMore: false,
         ),
       );
@@ -69,14 +70,15 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
         statementActionType: event.statementActionType,
       );
 
-      final allList = List<StatementModel>.from(result.data!.statements ?? [])
-        ..sort((a, b) => b.date!.compareTo(a.date!));
+      final allList = List<StatementItemEntity>.from(
+        result.statements ?? [],
+      )..sort((a, b) => b.date!.compareTo(a.date!));
 
       emit(
         state.copyWith(
           status: StatementStateStatus.success,
           filteredStatement: allList,
-          hasMore: result.data?.hasMoreItem ?? false,
+          hasMore: result.hasMoreItem ?? false,
           isLoadingMore: false,
         ),
       );
@@ -99,12 +101,12 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
         offset: state.allStatement.length,
       );
 
-      final newList = res.data?.statements ?? [];
+      final newList = res.statements ?? [];
 
       emit(
         state.copyWith(
           allStatement: [...state.allStatement, ...newList],
-          hasMore: res.data?.hasMoreItem ?? false,
+          hasMore: res.hasMoreItem ?? false,
           isLoadingMore: false,
         ),
       );
@@ -130,12 +132,12 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
           statementActionType: event.statementActionType
       );
 
-      final newList = res.data?.statements ?? [];
+      final newList = res.statements ?? [];
 
       emit(
         state.copyWith(
           filteredStatement: [...state.filteredStatement, ...newList],
-          hasMore: res.data?.hasMoreItem ?? false,
+          hasMore: res.hasMoreItem ?? false,
           isLoadingMore: false,
         ),
       );

@@ -1,13 +1,13 @@
 import 'dart:async';
-import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
+import '../Entities/statement_entity.dart';
 
 abstract class StatementRepository {
-  Future<StatementResponseModel> getLastestStatement({
+  Future<StatementEntity> getLastestStatement({
     required String depositNumber,
     required int offset,
   });
 
-  Future<StatementResponseModel> getFilterStatement({
+  Future<StatementEntity> getFilterStatement({
     required String depositNumber,
     required int offset,
     int? statementActionType,

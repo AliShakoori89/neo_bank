@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Model/statement_model.dart';
+
+import '../../../Domain/Entities/statement_entity.dart';
 
 enum StatementStateStatus { initial, success, error, loading }
 
@@ -22,8 +23,8 @@ class StatementState extends Equatable {
           isLoadingMore: false);
 
   final StatementStateStatus status;
-  final List<StatementModel> allStatement;
-  final List<StatementModel> filteredStatement;
+  final List<StatementItemEntity> allStatement;
+  final List<StatementItemEntity> filteredStatement;
   final bool hasMore;
   final bool isLoadingMore;
 
@@ -32,8 +33,8 @@ class StatementState extends Equatable {
 
   StatementState copyWith({
     StatementStateStatus? status,
-    List<StatementModel>? allStatement,
-    List<StatementModel>? filteredStatement,
+    List<StatementItemEntity>? allStatement,
+    List<StatementItemEntity>? filteredStatement,
     bool? hasMore,
     bool? isLoadingMore,
   }) {

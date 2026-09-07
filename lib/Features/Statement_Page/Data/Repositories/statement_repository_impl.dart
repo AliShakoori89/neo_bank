@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Data_Sources/statement_data_sources.dart';
 import '../../../../Core/Network/app_exception.dart';
+import '../../Domain/Entities/statement_entity.dart';
 import '../../Domain/Repositories/statement_repository.dart';
-import '../Model/statement_model.dart';
 
 class StatementRepositoryImpl implements StatementRepository{
 
@@ -11,7 +11,7 @@ class StatementRepositoryImpl implements StatementRepository{
   StatementRepositoryImpl({required this.statementDataSources});
 
   @override
-  Future<StatementResponseModel> getLastestStatement(
+  Future<StatementEntity> getLastestStatement(
   {
     required String depositNumber,
     required int offset}
@@ -23,7 +23,9 @@ class StatementRepositoryImpl implements StatementRepository{
         offset: offset
       );
 
-      if (data.success == true) { return data; }
+      if (data.success == true && data.data != null) {
+        return data.data!.toEntity();
+      }
 
       throw AppException('خطا در دریافت صورت‌حساب');
     } on DioException catch (e) {
@@ -36,7 +38,7 @@ class StatementRepositoryImpl implements StatementRepository{
   }
 
   @override
-  Future<StatementResponseModel> getFilterStatement({
+  Future<StatementEntity> getFilterStatement({
     required String depositNumber,
     required int offset,
     int? statementActionType,
@@ -52,8 +54,8 @@ class StatementRepositoryImpl implements StatementRepository{
         endDate: endDate,
       );
 
-      if (data.success == true) {
-        return data;
+      if (data.success == true && data.data != null) {
+        return data.data!.toEntity();
       }
 
       throw AppException('خطا در دریافت صورت‌حساب فیلتر شده');

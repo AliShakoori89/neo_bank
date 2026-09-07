@@ -1,4 +1,4 @@
-import '../../Data/Model/statement_model.dart';
+import '../Entities/statement_entity.dart';
 import '../Repositories/statement_repository.dart';
 
 class FetchStatementFilteredUseCase {
@@ -6,7 +6,7 @@ class FetchStatementFilteredUseCase {
 
   FetchStatementFilteredUseCase({required this.repository});
 
-  Future<StatementResponseModel> getFilteredStatement({
+  Future<StatementEntity> getFilteredStatement({
     required String depositNumber,
     required int offset,
     int? statementActionType,

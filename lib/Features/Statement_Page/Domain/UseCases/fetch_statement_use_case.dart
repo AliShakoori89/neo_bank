@@ -1,4 +1,4 @@
-import '../../Data/Model/statement_model.dart';
+import '../Entities/statement_entity.dart';
 import '../Repositories/statement_repository.dart';
 
 class FetchStatementUseCase {
@@ -6,7 +6,7 @@ class FetchStatementUseCase {
 
   FetchStatementUseCase({required this.repository});
 
-  Future<StatementResponseModel> getLastestStatement({
+  Future<StatementEntity> getLastestStatement({
     required String depositNumber,
     required int offset,
   }){
