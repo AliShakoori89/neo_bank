@@ -30,17 +30,14 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/a
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/internet_packages_data_sources.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/last_transaction_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/loan_page_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/transaction_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/wallet_data_source.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/internet_package_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/last_transaction_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/loan_page_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/transaction_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/wallet_repository_impl.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/internet_package_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/last_transaction_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/loan_page_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/transaction_use_case.dart';
@@ -238,25 +235,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => BalanceVisibilityCubit()),
         BlocProvider(create: (BuildContext context) => RefreshCountBloc()),
         BlocProvider(
-          create: (BuildContext context) {
-            final dio = DioClient().dio;
-
-            final internetPackagesDataSources = InternetPackagesDataSources(
-              dio: dio,
-            );
-
-            final repository = InternetPackageRepositoryImpl(
-              internetPackagesDataSources: internetPackagesDataSources,
-            );
-
-            final internetPackageUseCase = InternetPackageUseCase(
-              repository: repository,
-            );
-
-            return InternetPackageBloc(
-              internetPackageUseCase: internetPackageUseCase,
-            );
-          },
+          create: (_) => sl<InternetPackageBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) {
