@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/card_list_model.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_balance.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_number_and_date.dart';
 
+import '../../../../Domain/Entities/card_list_entity.dart';
+
 /// 🔹 کارت بانکی
-Widget buildBankCard(CardDataModel card) {
+Widget buildBankCard(CardEntity card) {
   return BlocProvider(
     create: (_) => BalanceVisibilityCubit(),
     child: Stack(

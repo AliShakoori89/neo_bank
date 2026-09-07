@@ -1,4 +1,4 @@
-
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/card_list_entity.dart';
 import '../../../../Core/Network/Models/api_error_model.dart';
 
 class CardListModel {
@@ -47,6 +47,16 @@ class CardDataModel {
       pan: json['pan'] as String?,
       cardDeposit: json['cardDeposit'] as String?,
       availableBalance: json['availableBalance'] as int?,
+    );
+  }
+
+  CardEntity toEntity(){
+    return CardEntity (
+      availableBalance: availableBalance,
+      cardDeposit: cardDeposit,
+      depositNumber: depositNumber,
+      expireDate: expireDate,
+      pan: pan
     );
   }
 

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/card_list_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/card_list_entity.dart';
 
 enum GetAllCardsStatus {
   initial,
@@ -25,14 +25,14 @@ class AllCardsState extends Equatable {
       AllCardsState(status: GetAllCardsStatus.initial, cards: []);
 
   final GetAllCardsStatus status;
-  final List<CardDataModel>? cards;
+  final List<CardEntity>? cards;
 
   @override
   List<Object?> get props => [status, cards];
 
   AllCardsState copyWith({
     GetAllCardsStatus? status,
-    List<CardDataModel>? cards,
+    List<CardEntity>? cards,
   }) {
     return AllCardsState(
       status: status ?? this.status,

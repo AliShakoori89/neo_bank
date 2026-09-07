@@ -1,5 +1,5 @@
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/card_list_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/card_list_entity.dart';
 
 abstract class AllCardRepository {
-  Future<CardListModel> getAllCards();
+  Future<List<CardEntity>> getAllCards();
 }

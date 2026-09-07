@@ -24,7 +24,7 @@ class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
       await Future.delayed(const Duration(milliseconds: 100));
 
       emit(
-        state.copyWith(status: GetAllCardsStatus.success, cards: cards.data),
+        state.copyWith(status: GetAllCardsStatus.success, cards: cards),
       );
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
