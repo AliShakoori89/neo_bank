@@ -55,10 +55,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Loan_Pag
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/otp_code_check_remote_data_source.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Repositories/otp_code_check_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Repositories/request_otp_code_again_repository_impl.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/otp_code_check_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/request_otp_code_again_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_bloc.dart';
@@ -205,25 +202,7 @@ class _MyAppState extends State<MyApp> {
           },
         ),
         BlocProvider(
-          create: (BuildContext context) {
-            final dio = DioClient().dio;
-
-            final otpCodeCheckRemoteDataSource = OtpCodeCheckRemoteDataSource(
-              dio: dio,
-            );
-
-            final repository = OtpCodeCheckRepositoryImpl(
-              otpCodeCheckRemoteDataSource: otpCodeCheckRemoteDataSource,
-            );
-
-            final otpCodeCheckUseCase = OtpCodeCheckUseCase(
-              repository: repository,
-            );
-
-            return OtpCodeCheckBloc(
-              otpCodeCheckUseCase: otpCodeCheckUseCase,
-            );
-          },
+            create: (_) => sl<OtpCodeCheckBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) {

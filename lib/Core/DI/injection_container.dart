@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import '../../Features/OTP_Code_Page/Data/DataSources/otp_code_check_remote_data_source.dart';
+import '../../Features/OTP_Code_Page/Data/Repositories/otp_code_check_repository_impl.dart';
+import '../../Features/OTP_Code_Page/Domain/Repositories/otp_code_check_repository.dart';
+import '../../Features/OTP_Code_Page/Domain/UseCases/otp_code_check_use_case.dart';
+import '../../Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import '../../Features/Profile_Page/Data/Data_Sources/citizen_ekyc_status_remote_data_source.dart';
 import '../../Features/Profile_Page/Data/Repositories/citizen_ekyc_status_repository_impl.dart';
 import '../../Features/Profile_Page/Domain/Repositories/citizen_kyc_status_repository.dart';
@@ -86,4 +91,34 @@ void setupDependencies() {
       citizenEkycStatusUseCase: sl<CitizenEkycStatusUseCase>(),
     ),
   );
+
+  // --------------------
+// OTP Code
+// --------------------
+
+  sl.registerLazySingleton<OtpCodeCheckRemoteDataSource>(
+        () => OtpCodeCheckRemoteDataSource(
+      dio: sl<DioClient>().dio,
+    ),
+  );
+
+  sl.registerLazySingleton<OtpCodeCheckRepository>(
+        () => OtpCodeCheckRepositoryImpl(
+      otpCodeCheckRemoteDataSource:
+      sl<OtpCodeCheckRemoteDataSource>(),
+    ),
+  );
+
+  sl.registerLazySingleton<OtpCodeCheckUseCase>(
+        () => OtpCodeCheckUseCase(
+      repository: sl<OtpCodeCheckRepository>(),
+    ),
+  );
+
+  sl.registerFactory<OtpCodeCheckBloc>(
+        () => OtpCodeCheckBloc(
+      otpCodeCheckUseCase: sl<OtpCodeCheckUseCase>(),
+    ),
+  );
+
 }
