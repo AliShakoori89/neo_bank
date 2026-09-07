@@ -54,9 +54,6 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Last_Tra
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Repositories/request_otp_code_again_repository_impl.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/request_otp_code_again_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repositories/profile_repository.dart';
@@ -205,25 +202,7 @@ class _MyAppState extends State<MyApp> {
             create: (_) => sl<OtpCodeCheckBloc>(),
         ),
         BlocProvider(
-          create: (BuildContext context) {
-            final dio = DioClient().dio;
-
-            final requestOtpCodeAgainRemoteDataSource = RequestOtpCodeAgainRemoteDataSource(
-              dio: dio,
-            );
-
-            final repository = RequestOtpCodeAgainRepositoryImpl(
-              requestOtpCodeAgainRemoteDataSource: requestOtpCodeAgainRemoteDataSource,
-            );
-
-            final requestOtpCodeAgainUseCase = RequestOtpCodeAgainUseCase(
-              repository: repository,
-            );
-
-            return RequestOtpAgainBloc(
-              requestOtpCodeAgainUseCase: requestOtpCodeAgainUseCase,
-            );
-          },
+          create: (_) => sl<RequestOtpAgainBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) => ProfileBloc(GetProfileRepository()),

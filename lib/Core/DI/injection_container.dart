@@ -1,9 +1,14 @@
 import 'package:get_it/get_it.dart';
+import '../../Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
 import '../../Features/OTP_Code_Page/Data/DataSources/otp_code_check_remote_data_source.dart';
 import '../../Features/OTP_Code_Page/Data/Repositories/otp_code_check_repository_impl.dart';
+import '../../Features/OTP_Code_Page/Data/Repositories/request_otp_code_again_repository_impl.dart';
 import '../../Features/OTP_Code_Page/Domain/Repositories/otp_code_check_repository.dart';
+import '../../Features/OTP_Code_Page/Domain/Repositories/request_otp_code_again_repository.dart';
 import '../../Features/OTP_Code_Page/Domain/UseCases/otp_code_check_use_case.dart';
+import '../../Features/OTP_Code_Page/Domain/UseCases/request_otp_code_again_use_case.dart';
 import '../../Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
+import '../../Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_bloc.dart';
 import '../../Features/Profile_Page/Data/Data_Sources/citizen_ekyc_status_remote_data_source.dart';
 import '../../Features/Profile_Page/Data/Repositories/citizen_ekyc_status_repository_impl.dart';
 import '../../Features/Profile_Page/Domain/Repositories/citizen_kyc_status_repository.dart';
@@ -121,4 +126,33 @@ void setupDependencies() {
     ),
   );
 
+  // --------------------
+// OTP Code Again
+// --------------------
+
+  sl.registerLazySingleton<RequestOtpCodeAgainRemoteDataSource>(
+        () => RequestOtpCodeAgainRemoteDataSource(
+      dio: sl<DioClient>().dio,
+    ),
+  );
+
+  sl.registerLazySingleton<RequestOtpCodeAgainRepository>(
+        () => RequestOtpCodeAgainRepositoryImpl(
+      requestOtpCodeAgainRemoteDataSource:
+      sl<RequestOtpCodeAgainRemoteDataSource>(),
+    ),
+  );
+
+  sl.registerLazySingleton<RequestOtpCodeAgainUseCase>(
+        () => RequestOtpCodeAgainUseCase(
+      repository: sl<RequestOtpCodeAgainRepository>(),
+    ),
+  );
+
+  sl.registerFactory<RequestOtpAgainBloc>(
+        () => RequestOtpAgainBloc(
+      requestOtpCodeAgainUseCase:
+      sl<RequestOtpCodeAgainUseCase>(),
+    ),
+  );
 }
