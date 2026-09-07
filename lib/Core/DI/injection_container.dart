@@ -1,4 +1,9 @@
 import 'package:get_it/get_it.dart';
+import '../../Features/Fund_Transfer_Page/Data/DataSources/all_card_detail_remote_data_source.dart';
+import '../../Features/Fund_Transfer_Page/Data/Repositories/all_card_detail_repository_impl.dart';
+import '../../Features/Fund_Transfer_Page/Domain/Repositories/all_card_detail_repository.dart';
+import '../../Features/Fund_Transfer_Page/Domain/UseCases/all_card_detail_use_case.dart';
+import '../../Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import '../../Features/Home_Page/Data/Data_Sources/all_card_data_source.dart';
 import '../../Features/Home_Page/Data/Data_Sources/internet_packages_data_sources.dart';
 import '../../Features/Home_Page/Data/Data_Sources/last_transaction_data_source.dart';
@@ -355,6 +360,35 @@ void setupDependencies() {
         () => WalletBloc(
       walletUseCase:
       sl<WalletUseCase>(),
+    ),
+  );
+
+  // ==================== All Card Details ====================
+
+  sl.registerLazySingleton<AllCardDetailRemoteDataSource>(
+        () => AllCardDetailRemoteDataSource(
+      dio: sl<DioClient>().dio,
+    ),
+  );
+
+  sl.registerLazySingleton<AllCardDetailRepository>(
+        () => AllCardDetailRepositoryImpl(
+      allCardDetailRemoteDataSource:
+      sl<AllCardDetailRemoteDataSource>(),
+    ),
+  );
+
+  sl.registerLazySingleton<AllCardDetailUseCase>(
+        () => AllCardDetailUseCase(
+      repository:
+      sl<AllCardDetailRepository>(),
+    ),
+  );
+
+  sl.registerFactory<AllCardsDetailBloc>(
+        () => AllCardsDetailBloc(
+      allCardDetailUseCase:
+      sl<AllCardDetailUseCase>(),
     ),
   );
 }
