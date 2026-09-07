@@ -14,12 +14,8 @@ class CitizenEkycStatusRepositoryImpl implements GetCitizenEKYCStatusRepository{
     try {
       final data = await citizenEkycStatusRemoteDataSource.fetchEKYCStatus();
 
-      if (data.success == true) {
-        final result = data;
-        if (result.success != true || result.data == null) {
-          return false;
-        }
-        return result.data!.hasApprovedKYC!;
+      if (data.success == true && data.data != null) {
+        return data.data!.hasApprovedKYC ?? false;
       }
       return false;
     } on DioException catch (e) {
