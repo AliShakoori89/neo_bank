@@ -1,7 +1,7 @@
 import '../../../../Core/Network/Models/api_error_model.dart';
 
 class AllCardsPansModel {
-  final List<AllCardsPansdDataModel>? data;
+  final List<AllCardsPansDataModel>? data;
   final bool? success;
   final String? traceId;
   final ApiErrorModel? error;
@@ -11,8 +11,8 @@ class AllCardsPansModel {
   factory AllCardsPansModel.fromJson(Map<String, dynamic> json) {
     return AllCardsPansModel(
       data: json['data'] != null
-          ? List<AllCardsPansdDataModel>.from(
-              json['data'].map((x) => AllCardsPansdDataModel.fromJson(x)),
+          ? List<AllCardsPansDataModel>.from(
+              json['data'].map((x) => AllCardsPansDataModel.fromJson(x)),
             )
           : null,
       success: json['success'] as bool?,
@@ -22,21 +22,21 @@ class AllCardsPansModel {
   }
 }
 
-class AllCardsPansdDataModel {
+class AllCardsPansDataModel {
   final String? depositNumber;
   final DateTime? expireDate;
   final String? pan;
   final int? availableBalance;
 
-  AllCardsPansdDataModel({
+  AllCardsPansDataModel({
     this.depositNumber,
     this.expireDate,
     this.pan,
     this.availableBalance,
   });
 
-  factory AllCardsPansdDataModel.fromJson(Map<String, dynamic> json) {
-    return AllCardsPansdDataModel(
+  factory AllCardsPansDataModel.fromJson(Map<String, dynamic> json) {
+    return AllCardsPansDataModel(
       depositNumber: json['depositNumber'] as String?,
       expireDate: json['expireDate'] != null
           ? DateTime.parse(json['expireDate'])
