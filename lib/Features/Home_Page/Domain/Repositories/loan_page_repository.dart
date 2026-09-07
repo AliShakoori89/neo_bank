@@ -1,7 +1,7 @@
-import '../../Data/Model/loan_model.dart';
+import '../Entities/loan_entity.dart';
 
 abstract class LoanPageRepository {
-  Future<List<LoanModel>> getLoans({
+  Future<List<LoanEntity>> getLoans({
     required String nationalNumber,
   });
 }

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Model/loan_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/loan_entity.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../../../../../Core/Utils/Formatters/persian_date_format_y_m_d.dart';
 
 class InstallmentItem extends StatelessWidget {
   final dynamic installment;
-  final LoanModel loanModel;
+  final LoanEntity loanEntity;
 
   const InstallmentItem({
     super.key,
     required this.installment,
-    required this.loanModel
+    required this.loanEntity
   });
 
   @override
@@ -126,14 +126,14 @@ class InstallmentItem extends StatelessWidget {
                 onPressed: () {
 
                   print('INSTALLMENT: $installment');
-                  print('LOAN NUMBER: ${loanModel.loanNumber}');
-                  print('LOAN NUMBER TYPE: ${loanModel.loanNumber.runtimeType}');
+                  print('LOAN NUMBER: ${loanEntity.loanNumber}');
+                  print('LOAN NUMBER TYPE: ${loanEntity.loanNumber.runtimeType}');
 
                   context.push(
                     '/installment_item_details',
                     extra: {
                       'installment': installment,
-                      'loanNumber': loanModel.loanNumber,
+                      'loanNumber': loanEntity.loanNumber,
                     },
                   );
                 },

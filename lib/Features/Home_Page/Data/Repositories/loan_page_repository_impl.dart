@@ -1,6 +1,6 @@
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/loan_page_data_source.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/loan_entity.dart';
 import '../../Domain/Repositories/loan_page_repository.dart';
-import '../Model/loan_model.dart';
 
 class LoanPageRepositoryImpl implements LoanPageRepository{
 
@@ -9,7 +9,7 @@ class LoanPageRepositoryImpl implements LoanPageRepository{
   LoanPageRepositoryImpl({required this.loanPageDataSource});
 
   @override
-  Future<List<LoanModel>> getLoans({
+  Future<List<LoanEntity>> getLoans({
     required String nationalNumber,
   }) async {
 

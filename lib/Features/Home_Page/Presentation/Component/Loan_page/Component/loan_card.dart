@@ -182,7 +182,7 @@ class LoanCard extends StatelessWidget {
                         (installment) {
                       return InstallmentItem(
                         installment: installment,
-                        loanModel: loan,
+                        loanEntity: loan,
                       );
                     },
                   ),

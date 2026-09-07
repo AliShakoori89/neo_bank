@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
 
-class LoanModel extends Equatable {
+class LoanEntity extends Equatable {
   final String? loanNumber;
   final String? title;
   final String? description;
   final int? amount;
   final int? loanStatus;
   final String? loanStatusDescription;
-  final List<InstallmentModel>? installments;
+  final List<InstallmentEntity>? installments;
 
-  const LoanModel({
+  const LoanEntity({
     this.loanNumber,
     this.title,
     this.description,
@@ -19,8 +19,8 @@ class LoanModel extends Equatable {
     this.installments,
   });
 
-  factory LoanModel.fromJson(Map<String, dynamic> json) {
-    return LoanModel(
+  factory LoanEntity.fromJson(Map<String, dynamic> json) {
+    return LoanEntity(
       loanNumber: json['loanNumber'] as String? ?? '',
       title: json['title'] as String? ?? '',
       description: json['description'] as String? ?? '',
@@ -30,7 +30,7 @@ class LoanModel extends Equatable {
       json['loanStatusDescription'] as String? ?? '',
       installments: (json['installments'] as List? ?? [])
           .map(
-            (item) => InstallmentModel.fromJson(
+            (item) => InstallmentEntity.fromJson(
           item as Map<String, dynamic>,
         ),
       )
@@ -64,14 +64,14 @@ class LoanModel extends Equatable {
   ];
 }
 
-class InstallmentModel extends Equatable {
+class InstallmentEntity extends Equatable {
   final int installmentNo;
   final DateTime dueDate;
   final int amount;
   final int status;
   final String statusDescription;
 
-  const InstallmentModel({
+  const InstallmentEntity({
     required this.installmentNo,
     required this.dueDate,
     required this.amount,
@@ -79,8 +79,8 @@ class InstallmentModel extends Equatable {
     required this.statusDescription,
   });
 
-  factory InstallmentModel.fromJson(Map<String, dynamic> json) {
-    return InstallmentModel(
+  factory InstallmentEntity.fromJson(Map<String, dynamic> json) {
+    return InstallmentEntity(
       installmentNo: json['installmentNo'] as int? ?? 0,
       dueDate: DateTime.parse(
         json['dueDate'] as String,

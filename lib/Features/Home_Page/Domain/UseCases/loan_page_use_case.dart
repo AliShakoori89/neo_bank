@@ -1,4 +1,4 @@
-import '../../Data/Model/loan_model.dart';
+import '../Entities/loan_entity.dart';
 import '../Repositories/loan_page_repository.dart';
 
 class LoanPageUseCase {
@@ -6,7 +6,7 @@ class LoanPageUseCase {
 
   LoanPageUseCase({required this.loanPageRepository});
 
-  Future<List<LoanModel>> getLoans({
+  Future<List<LoanEntity>> getLoans({
     required String nationalNumber,
   }){
     return loanPageRepository.getLoans(nationalNumber: nationalNumber);

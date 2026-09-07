@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/loan_entity.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../../Core/Spacing/app_space.dart';
 import '../../../../../../Core/Utils/Formatters/persian_date_format_y_m_d.dart';
 import '../../../../../../Core/Widgets/custom_button.dart';
-import '../../../../Data/Model/loan_model.dart';
 import '../../Charge_Internet_Page/Component/custom_header.dart';
 
 class InstallmentItemDetails extends StatelessWidget {
   final String loanNumber;
-  final InstallmentModel installment;
+  final InstallmentEntity installment;
 
   const InstallmentItemDetails({
     super.key,

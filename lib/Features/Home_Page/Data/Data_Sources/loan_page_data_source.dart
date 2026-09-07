@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-import '../Model/loan_model.dart';
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/loan_entity.dart';
 
 class LoanPageDataSource {
   final Dio dio;
@@ -10,7 +10,7 @@ class LoanPageDataSource {
     required this.dio,
   });
 
-  Future<List<LoanModel>> getLoans({
+  Future<List<LoanEntity>> getLoans({
     required String nationalNumber,
   }) async {
 
@@ -27,7 +27,7 @@ class LoanPageDataSource {
       final List<dynamic> data = jsonDecode(response.body);
 
       return data
-          .map((item) => LoanModel.fromJson(item))
+          .map((item) => LoanEntity.fromJson(item))
           .toList();
     }
 

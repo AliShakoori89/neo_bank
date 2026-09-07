@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../Data/Model/loan_model.dart';
+import '../../../Domain/Entities/loan_entity.dart';
 
 enum LoanPageStateStatus { initial, success, error, loading }
 
@@ -18,18 +18,18 @@ class LoanPageState extends Equatable {
 
   static LoanPageState initial() => LoanPageState(
     status: LoanPageStateStatus.initial,
-    loan: <LoanModel>[],
+    loan: <LoanEntity>[],
   );
 
   final LoanPageStateStatus status;
-  final List<LoanModel> loan;
+  final List<LoanEntity> loan;
 
   @override
   List<Object?> get props => [status, loan];
 
   LoanPageState copyWith({
     LoanPageStateStatus? status,
-    List<LoanModel>? loan,
+    List<LoanEntity>? loan,
   }) {
     return LoanPageState(
       status: status ?? this.status,
