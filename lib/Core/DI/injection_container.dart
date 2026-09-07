@@ -1,8 +1,13 @@
 import 'package:get_it/get_it.dart';
 import '../../Features/Fund_Transfer_Page/Data/DataSources/all_card_detail_remote_data_source.dart';
+import '../../Features/Fund_Transfer_Page/Data/DataSources/deposit_remote_data_source.dart';
 import '../../Features/Fund_Transfer_Page/Data/Repositories/all_card_detail_repository_impl.dart';
+import '../../Features/Fund_Transfer_Page/Data/Repositories/deposits_repository_impl.dart';
 import '../../Features/Fund_Transfer_Page/Domain/Repositories/all_card_detail_repository.dart';
+import '../../Features/Fund_Transfer_Page/Domain/Repositories/deposits_repository.dart';
 import '../../Features/Fund_Transfer_Page/Domain/UseCases/all_card_detail_use_case.dart';
+import '../../Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart';
+import '../../Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import '../../Features/Home_Page/Data/Data_Sources/all_card_data_source.dart';
 import '../../Features/Home_Page/Data/Data_Sources/internet_packages_data_sources.dart';
@@ -389,6 +394,33 @@ void setupDependencies() {
         () => AllCardsDetailBloc(
       allCardDetailUseCase:
       sl<AllCardDetailUseCase>(),
+    ),
+  );
+
+  sl.registerLazySingleton<DepositRemoteDataSource>(
+        () => DepositRemoteDataSource(
+      dio: sl<DioClient>().dio,
+    ),
+  );
+
+  sl.registerLazySingleton<DepositsRepository>(
+        () => DepositsRepositoryImpl(
+      depositRemoteDataSource:
+      sl<DepositRemoteDataSource>(),
+    ),
+  );
+
+  sl.registerLazySingleton<DepositUseCase>(
+        () => DepositUseCase(
+      repository:
+      sl<DepositsRepository>(),
+    ),
+  );
+
+  sl.registerFactory<UserAllAccountBloc>(
+        () => UserAllAccountBloc(
+      depositUseCase:
+      sl<DepositUseCase>(),
     ),
   );
 }
