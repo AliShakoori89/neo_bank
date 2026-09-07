@@ -76,7 +76,7 @@ class InternetPackageModel extends Equatable {
           : [],
       success: json['success'] as bool? ?? false,
       traceId: json['traceId'] as String? ?? '',
-      error: json['error'],
+      error: json['error'] != null ? ApiErrorModel.fromJson(json['error']) : null,
       message: json['message'] as String?,
       dataString: json['data'] as String?,
     );
@@ -197,35 +197,4 @@ class InternetPackage extends Equatable {
     description,
     giftTraffic,
   ];
-}
-
-class ErrorModel extends Equatable {
-  final int errorCode;
-  final String errorMessage;
-  final String? owner;
-
-  const ErrorModel({
-    required this.errorCode,
-    required this.errorMessage,
-    this.owner,
-  });
-
-  factory ErrorModel.fromJson(Map<String, dynamic> json) {
-    return ErrorModel(
-      errorCode: json['errorCode'] as int? ?? 0,
-      errorMessage: json['errorMessage'] as String? ?? '',
-      owner: json['owner'] as String?,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'errorCode': errorCode,
-      'errorMessage': errorMessage,
-      'owner': owner,
-    };
-  }
-
-  @override
-  List<Object?> get props => [errorCode, errorMessage, owner];
 }

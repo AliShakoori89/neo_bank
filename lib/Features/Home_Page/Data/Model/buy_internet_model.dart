@@ -1,43 +1,25 @@
+import 'package:neo_bank_mehr_iran/Core/Network/Models/api_error_model.dart';
+
 class BuyInternetModel {
   final bool success;
   final String traceId;
-  final BuyInternetErrorDetail error;
+  final ApiErrorModel? error;
 
   BuyInternetModel({
     required this.success,
     required this.traceId,
-    required this.error,
+    this.error,
   });
 
   factory BuyInternetModel.fromJson(Map<String, dynamic> json) {
     return BuyInternetModel(
       success: json['success'] ?? false,
       traceId: json['traceId'] ?? '',
-      error: BuyInternetErrorDetail.fromJson(json['error'] ?? {}),
+      error: json['error'] != null ? ApiErrorModel.fromJson(json['error']) : null,
     );
   }
 
   bool get isSuccess => success;
-  int get errorCode => error.errorCode;
-  String get errorMessage => error.errorMessage;
-}
-
-class BuyInternetErrorDetail {
-  final int errorCode;
-  final String errorMessage;
-  final dynamic owner;
-
-  BuyInternetErrorDetail({
-    required this.errorCode,
-    required this.errorMessage,
-    this.owner,
-  });
-
-  factory BuyInternetErrorDetail.fromJson(Map<String, dynamic> json) {
-    return BuyInternetErrorDetail(
-      errorCode: json['errorCode'] ?? 0,
-      errorMessage: json['errorMessage'] ?? 'خطای ناشناخته',
-      owner: json['owner'],
-    );
-  }
+  int get errorCode => error?.errorCode ?? 0;
+  String get errorMessage => error?.errorMessage ?? 'خطای ناشناخته';
 }
