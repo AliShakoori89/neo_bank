@@ -30,11 +30,8 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/a
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/transaction_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/wallet_data_source.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/transaction_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/wallet_repository_impl.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/transaction_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/wallet_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
@@ -235,25 +232,7 @@ class _MyAppState extends State<MyApp> {
           },
         ),
         BlocProvider(
-          create: (BuildContext context) {
-            final dio = DioClient().dio;
-
-            final transactionDataSource = TransactionDataSource(
-              dio: dio,
-            );
-
-            final transactionRepositoryImpl = TransactionRepositoryImpl(
-              transactionDataSource: transactionDataSource,
-            );
-
-            final transactionUseCase = TransactionUseCase(
-              transactionRepository: transactionRepositoryImpl,
-            );
-
-            return TransactionBloc(
-              transactionUseCase: transactionUseCase,
-            );
-          },
+          create: (_) => sl<TransactionBloc>(),
         ),
         BlocProvider(
             create: (_) => sl<CitizenEkycStatusBloc>(),
