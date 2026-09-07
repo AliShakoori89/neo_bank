@@ -30,15 +30,12 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/a
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/last_transaction_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/loan_page_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/transaction_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/wallet_data_source.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/last_transaction_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/loan_page_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/transaction_repository_impl.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/wallet_repository_impl.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/last_transaction_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/loan_page_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/transaction_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/wallet_use_case.dart';
@@ -187,25 +184,7 @@ class _MyAppState extends State<MyApp> {
             create: (_) => sl<StatementBloc>(),
         ),
         BlocProvider(
-          create: (BuildContext context) {
-            final dio = DioClient().dio;
-
-            final lastTransactionDataSource = LastTransactionDataSource(
-              dio: dio,
-            );
-
-            final lastTransactionRepositoryImpl = LastTransactionRepositoryImpl(
-              lastTransactionDataSource: lastTransactionDataSource,
-            );
-
-            final lastTransactionUseCase = LastTransactionUseCase(
-              lastTransactionRepository: lastTransactionRepositoryImpl,
-            );
-
-            return LastTransactionBloc(
-              lastTransactionUseCase: lastTransactionUseCase,
-            );
-          },
+          create: (_) => sl<LastTransactionBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) {
