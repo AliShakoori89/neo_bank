@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
-
+import 'package:injectable/injectable.dart';
 import '../Constants/api_key.dart';
 import '../Services/token_storage_service.dart';
 import 'error_interceptor.dart';
 
+@lazySingleton
 class DioClient {
   final Dio dio;
 

@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/internet_packages_data_sources.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../Domain/Repositories/internet_packages_repository.dart';
 import '../Model/internet_package_model.dart';
 
+@LazySingleton(as: InternetPackagesRepository)
 class InternetPackageRepositoryImpl implements InternetPackagesRepository{
 
   final InternetPackagesDataSources internetPackagesDataSources;

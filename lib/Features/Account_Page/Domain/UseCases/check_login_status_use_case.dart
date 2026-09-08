@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import '../Repositories/user_login_auth_repository.dart';
 
+@lazySingleton
 class CheckLoginStatusUseCase {
   final UserLoginAuthRepository repository;
 

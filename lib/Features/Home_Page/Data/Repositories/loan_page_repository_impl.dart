@@ -1,7 +1,9 @@
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/loan_page_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/loan_entity.dart';
 import '../../Domain/Repositories/loan_page_repository.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: LoanPageRepository)
 class LoanPageRepositoryImpl implements LoanPageRepository{
 
   final LoanPageDataSource loanPageDataSource;

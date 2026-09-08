@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Data_Sources/statement_data_sources.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../Domain/Entities/statement_entity.dart';
 import '../../Domain/Repositories/statement_repository.dart';
 
+@LazySingleton(as: StatementRepository)
 class StatementRepositoryImpl implements StatementRepository{
 
   final StatementDataSources statementDataSources;

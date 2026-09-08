@@ -3,7 +3,9 @@ import '../../../../Core/Network/app_exception.dart';
 import '../../Domain/Entities/wallet_entity.dart';
 import '../../Domain/Repositories/wallet_repository.dart';
 import '../Data_Sources/wallet_data_source.dart';
+import 'package:injectable/injectable.dart';
 
+@LazySingleton(as: WalletRepository)
 class WalletRepositoryImpl implements WalletRepository {
 
   final WalletDataSource walletDataSource;

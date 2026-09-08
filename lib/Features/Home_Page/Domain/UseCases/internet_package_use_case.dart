@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repositories/internet_packages_repository.dart';
 import '../../Data/Model/internet_package_model.dart';
 
+@lazySingleton
 class InternetPackageUseCase {
   final InternetPackagesRepository repository;
 

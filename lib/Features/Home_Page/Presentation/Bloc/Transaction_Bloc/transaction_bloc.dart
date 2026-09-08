@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_state.dart';
 import '../../../../../Core/Network/app_exception.dart';
 import '../../../Domain/UseCases/transaction_use_case.dart';
 
+@lazySingleton
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   final TransactionUseCase transactionUseCase;
 

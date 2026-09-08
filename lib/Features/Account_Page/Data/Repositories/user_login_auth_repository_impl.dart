@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../../../Core/Services/token_storage_service.dart';
 import '../../../../Core/Utils/DateTime/calculate_expire_time.dart';
@@ -6,6 +7,7 @@ import '../../Domain/Entities/login_result.dart';
 import '../../Domain/Repositories/user_login_auth_repository.dart';
 import '../Data_Sources/auth_remote_data_source.dart';
 
+@LazySingleton(as: UserLoginAuthRepository)
 class UserLoginAuthRepositoryImpl
     implements UserLoginAuthRepository {
 

@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repositories/transaction_repository.dart';
 import '../Entities/transaction_entity.dart';
 
+@lazySingleton
 class TransactionUseCase {
   final TransactionRepository transactionRepository;
 

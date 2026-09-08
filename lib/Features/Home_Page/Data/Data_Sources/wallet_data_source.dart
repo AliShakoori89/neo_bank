@@ -1,16 +1,18 @@
 import 'package:dio/dio.dart';
-
+import 'package:injectable/injectable.dart';
+import '../../../../Core/Network/dio_client.dart';
 import '../Model/wallet_model.dart';
 
+@lazySingleton
 class WalletDataSource {
-  final Dio dio;
+  final Dio _dio;
 
   WalletDataSource({
-    required this.dio,
-  });
+    required DioClient dioClient,
+  }) : _dio = dioClient.dio;
 
   Future<WalletResponseModel> getWalletDetails() async{
-    final response = await dio.post("/api/wallets/get-all");
+    final response = await _dio.post("/api/wallets/get-all");
 
     return WalletResponseModel.fromJson(response.data);
   }
@@ -28,7 +30,7 @@ class WalletDataSource {
       "destMobileNumber": destMobileNumber,
     };
 
-    final response = await dio.post(
+    final response = await _dio.post(
       "/api/internetpackages/buy",
       data: body,
     );

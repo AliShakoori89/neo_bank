@@ -1,11 +1,16 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import '../../../../Core/Network/dio_client.dart';
 import '../../../../Core/Services/device_info_service.dart';
 import '../../../Account_Page/Data/Models/user_login_response_model.dart';
 
+@lazySingleton
 class RequestOtpCodeAgainRemoteDataSource {
-  final Dio dio;
+  final Dio _dio;
 
-  RequestOtpCodeAgainRemoteDataSource({required this.dio});
+  RequestOtpCodeAgainRemoteDataSource({
+    required DioClient dioClient,
+  }) : _dio = dioClient.dio;
 
   Future<UserLoginResponseModel> requestOTPAgain({
     required String nationalNumber,
@@ -23,7 +28,7 @@ class RequestOtpCodeAgainRemoteDataSource {
       "appVersion": deviceInfo['appVersion'],
     };
 
-    final response = await dio.post(
+    final response = await _dio.post(
       "/api/auth/request-login",
       data: body,
     );

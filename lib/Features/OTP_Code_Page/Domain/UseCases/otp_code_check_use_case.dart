@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Entities/otp_request_result_entity.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repositories/otp_code_check_repository.dart';
 
+@lazySingleton
 class OtpCodeCheckUseCase {
   final OtpCodeCheckRepository repository;
 

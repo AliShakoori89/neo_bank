@@ -1,10 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/all_cards_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_state.dart';
-
 import '../../../../../Core/Network/app_exception.dart';
 
+@lazySingleton
 class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
   final AllCardsUseCase allCardsUseCase;
   static const int maxRefreshCount = 5;

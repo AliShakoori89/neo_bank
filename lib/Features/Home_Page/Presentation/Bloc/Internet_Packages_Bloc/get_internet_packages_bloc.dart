@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../../Core/Network/app_exception.dart';
 import '../../../Domain/UseCases/internet_package_use_case.dart';
 import 'get_internet_packages_event.dart';
 import 'get_internet_packages_state.dart';
 
+@lazySingleton
 class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageState> {
   final InternetPackageUseCase internetPackageUseCase;
 

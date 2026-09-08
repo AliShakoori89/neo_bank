@@ -3,7 +3,10 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/all_card
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/card_list_entity.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repositories/all_card_repository.dart';
 import '../../../../Core/Network/app_exception.dart';
+import 'package:injectable/injectable.dart';
 
+
+@LazySingleton(as: AllCardRepository)
 class AllCardRepositoryImpl implements AllCardRepository{
 
   final AllCardDataSource allCardDataSources;

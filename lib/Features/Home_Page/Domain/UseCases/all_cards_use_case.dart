@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/card_list_entity.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repositories/all_card_repository.dart';
 
+@lazySingleton
 class AllCardsUseCase {
   final AllCardRepository allCardRepository;
 

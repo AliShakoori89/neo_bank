@@ -1,6 +1,9 @@
+import 'package:injectable/injectable.dart';
+
 import '../Entities/wallet_entity.dart';
 import '../Repositories/wallet_repository.dart';
 
+@lazySingleton
 class WalletUseCase {
   final WalletRepository walletRepository;
 

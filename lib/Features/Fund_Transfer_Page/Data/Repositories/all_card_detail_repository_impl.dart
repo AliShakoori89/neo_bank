@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/DataSources/all_card_detail_remote_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repositories/all_card_detail_repository.dart';
 import '../../../../Core/Network/app_exception.dart';
 
+@LazySingleton(as: AllCardDetailRepository)
 class AllCardDetailRepositoryImpl implements AllCardDetailRepository{
 
   AllCardDetailRemoteDataSource allCardDetailRemoteDataSource;

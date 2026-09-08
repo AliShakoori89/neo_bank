@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import '../Repositories/citizen_kyc_status_repository.dart';
 
+@lazySingleton
 class CitizenEkycStatusUseCase {
   final GetCitizenEKYCStatusRepository repository;
 

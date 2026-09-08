@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/transaction_data_source.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../Domain/Entities/transaction_entity.dart';
 import '../../Domain/Repositories/transaction_repository.dart';
 import '../Model/transaction_model.dart';
 
+@LazySingleton(as: TransactionRepository)
 class TransactionRepositoryImpl implements TransactionRepository{
 
   final TransactionDataSource transactionDataSource;

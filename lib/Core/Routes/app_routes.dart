@@ -54,9 +54,9 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final args = state.extra as OtpArgs;
 
-        final dio = DioClient().dio;
+        final dioClient  = DioClient();
 
-        final remoteDataSource = RequestOtpCodeAgainRemoteDataSource( dio: dio, );
+        final remoteDataSource = RequestOtpCodeAgainRemoteDataSource( dioClient: dioClient, );
 
         final repository = RequestOtpCodeAgainRepositoryImpl( requestOtpCodeAgainRemoteDataSource: remoteDataSource, );
 

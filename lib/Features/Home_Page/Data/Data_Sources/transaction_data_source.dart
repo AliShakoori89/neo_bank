@@ -1,13 +1,15 @@
 import 'package:dio/dio.dart';
-
+import 'package:injectable/injectable.dart';
+import '../../../../Core/Network/dio_client.dart';
 import '../Model/transaction_model.dart';
 
+@lazySingleton
 class TransactionDataSource {
-  final Dio dio;
+  final Dio _dio;
 
   TransactionDataSource({
-    required this.dio,
-  });
+    required DioClient dioClient,
+  }) : _dio = dioClient.dio;
 
   Future<TransactionResponseModel> chargeWallet({
     required String customerWalletAddress,
@@ -24,7 +26,7 @@ class TransactionDataSource {
       "idempotentKey": idempotentKey,
     };
 
-    final response = await dio.post(
+    final response = await _dio.post(
       "/api/transactions/charge",
       data: body,
     );
@@ -46,7 +48,7 @@ class TransactionDataSource {
       "idempotentKey": idempotentKey,
     };
 
-    final response = await dio.post(
+    final response = await _dio.post(
       "/api/transactions/withdraw",
       data: body,
     );
