@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import '../Entities/statement_entity.dart';
 import '../Repositories/statement_repository.dart';
 
+@lazySingleton
 class FetchStatementUseCase {
   final StatementRepository repository;
 

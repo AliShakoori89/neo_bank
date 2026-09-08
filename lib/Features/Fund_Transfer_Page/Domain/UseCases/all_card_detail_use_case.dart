@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import '../Repositories/all_card_detail_repository.dart';
 
+@lazySingleton
 class AllCardDetailUseCase {
   final AllCardDetailRepository repository;
 

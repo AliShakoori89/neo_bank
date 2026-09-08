@@ -1,13 +1,16 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import '../../../../Core/Network/dio_client.dart';
 import '../../../../Core/Services/device_info_service.dart';
 import '../Models/user_login_response_model.dart';
 
+@lazySingleton
 class AuthRemoteDataSource {
-  final Dio dio;
+  final Dio _dio;
 
   AuthRemoteDataSource({
-    required this.dio,
-  });
+    required DioClient dioClient,
+  }) : _dio = dioClient.dio;
 
   Future<UserLoginResponseModel> userLogin({
     required String nationalNumber,
@@ -26,7 +29,7 @@ class AuthRemoteDataSource {
       "appVersion": deviceInfo['appVersion'],
     };
 
-    final response = await dio.post(
+    final response = await _dio.post(
       "/api/auth/request-login",
       data: body,
     );

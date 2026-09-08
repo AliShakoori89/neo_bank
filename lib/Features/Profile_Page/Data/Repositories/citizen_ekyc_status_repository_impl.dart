@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../Domain/Repositories/citizen_kyc_status_repository.dart';
 import '../Data_Sources/citizen_ekyc_status_remote_data_source.dart';
 
+@LazySingleton(as: GetCitizenEKYCStatusRepository)
 class CitizenEkycStatusRepositoryImpl implements GetCitizenEKYCStatusRepository{
 
   final CitizenEkycStatusRemoteDataSource citizenEkycStatusRemoteDataSource;

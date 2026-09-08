@@ -1,10 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import '../../../../Core/Network/dio_client.dart';
 import '../Model/statement_model.dart';
 
+@lazySingleton
 class StatementDataSources {
-  final Dio dio;
+  final Dio _dio;
 
-  StatementDataSources({required this.dio});
+  StatementDataSources({
+    required DioClient dioClient,
+  }) : _dio = dioClient.dio;
 
   Future<StatementResponseModel> getLastestStatement({
     required String depositNumber,
@@ -21,7 +26,7 @@ class StatementDataSources {
       "toDate": "2026-02-11T05:39:52.955Z"
     };
 
-    final response = await dio.post(
+    final response = await _dio.post(
       '/api/Statements/get-all',
       data: body,
     );
@@ -48,7 +53,7 @@ class StatementDataSources {
       "toDate": endDate
     };
 
-    final response = await dio.post(
+    final response = await _dio.post(
       '/api/Statements/get-all',
       data: body,
     );

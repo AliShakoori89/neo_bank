@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../Core/Widgets/to_persian_number.dart';
 
 typedef MenuEntry = DropdownMenuEntry<String>;

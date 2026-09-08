@@ -1,10 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_event.dart';
 import 'package:neo_bank/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
 import '../../../Domain/Entities/statement_entity.dart';
 import '../../../Domain/UseCases/fetch_statement_filtered_use_case.dart';
 import '../../../Domain/UseCases/fetch_statement_use_case.dart';
 
+@lazySingleton
 class StatementBloc extends Bloc<StatementEvent, StatementState> {
   final FetchStatementFilteredUseCase fetchStatementFilteredUseCase;
   final FetchStatementUseCase fetchStatementUseCase;

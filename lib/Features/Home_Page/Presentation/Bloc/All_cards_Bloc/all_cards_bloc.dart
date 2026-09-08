@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../../Core/Network/app_exception.dart';
 import '../../../Domain/UseCases/all_cards_use_case.dart';
 import 'all_cards_event.dart';
 import 'all_cards_state.dart';
 
+@lazySingleton
 class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
   final AllCardsUseCase allCardsUseCase;
   static const int maxRefreshCount = 5;
@@ -34,11 +36,7 @@ class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
           ),
         );
       } else {
-        emit(
-          state.copyWith(
-            status: GetAllCardsStatus.error,
-          ),
-        );
+        emit(state.copyWith(status: GetAllCardsStatus.error));
       }
     } catch (error) {
       emit(state.copyWith(status: GetAllCardsStatus.error));

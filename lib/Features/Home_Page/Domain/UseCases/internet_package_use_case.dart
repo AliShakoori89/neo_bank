@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import '../../Data/Model/internet_package_model.dart';
 import '../Repositories/internet_packages_repository.dart';
 
+@lazySingleton
 class InternetPackageUseCase {
   final InternetPackagesRepository repository;
 

@@ -1,10 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import '../../../../Core/Network/dio_client.dart';
 import '../Model/internet_package_model.dart';
 
+@lazySingleton
 class InternetPackagesDataSources {
-  final Dio dio;
+  final Dio _dio;
 
-  InternetPackagesDataSources({required this.dio});
+  InternetPackagesDataSources({
+    required DioClient dioClient,
+  }) : _dio = dioClient.dio;
 
   Future<List<InternetPackage>> getAllInternetPackages(int operatorCode) async {
 
@@ -12,7 +17,7 @@ class InternetPackagesDataSources {
       "operatorCode": operatorCode,
     };
 
-    final response = await dio.post(
+    final response = await _dio.post(
       "/api/internetpackages/get-all",
       data: body,
     );
@@ -61,7 +66,7 @@ class InternetPackagesDataSources {
       "traffic": traffic,
     };
 
-    final response = await dio.post(
+    final response = await _dio.post(
       "/api/internetpackages/get-all",
       data: body,
     );
@@ -109,7 +114,7 @@ class InternetPackagesDataSources {
       "destMobileNumber": destMobileNumber,
     };
 
-    final response = await dio.post(
+    final response = await _dio.post(
       "/api/internetpackages/buy",
       data: body,
     );

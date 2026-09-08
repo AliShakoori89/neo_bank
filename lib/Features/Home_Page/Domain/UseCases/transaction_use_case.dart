@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import '../Entities/transaction_entity.dart';
 import '../Repositories/transaction_repository.dart';
 
+@lazySingleton
 class TransactionUseCase {
   final TransactionRepository transactionRepository;
 

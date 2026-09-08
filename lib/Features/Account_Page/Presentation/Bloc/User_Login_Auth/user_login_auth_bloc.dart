@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_event.dart';
 import 'package:neo_bank/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_state.dart';
 import '../../../Domain/UseCases/check_login_status_use_case.dart';
 import '../../../Domain/UseCases/login_use_case.dart';
 
+@lazySingleton
 class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
   final LoginUseCase loginUseCase;
   final CheckLoginStatusUseCase checkLoginStatusUseCase;

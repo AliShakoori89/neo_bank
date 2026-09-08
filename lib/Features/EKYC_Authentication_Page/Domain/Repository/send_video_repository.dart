@@ -5,7 +5,6 @@ import '../../../../Core/Network/app_exception.dart';
 import '../../../../Core/Network/dio_client.dart';
 import '../../Data/Model/send_video_model.dart';
 
-
 class SendVideoRepository {
   final Dio dio;
 

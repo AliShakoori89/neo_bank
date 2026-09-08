@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import '../../../Domain/Entities/wallet_entity.dart';
 
 enum WalletStateStatus {

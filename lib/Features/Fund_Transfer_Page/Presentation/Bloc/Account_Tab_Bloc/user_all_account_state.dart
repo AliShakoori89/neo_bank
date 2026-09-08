@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import '../../../Domain/Entities/deposit_entity.dart';
 
 enum UserAllAccountStatus { initial, success, error, loading, tokenExpired }

@@ -22,7 +22,7 @@ import '../../Features/Main_Page/Presentation/main_page.dart';
 import '../../Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
 import '../../Features/OTP_Code_Page/Data/Repositories/request_otp_code_again_repository_impl.dart';
 import '../../Features/OTP_Code_Page/Domain/UseCases/request_otp_code_again_use_case.dart';
-import '../../Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_bloc.dart';
+import '../../Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_bloc.dart' show RequestOtpAgainBloc;
 import '../../Features/OTP_Code_Page/Presentation/otp_code_page.dart';
 import '../../Features/Profile_Page/Presentation/Component/about_application_page.dart';
 import '../../Features/Set_Pass_Page/Presentation/set_pass_page.dart';
@@ -54,9 +54,9 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final args = state.extra as OtpArgs;
 
-        final dio = DioClient().dio;
+        final dioClient  = DioClient();
 
-        final remoteDataSource = RequestOtpCodeAgainRemoteDataSource( dio: dio, );
+        final remoteDataSource = RequestOtpCodeAgainRemoteDataSource( dioClient: dioClient, );
 
         final repository = RequestOtpCodeAgainRepositoryImpl( requestOtpCodeAgainRemoteDataSource: remoteDataSource, );
 

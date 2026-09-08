@@ -63,7 +63,7 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   final isDark = prefs.getBool('isDarkTheme') ?? false;
 
-  setupDependencies();
+  configureDependencies();
 
   runApp(
     // DevicePreview(

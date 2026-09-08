@@ -1,7 +1,9 @@
 import '../../Domain/Entities/loan_entity.dart';
 import '../../Domain/Repositories/loan_page_repository.dart';
+import 'package:injectable/injectable.dart';
 import '../Data_Sources/loan_page_data_source.dart';
 
+@LazySingleton(as: LoanPageRepository)
 class LoanPageRepositoryImpl implements LoanPageRepository{
 
   final LoanPageDataSource loanPageDataSource;

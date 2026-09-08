@@ -45,7 +45,6 @@ class TransactionEntity extends Equatable {
     return 'تراکنش با موفقیت انجام شد';
   }
 
-
   @override
   List<Object?> get props => [data, success, traceId, error];
 }

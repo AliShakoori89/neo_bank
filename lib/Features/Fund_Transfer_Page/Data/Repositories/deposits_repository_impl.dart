@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../Domain/Entities/deposit_entity.dart';
 import '../../Domain/Repositories/deposits_repository.dart';
 import '../DataSources/deposit_remote_data_source.dart';
 
+@LazySingleton(as: DepositsRepository)
 class DepositsRepositoryImpl implements DepositsRepository{
 
   final DepositRemoteDataSource depositRemoteDataSource;
@@ -24,14 +26,12 @@ class DepositsRepositoryImpl implements DepositsRepository{
         throw AppException('Failed to fetch deposits');
       }
     } on DioException catch (e) {
-
       if (e.response?.statusCode == 401) {
         throw AppException(
           'نشست شما منقضی شده است.',
           statusCode: 401,
         );
       }
-
       if (e.error is AppException) {
         throw e.error!;
       }

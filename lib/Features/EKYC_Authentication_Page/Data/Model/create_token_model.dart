@@ -1,4 +1,3 @@
-
 import '../../../../Core/Network/Models/api_error_model.dart';
 
 class CreateTokenModel {

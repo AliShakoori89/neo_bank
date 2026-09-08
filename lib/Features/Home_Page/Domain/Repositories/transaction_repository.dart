@@ -1,4 +1,3 @@
-
 import '../Entities/transaction_entity.dart';
 
 abstract class TransactionRepository {

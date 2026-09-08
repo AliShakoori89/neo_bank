@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
 import '../../../../Core/Network/app_exception.dart';
+import 'package:injectable/injectable.dart';
+
 import '../../Domain/Entities/card_list_entity.dart';
 import '../../Domain/Repositories/all_card_repository.dart';
 import '../Data_Sources/all_card_data_source.dart';
 
+
+@LazySingleton(as: AllCardRepository)
 class AllCardRepositoryImpl implements AllCardRepository{
 
   final AllCardDataSource allCardDataSources;
@@ -24,12 +28,6 @@ class AllCardRepositoryImpl implements AllCardRepository{
       }
       throw AppException('Failed to fetch cards');
     } on DioException catch (e) {
-      if (e.response?.statusCode == 401) {
-        throw AppException(
-          'نشست شما منقضی شده است.',
-          statusCode: 401,
-        );
-      }
       if (e.error is AppException) {
         throw e.error!;
       }

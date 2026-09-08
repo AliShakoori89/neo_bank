@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../Domain/Entities/transaction_entity.dart';
 import '../../Domain/Repositories/transaction_repository.dart';
 import '../Data_Sources/transaction_data_source.dart';
 import '../Model/transaction_model.dart';
 
+@LazySingleton(as: TransactionRepository)
 class TransactionRepositoryImpl implements TransactionRepository{
 
   final TransactionDataSource transactionDataSource;

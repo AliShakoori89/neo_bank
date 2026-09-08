@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_event.dart';
 import 'package:neo_bank/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_state.dart';
+
 import '../../../Domain/Repository/random_text_repository.dart';
 
 class RandomTextBloc extends Bloc<RandomTextEvent, RandomTextState> {

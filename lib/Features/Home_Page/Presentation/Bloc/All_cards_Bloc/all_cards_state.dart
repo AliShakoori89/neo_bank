@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import '../../../Domain/Entities/card_list_entity.dart';
 
 enum GetAllCardsStatus {

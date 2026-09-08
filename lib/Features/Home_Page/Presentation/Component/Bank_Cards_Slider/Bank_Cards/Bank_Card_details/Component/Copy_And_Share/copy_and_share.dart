@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../../../../../../../Core/Spacing/app_space.dart';
 import '../../../../../../../../../Core/Theme/app_colors.dart';
 import 'Component/custom_row.dart';
-
 
 copyAndShare(context, String cardNumber, String cardDeposit){
   return showModalBottomSheet(

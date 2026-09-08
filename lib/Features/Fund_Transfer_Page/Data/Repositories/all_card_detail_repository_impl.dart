@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../Domain/Repositories/all_card_detail_repository.dart';
 import '../DataSources/all_card_detail_remote_data_source.dart';
 
+@LazySingleton(as: AllCardDetailRepository)
 class AllCardDetailRepositoryImpl implements AllCardDetailRepository{
 
   AllCardDetailRemoteDataSource allCardDetailRemoteDataSource;

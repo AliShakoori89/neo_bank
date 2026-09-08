@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import '../../Domain/Entities/transaction_entity.dart';
 
 // مدل داده داخلی

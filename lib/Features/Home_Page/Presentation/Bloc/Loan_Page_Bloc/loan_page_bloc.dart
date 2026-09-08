@@ -1,8 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+
 import '../../../Domain/UseCases/loan_page_use_case.dart';
 import 'loan_page_event.dart';
 import 'loan_page_state.dart';
 
+@lazySingleton
 class LoanPageBloc
     extends Bloc<LoanPageEvent, LoanPageState> {
   final LoanPageUseCase loanPageUseCase;

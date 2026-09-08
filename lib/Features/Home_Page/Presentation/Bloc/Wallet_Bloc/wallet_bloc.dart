@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_event.dart';
 import 'package:neo_bank/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_state.dart';
 import '../../../../../Core/Network/app_exception.dart';
 import '../../../Domain/UseCases/wallet_use_case.dart';
 
+@lazySingleton
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final WalletUseCase walletUseCase;
 
@@ -27,20 +29,12 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
             walletDetails: wallets,
           ),
         );
-      } on AppException catch (error) {
+    } on AppException catch (error) {
       print('❌ Error دریافت اطلاعات کیف پول: $error');
       emit(
         state.copyWith(
           status: WalletStateStatus.error,
-          errorMessage: error.message.toString(),
-        ),
-      );
-    } catch (e) {
-      print('❌ Unexpected Wallet Error: $e');
-      emit(
-        state.copyWith(
-          status: WalletStateStatus.error,
-          errorMessage: 'خطای ناشناخته رخ داده است.',
+          errorMessage: error.toString(),
         ),
       );
     }
@@ -68,7 +62,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
           purchaseData: purchaseResult,
         ),
       );
-    } on AppException catch (e) {
+    } on AppException  catch (e) {
       print('❌ DioError در خرید: ${e.message}');
       emit(
         state.copyWith(

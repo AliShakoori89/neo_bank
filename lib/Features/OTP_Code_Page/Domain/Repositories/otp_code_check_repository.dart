@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import '../Entities/otp_request_result_entity.dart';
 
 abstract class OtpCodeCheckRepository {

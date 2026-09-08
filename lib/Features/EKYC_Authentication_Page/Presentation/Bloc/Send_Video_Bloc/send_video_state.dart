@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import '../../../Data/Model/send_video_model.dart';
 
 enum SendVideoStateStatus { initial, success, error, loading }

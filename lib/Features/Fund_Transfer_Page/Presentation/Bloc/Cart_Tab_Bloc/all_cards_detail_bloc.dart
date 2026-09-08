@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../../Core/Network/app_exception.dart';
 import '../../../Domain/UseCases/all_card_detail_use_case.dart';
 import 'all_cards_detail_event.dart';
 import 'all_cards_detail_state.dart';
 
+@lazySingleton
 class AllCardsDetailBloc
     extends Bloc<AllCardsDetailEvent, AllCardsDetailState> {
   final AllCardDetailUseCase allCardDetailUseCase;

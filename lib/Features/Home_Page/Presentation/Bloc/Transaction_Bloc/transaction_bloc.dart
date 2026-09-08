@@ -1,24 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_event.dart';
 import 'package:neo_bank/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_state.dart';
-
 import '../../../../../Core/Network/app_exception.dart';
 import '../../../Domain/UseCases/transaction_use_case.dart';
 
+@lazySingleton
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   final TransactionUseCase transactionUseCase;
 
   TransactionBloc({required this.transactionUseCase})
-    : super(TransactionState.initial()) {
+      : super(TransactionState.initial()) {
     on<ChargeTransactionEvent>(_onChargeTransactionEvent);
     on<WithdrawTransactionEvent>(_onWithdrawTransactionEvent);
     // حذف ResetTransactionEvent - نیازی به آن نیست
   }
 
   Future<void> _onChargeTransactionEvent(
-    ChargeTransactionEvent event,
-    Emitter<TransactionState> emit,
-  ) async {
+      ChargeTransactionEvent event,
+      Emitter<TransactionState> emit,
+      ) async {
     try {
       // emit loading state
       emit(state.copyWith(status: TransactionStatus.loading, message: null));
@@ -70,9 +71,9 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   }
 
   Future<void> _onWithdrawTransactionEvent(
-    WithdrawTransactionEvent event,
-    Emitter<TransactionState> emit,
-  ) async {
+      WithdrawTransactionEvent event,
+      Emitter<TransactionState> emit,
+      ) async {
     try {
       // emit loading state
       emit(state.copyWith(status: TransactionStatus.loading, message: null));

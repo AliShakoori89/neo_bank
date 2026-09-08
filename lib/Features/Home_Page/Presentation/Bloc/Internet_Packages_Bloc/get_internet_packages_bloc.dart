@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../../Core/Network/app_exception.dart';
 import '../../../Domain/UseCases/internet_package_use_case.dart';
 import 'get_internet_packages_event.dart';
 import 'get_internet_packages_state.dart';
 
+@lazySingleton
 class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageState> {
   final InternetPackageUseCase internetPackageUseCase;
 
@@ -30,9 +32,8 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
         internetPackages: internetPackages,
         errorMessage: null,
       ));
-    } on AppException catch (e) {
+    } on AppException  catch (e) {
       print('❌ Dio Error: ${e.message}');
-
       emit(state.copyWith(
         status: InternetPackageStatus.error,
         errorMessage: e.message,
@@ -138,5 +139,4 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
       buyResult: null,
     ));
   }
-
 }
