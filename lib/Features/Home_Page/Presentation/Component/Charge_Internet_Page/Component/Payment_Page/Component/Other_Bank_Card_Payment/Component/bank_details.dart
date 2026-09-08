@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+
+import 'bank_info.dart';
+
+final Map<String, BankInfo> banks = {
+  '6037': BankInfo('بانک ملی ایران', 'melli', Colors.blue, imageAsset: 'assets/logo/bank_melli.png'),
+  '5892': BankInfo('بانک سپه', 'sepeh', Colors.green, icon: Icons.account_balance),
+  '6273': BankInfo('بانک صادرات ایران', 'saderat', Colors.red, icon: Icons.account_balance),
+  '5022': BankInfo('بانک پاسارگاد', 'pasargad', Colors.purple, icon: Icons.currency_bitcoin),
+  '5047': BankInfo('بانک رسالت', 'resalat', Colors.orange, icon: Icons.send),
+  '6221': BankInfo('بانک ملت', 'mellat', Colors.teal, icon: Icons.people),
+  '6393': BankInfo('بانک کشاورزی', 'keshavarzi', Colors.brown, icon: Icons.agriculture),
+  '6274': BankInfo('بانک سامان', 'saman', Colors.indigo, icon: Icons.wb_sunny),
+  '5859': BankInfo('بانک تات', 'tat', Colors.cyan, icon: Icons.link),
+  '6219': BankInfo('بانک گردشگری', 'gardeshgari', Colors.pink, icon: Icons.flight),
+  '6362': BankInfo('بانک انصار', 'ansar', Colors.lightBlue, icon: Icons.help),
+  '6280': BankInfo('بانک توسعه صادرات', 'tedbir', Colors.deepPurple, icon: Icons.trending_up),
+  '5058': BankInfo('بانک خاورمیانه', 'miyaneh', Colors.amber, icon: Icons.public),
+  '5059': BankInfo('بانک سینا', 'sina', Colors.lime, icon: Icons.health_and_safety),
+  '5069': BankInfo('بانک شهر', 'shahr', Colors.lightGreen, icon: Icons.location_city),
+  '5072': BankInfo('بانک دی', 'dey', Colors.deepOrange, icon: Icons.calendar_today),
+  '5074': BankInfo('بانک مهر اقتصاد', 'mehr', Colors.indigo, icon: Icons.attach_money),
+  '5075': BankInfo('بانک حکمت ایرانیان', 'hekmat', Colors.brown, icon: Icons.school),
+  '5076': BankInfo('بانک آینده', 'ayandeh', Colors.blueGrey, icon: Icons.timeline),
+  '5100': BankInfo('بانک کارآفرین', 'karafarin', Colors.orangeAccent, icon: Icons.business_center),
+  '5101': BankInfo('بانک پارسیان', 'parsian', Colors.redAccent, icon: Icons.work),
+  '5102': BankInfo('بانک سرمایه', 'sarmayeh', Colors.greenAccent, icon: Icons.trending_up),
+  '5111': BankInfo('بانک ایران زمین', 'iranzamin', Colors.purpleAccent, icon: Icons.public),
+  '5120': BankInfo('بانک قوامین', 'ghavamin', Colors.cyanAccent, icon: Icons.security),
+  '5128': BankInfo('بانک کوثر', 'kosar', Colors.pinkAccent, icon: Icons.favorite),
+  '5140': BankInfo('بانک نور', 'noor', Colors.yellow, icon: Icons.lightbulb),
+  '5165': BankInfo('بانک پست بانک', 'postbank', Colors.grey, icon: Icons.local_post_office),
+  '5171': BankInfo('بانک صنعت و معدن', 'sanatmadan', Colors.brown, icon: Icons.factory),
+  '5185': BankInfo('بانک توسعه تعاون', 'tedbirtaavon', Colors.lime, icon: Icons.handshake),
+  '5192': BankInfo('بانک رفاه کارگران', 'refah', Colors.red, icon: Icons.work),
+  '5208': BankInfo('بانک اقتصاد نوین', 'eghtesadenovin', Colors.blueGrey, icon: Icons.attach_money),
+  '5272': BankInfo('بانک مسکن', 'maskan', Colors.brown, icon: Icons.home),
+};
