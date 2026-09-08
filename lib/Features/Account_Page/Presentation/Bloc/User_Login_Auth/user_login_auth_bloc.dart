@@ -17,7 +17,7 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
     on<LogoutEvent>(_mapLogoutEventToState);
   }
 
-  void _mapUserLoginEventToState(
+  Future<void> _mapUserLoginEventToState(
     UserLoginEvent event,
     Emitter<UserLoginAuthState> emit,
   ) async {
@@ -57,7 +57,7 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
     }
   }
 
-  void _mapUserIsLoginEventToState(
+  Future<void> _mapUserIsLoginEventToState(
     UserIsLoginEvent event,
     Emitter<UserLoginAuthState> emit,
   ) async {
@@ -74,7 +74,7 @@ class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
     }
   }
 
-  void _mapLogoutEventToState(
+  Future<void> _mapLogoutEventToState(
     LogoutEvent event,
     Emitter<UserLoginAuthState> emit,
   ) async {

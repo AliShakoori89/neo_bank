@@ -1,8 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/all_cards_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_state.dart';
+
+import '../../../../../Core/Network/app_exception.dart';
 
 class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
   final AllCardsUseCase allCardsUseCase;
@@ -12,7 +13,7 @@ class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
     on<GetUserAllCardsEvent>(_mapGetUserAllCardsEventToState);
   }
 
-  void _mapGetUserAllCardsEventToState(
+  Future<void> _mapGetUserAllCardsEventToState(
     GetUserAllCardsEvent event,
     Emitter<AllCardsState> emit,
   ) async {
@@ -26,9 +27,13 @@ class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
       emit(
         state.copyWith(status: GetAllCardsStatus.success, cards: cards),
       );
-    } on DioException catch (e) {
-      if (e.response?.statusCode == 401) {
-        emit(state.copyWith(status: GetAllCardsStatus.tokenExpired));
+    } on AppException catch (e) {
+      if (e.statusCode == 401) {
+        emit(
+          state.copyWith(
+            status: GetAllCardsStatus.tokenExpired,
+          ),
+        );
       } else {
         emit(state.copyWith(status: GetAllCardsStatus.error));
       }

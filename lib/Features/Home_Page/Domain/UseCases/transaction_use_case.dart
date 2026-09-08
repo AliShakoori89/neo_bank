@@ -1,6 +1,5 @@
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repositories/transaction_repository.dart';
-
-import '../../Data/Model/transaction_model.dart';
+import '../Entities/transaction_entity.dart';
 
 class TransactionUseCase {
   final TransactionRepository transactionRepository;
@@ -8,7 +7,7 @@ class TransactionUseCase {
   TransactionUseCase({required this.transactionRepository});
 
   /// شارژ کیف پول
-  Future<TransactionResponseModel> chargeWallet({
+  Future<TransactionEntity> chargeWallet({
     required String customerWalletAddress,
     required int amount,
     required String customerDepositNumber,
@@ -20,7 +19,7 @@ class TransactionUseCase {
   }
 
   /// برداشت از کیف پول
-  Future<TransactionResponseModel> withdrawWallet({
+  Future<TransactionEntity> withdrawWallet({
     required String customerWalletAddress,
     required int amount,
     required String customerDepositNumber,
