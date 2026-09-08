@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../Core/Network/app_exception.dart';
 import '../../../Domain/UseCases/internet_package_use_case.dart';
 import 'get_internet_packages_event.dart';
 import 'get_internet_packages_state.dart';
@@ -30,11 +30,12 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
         internetPackages: internetPackages,
         errorMessage: null,
       ));
-    } on DioException catch (e) {
+    } on AppException catch (e) {
       print('❌ Dio Error: ${e.message}');
+
       emit(state.copyWith(
         status: InternetPackageStatus.error,
-        errorMessage: _getErrorMessage(e),
+        errorMessage: e.message,
       ));
     } catch (error) {
       print('❌ Error: $error');
@@ -66,11 +67,11 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
         internetPackages: internetPackages,
         errorMessage: null,
       ));
-    } on DioException catch (e) {
+    } on AppException  catch (e) {
       print('❌ Dio Error: ${e.message}');
       emit(state.copyWith(
         status: InternetPackageStatus.error,
-        errorMessage: _getErrorMessage(e),
+        errorMessage: e.message,
       ));
     } catch (error) {
       print('❌ Error: $error');
@@ -138,23 +139,4 @@ class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageStat
     ));
   }
 
-  String _getErrorMessage(DioException e) {
-    switch (e.type) {
-      case DioExceptionType.connectionTimeout:
-        return 'زمان ارتباط با سرور به پایان رسید';
-      case DioExceptionType.receiveTimeout:
-        return 'سرور پاسخ نمی‌دهد';
-      case DioExceptionType.sendTimeout:
-        return 'خطا در ارسال درخواست';
-      case DioExceptionType.connectionError:
-        return 'لطفاً اتصال اینترنت خود را بررسی کنید';
-      case DioExceptionType.cancel:
-        return 'درخواست لغو شد';
-      default:
-        if (e.response?.statusCode != null) {
-          return 'خطای سرور: کد خطا ${e.response!.statusCode}';
-        }
-        return 'خطا در ارتباط با سرور';
-    }
-  }
 }

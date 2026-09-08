@@ -8,9 +8,9 @@ import '../../../../../Core/Spacing/app_space.dart';
 import '../../../../../Core/Utils/Formatters/persian_date_format_m_d.dart';
 import '../../../../../Core/Widgets/custom_card.dart';
 import '../../../../../Core/Widgets/error_refresh_widget.dart';
-import '../../Bloc/Last_Transaction_Bloc/last_transaction_bloc.dart';
-import '../../Bloc/Last_Transaction_Bloc/last_transaction_event.dart';
-import '../../Bloc/Last_Transaction_Bloc/last_transaction_state.dart';
+import '../../../../Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
+import '../../../../Statement_Page/Presentation/Bloc/Statement_Bloc/statement_event.dart';
+import '../../../../Statement_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
 
 class TransactionsListWidget extends StatefulWidget {
   const TransactionsListWidget({super.key, required this.depositNumber});
@@ -33,8 +33,8 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
         widget.depositNumber != _lastDeposit) {
       _lastDeposit = widget.depositNumber;
 
-      BlocProvider.of<LastTransactionBloc>(context).add(
-        FetchLastTransactionEvent(
+      BlocProvider.of<StatementBloc>(context).add(
+        FetchStatementEvent(
           depositNumber: widget.depositNumber!,
         ),
       );
@@ -133,21 +133,21 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
             ),
           ),
           AppSpace.heightSpace_12,
-          BlocBuilder<LastTransactionBloc, LastTransactionState>(
+          BlocBuilder<StatementBloc, StatementState>(
             // buildWhen: (prev, curr) =>
             //     prev.topStatement != curr.topStatement ||
             //     prev.status != curr.status,
             builder: (context, state) {
-              if (state.status == SLastTransactionStatus.loading &&
-                  state.topStatement.isEmpty) {
+              if (state.status == StatementStateStatus.loading &&
+                  state.allStatement.isEmpty) {
                 return TransactionListShimmer();
               }
 
-              if (state.status == SLastTransactionStatus.error) {
+              if (state.status == StatementStateStatus.error) {
                 return ErrorRefreshWidget(
                   refreshFunction: () {
-                    context.read<LastTransactionBloc>().add(
-                      FetchLastTransactionEvent(
+                    context.read<StatementBloc>().add(
+                      FetchStatementEvent(
                         depositNumber: widget.depositNumber!,
                       ),
                     );
@@ -156,14 +156,14 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
               }
 
 
-              if (state.status == SLastTransactionStatus.success) {
+              if (state.status == StatementStateStatus.success) {
                 return ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: state.topStatement.length,
+                  itemCount: 5,
                   itemExtent: 70,
                   itemBuilder: (context, index) {
-                    final item = state.topStatement[index];
+                    final item = state.allStatement[index];
                     final amount = item.transferAmount ?? 0;
 
                     return InkWell(
@@ -180,7 +180,7 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
                       },
                       child: CustomCard(
                         deposit: item.actionDescription! == 'برداشت' ? false : true,
-                        title: state.topStatement[index].actionDescription!,
+                        title: state.allStatement[index].actionDescription!,
                         subtitle: item.description ?? '',
                         date: formatPersianDateMD(item.date!.toString()),
                         mount: amount
@@ -196,8 +196,8 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
 
               return ErrorRefreshWidget(
                 refreshFunction: () {
-                  context.read<LastTransactionBloc>().add(
-                    FetchLastTransactionEvent(
+                  context.read<StatementBloc>().add(
+                    FetchStatementEvent(
                       depositNumber: widget.depositNumber!,
                     ),
                   );

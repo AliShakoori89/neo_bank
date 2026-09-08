@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../../../Core/Network/app_exception.dart';
+import '../../Domain/Entities/transaction_entity.dart';
 import '../../Domain/Repositories/transaction_repository.dart';
 import '../Data_Sources/transaction_data_source.dart';
 import '../Model/transaction_model.dart';
@@ -11,7 +12,7 @@ class TransactionRepositoryImpl implements TransactionRepository{
   TransactionRepositoryImpl({required this.transactionDataSource});
 
   @override
-  Future<TransactionResponseModel> chargeWallet({
+  Future<TransactionEntity> chargeWallet({
     required String customerWalletAddress,
     required int amount,
     required String customerDepositNumber,
@@ -24,11 +25,17 @@ class TransactionRepositoryImpl implements TransactionRepository{
           customerDepositNumber: customerDepositNumber);
 
       if (data.success) {
-        return data;
+        return data.toEntity();
       }else {
         throw AppException('خطا در شارژ کیف پول');
       }
     } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw AppException(
+          'نشست شما منقضی شده است.',
+          statusCode: 401,
+        );
+      }
       if (e.error is AppException) throw e.error!;
       throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
@@ -38,7 +45,7 @@ class TransactionRepositoryImpl implements TransactionRepository{
   }
 
   @override
-  Future<TransactionResponseModel> withdrawWallet({
+  Future<TransactionEntity> withdrawWallet({
     required String customerWalletAddress,
     required int amount,
     required String customerDepositNumber,
@@ -52,11 +59,17 @@ class TransactionRepositoryImpl implements TransactionRepository{
           customerDepositNumber: customerDepositNumber);
 
       if (data.success) {
-        return data;
+        return data.toEntity();
       }else {
         throw AppException('خطا در برداشت از کیف پول');
       }
     } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw AppException(
+          'نشست شما منقضی شده است.',
+          statusCode: 401,
+        );
+      }
       if (e.error is AppException) throw e.error!;
       throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {

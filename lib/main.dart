@@ -32,7 +32,6 @@ import 'Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart'
 import 'Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
 import 'Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
 import 'Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
-import 'Features/Home_Page/Presentation/Bloc/Last_Transaction_Bloc/last_transaction_bloc.dart';
 import 'Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_bloc.dart';
 import 'Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
 import 'Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_bloc.dart';
@@ -121,9 +120,6 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
             create: (_) => sl<StatementBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => sl<LastTransactionBloc>(),
         ),
         BlocProvider(
           create: (_) => sl<UserAllAccountBloc>(),

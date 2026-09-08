@@ -31,6 +31,12 @@ class AllCardDetailRepositoryImpl implements AllCardDetailRepository{
         throw AppException('Failed to fetch cards');
       }
     } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw AppException(
+          'نشست شما منقضی شده است.',
+          statusCode: 401,
+        );
+      }
       if (e.error is AppException) {
         throw e.error!;
       }

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_event.dart';
 import 'package:neo_bank/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_state.dart';
@@ -19,7 +18,6 @@ class RefreshCountBloc extends Bloc<RefreshCountEvent, RefreshCountState> {
       return;
     }
 
-    try {
       emit(
         state.copyWith(
           status: RefreshCountStatus.loading,
@@ -28,12 +26,6 @@ class RefreshCountBloc extends Bloc<RefreshCountEvent, RefreshCountState> {
       );
 
       emit(state.copyWith(status: RefreshCountStatus.success));
-    } on DioException catch (e) {
-      print('DioException: ${e.message}');
-      emit(state.copyWith(status: RefreshCountStatus.error));
-    } catch (e) {
-      print('Other error: $e');
-      emit(state.copyWith(status: RefreshCountStatus.error));
-    }
+
   }
 }

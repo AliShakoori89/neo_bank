@@ -24,6 +24,14 @@ class DepositsRepositoryImpl implements DepositsRepository{
         throw AppException('Failed to fetch deposits');
       }
     } on DioException catch (e) {
+
+      if (e.response?.statusCode == 401) {
+        throw AppException(
+          'نشست شما منقضی شده است.',
+          statusCode: 401,
+        );
+      }
+
       if (e.error is AppException) {
         throw e.error!;
       }

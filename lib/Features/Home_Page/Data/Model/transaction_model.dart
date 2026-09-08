@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../Domain/Entities/transaction_entity.dart';
 
 // مدل داده داخلی
 class TransactionData extends Equatable {
@@ -60,20 +61,15 @@ class TransactionResponseModel extends Equatable {
   List<Object?> get props => [data, success, traceId, error];
 }
 
-// ✅ Extension برای بررسی وضعیت تراکنش (این قسمت را اضافه کنید)
-extension TransactionResponseExtension on TransactionResponseModel {
-  bool get isSuccess => success;
-
-  bool get isDuplicateTransaction =>
-      data.transactionNumber == 'تراکنش تکراری است';
-
-  bool get hasValidTransactionNumber =>
-      isSuccess && data.transactionNumber.isNotEmpty &&
-          data.transactionNumber != 'تراکنش تکراری است';
-
-  String get displayMessage {
-    if (!success) return 'خطا در انجام تراکنش';
-    if (isDuplicateTransaction) return 'این تراکنش قبلاً انجام شده است';
-    return 'تراکنش با موفقیت انجام شد';
+extension TransactionResponseModelMapper on TransactionResponseModel {
+  TransactionEntity toEntity() {
+    return TransactionEntity(
+      data: TransactionDataEntity(
+        transactionNumber: data.transactionNumber,
+      ),
+      success: success,
+      traceId: traceId,
+      error: error,
+    );
   }
 }

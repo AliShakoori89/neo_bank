@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_event.dart';
 import 'package:neo_bank/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_state.dart';
+import '../../../../../Core/Network/app_exception.dart';
 import '../../../Domain/UseCases/transaction_use_case.dart';
 
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
@@ -54,44 +54,20 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
           message: response.error?.toString() ?? 'خطا در شارژ کیف پول',
         ));
       }
-    } on DioException catch (e) {
-      print('DioException: ${e.message}');
-      String errorMessage = 'خطا در ارتباط با سرور';
-
-      if (e.type == DioExceptionType.connectionTimeout) {
-        errorMessage = 'زمان ارتباط با سرور به پایان رسید';
-      } else if (e.type == DioExceptionType.receiveTimeout) {
-        errorMessage = 'سرور پاسخ نمی‌دهد';
-      } else if (e.type == DioExceptionType.connectionError) {
-        errorMessage = 'لطفاً اتصال اینترنت خود را بررسی کنید';
-      } else if (e.response != null) {
-        try {
-          final errorData = e.response?.data;
-          if (errorData != null) {
-            if (errorData is Map) {
-              if (errorData.containsKey('message')) {
-                errorMessage = errorData['message'].toString();
-              } else if (errorData.containsKey('error')) {
-                errorMessage = errorData['error'].toString();
-              }
-            } else if (errorData is String) {
-              errorMessage = errorData;
-            }
-          }
-        } catch (_) {}
-      }
-
-      emit(state.copyWith(
-        status: TransactionStatus.error,
-        message: errorMessage,
-      ));
-    } catch (error) {
-      print('❌ خطا: $error');
-      print(error);
-      emit(state.copyWith(
-        status: TransactionStatus.error,
-        message: error.toString(),
-      ));
+    } on AppException catch (e) {
+      emit(
+        state.copyWith(
+          status: TransactionStatus.error,
+          message: e.message,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: TransactionStatus.error,
+          message: 'خطای ناشناخته رخ داده است',
+        ),
+      );
     }
   }
 
@@ -139,44 +115,20 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
           message: response.error?.toString() ?? 'خطا در برداشت از کیف پول',
         ));
       }
-    } on DioException catch (e) {
-      print('DioException: ${e.message}');
-      String errorMessage = 'خطا در ارتباط با سرور';
-
-      if (e.type == DioExceptionType.connectionTimeout) {
-        errorMessage = 'زمان ارتباط با سرور به پایان رسید';
-      } else if (e.type == DioExceptionType.receiveTimeout) {
-        errorMessage = 'سرور پاسخ نمی‌دهد';
-      } else if (e.type == DioExceptionType.connectionError) {
-        errorMessage = 'لطفاً اتصال اینترنت خود را بررسی کنید';
-      } else if (e.response != null) {
-        try {
-          final errorData = e.response?.data;
-          if (errorData != null) {
-            if (errorData is Map) {
-              if (errorData.containsKey('message')) {
-                errorMessage = errorData['message'].toString();
-              } else if (errorData.containsKey('error')) {
-                errorMessage = errorData['error'].toString();
-              }
-            } else if (errorData is String) {
-              errorMessage = errorData;
-            }
-          }
-        } catch (_) {}
-      }
-
-      emit(state.copyWith(
-        status: TransactionStatus.error,
-        message: errorMessage,
-      ));
-    } catch (error) {
-      print('❌ خطا: $error');
-      print(error);
-      emit(state.copyWith(
-        status: TransactionStatus.error,
-        message: error.toString().replaceFirst(RegExp(r'^Exception:\s*'), ''),
-      ));
+    } on AppException catch (e) {
+      emit(
+        state.copyWith(
+          status: TransactionStatus.error,
+          message: e.message,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: TransactionStatus.error,
+          message: 'خطای ناشناخته رخ داده است',
+        ),
+      );
     }
   }
 }

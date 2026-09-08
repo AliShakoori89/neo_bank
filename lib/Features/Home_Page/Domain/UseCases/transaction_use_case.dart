@@ -1,5 +1,4 @@
-
-import '../../Data/Model/transaction_model.dart';
+import '../Entities/transaction_entity.dart';
 import '../Repositories/transaction_repository.dart';
 
 class TransactionUseCase {
@@ -8,7 +7,7 @@ class TransactionUseCase {
   TransactionUseCase({required this.transactionRepository});
 
   /// شارژ کیف پول
-  Future<TransactionResponseModel> chargeWallet({
+  Future<TransactionEntity> chargeWallet({
     required String customerWalletAddress,
     required int amount,
     required String customerDepositNumber,
@@ -20,7 +19,7 @@ class TransactionUseCase {
   }
 
   /// برداشت از کیف پول
-  Future<TransactionResponseModel> withdrawWallet({
+  Future<TransactionEntity> withdrawWallet({
     required String customerWalletAddress,
     required int amount,
     required String customerDepositNumber,

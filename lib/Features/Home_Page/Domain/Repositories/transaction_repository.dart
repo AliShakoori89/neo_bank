@@ -1,16 +1,17 @@
-import '../../Data/Model/transaction_model.dart';
+
+import '../Entities/transaction_entity.dart';
 
 abstract class TransactionRepository {
 
   /// شارژ کیف پول
-  Future<TransactionResponseModel> chargeWallet({
+  Future<TransactionEntity> chargeWallet({
     required String customerWalletAddress,
     required int amount,
     required String customerDepositNumber,
   });
 
   /// برداشت از کیف پول
-  Future<TransactionResponseModel> withdrawWallet({
+  Future<TransactionEntity> withdrawWallet({
     required String customerWalletAddress,
     required int amount,
     required String customerDepositNumber,
