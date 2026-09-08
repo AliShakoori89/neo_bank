@@ -22,6 +22,30 @@ class TransactionEntity extends Equatable {
     this.error,
   });
 
+  bool get isSuccess => success;
+
+  bool get isDuplicateTransaction =>
+      data.transactionNumber == 'تراکنش تکراری است' ||
+          data.transactionNumber.contains('تکراری');
+
+  bool get hasValidTransactionNumber =>
+      isSuccess &&
+          data.transactionNumber.isNotEmpty &&
+          !isDuplicateTransaction;
+
+  String get displayMessage {
+    if (!success) {
+      return 'خطا در انجام تراکنش';
+    }
+
+    if (isDuplicateTransaction) {
+      return 'این تراکنش قبلاً انجام شده است';
+    }
+
+    return 'تراکنش با موفقیت انجام شد';
+  }
+
+
   @override
   List<Object?> get props => [data, success, traceId, error];
 }
