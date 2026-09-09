@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../../../../Core/Convertor/custom_formatter.dart';
 import '../../../../../../Core/Spacing/app_space.dart';
 import 'add_balance_text_field.dart';
-import 'custom_formatter.dart';
 import 'number_to_words.dart';
 
 class InputValueTextField extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:neo_bank_mehr_iran/Core/Widgets/to_persian_number.dart';
+import 'package:neo_bank_mehr_iran/Core/Convertor/to_persian_number.dart';
 
 import '../../../../Core/Theme/app_colors.dart';
 

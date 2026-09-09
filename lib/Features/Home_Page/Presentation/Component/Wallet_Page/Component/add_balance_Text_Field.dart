@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../../../../../../Core/Convertor/custom_formatter.dart';
 import '../../../../../../Core/Theme/app_colors.dart';
-import 'custom_formatter.dart';
+import '../../../../../../Core/Convertor/thousands_separator_formatter.dart';
 
 class AddBalanceTextField extends StatelessWidget {
   const AddBalanceTextField({
@@ -23,37 +23,52 @@ class AddBalanceTextField extends StatelessWidget {
         height: 50,
         child: TextFormField(
           controller: balanceController,
+
           keyboardType: TextInputType.number,
+
           inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
+            ThousandsSeparatorFormatter(),
           ],
+
           textAlign: TextAlign.center,
           textDirection: TextDirection.ltr,
           autofocus: false,
+
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
+
+          onChanged: onChanged,
+
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'لطفاً مبلغ را وارد کنید';
             }
+
             final rawValue = balanceController.rawValue;
+
             if (rawValue < 10000) {
               return 'حداقل مبلغ ۱۰,۰۰۰ تومان می‌باشد';
             }
+
             if (rawValue > 1000000000) {
               return 'حداکثر مبلغ ۱,۰۰۰,۰۰۰,۰۰۰ تومان می‌باشد';
             }
+
             return null;
           },
+
           decoration: InputDecoration(
             hintText: 'XXX',
+
             hintStyle: TextStyle(
               color: Colors.grey.shade700,
-              fontSize: 14
+              fontSize: 14,
             ),
+
             suffixText: 'تومان',
+
             suffixStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
@@ -62,15 +77,20 @@ class AddBalanceTextField extends StatelessWidget {
                   .titleTextStyle
                   ?.color,
             ),
+
             filled: true,
+
             fillColor: Colors.grey.withAlpha(30),
+
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 10,
             ),
+
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
             ),
+
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(

@@ -1,11 +1,10 @@
-// wallet_page.dart - نسخه نهایی و اصلاح شده
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
 import 'package:neo_bank_mehr_iran/Core/Widgets/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_state.dart';
+import '../../../../../Core/Convertor/custom_formatter.dart';
 import '../../Bloc/Transaction_Bloc/transaction_event.dart';
 import '../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../Bloc/Wallet_Bloc/wallet_event.dart';
@@ -13,7 +12,6 @@ import '../../Bloc/Wallet_Bloc/wallet_state.dart';
 import '../Charge_Internet_Page/Component/custom_header.dart';
 import 'Component/all_balance_widget.dart';
 import 'Component/confirm_button.dart';
-import 'Component/custom_formatter.dart';
 import 'Component/deposit_button.dart';
 import 'Component/deposit_input_container.dart';
 import 'Component/wallet_types_list.dart';
