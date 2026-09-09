@@ -6,9 +6,11 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_event.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/build_account_tab_body.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Sheba_Tab_Body/sheba_tab_body.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Account_Tab_Body/account_tab_body.dart';
 import '../../../Core/Services/check_connection_service.dart';
-import 'component/Card/build_cart_tab_body.dart';
+import 'component/Cart_Tab_Body/cart_tab_body.dart';
+import 'component/Gift_Tab_Body/gift_tab_body.dart';
 import 'component/build_tab_item.dart';
 
 class FundTransferPage extends StatefulWidget {
@@ -110,10 +112,10 @@ class _FundTransferPageState extends State<FundTransferPage>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  buildCartTabBody(context),
-                  buildAccountTabBody(context),
-                  const Center(child: Text("محتوای تب شبا")),
-                  const Center(child: Text("محتوای تب هدیه")),
+                  CartTabBody(),
+                  AccountTabBody(context),
+                  ShebaTabBody(),
+                  GiftTabBody(),
                 ],
               ),
             ),

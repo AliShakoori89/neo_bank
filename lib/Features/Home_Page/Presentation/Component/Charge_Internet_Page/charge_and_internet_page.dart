@@ -6,10 +6,9 @@ import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Core/Widgets/custom_disable_button.dart';
 import '../../../../../Core/Spacing/app_space.dart';
 import '../../../../../Core/Widgets/app_snackbar.dart';
+import '../../../../../Core/Widgets/contact_phone_number_picker.dart';
 import '../../../../../Core/Widgets/custom_button.dart';
 import 'package:flutter_native_contact_picker_plus/flutter_native_contact_picker_plus.dart';
-
-import 'Component/convert_phonenumber.dart';
 import 'Component/custom_header.dart';
 
 
@@ -94,77 +93,12 @@ class _ChargeAndInternetPageState extends State<ChargeAndInternetPage> with Sing
                     Row(
                       children: [
                         Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            onPressed: () async{
-                              Contact? contact = await _contactPicker.selectContact();
-                              setState(() {
-                                _contacts = contact == null ? null : [contact];
-                                phoneNumberController.text = convertPhoneNumber(_contacts!.first.phoneNumbers![0].toString());
-                              });
-                            },
-                            icon: Icon(Icons.contacts_rounded, color: AppColors.splashGradiantColor2,),
-                          ),
-                        ),
-                        Expanded(
                           flex: 9,
-                          child: Form(
-                            key: phoneNumberFormKey,
-                            child: TextFormField(
-                              textDirection: TextDirection.ltr,
-                              controller: phoneNumberController,
-                              textAlignVertical: TextAlignVertical.center,
-                              keyboardType: TextInputType.number,
-                              obscureText: false,
-                              style: TextStyle(
-                                color: Theme.of(context).appBarTheme.titleTextStyle!.color,
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(11),
-                              ],
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'لطفا شماره همراه خود را وارد نمایید.';
-                                }
-                                if (value.length != 11) {
-                                  return 'شماره همراه وارد شده صحیح نمی باشد.';
-                                }
-                                if (value.startsWith('09') == false) {
-                                  return 'شماره همراه وارد شده صحیح نمی باشد.';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                hintText: '09XXXXXXXXX',
-                                hintStyle: TextStyle(
-                                  color: Theme.of(context).colorScheme.surface,
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: 0,
-                                ),
-                                hintTextDirection: TextDirection.ltr,
-                                contentPadding: EdgeInsets.symmetric(vertical: 12.0),
-                                // تنظیم پدینگ عمودی
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.surfaceDim,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: Theme.of(context).colorScheme.surfaceDim,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                    color: AppColors.splashGradiantColor2,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          child: ContactPhoneNumberPicker(
+                            phoneNumberController: phoneNumberController,
+                            phoneNumberFormKey: phoneNumberFormKey,
+                            contactPicker: _contactPicker,
+                            contacts: _contacts,
                           ),
                         ),
                         Expanded(

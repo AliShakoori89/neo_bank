@@ -6,7 +6,6 @@ import 'package:neo_bank_mehr_iran/Core/Spacing/app_space.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_state.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Card/custom_drop_down_shimmer.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/all_transaction_list_widget.dart';
@@ -15,6 +14,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Componen
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/statement_dropdown_button.dart';
 import '../../../Core/Routes/transaction_detail_args.dart';
 import '../../../Core/Services/check_connection_service.dart';
+import '../../../Core/Widgets/custom_drop_down_shimmer.dart';
 import '../../../Core/Widgets/no_data_receive.dart';
 import 'Bloc/Statement_Bloc/statement_state.dart';
 import 'Component/action_icon.dart';

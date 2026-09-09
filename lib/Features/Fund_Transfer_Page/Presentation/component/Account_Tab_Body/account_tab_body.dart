@@ -4,7 +4,7 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_state.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
-Widget buildAccountTabBody(BuildContext context) {
+Widget AccountTabBody(BuildContext context) {
   final theme = Theme.of(context);
 
   Widget buildRow(String title, Widget value) {

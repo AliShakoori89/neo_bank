@@ -49,11 +49,11 @@ class AddBalanceTextField extends StatelessWidget {
             final rawValue = balanceController.rawValue;
 
             if (rawValue < 10000) {
-              return 'حداقل مبلغ ۱۰,۰۰۰ تومان می‌باشد';
+              return 'حداقل مبلغ ۱۰۰,۰۰۰ ریال می‌باشد';
             }
 
             if (rawValue > 1000000000) {
-              return 'حداکثر مبلغ ۱,۰۰۰,۰۰۰,۰۰۰ تومان می‌باشد';
+              return 'حداکثر مبلغ ۱,۰۰۰,۰۰۰,۰۰۰ ریال می‌باشد';
             }
 
             return null;
@@ -67,7 +67,7 @@ class AddBalanceTextField extends StatelessWidget {
               fontSize: 14,
             ),
 
-            suffixText: 'تومان',
+            suffixText: 'ریال',
 
             suffixStyle: TextStyle(
               fontSize: 14,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../Fund_Transfer_Page/Presentation/component/Card/custom_drop_down_shimmer.dart';
-import '../../../../../Fund_Transfer_Page/Presentation/component/Card/custom_dropdown_button.dart';
+import '../../../../../../Core/Widgets/custom_drop_down_shimmer.dart';
+import '../../../../../../Core/Widgets/custom_dropdown_button.dart';
 import '../../../Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import '../../../Bloc/All_cards_Bloc/all_cards_state.dart';
 

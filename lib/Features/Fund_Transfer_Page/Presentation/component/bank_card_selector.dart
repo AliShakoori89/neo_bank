@@ -4,7 +4,7 @@ import '../../../Statement_Page/Presentation/Component/custom_drop_down_shimmer.
 import '../Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import '../Bloc/Cart_Tab_Bloc/all_cards_detail_event.dart';
 import '../Bloc/Cart_Tab_Bloc/all_cards_detail_state.dart';
-import 'Card/custom_dropdown_button.dart';
+import '../../../../Core/Widgets/custom_dropdown_button.dart';
 
 class BankCardSelector extends StatefulWidget {
   const BankCardSelector({super.key, this.widthSize, this.heightSize});

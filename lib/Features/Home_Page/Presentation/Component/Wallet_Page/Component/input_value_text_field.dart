@@ -73,7 +73,7 @@ class _InputValueTextFieldState extends State<InputValueTextField> {
               child: IconButton(
                 onPressed: () {
                   int current = widget.balanceController.rawValue;
-                  current -= 10000;
+                  current -= 100000;
                   if (current < 0) current = 0;
                   _updateAmount(current);
                 },
@@ -98,7 +98,7 @@ class _InputValueTextFieldState extends State<InputValueTextField> {
               child: IconButton(
                 onPressed: () {
                   int current = widget.balanceController.rawValue;
-                  current += 10000;
+                  current += 100000;
                   _updateAmount(current);
                 },
                 icon: const Icon(Icons.add),
