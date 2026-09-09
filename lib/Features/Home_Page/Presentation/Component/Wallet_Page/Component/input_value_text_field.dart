@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../Core/Convertor/custom_formatter.dart';
 import '../../../../../../Core/Spacing/app_space.dart';
 import 'add_balance_text_field.dart';
-import 'number_to_words.dart';
+import '../../../../../../Core/Convertor/number_to_words.dart';
 
 class InputValueTextField extends StatefulWidget {
   const InputValueTextField({
@@ -52,7 +52,7 @@ class _InputValueTextFieldState extends State<InputValueTextField> {
   }
 
   void _updateAmount(int newValue) {
-    widget.balanceController.text = newValue.toString();
+    widget.balanceController.setAmount(newValue);
     // نیازی به فراخوانی دستی setState نیست چون listener انجام می‌دهد
   }
 
@@ -85,11 +85,6 @@ class _InputValueTextFieldState extends State<InputValueTextField> {
               child: AddBalanceTextField(
                 balanceController: widget.balanceController,
                 balanceFormKey: widget.balanceFormKey,
-                onChanged: (value) {
-                  // listener کار به‌روزرسانی را انجام می‌دهد
-                  // فقط والد را مطلع می‌کنیم
-                  widget.onAmountChanged?.call(widget.balanceController.rawValue);
-                },
               ),
             ),
             AppSpace.widthSpace_8,

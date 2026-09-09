@@ -1,39 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CustomNumberFormatter extends TextEditingController {
   CustomNumberFormatter({
     String? initialValue,
   }) {
     if (initialValue != null && initialValue.isNotEmpty) {
-      text = initialValue;
+      setAmountFromString(initialValue);
     }
   }
 
-  /// مقدار عددی واقعی برای استفاده در منطق برنامه
-  ///
-  /// مثال:
-  /// ۱٬۲۳۴٬۵۶۷ -> 1234567
+  /// مقدار خام به صورت int
   int get rawValue {
-    if (text.isEmpty) return 0;
-
     final normalized = _normalizeNumbers(text);
-
     return int.tryParse(normalized) ?? 0;
   }
 
-  /// مقدار خام به صورت String
-  ///
-  /// مثال:
-  /// ۱٬۲۳۴٬۵۶۷ -> "1234567"
+  /// مقدار خام برای API
   String get rawText {
     return _normalizeNumbers(text);
   }
 
-  /// مقدار مناسب برای ارسال به API
-  String get apiValue => rawValue.toString();
+  String get apiValue => rawText;
+
+  /// تنظیم مقدار و نمایش با جداکننده هزارگان و اعداد فارسی
+  void setAmount(int value) {
+    final formatted = _format(value);
+
+    super.value = TextEditingValue(
+      text: formatted,
+      selection: TextSelection.collapsed(
+        offset: formatted.length,
+      ),
+    );
+  }
+
+  /// اگر مقدار String بود
+  void setAmountFromString(String value) {
+    final normalized = _normalizeNumbers(value);
+    final number = int.tryParse(normalized) ?? 0;
+
+    setAmount(number);
+  }
+
+  String _format(int value) {
+    if (value == 0) {
+      return '۰';
+    }
+
+    final formatter = NumberFormat('#,###', 'en_US');
+
+    String result = formatter.format(value);
+
+    // جداکننده انگلیسی → جداکننده فارسی
+    result = result.replaceAll(',', '٬');
+
+    // اعداد انگلیسی → فارسی
+    return _toPersianNumbers(result);
+  }
 
   String _normalizeNumbers(String value) {
-    // اعداد فارسی → انگلیسی
     String result = value;
 
     const persianNumbers = '۰۱۲۳۴۵۶۷۸۹';
@@ -46,7 +72,6 @@ class CustomNumberFormatter extends TextEditingController {
       );
     }
 
-    // اعداد عربی → انگلیسی
     const arabicNumbers = '٠١٢٣٤٥٦٧٨٩';
 
     for (int i = 0; i < arabicNumbers.length; i++) {
@@ -56,11 +81,21 @@ class CustomNumberFormatter extends TextEditingController {
       );
     }
 
-    // حذف جداکننده‌ها و سایر کاراکترها
-    result = result.replaceAll(
-      RegExp(r'[^0-9]'),
-      '',
-    );
+    return result.replaceAll(RegExp(r'[^0-9]'), '');
+  }
+
+  String _toPersianNumbers(String value) {
+    const englishNumbers = '0123456789';
+    const persianNumbers = '۰۱۲۳۴۵۶۷۸۹';
+
+    String result = value;
+
+    for (int i = 0; i < englishNumbers.length; i++) {
+      result = result.replaceAll(
+        englishNumbers[i],
+        persianNumbers[i],
+      );
+    }
 
     return result;
   }
