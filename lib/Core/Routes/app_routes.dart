@@ -23,6 +23,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Componen
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/component/Gift_Tab_Body/select_design_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
+import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_tab.dart';
 import '../../Features/Home_Page/Data/Model/internet_package_model.dart';
 import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/Package_Details/package_details.dart';
 import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Directive_Charge/directive_charge_page.dart';
@@ -102,7 +103,13 @@ final GoRouter router = GoRouter(
 
     GoRoute(
       path: '/fund_transfer_page',
-      builder: (context, state) => const FundTransferPage(),
+      builder: (context, state) {
+        final initialTab = state.extra as FundTransferTab? ?? FundTransferTab.card;
+
+        return FundTransferPage(
+          initialTab: initialTab,
+        );
+      },
     ),
 
     GoRoute(

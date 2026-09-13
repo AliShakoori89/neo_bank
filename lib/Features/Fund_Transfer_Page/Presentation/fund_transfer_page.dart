@@ -12,9 +12,16 @@ import '../../../Core/Services/check_connection_service.dart';
 import 'component/Cart_Tab_Body/cart_tab_body.dart';
 import 'component/Gift_Tab_Body/gift_tab_body.dart';
 import 'component/build_tab_item.dart';
+import 'fund_transfer_tab.dart';
 
 class FundTransferPage extends StatefulWidget {
-  const FundTransferPage({super.key});
+
+  final FundTransferTab initialTab;
+
+  const FundTransferPage({
+    super.key,
+    this.initialTab = FundTransferTab.card,
+  });
 
   @override
   State<FundTransferPage> createState() => _FundTransferPageState();
@@ -42,7 +49,8 @@ class _FundTransferPageState extends State<FundTransferPage>
 
     BlocProvider.of<AllCardsDetailBloc>(context).add(GetAllCardsDetailEvent());
     BlocProvider.of<UserAllAccountBloc>(context).add(GetUserAllAccountEvent());
-    _tabController = TabController(length: _tabs.length, vsync: this)
+    _tabController = TabController(length: _tabs.length, vsync: this,
+      initialIndex: widget.initialTab.index,)
       ..addListener(() => setState(() {}));
   }
 

@@ -6,6 +6,7 @@ import 'package:neo_bank_mehr_iran/Features/Bank_Services_Page/Presentation/Comp
 import '../../Core/Spacing/app_space.dart';
 import '../../Core/Services/check_connection_service.dart';
 import '../../Core/Widgets/custom_header.dart';
+import '../Fund_Transfer_Page/Presentation/fund_transfer_tab.dart';
 import '../Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_bloc.dart';
 import '../Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_event.dart';
 import '../Profile_Page/Presentation/Component/authentication_status_dialog.dart';
@@ -89,9 +90,17 @@ class _BankServicesPageState extends State<BankServicesPage> {
                           iconName: 'شارژ',
                         ),
                       ),
-                      CustomIconWidget(
-                        iconPath: 'assets/svg/bank_services_page/gift.svg',
-                        iconName: 'تقویم مالی',
+                      InkWell(
+                        onTap: (){
+                          context.push(
+                            '/fund_transfer_page',
+                            extra: FundTransferTab.gift,
+                          );
+                        },
+                        child: CustomIconWidget(
+                          iconPath: 'assets/svg/bank_services_page/gift.svg',
+                          iconName: 'هدیه',
+                        ),
                       ),
                       InkWell(
                         onTap: (){
