@@ -67,6 +67,7 @@ flutter:
     - assets/logo/
     - assets/icon/
     - assets/image/
+    - assets/image/card_design/
     - assets/image/Bank_Card/
     - assets/svg/
     - assets/icon/navigation_bar_icon/

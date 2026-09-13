@@ -8,85 +8,90 @@ class ShebaTextField extends StatelessWidget {
     super.key,
     required this.controller,
     this.onChanged,
+    required this.formKey,
   });
 
   final TextEditingController controller;
+  final GlobalKey<FormState> formKey;
   final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: TextInputType.number,
-      textDirection: TextDirection.ltr,
-      textAlign: TextAlign.left,
-      maxLength: 29,
-      inputFormatters: [
-        ShebaInputFormatter(),
-      ],
-      validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return 'لطفاً شماره شبا را وارد کنید';
-        }
+    return Form(
+      key: formKey,
+      child: TextFormField(
+        controller: controller,
+        keyboardType: TextInputType.number,
+        textDirection: TextDirection.ltr,
+        textAlign: TextAlign.left,
+        maxLength: 29,
+        inputFormatters: [
+          ShebaInputFormatter(),
+        ],
+        validator: (value) {
+          if (value == null || value.trim().isEmpty) {
+            return 'لطفاً شماره شبا را وارد کنید';
+          }
 
-        final sheba = ShebaInputFormatter.normalize(value);
+          final sheba = ShebaInputFormatter.normalize(value);
 
-        if (sheba.length != 26) {
-          return 'شماره شبا باید ۲۴ رقم باشد';
-        }
+          if (sheba.length != 24) {
+            return 'شماره شبا باید ۲۴ رقم باشد';
+          }
 
-        return null;
-      },
-      decoration: InputDecoration(
-        counterText: '',
-        hintText: 'XXXXXXX XXXX XXXX XXX XXX XXXX',
-        hintStyle: TextStyle(
-          fontSize: 13,
-          color: Colors.grey.shade500,
-        ),
-        suffixIcon: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          child: Center(
-            widthFactor: 1,
-            child: Text(
-              'IR',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
+          return null;
+        },
+        decoration: InputDecoration(
+          counterText: '',
+          hintText: 'XXXXXXX XXXX XXXX XXX XXX XXXX',
+          hintStyle: TextStyle(
+            fontSize: 13,
+            color: Colors.grey.shade500,
+          ),
+          suffixIcon: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Center(
+              widthFactor: 1,
+              child: Text(
+                'IR',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
             ),
           ),
-        ),
-        filled: true,
-        fillColor: Colors.grey.withAlpha(30),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 12,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-            color: Theme.of(context)
-                .colorScheme
-                .surfaceDim,
+          filled: true,
+          fillColor: Colors.grey.withAlpha(30),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 12,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(
+              color: Theme.of(context)
+                  .colorScheme
+                  .surfaceDim,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(
+              color: Theme.of(context)
+                  .colorScheme
+                  .surfaceDim,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(
+              color: AppColors.splashGradiantColor1,
+            ),
           ),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-            color: Theme.of(context)
-                .colorScheme
-                .surfaceDim,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-            color: AppColors.splashGradiantColor1,
-          ),
-        ),
+        onChanged: onChanged,
       ),
-      onChanged: onChanged,
     );
   }
 }

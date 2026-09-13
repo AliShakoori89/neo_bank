@@ -69,6 +69,7 @@ class AppColors {
 
   static const Color redColor = Color(0xFFD92D20);
   static const Color lowRedColor = Color(0xFFFDA29B);
+  static const Color orangColor = Color(0xFFF8722E);
 
 
   static const Color buttonIconColor = Color(0xFF67E3F9);

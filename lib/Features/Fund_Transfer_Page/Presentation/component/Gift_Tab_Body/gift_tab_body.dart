@@ -47,17 +47,19 @@ class _GiftTabBodyState extends State<GiftTabBody> {
           AppSpace.heightSpace_12,
 
           // دکمه تایید
-          CustomButton(),
+          CustomButton(phoneNumberFormKey: phoneNumberFormKey, phoneNumberController: phoneNumberController,),
           AppSpace.heightSpace_42,
           Text('. با استفاده از این قابلیت میتوانید مبلغی را به همراه پیام و طرح دلخواه به عنوان هدیه به مخاطب خود انتقال دهید.',
           style: TextStyle(
               color: Theme.of(context).colorScheme.primaryFixed
-          ),),
+          ),
+            textAlign: TextAlign.justify,),
           AppSpace.heightSpace_8,
           Text('. بعد از ارسال هدیه از طریق پیامک به مخاطب شما اطلاع رسانی شده و ایشان میتواند مبلغ هدیه خود را دریافت کند.',
             style: TextStyle(
                 color: Theme.of(context).colorScheme.primaryFixed
-            ),)
+            ),
+            textAlign: TextAlign.justify,)
 
         ],
       ),

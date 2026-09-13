@@ -12,8 +12,9 @@ class RepetitiveContacts extends StatelessWidget {
     return Container(
       color: Theme.of(context).colorScheme.surfaceContainer,
       height: 142,
-      child: Column(
-        children: [
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
           Container(
             margin: EdgeInsets.only(right: 24, left: 24),
             child: SizedBox(
@@ -96,6 +97,7 @@ class RepetitiveContacts extends StatelessWidget {
           ),
         ],
       ),
+      )
     );
   }
 }

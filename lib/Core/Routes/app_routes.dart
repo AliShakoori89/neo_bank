@@ -8,6 +8,9 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/login_page
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Component/ekyc_gate_page.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/ekyc_first_step_auth_page.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/send_video_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Gift_Tab_Body/gift_details_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Gift_Tab_Body/message_and_amount_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/component/Gift_Tab_Body/send_gift_states_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Entities/loan_entity.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/charge_and_internet_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Loan_page/loan_page.dart';
@@ -18,6 +21,7 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
+import '../../Features/Fund_Transfer_Page/Presentation/component/Gift_Tab_Body/select_design_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../../Features/Home_Page/Data/Model/internet_package_model.dart';
 import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/Package_Details/package_details.dart';
@@ -224,6 +228,52 @@ final GoRouter router = GoRouter(
       path: '/about_application_page',
       builder: (context, state) {
         return AboutApplicationPage();
+      },
+    ),
+
+    GoRoute(
+      path: '/send_gift_states_page',
+      builder: (context, state) {
+        final extra = state.extra as Map?;
+        return SendGiftStatesPage(
+          phoneNumber: extra?['phoneNumber'],
+        );
+      },
+    ),
+
+    GoRoute(
+      path: '/select_design_page',
+      builder: (context, state) {
+        final extra = state.extra as Map?;
+        return SelectDesignPage(
+          phoneNumber: extra?['phoneNumber'],
+        );
+      },
+    ),
+
+    GoRoute(
+      path: '/message_and_amount_page',
+      builder: (context, state) {
+        final extra = state.extra as Map?;
+        return MessageAndAmountPage(
+          phoneNumber: extra?['phoneNumber'],
+          imgPath: extra?['imgPath'],
+          cardTitle: extra?['cardTitle'],
+        );
+      },
+    ),
+
+    GoRoute(
+      path: '/gift_details_page',
+      builder: (context, state) {
+        final extra = state.extra as Map?;
+        return GiftDetailsPage(
+          phoneNumber: extra?['phoneNumber'],
+          imgPath: extra?['imgPath'],
+          cardTitle: extra?['cardTitle'],
+          amount: extra?['amount'],
+          message: extra?['message'],
+        );
       },
     ),
   ],

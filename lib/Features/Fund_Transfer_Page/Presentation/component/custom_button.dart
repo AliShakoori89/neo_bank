@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../Core/Spacing/app_space.dart';
 import '../../../../Core/Theme/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key});
+  const CustomButton({super.key, required this.phoneNumberFormKey, required this.phoneNumberController});
+
+  final GlobalKey<FormState> phoneNumberFormKey;
+  final TextEditingController phoneNumberController;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +32,11 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
+          if (phoneNumberFormKey.currentState!.validate()) {
+            context.push('/send_gift_states_page', extra: {
+              'phoneNumber': phoneNumberController.text,
+            });
+          }
           },
         child: Row(
           mainAxisAlignment:

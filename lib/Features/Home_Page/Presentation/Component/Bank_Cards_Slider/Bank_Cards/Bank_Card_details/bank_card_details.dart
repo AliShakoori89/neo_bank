@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../../../Core/Spacing/app_space.dart';
 import 'Component/Copy_And_Share/copy_and_share.dart';
 
-bankCardDetails(context, String cardPan, String cardDeposit){
+Future<dynamic> bankCardDetails(context, String cardPan, String cardDeposit){
 
   List<Map> detailsItem = [
     {'id' : 1 ,'itemName': 'کپی و اشتراک', 'icon': Icons.share},

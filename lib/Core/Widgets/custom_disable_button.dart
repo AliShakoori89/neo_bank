@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../Spacing/app_space.dart';
 import '../Theme/app_colors.dart';
 
 class CustomDisableButton extends StatelessWidget {
@@ -27,18 +28,24 @@ class CustomDisableButton extends StatelessWidget {
         ),
       ),
       onPressed: null,
-      child: SizedBox(
-        width: double.infinity,
-        child: Center(
-          child: Text(
-            'تایید',
+      child: Row(
+        mainAxisAlignment:
+        MainAxisAlignment.center,
+        children: [
+          const Text(
+            'تایید و ادامه',
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: AppColors.darkModeIconIconColor.withAlpha(60), // متن کمرنگ‌تر
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: AppColors.loginPageHintFontColor,
             ),
           ),
-        ),
+          AppSpace.widthSpace_5,
+          Icon(
+            Icons.arrow_forward,
+            color: AppColors.loginPageHintFontColor
+          ),
+        ],
       ),
     );
   }

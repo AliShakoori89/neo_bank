@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../Spacing/app_space.dart';
 import '../Theme/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
@@ -34,12 +35,19 @@ class CustomButton extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: Center(
-          child: Text(
-            buttonTitle,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                buttonTitle,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              AppSpace.widthSpace_5,
+              Icon(Icons.arrow_forward, color: AppColors.appWhite)
+            ],
           ),
         ),
       ),
