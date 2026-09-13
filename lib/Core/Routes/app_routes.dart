@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:neo_bank_mehr_iran/Core/Routes/otp_args.dart';
@@ -21,6 +22,7 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Component/
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
+import 'package:neo_bank_mehr_iran/Features/Invoices_Page/Presentation/Component/invoice_details.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/component/Gift_Tab_Body/select_design_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_tab.dart';
@@ -266,6 +268,18 @@ final GoRouter router = GoRouter(
           phoneNumber: extra?['phoneNumber'],
           imgPath: extra?['imgPath'],
           cardTitle: extra?['cardTitle'],
+        );
+      },
+    ),
+
+    GoRoute(
+      path: '/invoice_details',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        return InvoiceDetails(
+          title: extra?['title'] ?? 'جزئیات قبض',
+          icon: extra?['icon'] as IconData?,
+          color: extra?['color'] as Color?,
         );
       },
     ),

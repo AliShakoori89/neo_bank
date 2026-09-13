@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../Core/Theme/app_colors.dart';
 import '../../Core/Spacing/app_space.dart';
 import '../Home_Page/Presentation/Component/Charge_Internet_Page/Component/custom_header.dart';
@@ -132,8 +133,11 @@ class InvoicesPage extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        // TODO:
-        // منطق پرداخت قبض بر اساس نوع قبض
+        context.push('/invoice_details', extra: {
+          'title': title,
+          'icon': icon,
+          'color': color,
+        });
       },
       borderRadius: BorderRadius.circular(16),
       child: Container(
