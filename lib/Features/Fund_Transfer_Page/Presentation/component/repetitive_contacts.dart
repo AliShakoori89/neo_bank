@@ -5,7 +5,21 @@ import '../../../../Core/Spacing/app_space.dart';
 import '../../../../Core/Theme/app_colors.dart';
 
 class RepetitiveContacts extends StatelessWidget {
-  const RepetitiveContacts({super.key});
+  RepetitiveContacts({super.key});
+
+  final List<Map> amountItem = [
+    {'id' : 0 ,'userName': 'احسان علی مردانی'},
+    {'id' : 1 ,'userName': 'علی شکوری'},
+    {'id' : 2 ,'userName': 'جلال بال افکن'},
+    {'id' : 3 ,'userName': 'بهروز فرجی'},
+    {'id' : 4 ,'userName': 'ساحل معظمی'},
+    {'id' : 5 ,'userName': 'الناز اردلانی'},
+    {'id' : 6 ,'userName': 'فرهاد حسین زاده'},
+    {'id' : 7 ,'userName': 'فرشید نوری'},
+    {'id' : 8 ,'userName': 'علیرضا درودیان'},
+    {'id' : 9 ,'userName': 'میلاد سرلک'},
+    {'id' : 10 ,'userName': 'محمد بخیرایی'}
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +67,8 @@ class RepetitiveContacts extends StatelessWidget {
               height: 82,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                separatorBuilder: (_, _) => const SizedBox(width: 15),
+                itemCount: amountItem.length,
+                separatorBuilder: (_, _) => const SizedBox(width: 10),
                 itemBuilder: (context, index) => SizedBox(
                   width: 74,
                   height: 82,
@@ -78,11 +92,12 @@ class RepetitiveContacts extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: Text(
-                          'احسان علیمردانی',
+                          amountItem.elementAt(index)['userName'].toString(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
+                            overflow: TextOverflow.ellipsis,
                             color: Theme.of(
                               context,
                             ).colorScheme.primaryFixed,

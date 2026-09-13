@@ -32,10 +32,7 @@ class _FundTransferPageState extends State<FundTransferPage>
   late TabController _tabController;
 
   final List<Map<String, String>> _tabs = [
-    {
-      'icon': 'assets/svg/fund_transfer_page/credit-card-02.svg',
-      'title': 'کارت',
-    },
+    {'icon': 'assets/svg/fund_transfer_page/credit-card-02.svg', 'title': 'کارت',},
     {'icon': 'assets/svg/fund_transfer_page/bank.svg', 'title': 'حساب'},
     {'icon': 'assets/svg/fund_transfer_page/Layer_1.svg', 'title': 'شبا'},
     {'icon': 'assets/svg/fund_transfer_page/gift-01.svg', 'title': 'هدیه'},
