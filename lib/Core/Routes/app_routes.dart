@@ -23,6 +23,7 @@ import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Invoices_Page/Presentation/Component/invoice_details.dart';
+import '../../Features/AI_Assistant/Presentation/Pages/ai_assistant_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/component/Gift_Tab_Body/select_design_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_tab.dart';
@@ -295,6 +296,13 @@ final GoRouter router = GoRouter(
           amount: extra?['amount'],
           message: extra?['message'],
         );
+      },
+    ),
+
+    GoRoute(
+      path: '/ai_assistant_page',
+      builder: (context, state) {
+        return AiAssistantPage();
       },
     ),
   ],

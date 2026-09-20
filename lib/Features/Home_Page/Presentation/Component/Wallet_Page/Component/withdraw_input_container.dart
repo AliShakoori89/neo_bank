@@ -46,6 +46,7 @@ class _WithdrawInputContainerState extends State<WithdrawInputContainer> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
+                  AppSpace.heightSpace_24,
                   Text('کیف پول مورد نظر خود را انتخاب نمایید:',
                     style: TextStyle(
                       fontSize: 14,

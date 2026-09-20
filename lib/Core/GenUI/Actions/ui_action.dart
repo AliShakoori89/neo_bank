@@ -1,0 +1,1 @@
+typedef UiAction = Future<void> Function();

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:neo_bank_mehr_iran/Core/Theme/app_colors.dart';
 import 'package:neo_bank_mehr_iran/Features/Account_Report_Page/Presentation/account_report_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_event.dart';
@@ -93,6 +95,24 @@ class _MainPageState extends State<MainPage> {
         },
         child: Scaffold(
           backgroundColor: Colors.transparent,
+          floatingActionButton: Padding(
+            padding: EdgeInsets.only(
+              bottom: 80,
+              right: 20
+            ),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton(
+                backgroundColor: AppColors.homePageTitleColor.withAlpha(100),
+                onPressed: () {
+                  context.push('/ai_assistant_page');
+                },
+                child: Image.asset('assets/icon/ai.png', width: 40, height: 40,
+                  
+                ),
+              ),
+            ),
+          ),
           body: SafeArea(
             child: Directionality(
               textDirection: TextDirection.rtl,

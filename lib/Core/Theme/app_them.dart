@@ -78,6 +78,8 @@ class AppTheme {
     ),
 
     dividerColor: Color(0xFFE9EAEB),
+
+      primaryColor: Colors.black
   );
 
 
@@ -160,5 +162,7 @@ class AppTheme {
     ),
 
     dividerColor: Color(0xFF22262F),
+
+    primaryColor: Colors.white
   );
 }

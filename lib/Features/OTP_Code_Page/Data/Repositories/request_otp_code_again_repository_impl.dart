@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Entities/otp_request_again_result_entity.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repositories/request_otp_code_again_repository.dart';
 import '../../../../Core/Network/app_exception.dart';
 import '../../../../Core/Services/token_storage_service.dart';
 
+@LazySingleton(as: RequestOtpCodeAgainRepository)
 class RequestOtpCodeAgainRepositoryImpl implements RequestOtpCodeAgainRepository{
 
   final RequestOtpCodeAgainRemoteDataSource requestOtpCodeAgainRemoteDataSource;

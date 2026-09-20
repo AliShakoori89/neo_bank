@@ -42,6 +42,8 @@ import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/DI/injection_container.dart';
 import 'Core/Routes/app_routes.dart';
+import 'Features/AI_Assistant/Presentation/Bloc/AI_Assistant_Bloc/ai_assistant_bloc.dart';
+import 'Features/AI_Assistant/Presentation/Bloc/Account_Bloc/account_bloc.dart';
 import 'Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
@@ -172,6 +174,12 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (_) => sl<LoanPageBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => sl<AccountBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => sl<AiAssistantBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) =>
