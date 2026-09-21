@@ -6,7 +6,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Sta
 import '../../../Domain/Entities/statement_entity.dart';
 import '../../../Domain/UseCases/fetch_statement_use_case.dart';
 
-@lazySingleton
+@injectable
 class StatementBloc extends Bloc<StatementEvent, StatementState> {
   final FetchStatementFilteredUseCase fetchStatementFilteredUseCase;
   final FetchStatementUseCase fetchStatementUseCase;

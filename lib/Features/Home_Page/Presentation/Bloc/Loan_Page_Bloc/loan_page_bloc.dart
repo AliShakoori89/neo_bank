@@ -4,7 +4,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/loan_page_
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_state.dart';
 
-@lazySingleton
+@injectable
 class LoanPageBloc
     extends Bloc<LoanPageEvent, LoanPageState> {
   final LoanPageUseCase loanPageUseCase;

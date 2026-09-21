@@ -5,7 +5,7 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_state.dart';
 import '../../../../../Core/Network/app_exception.dart';
 
-@lazySingleton
+@injectable
 class AllCardsDetailBloc
     extends Bloc<AllCardsDetailEvent, AllCardsDetailState> {
   final AllCardDetailUseCase allCardDetailUseCase;

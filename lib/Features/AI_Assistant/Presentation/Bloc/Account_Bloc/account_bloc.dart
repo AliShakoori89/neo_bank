@@ -4,7 +4,7 @@ import '../../../Domain/UseCases/get_balance_use_case.dart';
 import 'account_event.dart';
 import 'account_state.dart';
 
-@lazySingleton
+@injectable
 class AccountBloc
     extends Bloc<AccountEvent, AccountState> {
   final GetBalanceUseCase getBalanceUseCase;

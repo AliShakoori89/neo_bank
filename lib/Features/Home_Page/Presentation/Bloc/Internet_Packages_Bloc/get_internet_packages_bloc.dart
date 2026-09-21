@@ -5,7 +5,7 @@ import '../../../Domain/UseCases/internet_package_use_case.dart';
 import 'get_internet_packages_event.dart';
 import 'get_internet_packages_state.dart';
 
-@lazySingleton
+@injectable
 class InternetPackageBloc extends Bloc<InternetPackageEvent, InternetPackageState> {
   final InternetPackageUseCase internetPackageUseCase;
 

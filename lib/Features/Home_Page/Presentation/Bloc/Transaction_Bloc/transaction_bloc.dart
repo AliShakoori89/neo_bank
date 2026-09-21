@@ -5,7 +5,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transact
 import '../../../../../Core/Network/app_exception.dart';
 import '../../../Domain/UseCases/transaction_use_case.dart';
 
-@lazySingleton
+@injectable
 class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
   final TransactionUseCase transactionUseCase;
 

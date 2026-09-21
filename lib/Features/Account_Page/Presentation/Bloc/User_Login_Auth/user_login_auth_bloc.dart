@@ -5,7 +5,7 @@ import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_
 import '../../../Domain/UseCases/check_login_status_use_case.dart';
 import '../../../Domain/UseCases/login_use_case.dart';
 
-@lazySingleton
+@injectable
 class UserLoginAuthBloc extends Bloc<UserLoginAuthEvent, UserLoginAuthState> {
   final LoginUseCase loginUseCase;
   final CheckLoginStatusUseCase checkLoginStatusUseCase;

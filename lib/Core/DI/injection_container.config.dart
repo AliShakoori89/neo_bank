@@ -266,7 +266,7 @@ extension GetItInjectableX on _i174.GetIt {
         otpCodeCheckRemoteDataSource: gh<_i78.OtpCodeCheckRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i840.LoanPageBloc>(
+    gh.factory<_i840.LoanPageBloc>(
       () => _i840.LoanPageBloc(loanPageUseCase: gh<_i56.LoanPageUseCase>()),
     );
     gh.lazySingleton<_i22.WalletUseCase>(
@@ -332,7 +332,7 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i64.CitizenEkycStatusRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i172.WalletBloc>(
+    gh.factory<_i172.WalletBloc>(
       () => _i172.WalletBloc(walletUseCase: gh<_i22.WalletUseCase>()),
     );
     gh.lazySingleton<_i867.OtpCodeCheckUseCase>(
@@ -350,7 +350,7 @@ extension GetItInjectableX on _i174.GetIt {
         repository: gh<_i99.InternetPackagesRepository>(),
       ),
     );
-    gh.lazySingleton<_i894.InternetPackageBloc>(
+    gh.factory<_i894.InternetPackageBloc>(
       () => _i894.InternetPackageBloc(
         internetPackageUseCase: gh<_i917.InternetPackageUseCase>(),
       ),
@@ -363,7 +363,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i173.DepositUseCase>(
       () => _i173.DepositUseCase(repository: gh<_i25.DepositsRepository>()),
     );
-    gh.lazySingleton<_i982.StatementBloc>(
+    gh.factory<_i982.StatementBloc>(
       () => _i982.StatementBloc(
         gh<_i749.FetchStatementFilteredUseCase>(),
         gh<_i849.FetchStatementUseCase>(),
@@ -398,15 +398,15 @@ extension GetItInjectableX on _i174.GetIt {
         validator: gh<_i978.UiSchemaValidator>(),
       ),
     );
-    gh.lazySingleton<_i85.UserAllAccountBloc>(
+    gh.factory<_i85.UserAllAccountBloc>(
       () => _i85.UserAllAccountBloc(depositUseCase: gh<_i173.DepositUseCase>()),
     );
-    gh.lazySingleton<_i553.TransactionBloc>(
+    gh.factory<_i553.TransactionBloc>(
       () => _i553.TransactionBloc(
         transactionUseCase: gh<_i37.TransactionUseCase>(),
       ),
     );
-    gh.lazySingleton<_i757.UserLoginAuthBloc>(
+    gh.factory<_i757.UserLoginAuthBloc>(
       () => _i757.UserLoginAuthBloc(
         loginUseCase: gh<_i480.LoginUseCase>(),
         checkLoginStatusUseCase: gh<_i394.CheckLoginStatusUseCase>(),
@@ -421,20 +421,20 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i324.GetBalanceUseCase(allCardsUseCase: gh<_i829.AllCardsUseCase>()),
     );
-    gh.lazySingleton<_i54.AllCardsBloc>(
+    gh.factory<_i54.AllCardsBloc>(
       () => _i54.AllCardsBloc(allCardsUseCase: gh<_i829.AllCardsUseCase>()),
     );
-    gh.lazySingleton<_i456.CitizenEkycStatusBloc>(
+    gh.factory<_i456.CitizenEkycStatusBloc>(
       () => _i456.CitizenEkycStatusBloc(
         citizenEkycStatusUseCase: gh<_i286.CitizenEkycStatusUseCase>(),
       ),
     );
-    gh.lazySingleton<_i866.AllCardsDetailBloc>(
+    gh.factory<_i866.AllCardsDetailBloc>(
       () => _i866.AllCardsDetailBloc(
         allCardDetailUseCase: gh<_i477.AllCardDetailUseCase>(),
       ),
     );
-    gh.lazySingleton<_i671.AccountBloc>(
+    gh.factory<_i671.AccountBloc>(
       () => _i671.AccountBloc(getBalanceUseCase: gh<_i324.GetBalanceUseCase>()),
     );
     gh.lazySingleton<_i724.AiAssistantActionRegistry>(

@@ -5,7 +5,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_B
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_state.dart';
 import '../../../../../Core/Network/app_exception.dart';
 
-@lazySingleton
+@injectable
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final WalletUseCase walletUseCase;
 

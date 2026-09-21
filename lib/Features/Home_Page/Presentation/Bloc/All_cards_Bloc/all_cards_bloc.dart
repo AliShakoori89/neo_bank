@@ -5,7 +5,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_card
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_state.dart';
 import '../../../../../Core/Network/app_exception.dart';
 
-@lazySingleton
+@injectable
 class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
   final AllCardsUseCase allCardsUseCase;
   static const int maxRefreshCount = 5;

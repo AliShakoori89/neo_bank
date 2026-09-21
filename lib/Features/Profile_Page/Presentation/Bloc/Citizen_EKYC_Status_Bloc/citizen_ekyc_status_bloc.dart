@@ -5,7 +5,7 @@ import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/UseCases/citizen
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_state.dart';
 
-@lazySingleton
+@injectable
 class CitizenEkycStatusBloc extends Bloc<CitizenEkycStatusEvent, CitizenEkycStatusState> {
   final CitizenEkycStatusUseCase citizenEkycStatusUseCase;
 

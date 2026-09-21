@@ -24,6 +24,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Componen
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Invoices_Page/Presentation/Component/invoice_details.dart';
 import '../../Features/AI_Assistant/Presentation/Pages/ai_assistant_page.dart';
+import '../../Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/component/Gift_Tab_Body/select_design_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_tab.dart';
@@ -35,10 +36,8 @@ import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Com
 import '../../Features/Home_Page/Presentation/Component/Loan_page/Component/installment_item_details.dart';
 import '../../Features/Invoices_Page/invoices_page.dart';
 import '../../Features/Main_Page/Presentation/main_page.dart';
-import '../../Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart';
-import '../../Features/OTP_Code_Page/Data/Repositories/request_otp_code_again_repository_impl.dart';
-import '../../Features/OTP_Code_Page/Domain/UseCases/request_otp_code_again_use_case.dart';
-import '../Network/dio_client.dart';
+import '../../Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
+import '../DI/injection_container.dart';
 import '../Services/App_Lock/navigator_key.dart';
 
 final GoRouter router = GoRouter(
@@ -62,17 +61,8 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final args = state.extra as OtpArgs;
 
-        final dioClient  = DioClient();
-
-        final remoteDataSource = RequestOtpCodeAgainRemoteDataSource( dioClient: dioClient, );
-
-        final repository = RequestOtpCodeAgainRepositoryImpl( requestOtpCodeAgainRemoteDataSource: remoteDataSource, );
-
-        final useCase = RequestOtpCodeAgainUseCase( repository: repository, );
-
         return BlocProvider(
-          create: (_) =>
-              RequestOtpAgainBloc(requestOtpCodeAgainUseCase: useCase,),
+          create: (_) => sl<RequestOtpAgainBloc>(),
           child: OtpCodePage(
             phoneNumber: args.phoneNumber,
             nationalCode: args.nationalCode,
@@ -152,7 +142,19 @@ final GoRouter router = GoRouter(
 
     GoRoute(
       path: '/statement_page',
-      builder: (context, state) => const StatementPage(),
+      builder: (context, state) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<AllCardsDetailBloc>(
+              create: (_) => sl<AllCardsDetailBloc>(),
+            ),
+            BlocProvider<StatementBloc>(
+              create: (_) => sl<StatementBloc>(),
+            ),
+          ],
+          child: const StatementPage(),
+        );
+      },
     ),
 
     GoRoute(
