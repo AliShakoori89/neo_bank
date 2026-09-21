@@ -8,7 +8,7 @@ class FetchStatementEvent extends StatementEvent {
 
 class FetchFilterStatementEvent extends StatementEvent {
   final String depositNumber;
-  int? statementActionType;
+  final int? statementActionType;
   final String startDate;
   final String endDate;
 
@@ -22,7 +22,7 @@ class LoadMoreStatementEvent extends StatementEvent {
 
 class LoadMoreFilteredStatementEvent extends StatementEvent {
   final String depositNumber;
-  int? statementActionType;
+  final int? statementActionType;
   final String startDate;
   final String endDate;
   LoadMoreFilteredStatementEvent(this.depositNumber, this.statementActionType, this.startDate, this.endDate);
