@@ -41,7 +41,7 @@ class _StatementPageState extends State<StatementPage> {
 
   TransactionType selectedType = TransactionType.all;
 
-  void _onOtpChanged(TransactionType value) {
+  void _onTransactionTypeChanged(TransactionType value) {
     setState(() {
       selectedType = value;
     });
@@ -248,7 +248,7 @@ class _StatementPageState extends State<StatementPage> {
                                 ),
 
                                 AppSpace.heightSpace_32,
-                                SelectTransactionTypes(selectedType: selectedType, onCompleted: _onOtpChanged,),
+                                SelectTransactionTypes(selectedType: selectedType, onCompleted: _onTransactionTypeChanged,),
 
                                 AppSpace.heightSpace_32,
                                 Row(

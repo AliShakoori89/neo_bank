@@ -38,7 +38,16 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
 
       final allList = List<StatementItemEntity>.from(
         result.statements ?? [],
-      )..sort((a, b) => b.date!.compareTo(a.date!));
+      )..sort((a, b) {
+        final aDate = a.date;
+        final bDate = b.date;
+
+        if (aDate == null && bDate == null) return 0;
+        if (aDate == null) return 1;
+        if (bDate == null) return -1;
+
+        return bDate.compareTo(aDate);
+      });
 
       emit(
         state.copyWith(
@@ -74,7 +83,16 @@ class StatementBloc extends Bloc<StatementEvent, StatementState> {
 
       final allList = List<StatementItemEntity>.from(
         result.statements ?? [],
-      )..sort((a, b) => b.date!.compareTo(a.date!));
+      )..sort((a, b) {
+        final aDate = a.date;
+        final bDate = b.date;
+
+        if (aDate == null && bDate == null) return 0;
+        if (aDate == null) return 1;
+        if (bDate == null) return -1;
+
+        return bDate.compareTo(aDate);
+      });
 
       emit(
         state.copyWith(
