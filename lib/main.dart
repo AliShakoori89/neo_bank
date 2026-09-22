@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:neo_bank_mehr_iran/Core/Theme/app_them.dart';
 import 'package:neo_bank_mehr_iran/Core/Services/App_Lock/app_lock_observer_service.dart';
-import 'package:neo_bank_mehr_iran/Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/abort_token_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/create_token_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Domain/Repository/get_citizen_ekyc_status_repository.dart';
@@ -22,30 +21,10 @@ import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentatio
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Random_Text_Bloc/random_text_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Send_Video_Bloc/send_video_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentation/Bloc/Validate_token_Bloc/validate_token_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repositories/profile_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Domain/Repository/local_pass_repository.dart';
-import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/DI/injection_container.dart';
 import 'Core/Routes/app_routes.dart';
-import 'Features/AI_Assistant/Presentation/Bloc/AI_Assistant_Bloc/ai_assistant_bloc.dart';
-import 'Features/AI_Assistant/Presentation/Bloc/Account_Bloc/account_bloc.dart';
-import 'Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
-import 'Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_bloc.dart';
 import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_event.dart';
@@ -99,51 +78,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (_) => VpnBloc()..add(CheckVpnEvent()),
         ),
-        BlocProvider(
-          create: (_) => MainNavigationBloc(initialIndex: 0), // ⭐ اضافه شود
-        ),
-        BlocProvider(
-          create: (_) => sl<UserLoginAuthBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => sl<AllCardsBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => sl<AllCardsDetailBloc>(),
-        ),
-        BlocProvider(
-            create: (_) => sl<OtpCodeCheckBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => sl<RequestOtpAgainBloc>(),
-        ),
-        BlocProvider(
-          create: (BuildContext context) => ProfileBloc(GetProfileRepository()),
-        ),
-        BlocProvider(
-            create: (_) => sl<StatementBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => sl<UserAllAccountBloc>(),
-        ),
-        BlocProvider(
-          create: (BuildContext context) =>
-              LocalPassBloc(LocalPassRepository()),
-        ),
-        BlocProvider(create: (_) => BalanceVisibilityCubit()),
-        BlocProvider(create: (BuildContext context) => RefreshCountBloc()),
-        BlocProvider(
-          create: (_) => sl<InternetPackageBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => sl<WalletBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => sl<TransactionBloc>(),
-        ),
-        BlocProvider(
-            create: (_) => sl<CitizenEkycStatusBloc>(),
-        ),
+
         BlocProvider(
           create: (BuildContext context) =>
               CreateTokenBloc(CreateTokenRepository()),
@@ -171,15 +106,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (BuildContext context) =>
               HasApprovedEkycBloc(HasApprovedEkycRepository()),
-        ),
-        BlocProvider(
-          create: (_) => sl<LoanPageBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => sl<AccountBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => sl<AiAssistantBloc>(),
         ),
         BlocProvider(
           create: (BuildContext context) =>
