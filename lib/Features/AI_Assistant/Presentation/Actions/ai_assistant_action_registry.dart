@@ -7,14 +7,12 @@ import '../Bloc/Account_Bloc/account_event.dart';
 @lazySingleton
 class AiAssistantActionRegistry {
   final UiActionRegistry registry;
-  final AccountBloc accountBloc;
 
   AiAssistantActionRegistry({
     required this.registry,
-    required this.accountBloc,
   });
 
-  void registerActions() {
+  void registerActions(AccountBloc accountBloc) {
     registry.register(
       'show_balance',
           () async {
