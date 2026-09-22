@@ -54,40 +54,53 @@ class InternetChecker {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (ctx) {
-
-        bool isLoading = false; // ✅ فقط یکبار تعریف شده
-
-        return StatefulBuilder(
-          builder: (context, setState) {
-
-            Future<void> handleRetry() async {
-              if (isLoading) return;
-
-              setState(() => isLoading = true);
-
-              final results = await Future.wait([
-                hasConnection(), // ✅ فقط چک خالص
-                Future.delayed(const Duration(seconds: 3)), // ⏳ فرمالیته
-              ]);
-
-              final connected = results[0] as bool;
-
-              if (connected) {
-                Navigator.of(ctx).pop();
-                onSuccess();
-              } else {
-                setState(() => isLoading = false);
-              }
-            }
-
-            return AppSnackBarWithButton(
-                errorText: 'اتصال اینترنت برقرار نیست!',
-                isLoading: isLoading,
-                handleRetry: handleRetry);
-          },
+      builder: (_) {
+        return _NoInternetDialog(
+          onSuccess: onSuccess,
         );
       },
+    );
+  }
+}
+
+class _NoInternetDialog extends StatefulWidget {
+  const _NoInternetDialog({
+    required this.onSuccess,
+  });
+
+  final VoidCallback onSuccess;
+
+  @override
+  State<_NoInternetDialog> createState() => _NoInternetDialogState();
+}
+
+class _NoInternetDialogState extends State<_NoInternetDialog> {
+  bool isLoading = false;
+
+  Future<void> handleRetry() async {
+    if (isLoading) return;
+
+    setState(() => isLoading = true);
+
+    final connected = await InternetChecker.hasConnection();
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!mounted) return;
+
+    if (connected) {
+      Navigator.of(context).pop();
+      widget.onSuccess();
+    } else {
+      setState(() => isLoading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AppSnackBarWithButton(
+      errorText: 'اتصال اینترنت برقرار نیست!',
+      isLoading: isLoading,
+      handleRetry: handleRetry,
     );
   }
 }
