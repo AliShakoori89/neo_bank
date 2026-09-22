@@ -254,9 +254,6 @@ extension GetItInjectableX on _i174.GetIt {
         loanPageDataSource: gh<_i572.LoanPageDataSource>(),
       ),
     );
-    gh.factory<_i845.MainNavigationBloc>(
-      () => _i845.MainNavigationBloc(initialIndex: gh<int>()),
-    );
     gh.lazySingleton<_i978.UiSchemaValidator>(
       () => _i978.UiSchemaValidator(
         actionRegistry: gh<_i944.UiActionRegistry>(),
@@ -337,6 +334,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i301.ProfileBloc>(
       () => _i301.ProfileBloc(gh<_i85.GetProfileRepository>()),
+    );
+    gh.factoryParam<_i845.MainNavigationBloc, int, dynamic>(
+      (initialIndex, _) => _i845.MainNavigationBloc(initialIndex: initialIndex),
     );
     gh.lazySingleton<_i362.AllCardDetailRepository>(
       () => _i348.AllCardDetailRepositoryImpl(

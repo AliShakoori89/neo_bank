@@ -36,6 +36,7 @@ import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_tab.dart';
 import '../../Features/Home_Page/Data/Model/internet_package_model.dart';
 import '../../Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
+import '../../Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
 import '../../Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import '../../Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_bloc.dart';
 import '../../Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
@@ -162,12 +163,19 @@ final GoRouter router = GoRouter(
 
             // Main navigation
             BlocProvider<MainNavigationBloc>(
-              create: (_) => sl<MainNavigationBloc>(),
+              create: (_) => sl<MainNavigationBloc>(
+                param1: index,
+              ),
             ),
 
             // Home
             BlocProvider<AllCardsBloc>(
               create: (_) => sl<AllCardsBloc>(),
+            ),
+
+            // Refresh Count
+            BlocProvider<RefreshCountBloc>(
+              create: (_) => sl<RefreshCountBloc>(),
             ),
 
             // Fund Transfer
@@ -534,6 +542,9 @@ final GoRouter router = GoRouter(
             ),
             BlocProvider<AccountBloc>(
               create: (_) => sl<AccountBloc>(),
+            ),
+            BlocProvider<ProfileBloc>(
+              create: (_) => sl<ProfileBloc>(),
             ),
           ],
           child: const AiAssistantPage(),

@@ -5,7 +5,7 @@ import 'main_navigation_state.dart';
 
 @injectable
 class MainNavigationBloc extends Bloc<MainNavigationEvent, MainNavigationState> {
-  MainNavigationBloc({int initialIndex = 0}) : super(MainNavigationState(initialIndex)) {
+  MainNavigationBloc({@factoryParam int initialIndex = 0}) : super(MainNavigationState(initialIndex)) {
     on<ChangeTabEvent>((event, emit) => emit(MainNavigationState(event.index)));
   }
 }

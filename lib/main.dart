@@ -71,12 +71,14 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => ThemeBloc(
-            widget.isDark ? AppTheme.darkTheme : AppTheme.lightTheme,
+          create: (_) => sl<ThemeBloc>(
+            param1: widget.isDark
+                ? AppTheme.darkTheme
+                : AppTheme.lightTheme,
           ),
         ),
         BlocProvider(
-          create: (_) => VpnBloc()..add(CheckVpnEvent()),
+          create: (_) => sl<VpnBloc>()..add(CheckVpnEvent()),
         ),
 
         BlocProvider(

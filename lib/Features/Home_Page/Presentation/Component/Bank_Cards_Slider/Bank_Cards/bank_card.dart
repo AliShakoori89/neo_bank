@@ -6,13 +6,13 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_v
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_balance.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_header.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Bank_Cards_Slider/Bank_Cards/Bank_Card_Component/card_number_and_date.dart';
-
+import '../../../../../../Core/DI/injection_container.dart';
 import '../../../../Domain/Entities/card_list_entity.dart';
 
 /// 🔹 کارت بانکی
 Widget buildBankCard(CardEntity card) {
   return BlocProvider(
-    create: (_) => BalanceVisibilityCubit(),
+    create: (_) => sl<BalanceVisibilityCubit>(),
     child: Stack(
       children: [
         // کارت اصلی

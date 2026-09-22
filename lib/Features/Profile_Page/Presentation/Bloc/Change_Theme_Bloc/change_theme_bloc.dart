@@ -8,7 +8,7 @@ enum ThemeEvent { toggle, load }
 
 @injectable
 class ThemeBloc extends Bloc<ThemeEvent, ThemeData> {
-  ThemeBloc(super.initialTheme) {
+  ThemeBloc(@factoryParam super.initialTheme){
     on<ThemeEvent>(_onEvent);
   }
 
