@@ -481,7 +481,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i724.AiAssistantActionRegistry>(
       () => _i724.AiAssistantActionRegistry(
         registry: gh<_i944.UiActionRegistry>(),
-        accountBloc: gh<_i671.AccountBloc>(),
       ),
     );
     return this;
