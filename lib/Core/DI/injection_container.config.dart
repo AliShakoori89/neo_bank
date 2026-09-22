@@ -201,6 +201,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i944.UiActionRegistry>(() => _i944.UiActionRegistry());
     gh.lazySingleton<_i891.UiStateRegistry>(() => _i891.UiStateRegistry());
     gh.lazySingleton<_i893.DioClient>(() => _i893.DioClient());
+    gh.lazySingleton<_i85.GetProfileRepository>(
+      () => _i85.GetProfileRepository(),
+    );
+    gh.lazySingleton<_i812.LocalPassRepository>(
+      () => _i812.LocalPassRepository(),
+    );
     gh.lazySingleton<_i361.Dio>(
       () => registerModule.geminiDio,
       instanceName: 'geminiDio',
@@ -290,6 +296,9 @@ extension GetItInjectableX on _i174.GetIt {
         loanPageRepository: gh<_i517.LoanPageRepository>(),
       ),
     );
+    gh.factoryParam<_i811.ThemeBloc, _i409.ThemeData, dynamic>(
+      (initialTheme, _) => _i811.ThemeBloc(initialTheme),
+    );
     gh.lazySingleton<_i34.OtpCodeCheckRepository>(
       () => _i79.OtpCodeCheckRepositoryImpl(
         otpCodeCheckRemoteDataSource: gh<_i78.OtpCodeCheckRemoteDataSource>(),
@@ -321,7 +330,6 @@ extension GetItInjectableX on _i174.GetIt {
         dataSource: gh<_i612.AiSchemaDataSource>(),
       ),
     );
-    gh.factory<_i811.ThemeBloc>(() => _i811.ThemeBloc(gh<_i409.ThemeData>()));
     gh.lazySingleton<_i367.RequestOtpCodeAgainUseCase>(
       () => _i367.RequestOtpCodeAgainUseCase(
         repository: gh<_i468.RequestOtpCodeAgainRepository>(),
@@ -346,6 +354,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i979.UiActionHandler>(
       () => _i979.UiActionHandler(registry: gh<_i944.UiActionRegistry>()),
+    );
+    gh.lazySingleton<_i724.AiAssistantActionRegistry>(
+      () => _i724.AiAssistantActionRegistry(
+        registry: gh<_i944.UiActionRegistry>(),
+      ),
     );
     gh.factory<_i451.RequestOtpAgainBloc>(
       () => _i451.RequestOtpAgainBloc(
@@ -477,11 +490,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i671.AccountBloc>(
       () => _i671.AccountBloc(getBalanceUseCase: gh<_i324.GetBalanceUseCase>()),
-    );
-    gh.lazySingleton<_i724.AiAssistantActionRegistry>(
-      () => _i724.AiAssistantActionRegistry(
-        registry: gh<_i944.UiActionRegistry>(),
-      ),
     );
     return this;
   }
