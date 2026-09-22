@@ -26,6 +26,9 @@ import 'package:neo_bank_mehr_iran/Features/Invoices_Page/Presentation/Component
 import '../../Features/AI_Assistant/Presentation/Bloc/AI_Assistant_Bloc/ai_assistant_bloc.dart';
 import '../../Features/AI_Assistant/Presentation/Bloc/Account_Bloc/account_bloc.dart';
 import '../../Features/AI_Assistant/Presentation/Pages/ai_assistant_page.dart';
+import '../../Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
+import '../../Features/EKYC_Authentication_Page/Domain/Repository/abort_token_repository.dart';
+import '../../Features/EKYC_Authentication_Page/Presentation/Bloc/Abort_Token_Bloc/abort_token_bloc.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/component/Gift_Tab_Body/select_design_page.dart';
@@ -43,7 +46,12 @@ import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Com
 import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/Payment_Page/payment_page.dart';
 import '../../Features/Home_Page/Presentation/Component/Loan_page/Component/installment_item_details.dart';
 import '../../Features/Invoices_Page/invoices_page.dart';
+import '../../Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';
 import '../../Features/Main_Page/Presentation/main_page.dart';
+import '../../Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart';
+import '../../Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_bloc.dart';
+import '../../Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
+import '../../Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart';
 import '../../Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart';
 import '../DI/injection_container.dart';
 import '../Services/App_Lock/navigator_key.dart';
@@ -53,27 +61,47 @@ final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
 
-    GoRoute(path: '/', builder: (context, state) => const AuthGate()),
+    // ---------------------------------------------------------------------------
+    // AUTH GATE
+    // ---------------------------------------------------------------------------
 
     GoRoute(
-      path: '/main_page',
-      builder: (context, state) {
-        final index = state.extra as int? ?? 0;
+      path: '/',
+      builder: (context, state) => const AuthGate(),
+    ),
 
-        return BlocProvider<AllCardsBloc>(
-          create: (_) => sl<AllCardsBloc>(),
-          child: MainPage(initialIndex: index),
+    // ---------------------------------------------------------------------------
+    // LOGIN
+    // ---------------------------------------------------------------------------
+
+    GoRoute(
+      path: '/login_page',
+      builder: (context, state) {
+        return BlocProvider<UserLoginAuthBloc>(
+          create: (_) => sl<UserLoginAuthBloc>(),
+          child: const LoginPage(),
         );
       },
     ),
+
+    // ---------------------------------------------------------------------------
+    // OTP
+    // ---------------------------------------------------------------------------
 
     GoRoute(
       path: '/otp_code_page',
       builder: (context, state) {
         final args = state.extra as OtpArgs;
 
-        return BlocProvider(
-          create: (_) => sl<RequestOtpAgainBloc>(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<RequestOtpAgainBloc>(
+              create: (_) => sl<RequestOtpAgainBloc>(),
+            ),
+            BlocProvider<OtpCodeCheckBloc>(
+              create: (_) => sl<OtpCodeCheckBloc>(),
+            ),
+          ],
           child: OtpCodePage(
             phoneNumber: args.phoneNumber,
             nationalCode: args.nationalCode,
@@ -85,28 +113,117 @@ final GoRouter router = GoRouter(
       },
     ),
 
+    // ---------------------------------------------------------------------------
+    // LOCAL LOGIN
+    // ---------------------------------------------------------------------------
+
     GoRoute(
-      path: '/loan_page',
+      path: '/local_login_page',
       builder: (context, state) {
-        return BlocProvider<LoanPageBloc>(
-          create: (_) => sl<LoanPageBloc>(),
-          child: const LoanPage(),
+        return BlocProvider<LocalPassBloc>(
+          create: (_) => sl<LocalPassBloc>(),
+          child: const LocalLoginPage(),
         );
       },
     ),
+
+    // ---------------------------------------------------------------------------
+    // SET PASS
+    // ---------------------------------------------------------------------------
 
     GoRoute(
       path: '/set_pass_page',
       builder: (context, state) {
         final bool? inputFromProfile = state.extra as bool?;
-        return SetPassPage(inputFromProfile: inputFromProfile);
+
+        return BlocProvider<LocalPassBloc>(
+          create: (_) => sl<LocalPassBloc>(),
+          child: SetPassPage(
+            inputFromProfile: inputFromProfile,
+          ),
+        );
       },
     ),
 
+    // ---------------------------------------------------------------------------
+    // MAIN PAGE
+    //
+    // MainPage خودش چندین Feature/Page دارد، بنابراین BLoCهای مربوط به
+    // تب‌های داخلی باید بالاتر از MainPage قرار بگیرند.
+    // ---------------------------------------------------------------------------
+
     GoRoute(
-      path: '/local_login_page',
-      builder: (context, state) => const LocalLoginPage(),
+      path: '/main_page',
+      builder: (context, state) {
+        final index = state.extra as int? ?? 0;
+
+        return MultiBlocProvider(
+          providers: [
+
+            // Main navigation
+            BlocProvider<MainNavigationBloc>(
+              create: (_) => sl<MainNavigationBloc>(),
+            ),
+
+            // Home
+            BlocProvider<AllCardsBloc>(
+              create: (_) => sl<AllCardsBloc>(),
+            ),
+
+            // Fund Transfer
+            BlocProvider<AllCardsDetailBloc>(
+              create: (_) => sl<AllCardsDetailBloc>(),
+            ),
+            BlocProvider<UserAllAccountBloc>(
+              create: (_) => sl<UserAllAccountBloc>(),
+            ),
+
+            // Wallet
+            BlocProvider<WalletBloc>(
+              create: (_) => sl<WalletBloc>(),
+            ),
+            BlocProvider<TransactionBloc>(
+              create: (_) => sl<TransactionBloc>(),
+            ),
+
+            // Internet Packages
+            BlocProvider<InternetPackageBloc>(
+              create: (_) => sl<InternetPackageBloc>(),
+            ),
+
+            // Loan
+            BlocProvider<LoanPageBloc>(
+              create: (_) => sl<LoanPageBloc>(),
+            ),
+
+            // Profile
+            BlocProvider<ProfileBloc>(
+              create: (_) => sl<ProfileBloc>(),
+            ),
+            BlocProvider<CitizenEkycStatusBloc>(
+              create: (_) => sl<CitizenEkycStatusBloc>(),
+            ),
+
+            // این BLoC فعلاً در DI جدید ثبت نشده است.
+            BlocProvider<AbortTokenBloc>(
+              create: (_) => AbortTokenBloc(
+                AbortTokenRepository(),
+              ),
+            ),
+          ],
+          child: MainPage(
+            initialIndex: index,
+          ),
+        );
+      },
     ),
+
+    // ---------------------------------------------------------------------------
+    // FUND TRANSFER
+    //
+    // این Route زمانی استفاده می‌شود که FundTransferPage خارج از MainPage
+    // به‌صورت مستقیم باز شود.
+    // ---------------------------------------------------------------------------
 
     GoRoute(
       path: '/fund_transfer_page',
@@ -130,15 +247,47 @@ final GoRouter router = GoRouter(
       },
     ),
 
+    // ---------------------------------------------------------------------------
+    // LOAN
+    // ---------------------------------------------------------------------------
+
     GoRoute(
       path: '/loan_page',
-      builder: (context, state) => const LoanPage(),
+      builder: (context, state) {
+        return BlocProvider<LoanPageBloc>(
+          create: (_) => sl<LoanPageBloc>(),
+          child: const LoanPage(),
+        );
+      },
     ),
+
+    // ---------------------------------------------------------------------------
+    // INVOICES
+    // ---------------------------------------------------------------------------
 
     GoRoute(
       path: '/invoices_page',
-      builder: (context, state) => const InvoicesPage(),
+      builder: (context, state) {
+        return const InvoicesPage();
+      },
     ),
+
+    GoRoute(
+      path: '/invoice_details',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+
+        return InvoiceDetails(
+          title: extra?['title'] ?? 'جزئیات قبض',
+          icon: extra?['icon'] as IconData?,
+          color: extra?['color'] as Color?,
+        );
+      },
+    ),
+
+    // ---------------------------------------------------------------------------
+    // INSTALLMENT
+    // ---------------------------------------------------------------------------
 
     GoRoute(
       path: '/installment_item_details',
@@ -152,10 +301,15 @@ final GoRouter router = GoRouter(
       },
     ),
 
+    // ---------------------------------------------------------------------------
+    // PAYMENT
+    // ---------------------------------------------------------------------------
+
     GoRoute(
       path: '/payment_page',
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>?;
+
         return PaymentPage(
           amount: extra?['amount'] ?? '0',
           title: extra?['title'] ?? 'پرداخت',
@@ -164,6 +318,10 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+
+    // ---------------------------------------------------------------------------
+    // STATEMENT
+    // ---------------------------------------------------------------------------
 
     GoRoute(
       path: '/statement_page',
@@ -182,6 +340,10 @@ final GoRouter router = GoRouter(
       },
     ),
 
+    // ---------------------------------------------------------------------------
+    // TRANSACTION DETAIL
+    // ---------------------------------------------------------------------------
+
     GoRoute(
       path: '/transaction_detail_page',
       builder: (context, state) {
@@ -196,15 +358,9 @@ final GoRouter router = GoRouter(
       },
     ),
 
-    GoRoute(
-      path: '/charge_internet_page',
-      builder: (context, state) => const ChargeAndInternetPage(),
-    ),
-
-    GoRoute(
-      path: '/directive_charge_page',
-      builder: (context, state) => DirectiveChargePage(),
-    ),
+    // ---------------------------------------------------------------------------
+    // WALLET
+    // ---------------------------------------------------------------------------
 
     GoRoute(
       path: '/wallet_page',
@@ -223,17 +379,21 @@ final GoRouter router = GoRouter(
       },
     ),
 
-    // در فایل router.dart
+    // ---------------------------------------------------------------------------
+    // CHARGE / INTERNET
+    // ---------------------------------------------------------------------------
+
     GoRoute(
-      path: '/internet_package_details_page',
-      name: 'internet_package_details_page',
+      path: '/charge_internet_page',
       builder: (context, state) {
-        final extra = state.extra as Map<String, dynamic>;
-        return InternetPackageDetailsPage(
-          package: extra['package'] as InternetPackage,
-          phoneNumber: extra['phoneNumber'] as String,
-          operatorCode: extra['operatorCode'] as int,
-        );
+        return const ChargeAndInternetPage();
+      },
+    ),
+
+    GoRoute(
+      path: '/directive_charge_page',
+      builder: (context, state) {
+        return DirectiveChargePage();
       },
     ),
 
@@ -252,6 +412,24 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+
+    GoRoute(
+      path: '/internet_package_details_page',
+      name: 'internet_package_details_page',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>;
+
+        return InternetPackageDetailsPage(
+          package: extra['package'] as InternetPackage,
+          phoneNumber: extra['phoneNumber'] as String,
+          operatorCode: extra['operatorCode'] as int,
+        );
+      },
+    ),
+
+    // ---------------------------------------------------------------------------
+    // EKYC
+    // ---------------------------------------------------------------------------
 
     GoRoute(
       path: '/ekyc_first_step_auth_page',
@@ -277,17 +455,26 @@ final GoRouter router = GoRouter(
       },
     ),
 
+    // ---------------------------------------------------------------------------
+    // PROFILE / ABOUT
+    // ---------------------------------------------------------------------------
+
     GoRoute(
       path: '/about_application_page',
       builder: (context, state) {
-        return AboutApplicationPage();
+        return const AboutApplicationPage();
       },
     ),
+
+    // ---------------------------------------------------------------------------
+    // GIFTS
+    // ---------------------------------------------------------------------------
 
     GoRoute(
       path: '/send_gift_states_page',
       builder: (context, state) {
         final extra = state.extra as Map?;
+
         return SendGiftStatesPage(
           phoneNumber: extra?['phoneNumber'],
         );
@@ -298,6 +485,7 @@ final GoRouter router = GoRouter(
       path: '/select_design_page',
       builder: (context, state) {
         final extra = state.extra as Map?;
+
         return SelectDesignPage(
           phoneNumber: extra?['phoneNumber'],
         );
@@ -308,6 +496,7 @@ final GoRouter router = GoRouter(
       path: '/message_and_amount_page',
       builder: (context, state) {
         final extra = state.extra as Map?;
+
         return MessageAndAmountPage(
           phoneNumber: extra?['phoneNumber'],
           imgPath: extra?['imgPath'],
@@ -317,21 +506,10 @@ final GoRouter router = GoRouter(
     ),
 
     GoRoute(
-      path: '/invoice_details',
-      builder: (context, state) {
-        final extra = state.extra as Map<String, dynamic>?;
-        return InvoiceDetails(
-          title: extra?['title'] ?? 'جزئیات قبض',
-          icon: extra?['icon'] as IconData?,
-          color: extra?['color'] as Color?,
-        );
-      },
-    ),
-
-    GoRoute(
       path: '/gift_details_page',
       builder: (context, state) {
         final extra = state.extra as Map?;
+
         return GiftDetailsPage(
           phoneNumber: extra?['phoneNumber'],
           imgPath: extra?['imgPath'],
@@ -341,6 +519,10 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+
+    // ---------------------------------------------------------------------------
+    // AI ASSISTANT
+    // ---------------------------------------------------------------------------
 
     GoRoute(
       path: '/ai_assistant_page',
