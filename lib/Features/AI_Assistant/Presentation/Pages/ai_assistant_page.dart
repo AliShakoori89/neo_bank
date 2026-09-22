@@ -21,19 +21,9 @@ class AiAssistantPage extends StatelessWidget {
     actionRegistry.registerActions();
 
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => GetIt.I<AiAssistantBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => GetIt.I<AccountBloc>(),
-        ),
-      ],
-      child: AiAssistantView(
-        actionHandler: GetIt.I<UiActionHandler>(),
-        allCardsUseCase: GetIt.I<AllCardsUseCase>(),
-      ),
+    return AiAssistantView(
+      actionHandler: GetIt.I<UiActionHandler>(),
+      allCardsUseCase: GetIt.I<AllCardsUseCase>(),
     );
   }
 }

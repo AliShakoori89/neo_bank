@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+@injectable
 class BalanceVisibilityCubit extends Cubit<bool> {
   static const _key = 'balance_visible';
 

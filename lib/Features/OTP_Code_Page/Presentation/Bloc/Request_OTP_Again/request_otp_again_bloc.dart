@@ -1,8 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/request_otp_code_again_use_case.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_event.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_state.dart';
 
+@injectable
 class RequestOtpAgainBloc
     extends Bloc<RequerstOtpAgainEvent, RequestOtpAgainState> {
   final RequestOtpCodeAgainUseCase requestOtpCodeAgainUseCase;

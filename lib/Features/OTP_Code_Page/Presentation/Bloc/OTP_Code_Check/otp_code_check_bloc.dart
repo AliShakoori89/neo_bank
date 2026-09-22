@@ -4,7 +4,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/otp_co
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_event.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_state.dart';
 
-@lazySingleton
+@injectable
 class OtpCodeCheckBloc extends Bloc<OtpCodeCheckEvent, OtpCodeCheckState> {
   final OtpCodeCheckUseCase otpCodeCheckUseCase;
 

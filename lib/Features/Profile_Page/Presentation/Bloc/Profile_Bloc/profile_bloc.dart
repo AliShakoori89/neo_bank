@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repositories/profile_repository.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_state.dart';
 import '../../../Domain/Entities/profile_result_entity.dart';
 
+@injectable
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   GetProfileRepository getProfileRepository;
 

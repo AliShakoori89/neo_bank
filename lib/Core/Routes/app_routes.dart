@@ -23,12 +23,20 @@ import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/set_pass_
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/transaction_detail_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/statement_page.dart';
 import 'package:neo_bank_mehr_iran/Features/Invoices_Page/Presentation/Component/invoice_details.dart';
+import '../../Features/AI_Assistant/Presentation/Bloc/AI_Assistant_Bloc/ai_assistant_bloc.dart';
+import '../../Features/AI_Assistant/Presentation/Bloc/Account_Bloc/account_bloc.dart';
 import '../../Features/AI_Assistant/Presentation/Pages/ai_assistant_page.dart';
+import '../../Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/component/Gift_Tab_Body/select_design_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_tab.dart';
 import '../../Features/Home_Page/Data/Model/internet_package_model.dart';
+import '../../Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
+import '../../Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
+import '../../Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_bloc.dart';
+import '../../Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
+import '../../Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/Package_Details/package_details.dart';
 import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Directive_Charge/directive_charge_page.dart';
 import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/internet_packages_page.dart';
@@ -52,7 +60,10 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final index = state.extra as int? ?? 0;
 
-        return MainPage(initialIndex: index);
+        return BlocProvider<AllCardsBloc>(
+          create: (_) => sl<AllCardsBloc>(),
+          child: MainPage(initialIndex: index),
+        );
       },
     ),
 
@@ -75,9 +86,12 @@ final GoRouter router = GoRouter(
     ),
 
     GoRoute(
-      path: '/login_page',
+      path: '/loan_page',
       builder: (context, state) {
-        return LoginPage();
+        return BlocProvider<LoanPageBloc>(
+          create: (_) => sl<LoanPageBloc>(),
+          child: const LoanPage(),
+        );
       },
     ),
 
@@ -97,10 +111,21 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/fund_transfer_page',
       builder: (context, state) {
-        final initialTab = state.extra as FundTransferTab? ?? FundTransferTab.card;
+        final initialTab =
+            state.extra as FundTransferTab? ?? FundTransferTab.card;
 
-        return FundTransferPage(
-          initialTab: initialTab,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<AllCardsDetailBloc>(
+              create: (_) => sl<AllCardsDetailBloc>(),
+            ),
+            BlocProvider<UserAllAccountBloc>(
+              create: (_) => sl<UserAllAccountBloc>(),
+            ),
+          ],
+          child: FundTransferPage(
+            initialTab: initialTab,
+          ),
         );
       },
     ),
@@ -183,7 +208,19 @@ final GoRouter router = GoRouter(
 
     GoRoute(
       path: '/wallet_page',
-      builder: (context, state) => WalletPage(),
+      builder: (context, state) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<WalletBloc>(
+              create: (_) => sl<WalletBloc>(),
+            ),
+            BlocProvider<TransactionBloc>(
+              create: (_) => sl<TransactionBloc>(),
+            ),
+          ],
+          child: const WalletPage(),
+        );
+      },
     ),
 
     // در فایل router.dart
@@ -204,10 +241,14 @@ final GoRouter router = GoRouter(
       path: '/internet_package_page',
       builder: (context, state) {
         final extra = state.extra as Map?;
-        return InternetPackagesPage(
-          selectedOperator: extra?['selectedOperator'],
-          selectedSimType: extra?['selectedSimType'],
-          phoneNumber: extra?['phoneNumber'],
+
+        return BlocProvider<InternetPackageBloc>(
+          create: (_) => sl<InternetPackageBloc>(),
+          child: InternetPackagesPage(
+            selectedOperator: extra?['selectedOperator'],
+            selectedSimType: extra?['selectedSimType'],
+            phoneNumber: extra?['phoneNumber'],
+          ),
         );
       },
     ),
@@ -304,7 +345,17 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/ai_assistant_page',
       builder: (context, state) {
-        return AiAssistantPage();
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<AiAssistantBloc>(
+              create: (_) => sl<AiAssistantBloc>(),
+            ),
+            BlocProvider<AccountBloc>(
+              create: (_) => sl<AccountBloc>(),
+            ),
+          ],
+          child: const AiAssistantPage(),
+        );
       },
     ),
   ],

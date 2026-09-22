@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../Core/Services/vpn_checker_service.dart';
 import 'vpn_event.dart';
 import 'vpn_state.dart';
 
+@injectable
 class VpnBloc extends Bloc<VpnEvent, VpnState> {
   Timer? _timer;
 

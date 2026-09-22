@@ -1,8 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_event.dart';
 import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_state.dart';
 import '../../../Domain/Repository/local_pass_repository.dart';
 
+@injectable
 class LocalPassBloc extends Bloc<LocalPassEvent, LocalPassState> {
   LocalPassRepository setPassRepository;
 

@@ -1,10 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../Core/Theme/app_them.dart';
 
 enum ThemeEvent { toggle, load }
 
+@injectable
 class ThemeBloc extends Bloc<ThemeEvent, ThemeData> {
   ThemeBloc(super.initialTheme) {
     on<ThemeEvent>(_onEvent);

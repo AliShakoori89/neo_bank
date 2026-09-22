@@ -11,13 +11,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
 import 'package:dio/dio.dart' as _i361;
+import 'package:flutter/material.dart' as _i409;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:neo_bank_mehr_iran/Core/DI/register_module.dart' as _i390;
 import 'package:neo_bank_mehr_iran/Core/GenUI/Actions/ui_action_handler.dart'
     as _i979;
 import 'package:neo_bank_mehr_iran/Core/GenUI/Actions/ui_action_registry.dart'
-    as _i943;
+    as _i944;
 import 'package:neo_bank_mehr_iran/Core/GenUI/State/ui_state_registry.dart'
     as _i891;
 import 'package:neo_bank_mehr_iran/Core/GenUI/Validation/ui_schema_validator.dart'
@@ -70,7 +71,7 @@ import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/a
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/UseCases/deposit_use_case.dart'
     as _i173;
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart'
-    as _i85;
+    as _i86;
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Presentation/Bloc/Cart_Tab_Bloc/all_cards_detail_bloc.dart'
     as _i866;
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Data_Sources/all_card_data_source.dart'
@@ -115,6 +116,10 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/UseCases/wallet_use
     as _i22;
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart'
     as _i54;
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart'
+    as _i429;
+import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart'
+    as _i943;
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart'
     as _i894;
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_bloc.dart'
@@ -123,6 +128,8 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transact
     as _i553;
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_bloc.dart'
     as _i172;
+import 'package:neo_bank_mehr_iran/Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart'
+    as _i845;
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/otp_code_check_remote_data_source.dart'
     as _i78;
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/Request_otp_code_again_remote_data_source.dart'
@@ -141,16 +148,30 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/UseCases/reques
     as _i367;
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/OTP_Code_Check/otp_code_check_bloc.dart'
     as _i747;
+import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Presentation/Bloc/Request_OTP_Again/request_otp_again_bloc.dart'
+    as _i451;
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Data_Sources/citizen_ekyc_status_remote_data_source.dart'
     as _i64;
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Data/Repositories/citizen_ekyc_status_repository_impl.dart'
     as _i985;
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repositories/citizen_kyc_status_repository.dart'
     as _i1038;
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/Repositories/profile_repository.dart'
+    as _i85;
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Domain/UseCases/citizen_ekyc_status_use_case.dart'
     as _i286;
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart'
+    as _i811;
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Citizen_EKYC_Status_Bloc/citizen_ekyc_status_bloc.dart'
     as _i456;
+import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart'
+    as _i301;
+import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Domain/Repository/local_pass_repository.dart'
+    as _i812;
+import 'package:neo_bank_mehr_iran/Features/Set_Pass_Page/Presentation/Bloc/Local_Pass_Bloc/local_pass_bloc.dart'
+    as _i140;
+import 'package:neo_bank_mehr_iran/Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_bloc.dart'
+    as _i982;
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Data_Sources/statement_data_sources.dart'
     as _i5;
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Data/Repositories/statement_repository_impl.dart'
@@ -162,7 +183,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/UseCases/fetch
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Domain/UseCases/fetch_statement_use_case.dart'
     as _i849;
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_bloc.dart'
-    as _i982;
+    as _i984;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -172,7 +193,12 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
-    gh.lazySingleton<_i943.UiActionRegistry>(() => _i943.UiActionRegistry());
+    gh.factory<_i429.BalanceVisibilityCubit>(
+      () => _i429.BalanceVisibilityCubit(),
+    );
+    gh.factory<_i943.RefreshCountBloc>(() => _i943.RefreshCountBloc());
+    gh.factory<_i982.VpnBloc>(() => _i982.VpnBloc());
+    gh.lazySingleton<_i944.UiActionRegistry>(() => _i944.UiActionRegistry());
     gh.lazySingleton<_i891.UiStateRegistry>(() => _i891.UiStateRegistry());
     gh.lazySingleton<_i893.DioClient>(() => _i893.DioClient());
     gh.lazySingleton<_i361.Dio>(
@@ -220,14 +246,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i5.StatementDataSources>(
       () => _i5.StatementDataSources(dioClient: gh<_i893.DioClient>()),
     );
+    gh.factory<_i140.LocalPassBloc>(
+      () => _i140.LocalPassBloc(gh<_i812.LocalPassRepository>()),
+    );
     gh.lazySingleton<_i517.LoanPageRepository>(
       () => _i24.LoanPageRepositoryImpl(
         loanPageDataSource: gh<_i572.LoanPageDataSource>(),
       ),
     );
+    gh.factory<_i845.MainNavigationBloc>(
+      () => _i845.MainNavigationBloc(initialIndex: gh<int>()),
+    );
     gh.lazySingleton<_i978.UiSchemaValidator>(
       () => _i978.UiSchemaValidator(
-        actionRegistry: gh<_i943.UiActionRegistry>(),
+        actionRegistry: gh<_i944.UiActionRegistry>(),
         stateRegistry: gh<_i891.UiStateRegistry>(),
       ),
     );
@@ -292,6 +324,7 @@ extension GetItInjectableX on _i174.GetIt {
         dataSource: gh<_i612.AiSchemaDataSource>(),
       ),
     );
+    gh.factory<_i811.ThemeBloc>(() => _i811.ThemeBloc(gh<_i409.ThemeData>()));
     gh.lazySingleton<_i367.RequestOtpCodeAgainUseCase>(
       () => _i367.RequestOtpCodeAgainUseCase(
         repository: gh<_i468.RequestOtpCodeAgainRepository>(),
@@ -302,6 +335,9 @@ extension GetItInjectableX on _i174.GetIt {
         statementDataSources: gh<_i5.StatementDataSources>(),
       ),
     );
+    gh.factory<_i301.ProfileBloc>(
+      () => _i301.ProfileBloc(gh<_i85.GetProfileRepository>()),
+    );
     gh.lazySingleton<_i362.AllCardDetailRepository>(
       () => _i348.AllCardDetailRepositoryImpl(
         allCardDetailRemoteDataSource:
@@ -309,7 +345,12 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.lazySingleton<_i979.UiActionHandler>(
-      () => _i979.UiActionHandler(registry: gh<_i943.UiActionRegistry>()),
+      () => _i979.UiActionHandler(registry: gh<_i944.UiActionRegistry>()),
+    );
+    gh.factory<_i451.RequestOtpAgainBloc>(
+      () => _i451.RequestOtpAgainBloc(
+        requestOtpCodeAgainUseCase: gh<_i367.RequestOtpCodeAgainUseCase>(),
+      ),
     );
     gh.lazySingleton<_i25.DepositsRepository>(
       () => _i651.DepositsRepositoryImpl(
@@ -363,8 +404,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i173.DepositUseCase>(
       () => _i173.DepositUseCase(repository: gh<_i25.DepositsRepository>()),
     );
-    gh.factory<_i982.StatementBloc>(
-      () => _i982.StatementBloc(
+    gh.factory<_i984.StatementBloc>(
+      () => _i984.StatementBloc(
         gh<_i749.FetchStatementFilteredUseCase>(),
         gh<_i849.FetchStatementUseCase>(),
       ),
@@ -398,8 +439,8 @@ extension GetItInjectableX on _i174.GetIt {
         validator: gh<_i978.UiSchemaValidator>(),
       ),
     );
-    gh.factory<_i85.UserAllAccountBloc>(
-      () => _i85.UserAllAccountBloc(depositUseCase: gh<_i173.DepositUseCase>()),
+    gh.factory<_i86.UserAllAccountBloc>(
+      () => _i86.UserAllAccountBloc(depositUseCase: gh<_i173.DepositUseCase>()),
     );
     gh.factory<_i553.TransactionBloc>(
       () => _i553.TransactionBloc(
@@ -412,7 +453,7 @@ extension GetItInjectableX on _i174.GetIt {
         checkLoginStatusUseCase: gh<_i394.CheckLoginStatusUseCase>(),
       ),
     );
-    gh.lazySingleton<_i747.OtpCodeCheckBloc>(
+    gh.factory<_i747.OtpCodeCheckBloc>(
       () => _i747.OtpCodeCheckBloc(
         otpCodeCheckUseCase: gh<_i867.OtpCodeCheckUseCase>(),
       ),
@@ -439,7 +480,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i724.AiAssistantActionRegistry>(
       () => _i724.AiAssistantActionRegistry(
-        registry: gh<_i943.UiActionRegistry>(),
+        registry: gh<_i944.UiActionRegistry>(),
         accountBloc: gh<_i671.AccountBloc>(),
       ),
     );
