@@ -44,7 +44,7 @@ import '../../Features/Home_Page/Presentation/Bloc/Wallet_Bloc/wallet_bloc.dart'
 import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/Package_Card_Component/Package_Details/package_details.dart';
 import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Directive_Charge/directive_charge_page.dart';
 import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Internet_package/internet_packages_page.dart';
-import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/Payment_Page/payment_page.dart';
+import '../../Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/payment_page.dart';
 import '../../Features/Home_Page/Presentation/Component/Loan_page/Component/installment_item_details.dart';
 import '../../Features/Invoices_Page/invoices_page.dart';
 import '../../Features/Main_Page/Presentation/Bloc/Main_Navigation_Bloc/main_navigation_bloc.dart';

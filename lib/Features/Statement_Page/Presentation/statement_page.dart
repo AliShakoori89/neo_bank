@@ -202,6 +202,9 @@ class _StatementPageState extends State<StatementPage> {
               IconButton(
                 icon: const Icon(Icons.filter_list),
                 onPressed: () {
+
+                  final statementBloc = context.read<StatementBloc>();
+
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
@@ -214,7 +217,7 @@ class _StatementPageState extends State<StatementPage> {
                       TransactionType tempSelectedType = selectedType;
 
                       return StatefulBuilder(
-                        builder: (context, setModalState){
+                        builder: (modalContext, setModalState){
                           return Container(
                               height: 380, // 👈 ارتفاع ثابت اینجاست
                               decoration: BoxDecoration(
@@ -331,7 +334,7 @@ class _StatementPageState extends State<StatementPage> {
                                               _filterEnd = fixedEnd;
                                             });
 
-                                            context.pop();
+                                            modalContext.pop();
 
                                             debugPrint('Selected Type: $tempSelectedType');
                                             debugPrint(
@@ -344,7 +347,7 @@ class _StatementPageState extends State<StatementPage> {
 
                                             if (tempSelectedType == TransactionType.all) {
 
-                                              context.read<StatementBloc>().add(
+                                              statementBloc.add(
                                                 FetchFilterStatementEvent(
                                                   depositNumber: _selectedDepositNumber!,
                                                   startDate: fixedStart.toIso8601String(),
@@ -356,7 +359,7 @@ class _StatementPageState extends State<StatementPage> {
                                               final actionType =
                                               tempSelectedType == TransactionType.deposit ? 1 : 0;
 
-                                              context.read<StatementBloc>().add(
+                                              statementBloc.add(
                                                 FetchFilterStatementEvent(
                                                   depositNumber: _selectedDepositNumber!,
                                                   statementActionType: actionType,

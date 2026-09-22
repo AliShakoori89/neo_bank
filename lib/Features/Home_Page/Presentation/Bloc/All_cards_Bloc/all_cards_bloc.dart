@@ -8,7 +8,6 @@ import '../../../../../Core/Network/app_exception.dart';
 @injectable
 class AllCardsBloc extends Bloc<AllCardsEvent, AllCardsState> {
   final AllCardsUseCase allCardsUseCase;
-  static const int maxRefreshCount = 5;
 
   AllCardsBloc({required this.allCardsUseCase}) : super(AllCardsState.initial()) {
     on<GetUserAllCardsEvent>(_mapGetUserAllCardsEventToState);

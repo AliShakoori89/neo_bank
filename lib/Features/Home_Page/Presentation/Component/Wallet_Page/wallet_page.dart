@@ -5,6 +5,8 @@ import 'package:neo_bank_mehr_iran/Core/Widgets/app_snackbar.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Bloc/Transaction_Bloc/transaction_state.dart';
 import '../../../../../Core/Convertor/custom_formatter.dart';
+import '../../Bloc/All_cards_Bloc/all_cards_bloc.dart';
+import '../../Bloc/All_cards_Bloc/all_cards_event.dart';
 import '../../Bloc/Transaction_Bloc/transaction_event.dart';
 import '../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../Bloc/Wallet_Bloc/wallet_event.dart';
@@ -35,8 +37,9 @@ class _WalletPageState extends State<WalletPage> {
 
   @override
   void initState() {
-    context.read<WalletBloc>().add(WalletDetailsPackagesEvent());
     super.initState();
+    context.read<WalletBloc>().add(WalletDetailsPackagesEvent());
+    context.read<AllCardsBloc>().add(GetUserAllCardsEvent());
   }
 
   @override

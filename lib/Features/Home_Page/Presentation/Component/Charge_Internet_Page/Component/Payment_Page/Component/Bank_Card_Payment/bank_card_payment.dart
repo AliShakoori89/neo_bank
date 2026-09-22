@@ -6,8 +6,8 @@ import 'Component/bank_info.dart';
 import 'Component/card_form_widget.dart';
 import 'Component/loading_overlay.dart';
 
-class OtherBankCardPayment extends StatefulWidget {
-  const OtherBankCardPayment({
+class BankCardPayment extends StatefulWidget {
+  const BankCardPayment({
     super.key,
     required this.amount,
     required this.title,
@@ -23,10 +23,10 @@ class OtherBankCardPayment extends StatefulWidget {
   final String? selectedWalletTitle;
 
   @override
-  State<OtherBankCardPayment> createState() => _OtherBankCardPaymentState();
+  State<BankCardPayment> createState() => _BankCardPaymentState();
 }
 
-class _OtherBankCardPaymentState extends State<OtherBankCardPayment> {
+class _BankCardPaymentState extends State<BankCardPayment> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _cardNumberController = TextEditingController();
   final TextEditingController _expiryDateController = TextEditingController();

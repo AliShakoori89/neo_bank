@@ -8,22 +8,22 @@ import '../../../../../../Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import '../../../../../../Bloc/All_cards_Bloc/all_cards_state.dart';
 import '../../../../../Wallet_Page/Component/custom_selector_card.dart';
 
-class ThisBankCardPayment extends StatefulWidget {
-  const ThisBankCardPayment({super.key});
+class BankAccountPayment extends StatefulWidget {
+  const BankAccountPayment({super.key});
 
   @override
-  State<ThisBankCardPayment> createState() => _ThisBankCardPaymentState();
+  State<BankAccountPayment> createState() => _BankAccountPaymentState();
 }
 
-class _ThisBankCardPaymentState extends State<ThisBankCardPayment> {
+class _BankAccountPaymentState extends State<BankAccountPayment> {
 
   var selectedCardIndex = 0;
 
   @override
   void initState() {
+    super.initState();
     FocusManager.instance.primaryFocus?.unfocus();
     BlocProvider.of<UserAllAccountBloc>(context).add(GetUserAllAccountEvent());
-    super.initState();
   }
 
   @override

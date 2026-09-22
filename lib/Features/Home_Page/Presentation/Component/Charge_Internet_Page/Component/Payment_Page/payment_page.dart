@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neo_bank_mehr_iran/Features/Home_Page/Presentation/Component/Charge_Internet_Page/Component/Payment_Page/Component/This_Bank_Card_Payment/this_bank_card_payment.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
-import '../../../../../../../../../Core/Theme/app_colors.dart';
-import '../../../../../../../../../Core/Spacing/app_space.dart';
-import '../../../../../../../../Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
-import '../../../../../../../Data/Model/internet_package_model.dart';
-import '../../../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
-import '../../../../../../Bloc/Wallet_Bloc/wallet_event.dart';
-import '../../../custom_header.dart';
-import '../Other_Bank_Card_Payment/other_bank_card_payment.dart';
-import '../wallet_payment.dart';
-import 'Component/build_charge_package_payment_info_card.dart';
-import 'Component/build_loan_installment_payment_info_card.dart';
+import '../../../../../../../Core/Theme/app_colors.dart';
+import '../../../../../../../Core/Spacing/app_space.dart';
+import '../../../../../../Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
+import '../../../../../../Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_event.dart';
+import '../../../../../../Profile_Page/Presentation/Bloc/Profile_Bloc/profile_event.dart';
+import '../../../../../Data/Model/internet_package_model.dart';
+import '../../../../Bloc/All_cards_Bloc/all_cards_bloc.dart';
+import '../../../../Bloc/All_cards_Bloc/all_cards_event.dart';
+import '../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
+import '../../../../Bloc/Wallet_Bloc/wallet_event.dart';
+import '../custom_header.dart';
+import 'Component/Bank_Account_Payment/bank_account_payment.dart';
+import 'Component/Bank_Card_Payment/bank_card_payment.dart';
+import 'Component/Bank_Wallet_Payment/Component/build_charge_package_payment_info_card.dart';
+import 'Component/Bank_Wallet_Payment/Component/build_loan_installment_payment_info_card.dart';
+import 'Component/Bank_Wallet_Payment/wallet_payment.dart';
+
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key, required this.amount, required this.title, this.package, this.phoneNumber});
@@ -37,6 +42,12 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
         WalletDetailsPackagesEvent());
     context.read<ProfileBloc>().add(
         GetProfileEventEvent());
+    context.read<AllCardsBloc>().add(
+      GetUserAllCardsEvent(),
+    );
+    context.read<UserAllAccountBloc>().add(
+      GetUserAllAccountEvent(),
+    );
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -85,13 +96,13 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    OtherBankCardPayment(amount: widget.amount, title: widget.title),
+                    BankCardPayment(amount: widget.amount, title: widget.title),
                     WalletPayment(
                         amount: widget.amount,
                         title: widget.title,
                         package: widget.package,
                         destinationPhoneNumber: widget.phoneNumber ?? ''),
-                    ThisBankCardPayment(),
+                    BankAccountPayment(),
                   ],
                 ),
               ),

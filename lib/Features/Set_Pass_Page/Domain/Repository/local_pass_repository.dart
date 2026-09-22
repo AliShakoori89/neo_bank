@@ -1,28 +1,27 @@
 import 'dart:async';
-import 'package:dio/dio.dart';
-import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart';
+import 'package:injectable/injectable.dart';
 import '../../../../Core/Services/token_storage_service.dart';
 
+@lazySingleton
 class LocalPassRepository {
-  final Dio dio;
 
-  LocalPassRepository({Dio? dio}) : dio = dio ?? DioClient().dio;
-
-  setPass(passField) async {
-    await LocalStorageService.save('local_password', passField);
+  Future<void> setPass(String passField) async {
+    await LocalStorageService.save(
+      'local_password',
+      passField,
+    );
   }
 
-  Future<String> readPass() async {
-    final localPass = await LocalStorageService.read(
+  Future<String?> readPass() async {
+    return LocalStorageService.read(
       'local_password',
     );
-    return localPass!;
   }
 
   Future<bool> isFirstLogin() async {
     final localPass = await LocalStorageService.read(
       'local_password',
     );
-    return localPass == null ? true : false;
+    return localPass == null;
   }
 }
