@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
+import '../Theme/app_them.dart';
+
 enum SnackBarType { success, error, info, warning }
 
 class AppSnackBar {
@@ -176,7 +178,7 @@ class _SnackBarWidgetState extends State<_SnackBarWidget> with SingleTickerProvi
                           ),
                           child: Icon(
                             icon,
-                            color: Colors.white,
+                            color: AppTheme.darkTheme is AppTheme ? Colors.white : Colors.black,
                             size: 24,
                           ),
                         ),
@@ -188,8 +190,8 @@ class _SnackBarWidgetState extends State<_SnackBarWidget> with SingleTickerProvi
                             children: [
                               Text(
                                 _getTitle(widget.type),
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color: AppTheme.darkTheme is AppTheme ? Colors.white : Colors.black,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   letterSpacing: 0.5,
@@ -199,7 +201,7 @@ class _SnackBarWidgetState extends State<_SnackBarWidget> with SingleTickerProvi
                               Text(
                                 widget.message,
                                 style: TextStyle(
-                                  color: Colors.white.withAlpha(90),
+                                  color: AppTheme.darkTheme is AppTheme ? Colors.white10 : Colors.black87,
                                   fontSize: 13,
                                   height: 1.4,
                                 ),

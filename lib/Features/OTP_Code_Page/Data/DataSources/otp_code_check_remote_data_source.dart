@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../Core/Network/dio_client.dart';
@@ -25,7 +24,7 @@ class OtpCodeCheckRemoteDataSource {
 
     final response = await _dio.post(
       "/api/auth/login",
-      data: jsonEncode(body),
+      data: body,
     );
 
     return OtpCodeResponseModel.fromJson(response.data);

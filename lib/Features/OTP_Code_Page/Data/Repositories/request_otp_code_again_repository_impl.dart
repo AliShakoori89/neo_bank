@@ -4,15 +4,18 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/Reque
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Entities/otp_request_again_result_entity.dart';
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repositories/request_otp_code_again_repository.dart';
 import '../../../../Core/Network/app_exception.dart';
+import '../../../../Core/Notification/local_notification_service.dart';
 import '../../../../Core/Services/token_storage_service.dart';
 
 @LazySingleton(as: RequestOtpCodeAgainRepository)
 class RequestOtpCodeAgainRepositoryImpl implements RequestOtpCodeAgainRepository{
 
   final RequestOtpCodeAgainRemoteDataSource requestOtpCodeAgainRemoteDataSource;
+  final LocalNotificationService notificationService;
 
   RequestOtpCodeAgainRepositoryImpl({
-    required this.requestOtpCodeAgainRemoteDataSource
+    required this.requestOtpCodeAgainRemoteDataSource,
+    required this.notificationService
   });
 
   @override
@@ -21,10 +24,14 @@ class RequestOtpCodeAgainRepositoryImpl implements RequestOtpCodeAgainRepository
     try {
 
       final data = await requestOtpCodeAgainRemoteDataSource.requestOTPAgain(nationalNumber: nationalNumber, mobileNumber: mobileNumber);
-      print('code                ');
+      print('OTP Code:');
       print(data.data!.code);
 
       if (data.success == true) {
+
+        await notificationService.showOtpNotification(
+          otp: data.data?.code ?? '',
+        );
 
         LocalStorageService.save('secret_key', data.data!.secretKey!);
         LocalStorageService.save(

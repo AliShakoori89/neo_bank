@@ -24,6 +24,7 @@ import 'package:neo_bank_mehr_iran/Features/EKYC_Authentication_Page/Presentatio
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Core/DI/injection_container.dart';
+import 'Core/Notification/local_notification_service.dart';
 import 'Core/Routes/app_routes.dart';
 import 'Features/Profile_Page/Presentation/Bloc/Change_Theme_Bloc/change_theme_bloc.dart';
 import 'Features/Splash_Screen_Page/Presentation/VPN_Bloc/vpn_bloc.dart';
@@ -45,6 +46,12 @@ void main() async {
   final isDark = prefs.getBool('isDarkTheme') ?? false;
 
   configureDependencies();
+
+  //local notification _______________________________________
+  final notificationService = sl<LocalNotificationService>();
+  await notificationService.initialize();
+  await notificationService.requestPermission();
+  //_______________________________________
 
   runApp(
     // DevicePreview(

@@ -24,6 +24,10 @@ import 'package:neo_bank_mehr_iran/Core/GenUI/State/ui_state_registry.dart'
 import 'package:neo_bank_mehr_iran/Core/GenUI/Validation/ui_schema_validator.dart'
     as _i978;
 import 'package:neo_bank_mehr_iran/Core/Network/dio_client.dart' as _i893;
+import 'package:neo_bank_mehr_iran/Core/Notification/local_notification_service.dart'
+    as _i550;
+import 'package:neo_bank_mehr_iran/Core/Notification/local_notification_service_impl.dart'
+    as _i584;
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Data_Sources/auth_remote_data_source.dart'
     as _i412;
 import 'package:neo_bank_mehr_iran/Features/Account_Page/Data/Repositories/user_login_auth_repository_impl.dart'
@@ -95,7 +99,7 @@ import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/transact
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Data/Repositories/wallet_repository_impl.dart'
     as _i230;
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repositories/all_card_repository.dart'
-    as _i234;
+    as _i233;
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repositories/internet_packages_repository.dart'
     as _i99;
 import 'package:neo_bank_mehr_iran/Features/Home_Page/Domain/Repositories/loan_page_repository.dart'
@@ -137,7 +141,7 @@ import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/DataSources/Reque
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Repositories/otp_code_check_repository_impl.dart'
     as _i79;
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Data/Repositories/request_otp_code_again_repository_impl.dart'
-    as _i233;
+    as _i234;
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repositories/otp_code_check_repository.dart'
     as _i34;
 import 'package:neo_bank_mehr_iran/Features/OTP_Code_Page/Domain/Repositories/request_otp_code_again_repository.dart'
@@ -211,6 +215,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.geminiDio,
       instanceName: 'geminiDio',
     );
+    gh.lazySingleton<_i550.LocalNotificationService>(
+      () => _i584.LocalNotificationServiceImpl(),
+    );
     gh.lazySingleton<_i412.AuthRemoteDataSource>(
       () => _i412.AuthRemoteDataSource(dioClient: gh<_i893.DioClient>()),
     );
@@ -266,12 +273,6 @@ extension GetItInjectableX on _i174.GetIt {
         stateRegistry: gh<_i891.UiStateRegistry>(),
       ),
     );
-    gh.lazySingleton<_i468.RequestOtpCodeAgainRepository>(
-      () => _i233.RequestOtpCodeAgainRepositoryImpl(
-        requestOtpCodeAgainRemoteDataSource:
-            gh<_i941.RequestOtpCodeAgainRemoteDataSource>(),
-      ),
-    );
     gh.lazySingleton<_i983.WalletRepository>(
       () => _i230.WalletRepositoryImpl(
         walletDataSource: gh<_i914.WalletDataSource>(),
@@ -310,7 +311,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i22.WalletUseCase>(
       () => _i22.WalletUseCase(walletRepository: gh<_i983.WalletRepository>()),
     );
-    gh.lazySingleton<_i234.AllCardRepository>(
+    gh.lazySingleton<_i233.AllCardRepository>(
       () => _i9.AllCardRepositoryImpl(
         allCardDataSources: gh<_i109.AllCardDataSource>(),
       ),
@@ -328,11 +329,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i430.AiSchemaRepository>(
       () => _i258.AiSchemaRepositoryImpl(
         dataSource: gh<_i612.AiSchemaDataSource>(),
-      ),
-    );
-    gh.lazySingleton<_i367.RequestOtpCodeAgainUseCase>(
-      () => _i367.RequestOtpCodeAgainUseCase(
-        repository: gh<_i468.RequestOtpCodeAgainRepository>(),
       ),
     );
     gh.lazySingleton<_i150.StatementRepository>(
@@ -360,11 +356,6 @@ extension GetItInjectableX on _i174.GetIt {
         registry: gh<_i944.UiActionRegistry>(),
       ),
     );
-    gh.factory<_i451.RequestOtpAgainBloc>(
-      () => _i451.RequestOtpAgainBloc(
-        requestOtpCodeAgainUseCase: gh<_i367.RequestOtpCodeAgainUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i25.DepositsRepository>(
       () => _i651.DepositsRepositoryImpl(
         depositRemoteDataSource: gh<_i874.DepositRemoteDataSource>(),
@@ -378,6 +369,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i849.FetchStatementUseCase>(
       () => _i849.FetchStatementUseCase(
         repository: gh<_i150.StatementRepository>(),
+      ),
+    );
+    gh.lazySingleton<_i468.RequestOtpCodeAgainRepository>(
+      () => _i234.RequestOtpCodeAgainRepositoryImpl(
+        requestOtpCodeAgainRemoteDataSource:
+            gh<_i941.RequestOtpCodeAgainRemoteDataSource>(),
+        notificationService: gh<_i550.LocalNotificationService>(),
       ),
     );
     gh.lazySingleton<_i1038.GetCitizenEKYCStatusRepository>(
@@ -411,7 +409,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i829.AllCardsUseCase>(
       () => _i829.AllCardsUseCase(
-        allCardRepository: gh<_i234.AllCardRepository>(),
+        allCardRepository: gh<_i233.AllCardRepository>(),
       ),
     );
     gh.lazySingleton<_i173.DepositUseCase>(
@@ -444,6 +442,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i286.CitizenEkycStatusUseCase>(
       () => _i286.CitizenEkycStatusUseCase(
         repository: gh<_i1038.GetCitizenEKYCStatusRepository>(),
+      ),
+    );
+    gh.lazySingleton<_i367.RequestOtpCodeAgainUseCase>(
+      () => _i367.RequestOtpCodeAgainUseCase(
+        repository: gh<_i468.RequestOtpCodeAgainRepository>(),
+      ),
+    );
+    gh.factory<_i451.RequestOtpAgainBloc>(
+      () => _i451.RequestOtpAgainBloc(
+        requestOtpCodeAgainUseCase: gh<_i367.RequestOtpCodeAgainUseCase>(),
       ),
     );
     gh.factory<_i639.AiAssistantBloc>(

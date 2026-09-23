@@ -41,13 +41,22 @@ class _ConfirmationButtonState extends State<ConfirmationButton> {
   Widget build(BuildContext context) {
     return BlocConsumer<OtpCodeCheckBloc, OtpCodeCheckState>(
       listener: (context, state) {
-
         if (state.status.isSuccess) {
           if (state.otpLoginStatus) {
             context.go('/set_pass_page');
           } else {
-            AppSnackBar.errorTop(context, state.otpLoginMessage);
+            AppSnackBar.errorTop(
+              context,
+              state.otpLoginMessage,
+            );
           }
+        }
+
+        if (state.status.isError) {
+          AppSnackBar.errorTop(
+            context,
+            state.otpLoginMessage,
+          );
         }
       },
       builder: (context, state) {
