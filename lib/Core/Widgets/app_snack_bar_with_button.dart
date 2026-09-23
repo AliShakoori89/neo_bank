@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import '../Theme/app_them.dart';
 
 class AppSnackBarWithButton extends StatelessWidget {
   const AppSnackBarWithButton({
@@ -40,7 +41,7 @@ class AppSnackBarWithButton extends StatelessWidget {
                   vertical: 16,
                 ),
                 decoration: BoxDecoration(
-                  color: baseColor.withAlpha(isDark ? 20 : 85),
+                  color: baseColor.withAlpha(isDark ? 20 : 90),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: baseColor.withAlpha(30),
@@ -59,12 +60,12 @@ class AppSnackBarWithButton extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.white.withAlpha(20),
+                        color: AppTheme.darkTheme is AppTheme ? Colors.white.withAlpha(20) : Colors.black.withAlpha(20),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.wifi_off_rounded,
-                        color: Colors.white,
+                        color: AppTheme.darkTheme is AppTheme ? Colors.white : Colors.black,
                         size: 24,
                       ),
                     ),
@@ -74,10 +75,10 @@ class AppSnackBarWithButton extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text(
+                          Text(
                             'خطای اتصال',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: AppTheme.darkTheme is AppTheme ? Colors.white : Colors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                             ),
@@ -86,7 +87,7 @@ class AppSnackBarWithButton extends StatelessWidget {
                           Text(
                             errorText,
                             style: TextStyle(
-                              color: Colors.white.withAlpha(90),
+                              color: Theme.of(context).colorScheme.surfaceBright,
                               fontSize: 13,
                               height: 1.4,
                             ),
@@ -97,34 +98,35 @@ class AppSnackBarWithButton extends StatelessWidget {
                     const SizedBox(width: 12),
                     isLoading
                         ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2.5,
-                            ),
-                          )
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2.5,
+                      ),
+                    )
                         : TextButton(
-                            onPressed: handleRetry,
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.white.withAlpha(20),
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 8,
-                              ),
-                            ),
-                            child: const Text(
-                              "تلاش مجدد",
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                      onPressed: handleRetry,
+                      style: TextButton.styleFrom(
+                        backgroundColor: AppTheme.darkTheme is AppTheme ? Colors.white.withAlpha(20) : Colors.black.withAlpha(20),
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                      ),
+                      child: Text(
+                        "تلاش مجدد",
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.surfaceBright,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -142,9 +144,9 @@ class AppSnackBarWithButton extends StatelessWidget {
           right: 0,
           child: animation != null
               ? SlideTransition(
-                  position: animation!,
-                  child: content,
-                )
+            position: animation!,
+            child: content,
+          )
               : content,
         ),
       ],

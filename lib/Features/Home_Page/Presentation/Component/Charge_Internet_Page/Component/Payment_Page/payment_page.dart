@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neo_bank_mehr_iran/Features/Profile_Page/Presentation/Bloc/Profile_Bloc/profile_bloc.dart';
-import '../../../../../../../Core/DI/injection_container.dart';
 import '../../../../../../../Core/Theme/app_colors.dart';
 import '../../../../../../../Core/Spacing/app_space.dart';
 import '../../../../../../Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
@@ -10,7 +9,6 @@ import '../../../../../../Profile_Page/Presentation/Bloc/Profile_Bloc/profile_ev
 import '../../../../../Data/Model/internet_package_model.dart';
 import '../../../../Bloc/All_cards_Bloc/all_cards_bloc.dart';
 import '../../../../Bloc/All_cards_Bloc/all_cards_event.dart';
-import '../../../../Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import '../../../../Bloc/Wallet_Bloc/wallet_bloc.dart';
 import '../../../../Bloc/Wallet_Bloc/wallet_event.dart';
 import '../custom_header.dart';
@@ -95,21 +93,19 @@ class _PaymentPageState extends State<PaymentPage>  with SingleTickerProviderSta
                   ? buildChargePackagePaymentInfoCard(context, theme, widget.package!, widget.title, widget.amount)
                   : buildLoanInstallmentPaymentInfoCard(context, theme, widget.title, widget.amount),
               Expanded(
-                child: BlocProvider<InternetPackageBloc>(
-                    create: (_) => sl<InternetPackageBloc>(),
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        BankCardPayment(amount: widget.amount, title: widget.title),
-                        WalletPayment(
-                            amount: widget.amount,
-                            title: widget.title,
-                            package: widget.package,
-                            destinationPhoneNumber: widget.phoneNumber ?? ''),
-                        BankAccountPayment(),
-                      ],
-                    )
-                ),
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    BankCardPayment(amount: widget.amount, title: widget.title),
+                    WalletPayment(
+                        amount: widget.amount,
+                        title: widget.title,
+                        package: widget.package,
+                        destinationPhoneNumber: widget.phoneNumber ?? ''),
+                    BankAccountPayment(),
+                  ],
+                )
+
               ),
               AppSpace.heightSpace_16,
             ],

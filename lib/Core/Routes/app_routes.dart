@@ -36,6 +36,7 @@ import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_page.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/fund_transfer_tab.dart';
 import '../../Features/Home_Page/Data/Model/internet_package_model.dart';
 import '../../Features/Home_Page/Presentation/Bloc/All_cards_Bloc/all_cards_bloc.dart';
+import '../../Features/Home_Page/Presentation/Bloc/Balanc_visibility/balanc_visibility.dart';
 import '../../Features/Home_Page/Presentation/Bloc/Card_Slider_Bloc/refresh_count_bloc.dart';
 import '../../Features/Home_Page/Presentation/Bloc/Internet_Packages_Bloc/get_internet_packages_bloc.dart';
 import '../../Features/Home_Page/Presentation/Bloc/Loan_Page_Bloc/loan_page_bloc.dart';
@@ -101,6 +102,9 @@ final GoRouter router = GoRouter(
             ),
             BlocProvider<OtpCodeCheckBloc>(
               create: (_) => sl<OtpCodeCheckBloc>(),
+            ),
+            BlocProvider<LocalPassBloc>(
+              create: (_) => sl<LocalPassBloc>(),
             ),
           ],
           child: OtpCodePage(
@@ -178,10 +182,16 @@ final GoRouter router = GoRouter(
               create: (_) => sl<RefreshCountBloc>(),
             ),
 
+            // Last Transactions List
+            BlocProvider<StatementBloc>(
+              create: (_) => sl<StatementBloc>(),
+            ),
+
             // Fund Transfer
             BlocProvider<AllCardsDetailBloc>(
               create: (_) => sl<AllCardsDetailBloc>(),
             ),
+
             BlocProvider<UserAllAccountBloc>(
               create: (_) => sl<UserAllAccountBloc>(),
             ),
@@ -190,6 +200,7 @@ final GoRouter router = GoRouter(
             BlocProvider<WalletBloc>(
               create: (_) => sl<WalletBloc>(),
             ),
+
             BlocProvider<TransactionBloc>(
               create: (_) => sl<TransactionBloc>(),
             ),
@@ -208,6 +219,7 @@ final GoRouter router = GoRouter(
             BlocProvider<ProfileBloc>(
               create: (_) => sl<ProfileBloc>(),
             ),
+
             BlocProvider<CitizenEkycStatusBloc>(
               create: (_) => sl<CitizenEkycStatusBloc>(),
             ),
@@ -318,11 +330,33 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>?;
 
-        return PaymentPage(
-          amount: extra?['amount'] ?? '0',
-          title: extra?['title'] ?? 'پرداخت',
-          package: extra?['package'] as InternetPackage?,
-          phoneNumber: extra?['phoneNumber'] as String?,
+        return MultiBlocProvider(
+            providers: [
+              BlocProvider<WalletBloc>(
+                create: (_) => sl<WalletBloc>(),
+              ),
+              BlocProvider<ProfileBloc>(
+                create: (_) => sl<ProfileBloc>(),
+              ),
+              BlocProvider<AllCardsBloc>(
+                create: (_) => sl<AllCardsBloc>(),
+              ),
+              BlocProvider<UserAllAccountBloc>(
+                  create: (_) => sl<UserAllAccountBloc>()
+              ),
+              BlocProvider<InternetPackageBloc>(
+                  create: (_) => sl<InternetPackageBloc>()
+              ),
+              BlocProvider<BalanceVisibilityCubit>(
+                  create: (_) => sl<BalanceVisibilityCubit>()
+              ),
+            ],
+            child: PaymentPage(
+              amount: extra?['amount'] ?? '0',
+              title: extra?['title'] ?? 'پرداخت',
+              package: extra?['package'] as InternetPackage?,
+              phoneNumber: extra?['phoneNumber'] as String?,
+            )
         );
       },
     ),
@@ -381,6 +415,9 @@ final GoRouter router = GoRouter(
             BlocProvider<TransactionBloc>(
               create: (_) => sl<TransactionBloc>(),
             ),
+            BlocProvider<AllCardsBloc>(
+                create: (_) => sl<AllCardsBloc>()
+            ),
           ],
           child: const WalletPage(),
         );
@@ -427,10 +464,13 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final extra = state.extra as Map<String, dynamic>;
 
-        return InternetPackageDetailsPage(
-          package: extra['package'] as InternetPackage,
-          phoneNumber: extra['phoneNumber'] as String,
-          operatorCode: extra['operatorCode'] as int,
+        return BlocProvider<WalletBloc>(
+            create: (_) => sl<WalletBloc>(),
+            child: InternetPackageDetailsPage(
+              package: extra['package'] as InternetPackage,
+              phoneNumber: extra['phoneNumber'] as String,
+              operatorCode: extra['operatorCode'] as int,
+            )
         );
       },
     ),
@@ -545,6 +585,9 @@ final GoRouter router = GoRouter(
             ),
             BlocProvider<ProfileBloc>(
               create: (_) => sl<ProfileBloc>(),
+            ),
+            BlocProvider<AllCardsBloc>(
+                create: (_) => sl<AllCardsBloc>()
             ),
           ],
           child: const AiAssistantPage(),

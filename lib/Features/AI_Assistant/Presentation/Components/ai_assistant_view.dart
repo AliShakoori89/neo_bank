@@ -128,11 +128,17 @@ class _AiAssistantViewState extends State<AiAssistantView> {
             builder: (context, state) {
               return Align(
                 alignment: Alignment.topRight,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TypewriterText(text: ' روز بخیر ${state.userName}\n\n''سوال مورد نظر خود را بپرس تا کمکت کنم.'),
-                  ],
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      right: 10,
+                      left: 10
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TypewriterText(text: ' روز بخیر ${state.userName}\n\n''سوال مورد نظر خود را بپرس تا کمکت کنم.'),
+                    ],
+                  ),
                 )
 
               );
