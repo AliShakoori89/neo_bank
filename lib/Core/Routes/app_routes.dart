@@ -576,7 +576,18 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/card_issuance_page',
       builder: (context, state) {
-        return CardIssuancePage();
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<AllCardsDetailBloc>(
+              create: (_) => sl<AllCardsDetailBloc>()
+            ),
+
+            BlocProvider<UserAllAccountBloc>(
+              create: (_) => sl<UserAllAccountBloc>()
+            ),
+          ],
+          child: const CardIssuancePage(),
+        );
       },
     ),
 

@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Data/DataSources/all_card_detail_remote_data_source.dart';
 import 'package:neo_bank_mehr_iran/Features/Fund_Transfer_Page/Domain/Repositories/all_card_detail_repository.dart';
 import '../../../../Core/Network/app_exception.dart';
+import '../../Domain/Entities/ali_card_pan_entity.dart';
 
 @LazySingleton(as: AllCardDetailRepository)
 class AllCardDetailRepositoryImpl implements AllCardDetailRepository{
@@ -78,6 +79,49 @@ class AllCardDetailRepositoryImpl implements AllCardDetailRepository{
       throw AppException(e.message ?? 'خطایی در ارتباط با سرور رخ داده است.');
     } catch (e) {
       if (e is AppException) rethrow;
+      throw AppException('خطای غیرمنتظره: $e');
+    }
+  }
+
+  @override
+  Future<List<AliCardPanEntity>> getAllCards() async {
+    try {
+      final data =
+      await allCardDetailRemoteDataSource.getAllCardsPan();
+
+      if (data.success == true) {
+        final List<AliCardPanEntity> cards = [];
+
+        if (data.data != null) {
+          for (final card in data.data!) {
+            cards.add(card.toEntity());
+          }
+        }
+
+        return cards;
+      } else {
+        throw AppException('Failed to fetch cards');
+      }
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw AppException(
+          'نشست شما منقضی شده است.',
+          statusCode: 401,
+        );
+      }
+
+      if (e.error is AppException) {
+        throw e.error!;
+      }
+
+      throw AppException(
+        e.message ?? 'خطایی در ارتباط با سرور رخ داده است.',
+      );
+    } catch (e) {
+      if (e is AppException) {
+        rethrow;
+      }
+
       throw AppException('خطای غیرمنتظره: $e');
     }
   }

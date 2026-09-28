@@ -22,6 +22,8 @@ class AllCardsDetailBloc
     try {
       emit(state.copyWith(status: AllCardsDetailStatus.loading));
 
+      final cards = await allCardDetailUseCase.getAllCards();
+
       final cardsPan = await allCardDetailUseCase.getAllCardsPan();
 
       final cardsDeposit = await allCardDetailUseCase.getAllCardsDeposit();
@@ -29,6 +31,7 @@ class AllCardsDetailBloc
       emit(
         state.copyWith(
           status: AllCardsDetailStatus.success,
+          cards: cards,
           cardsPan: cardsPan,
           cardsDeposit: cardsDeposit,
         ),
