@@ -27,6 +27,7 @@ import '../../Features/AI_Assistant/Presentation/Bloc/AI_Assistant_Bloc/ai_assis
 import '../../Features/AI_Assistant/Presentation/Bloc/Account_Bloc/account_bloc.dart';
 import '../../Features/AI_Assistant/Presentation/Pages/ai_assistant_page.dart';
 import '../../Features/Account_Page/Presentation/Bloc/User_Login_Auth/user_login_auth_bloc.dart';
+import '../../Features/Bank_Services_Page/Presentation/Component/Card_]ssuance_Page/card_issuance_page.dart';
 import '../../Features/EKYC_Authentication_Page/Domain/Repository/abort_token_repository.dart';
 import '../../Features/EKYC_Authentication_Page/Presentation/Bloc/Abort_Token_Bloc/abort_token_bloc.dart';
 import '../../Features/Fund_Transfer_Page/Presentation/Bloc/Account_Tab_Bloc/user_all_account_bloc.dart';
@@ -565,6 +566,17 @@ final GoRouter router = GoRouter(
           amount: extra?['amount'],
           message: extra?['message'],
         );
+      },
+    ),
+
+    // ---------------------------------------------------------------------------
+    // Card Issuance
+    // ---------------------------------------------------------------------------
+
+    GoRoute(
+      path: '/card_issuance_page',
+      builder: (context, state) {
+        return CardIssuancePage();
       },
     ),
 

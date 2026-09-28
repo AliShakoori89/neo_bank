@@ -135,10 +135,15 @@ class _BankServicesPageState extends State<BankServicesPage> {
                         iconPath: 'assets/svg/bank_services_page/calendar.svg',
                         iconName: 'تقویم مالی',
                       ),
-                      CustomIconWidget(
-                        iconPath:
-                        'assets/svg/bank_services_page/credit-card-plus.svg',
-                        iconName: 'صدور کارت',
+                      InkWell(
+                        onTap: (){
+                          context.push('/card_issuance_page');
+                        },
+                        child: CustomIconWidget(
+                          iconPath:
+                          'assets/svg/bank_services_page/credit-card-plus.svg',
+                          iconName: 'صدور کارت',
+                        ),
                       ),
                       CustomIconWidget(
                         iconPath:
