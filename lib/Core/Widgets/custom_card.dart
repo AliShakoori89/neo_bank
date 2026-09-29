@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/Formatters/persian_date_format_h.dart';
+import 'package:neo_bank_mehr_iran/Core/Utils/Formatters/persian_date_format_m_d.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../Spacing/app_space.dart';
 
@@ -78,7 +80,7 @@ class CustomCard extends StatelessWidget {
                           ),
                           AppSpace.heightSpace_4,
                           Text(
-                            subtitle.toPersianDigit(),
+                            subtitle.toPersianDigit().split('-').last,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
@@ -120,11 +122,24 @@ class CustomCard extends StatelessWidget {
                             ],
                           ),
                           AppSpace.heightSpace_4,
-                          Text(
-                            date,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                formatPersianDateH(date),
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                ),
+                              ),
+                              AppSpace.widthSpace_5,
+                              Text(
+                                formatPersianDateMD(date),
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

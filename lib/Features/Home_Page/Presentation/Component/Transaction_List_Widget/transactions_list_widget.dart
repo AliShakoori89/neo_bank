@@ -8,7 +8,6 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Sta
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../../../Core/Routes/transaction_detail_args.dart';
 import '../../../../../Core/Spacing/app_space.dart';
-import '../../../../../Core/Utils/Formatters/persian_date_format_m_d.dart';
 import '../../../../../Core/Widgets/custom_card.dart';
 import '../../../../../Core/Widgets/error_refresh_widget.dart';
 
@@ -182,7 +181,7 @@ class _TransactionsListWidgetState extends State<TransactionsListWidget> {
                         deposit: item.actionDescription! == 'برداشت' ? false : true,
                         title: state.allStatement[index].actionDescription!,
                         subtitle: item.description ?? '',
-                        date: formatPersianDateMD(item.date!.toString()),
+                        date: item.date!.toString(),
                         mount: amount
                             .abs()
                             .toString()

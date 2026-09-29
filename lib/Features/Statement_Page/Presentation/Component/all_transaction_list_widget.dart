@@ -7,6 +7,7 @@ import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Sta
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Bloc/Statement_Bloc/statement_state.dart';
 import 'package:neo_bank_mehr_iran/Features/Statement_Page/Presentation/Component/statement_list_shimmer.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import '../../../../Core/Theme/app_colors.dart';
 import '../../../../Core/Utils/Formatters/persian_date_format_y_m_d.dart';
 import '../../../../Core/Widgets/no_data_receive.dart';
 import '../../../../Core/Utils/Formatters/persian_date_format_h.dart';
@@ -32,7 +33,7 @@ class AllTransactionListWidget extends StatelessWidget {
         if (state.status == StatementStateStatus.error) {
           return Center(child: NoDataReceive(description: 'خطا در دریافت تراکنش‌ها'));
         }
-        
+
         if (state.allStatement.isEmpty) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -53,30 +54,37 @@ class AllTransactionListWidget extends StatelessWidget {
               final item = state.allStatement[index];
               final isDeposit = item.actionDescription == 'واریز';
 
+              print(state.allStatement[index].actionDescription);
+              print(state.allStatement[index].transferAmount);
+
               return InkWell(
-                onTap: () {
-                  context.push(
-                    '/transaction_detail_page',
-                    extra: TransactionDetailArgs(
-                      title: item.actionDescription ?? '',
-                      transferAmount: item.transferAmount!.toString(),
-                      date: item.date.toString(),
-                      description: item.description ?? '',
-                    ),
-                  );
-                },
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        _ActionIcon(isDeposit: isDeposit),
-                        const SizedBox(width: 12),
-                        Expanded(child: _TransactionInfo(item: item)),
-                      ],
-                    ),
-                    Divider(height: 1, color: Theme.of(context).dividerColor),
-                  ],
-                )
+                  onTap: () {
+                    context.push(
+                      '/transaction_detail_page',
+                      extra: TransactionDetailArgs(
+                        title: item.actionDescription ?? '',
+                        transferAmount: item.transferAmount!.toString(),
+                        date: item.date.toString(),
+                        description: item.description ?? '',
+                      ),
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          _ActionIcon(isDeposit: isDeposit),
+                          const SizedBox(width: 12),
+                          Expanded(child: _TransactionInfo(
+                              item: item,
+                              actionDescription: state.allStatement[index].actionDescription,
+                              itemDescription: item.description ?? ''
+                          )),
+                        ],
+                      ),
+                      Divider(height: 1, color: Theme.of(context).dividerColor),
+                    ],
+                  )
               );
             }
 
@@ -96,7 +104,7 @@ class AllTransactionListWidget extends StatelessWidget {
                   },
                   child: Text('مشاهده بیشتر ...',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onTertiary
+                        color: Theme.of(context).colorScheme.onTertiary
                     ),
                   ),
                 ),
@@ -138,8 +146,10 @@ class _ActionIcon extends StatelessWidget {
 
 class _TransactionInfo extends StatelessWidget {
   final dynamic item;
+  final String? actionDescription;
+  final String? itemDescription;
 
-  const _TransactionInfo({required this.item});
+  const _TransactionInfo({required this.item, this.actionDescription, this.itemDescription});
 
   @override
   Widget build(BuildContext context) {
@@ -158,16 +168,18 @@ class _TransactionInfo extends StatelessWidget {
               ),
             ),
             AppSpace.heightSpace_4,
+            AppSpace.heightSpace_4,
             Text(
-              formatPersianDateH(item.date.toString()),
+              itemDescription?.split('-').last ?? '',
               style: TextStyle(
-                fontSize: 11,
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
+              maxLines: 1,
             ),
           ],
         ),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -177,7 +189,9 @@ class _TransactionInfo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.onTertiary,
+                    color: actionDescription == 'واریز'
+                        ? Theme.of(context).colorScheme.onTertiary
+                        : AppColors.redColor ,
                   ),
                 ),
                 AppSpace.widthSpace_5,
@@ -186,18 +200,33 @@ class _TransactionInfo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.onTertiary,
+                    color: actionDescription == 'واریز'
+                        ? Theme.of(context).colorScheme.onTertiary
+                        : AppColors.redColor ,
                   ),
                 ),
               ],
             ),
             AppSpace.heightSpace_4,
-            Text(
-              formatPersianDateYMD(item.date.toString()),
-              style: TextStyle(
-                fontSize: 11,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
+            Row(
+              children: [
+                Text(
+                  formatPersianDateH(item.date.toString()),
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+                AppSpace.widthSpace_5,
+                Text(
+                  formatPersianDateYMD(item.date.toString()),
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+
+              ],
             ),
           ],
         ),
