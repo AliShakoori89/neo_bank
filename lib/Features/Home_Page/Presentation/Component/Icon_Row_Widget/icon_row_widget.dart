@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../Fund_Transfer_Page/Presentation/fund_transfer_tab.dart';
 import 'custom_icon.dart';
 
 Widget allServicesList() {
@@ -35,6 +36,11 @@ Widget allServicesList() {
                   context.push('/loan_page');
                 }else if(servicesItem[index]['id'] == 4){
                   context.push('/invoices_page');
+                }else if(servicesItem[index]['id'] == 6){
+                  context.push(
+                    '/fund_transfer_page',
+                    extra: FundTransferTab.gift,
+                  );
                 }
               },
             ),
